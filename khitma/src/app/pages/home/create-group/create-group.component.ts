@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { KhitmaGroup } from '../../../entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../alert.service';
+
 
 @Component({
   selector: 'app-create-group',
@@ -14,7 +16,7 @@ export class CreateGroupComponent implements OnInit {
   description: string;
   author: string;
 
-  constructor(private groupsApi: KhitmaGroupService, private router: Router) { }
+  constructor(private groupsApi: KhitmaGroupService, private router: Router, private alert: AlertService) { }
 
   ngOnInit(): void {
   }
@@ -23,9 +25,8 @@ export class CreateGroupComponent implements OnInit {
 
     this.groupsApi.createGroup(this.title, this.description, this.author,).then(docRef => {
 
-      this.router.navigate(['/product-details', docRef.id]);
-
-      // this.router.navigateByUrl('/group/' +  + "/invite");
+      this.alert.show("تمّ إنشاء مجموعة الختمة بنجاح!");
+      this.router.navigate(['/group/' + docRef.id + '/invite']);
 
     });
   }
