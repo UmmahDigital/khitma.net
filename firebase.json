@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/khitma",
+    "public": "khitma/dist/khitma",
     "ignore": [
       "firebase.json",
       "**/.*",
