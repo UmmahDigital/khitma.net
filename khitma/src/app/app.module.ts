@@ -22,20 +22,21 @@ import { JuzListComponent } from './shared/juz-list/juz-list.component';
 import { GroupInviteComponent } from './pages/group/group-invite/group-invite.component';
 
 import { environment } from '../environments/environment';
-
+import { GroupJoinComponent } from './pages/group/group-join/group-join.component';
+import { KhitmaInfoComponent } from './shared/khitma-info/khitma-info.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {
     path: 'group/:groupId', component: GroupComponent, children: [
       { path: 'invite', component: GroupInviteComponent },
+      { path: 'join', component: GroupJoinComponent },
     ]
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
 
 ];
-
 
 @NgModule({
   declarations: [
@@ -47,6 +48,8 @@ const routes: Routes = [
     GroupComponent,
     JuzListComponent,
     GroupInviteComponent,
+    GroupJoinComponent,
+    KhitmaInfoComponent,
   ],
   imports: [
     BrowserModule,

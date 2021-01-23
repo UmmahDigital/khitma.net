@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
+import { Location, LocationStrategy } from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class GroupInviteComponent implements OnInit {
   group: KhitmaGroup;
   inviteLink: string;
 
-  constructor(private route: ActivatedRoute, private groupsApi: KhitmaGroupService) { }
+  constructor(private route: ActivatedRoute, private groupsApi: KhitmaGroupService, private locationStrategy: LocationStrategy) { }
 
   ngOnInit() {
 
@@ -27,7 +28,9 @@ export class GroupInviteComponent implements OnInit {
         this.groupsApi.getGroupDetails(groupId).subscribe((group: KhitmaGroup) => {
           this.group = group;
 
-          this.inviteLink = "";
+          this.inviteLink = location.origin + '/groups/' + this.group.id + "/join";
+
+          // this.inviteLink = this.locationStrategy.getBaseHref() + '/groups/' + this.group.id + "/join";
         });
 
       });
