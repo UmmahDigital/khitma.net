@@ -19,6 +19,8 @@ export class GroupJoinComponent implements OnInit {
 
   ngOnInit() {
 
+    // if already joined --> redirect to /page/id page
+
     this.route.params.subscribe(
       (params: Params): void => {
 
