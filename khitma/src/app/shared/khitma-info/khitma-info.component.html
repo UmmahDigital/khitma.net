@@ -6,4 +6,7 @@
     <mat-card-content>
         {{group.description}}
     </mat-card-content>
+
+    <span *ngIf="showLink">{{groupLink}}</span>
+
 </mat-card>

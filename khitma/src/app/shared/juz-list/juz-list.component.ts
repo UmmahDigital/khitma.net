@@ -14,7 +14,7 @@ export class JuzListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
+    console.log(this.ajza);
   }
 
 }

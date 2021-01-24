@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class LocalDatabaseService {
 
-  groups: string[];
+  groups: object;
 
   constructor() {
-    this.groups = JSON.parse(localStorage.getItem("groups")) || [];
+    this.groups = JSON.parse(localStorage.getItem("groups")) || {};
   }
 
   setUserName(name) {
@@ -20,12 +20,12 @@ export class LocalDatabaseService {
   }
 
   insertGroup(groupId) {
-    this.groups.push(groupId);
-    localStorage.setItem("names", JSON.stringify(this.groups));
+    this.groups[groupId] = 'joined';
+    localStorage.setItem("groups", JSON.stringify(this.groups));
   }
 
-  isGroupExist(groupId) {
-    return this.groups.includes(groupId);
+  isGroupJoined(groupId) {
+    return (this.groups[groupId] != null);
   }
 
   getGroups() {

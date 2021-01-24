@@ -1,0 +1,18 @@
+<div *ngIf="group">
+
+    <app-khitma-info [group]="group"></app-khitma-info>
+
+    <mat-card>
+
+        <mat-card-title>أجزاء الختمة</mat-card-title>
+
+        <!-- <mat-card-subtitle>يمكنك إنشاء ختمة جديدة </mat-card-subtitle> -->
+
+        <mat-card-content>
+            <app-juz-list [ajza]="group.ajza"></app-juz-list>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>

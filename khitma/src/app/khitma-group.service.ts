@@ -42,4 +42,12 @@ export class KhitmaGroupService {
     // });
 
   }
+
+  public getGroupURL(groupId: string) {
+    return location.origin + '/group/' + groupId;
+  }
+
+  public isValidGroup(group: KhitmaGroup) {
+    return group.title ? true : false;
+  }
 }

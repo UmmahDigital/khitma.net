@@ -1,6 +1,7 @@
 
 const NUM_OF_AJZA = 30;
 
+
 const JUZ_STATUS = Object.freeze({
     IDLE: 0,
     BOOKED: 1,
@@ -10,11 +11,12 @@ const JUZ_STATUS = Object.freeze({
 export class Juz {
     index: number;
     status: number;
-    ownerName: string;
+    owner: string;
 
     public constructor(init?: Partial<Juz>) {
         Object.assign(this, init);
     }
+
 }
 
 export class KhitmaGroup {
@@ -43,8 +45,12 @@ export class KhitmaGroup {
         // this.ajza = Array(NUM_OF_AJZA).fill(new Juz());
     }
 
-    public assignJuz(juzIndex, ownerName) {
-        this.ajza[juzIndex].ownerName = ownerName;
+    public assignJuz(juzIndex, owner) {
+        this.ajza[juzIndex].owner = owner;
+    }
+
+    public getURL() {
+        return location.origin + '/group/' + this.id;
     }
 
     toJson() {
@@ -60,5 +66,7 @@ export class KhitmaGroup {
     getAjzaObj() {
         return this.ajza.map((obj) => { return Object.assign({}, obj) });
     }
+
+
 }
 
