@@ -32,9 +32,14 @@ export class CreateGroupComponent implements OnInit {
       this.alert.show("تمّ إنشاء مجموعة الختمة بنجاح!", 5000);
 
       this.localDB.insertGroup(groupId);
-      this.router.navigate(['/group/' + groupId + '/invite']);
 
       this.groupCreated.emit(groupId);
+
+      this.router.navigateByUrl('/group/' + groupId + '/invite');
+
+      // window.location.href = '/group/' + groupId + '/invite';
+
+
     });
   }
 

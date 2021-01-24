@@ -2,11 +2,13 @@
 const NUM_OF_AJZA = 30;
 
 
-const JUZ_STATUS = Object.freeze({
+export const JUZ_STATUS = Object.freeze({
     IDLE: 0,
     BOOKED: 1,
     DONE: 2
 });
+
+
 
 export class Juz {
     index: number;

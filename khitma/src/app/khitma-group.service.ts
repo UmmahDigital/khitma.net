@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { KhitmaGroup, Juz } from './entities/entities';
 
-import { Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { map, catchError, take } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
@@ -11,6 +11,9 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
   providedIn: 'root'
 })
 export class KhitmaGroupService {
+
+  public currentGroup = new BehaviorSubject(null);
+
 
   private groupsDocs: object = {}; // save references of queried groups
 

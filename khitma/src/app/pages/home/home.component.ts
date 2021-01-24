@@ -18,7 +18,9 @@ export class HomeComponent implements OnInit {
   groupCreated(groupId) {
 
     this.localDB.insertGroup(groupId);
-    this.router.navigate(['/group/' + groupId + '/dashboard/invite']);
+    // this.router.navigate(['/group/' + groupId + '/dashboard/invite']);
+
+    window.location.href = '/group/' + groupId + '/dashboard/invite';
 
   }
 

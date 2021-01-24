@@ -9,7 +9,7 @@
         <!-- <mat-card-subtitle>يمكنك إنشاء ختمة جديدة </mat-card-subtitle> -->
 
         <mat-card-content>
-            <app-juz-list [ajza]="group.ajza"></app-juz-list>
+            <app-juz-list [ajza]="group.ajza" (onJuzSelection)="juzSelected($event)"></app-juz-list>
 
         </mat-card-content>
 

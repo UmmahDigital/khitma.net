@@ -1,9 +1,7 @@
-import { Component, OnInit, Host } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
-import { GroupComponent } from '../group.component';
 
 @Component({
   selector: 'app-group-join',
@@ -17,24 +15,25 @@ export class GroupJoinComponent implements OnInit {
   username: string;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private groupsApi: KhitmaGroupService,
-    private localDB: LocalDatabaseService,
-    @Host() parent: GroupComponent) {
-
-    this.group = parent.group;
+    private localDB: LocalDatabaseService) {
 
   }
 
   ngOnInit() {
+
+    this.groupsApi.currentGroup.subscribe(
+      (value: KhitmaGroup) => this.group = value
+    )
 
   }
 
   join() {
     this.localDB.setUserName(this.username);
     this.localDB.insertGroup(this.group.id);
-    this.router.navigate(['/group/' + this.group.id + '/dashboard']);
+    // this.router.navigate(['/group/' + this.group.id + '/dashboard']);
+
+    window.location.href = '/group/' + this.group.id + '/dashboard'
 
   }
 

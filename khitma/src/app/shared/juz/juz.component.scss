@@ -1,0 +1,16 @@
+:host {
+  display: block;
+
+  &:not(:first-child) {
+    border-top: 1px solid #e5e5e5;
+  }
+}
+
+.juz {
+  display: block;
+  padding: 20px 0;
+}
+
+.juz.booked {
+  color: gray;
+}

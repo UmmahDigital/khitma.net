@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Juz } from 'src/app/entities/entities';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Juz, JUZ_STATUS } from 'src/app/entities/entities';
 
 @Component({
   selector: 'app-juz',
@@ -10,9 +10,19 @@ export class JuzComponent implements OnInit {
 
   @Input() juz: Juz;
 
+  stateClass: string;
+
   constructor() { }
 
   ngOnInit(): void {
+
+    switch (this.juz.status) {
+      case JUZ_STATUS.IDLE: this.stateClass = "idle"; break;
+      case JUZ_STATUS.BOOKED: this.stateClass = "booked"; break;
+      case JUZ_STATUS.DONE: this.stateClass = "done"; break;
+    }
+
+
   }
 
 }

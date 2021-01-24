@@ -32,7 +32,7 @@ import { KhitmaInfoComponent } from './shared/khitma-info/khitma-info.component'
 import { JuzComponent } from './shared/juz/juz.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   {
     path: 'new', component: CreateGroupComponent, children: [
       { path: 'invite', component: GroupInviteComponent },
@@ -45,8 +45,7 @@ const routes: Routes = [
       { path: 'dashboard', component: GroupDashboardComponent },
     ]
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
 

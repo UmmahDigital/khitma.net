@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Juz } from '../../entities/entities';
+import { Juz, JUZ_STATUS } from '../../entities/entities';
 
 @Component({
   selector: 'app-juz-list',
@@ -10,11 +10,20 @@ import { Juz } from '../../entities/entities';
 export class JuzListComponent implements OnInit {
 
   @Input() ajza: Juz[];
+  @Output() onJuzSelection = new EventEmitter<Juz>();
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.ajza);
+  }
+
+  juzClicked(juz: Juz) {
+
+    if (juz.status != JUZ_STATUS.IDLE) {
+      return;
+    }
+
+    this.onJuzSelection.emit(juz);
   }
 
 }

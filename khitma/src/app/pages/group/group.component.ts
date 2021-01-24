@@ -14,8 +14,6 @@ import { AlertService } from 'src/app/alert.service';
 })
 export class GroupComponent implements OnInit {
 
-  public group: KhitmaGroup;
-
   constructor(private route: ActivatedRoute,
     private router: Router,
     private groupsApi: KhitmaGroupService,
@@ -33,16 +31,23 @@ export class GroupComponent implements OnInit {
 
           if (!this.groupsApi.isValidGroup(group)) {
             this.alert.show("لم يتم العثور على الختمة المطلوبة.");
-            this.router.navigate(['notfound']);
+            // this.router.navigate(['notfound']);
+            window.location.href = '/';
+
           }
 
-          this.group = group;
+          this.groupsApi.currentGroup.next(group);
 
           const isJoind = this.localDB.isGroupJoined(groupId);
-
           const redirecTo = isJoind ? '/dashboard' : '/join';
 
-          this.router.navigate(['/group/' + groupId + redirecTo]);
+          if (!this.router.url.includes(redirecTo)) {
+            window.location.href = '/group/' + groupId + redirecTo;
+          }
+
+
+
+          // this.router.navigate(['/group/' + groupId + redirecTo]);
 
         });
 
