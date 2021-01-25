@@ -1,3 +1,7 @@
+:host {
+  padding-bottom: 80px;
+}
+
 mat-card {
   margin: 16px auto;
 }
@@ -7,7 +11,9 @@ button {
 }
 
 .done-btn {
-  height: 80px;
+  height: 70px;
+  line-height: 70px !important;
+  padding: 0 16px !important;
 }
 
 .current-juz {
@@ -19,5 +25,86 @@ button {
 
   span {
     color: #3f51b5;
+    margin-top: 5px;
+    display: block;
+  }
+}
+
+.action-panel {
+  position: fixed;
+  bottom: 0;
+  background: white;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 100px;
+  margin: 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    > * {
+      margin: 0 10px !important;
+    }
+  }
+}
+
+.current-juz {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #e5e5e5;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 100%;
+
+  &:before {
+    content: "جزء";
+    position: absolute;
+    top: 0;
+    text-align: center;
+    font-size: 50%;
+    left: 0;
+    right: 0;
+    color: gray;
+    margin-top: -16px;
+  }
+}
+
+.giveup-btn {
+  zoom: 0.75;
+  color: gray;
+}
+
+.spacer {
+  height: 100px;
+}
+
+.juz {
+  display: block;
+  background: white;
+  font-weight: bold;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0 auto;
+}
+
+section {
+  margin: 32px 0;
+
+  > header {
+    text-align: center;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 20px;
+    margin-bottom: -16px;
   }
 }

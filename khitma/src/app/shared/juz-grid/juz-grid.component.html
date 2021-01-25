@@ -1,0 +1,15 @@
+<section dir="ltr" [ngClass]="{'has-juz': myJuzIndex>=0}" fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div *ngFor="let juz of ajza" fxFlex="10%" style="text-align:center">
+        <app-juz-toggle [juz]="juz" [isMyJuz]="juz.index == myJuzIndex" (click)="juzClicked(juz)">
+        </app-juz-toggle>
+    </div>
+</section>
+
+<!-- 
+<div class="ideas-list" >
+    <div *ngFor="let idea of filteredItems" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%"
+        style="text-align:center">
+        <app-idea [idea]="idea" [index]="i"></app-idea>
+    </div>
+</div>
+ -->

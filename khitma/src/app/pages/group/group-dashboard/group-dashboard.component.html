@@ -1,25 +1,36 @@
 <div *ngIf="group">
 
-    <app-khitma-info [group]="group"></app-khitma-info>
+    <section>
+        <app-khitma-info [group]="group"></app-khitma-info>
+    </section>
+
+    <section>
+
+        <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
+            (onJuzSelection)="juzSelected($event)">
+        </app-juz-grid>
+    </section>
+
+    <section class="action-panel mat-elevation-z16">
+
+        <div *ngIf="myJuzIndex != null">
+            <div class="current-juz"><span>{{myJuzIndex + 1}}</span> </div>
 
 
-    <mat-card *ngIf="myJuzIndex != null">
-
-        <mat-card-content>
-
-            <label class="current-juz">جزؤك الحالي: <span>{{myJuzIndex + 1}}</span> </label>
-
-
-            <button mat-raised-button color="accent" class="block done-btn" (click)="juzDone()"
+            <!-- جزؤك الحالي:  -->
+            <button mat-raised-button color="accent" class="done-btn" (click)="juzDone()"
                 [disabled]="myJuzIndex == null">
                 أتممت قراءة جزئي</button>
 
 
-            <button mat-flat-button class="block" (click)="juzGiveup()">تنازل عن الجزء</button>
+            <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
 
-        </mat-card-content>
+        </div>
 
-    </mat-card>
+
+        <div *ngIf="myJuzIndex == null">رجاء قم باختيار جزء</div>
+    </section>
+
 
 
     <section>
@@ -29,6 +40,8 @@
         </app-juz-list>
 
     </section>
+
+    <div class="spacer"></div>
 
 
 

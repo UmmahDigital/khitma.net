@@ -1,11 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;700&display=swap");
+
+@import "~@angular/material/theming";
+
 html,
 body {
   height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  // font-family: "Scheherazade", serif !important;
   font-size: 100% !important;
   line-height: 150% !important;
   overflow-x: hidden;
+  background-color: #fafafa;
 }
+
+$custom-typography: mat-typography-config(
+  $font-family: "Markazi Text",
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500),
+);
+
+@include mat-base-typography($custom-typography);
+@include angular-material-typography($custom-typography);

@@ -11,6 +11,9 @@ import { MaterialModule } from './modules/material.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -30,6 +33,7 @@ import { JuzListComponent } from './shared/juz-list/juz-list.component';
 import { environment } from '../environments/environment';
 import { KhitmaInfoComponent } from './shared/khitma-info/khitma-info.component';
 import { JuzComponent } from './shared/juz/juz.component';
+import { JuzGridComponent } from './shared/juz-grid/juz-grid.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -62,6 +66,7 @@ const routes: Routes = [
     KhitmaInfoComponent,
     GroupDashboardComponent,
     JuzComponent,
+    JuzGridComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +75,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'always' }),
     MaterialModule,
     FormsModule,
+    FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     // AngularFireAuthModule, // auth

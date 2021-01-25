@@ -6,34 +6,51 @@
   }
 }
 
-.juz {
-  display: block;
-  // padding: 20px 0;
-  background: #fafafa;
+.juz.list-item {
   margin: 5px auto;
-  font-weight: bold;
   padding: 24px 16px;
 }
 
-.juz.idle {
+.juz.list-item.idle .index {
   background-color: #ff9090;
 }
 
-.juz.booked {
+.juz.list-item.booked .index {
   background-color: #f0f090;
 }
 
-.juz.my-juz {
+.juz.list-item.my-juz .index {
   // background-color: #90d8f0;
   // font-size: 150%;
   background-color: #3f51b5;
   color: white;
 }
 
-.juz.done {
+.juz.list-item.done .index {
   background-color: #a8f0a8;
 }
 
 .index {
   margin-left: 8px;
+  position: relative;
+  display: inline-block;
+  border: 1px solid #e5e5e5;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 100%;
+  padding: 5px;
+
+  // &:before {
+  //   content: "جزء";
+  //   position: absolute;
+  //   top: 0;
+  //   text-align: center;
+  //   font-size: 50%;
+  //   left: 0;
+  //   right: 0;
+  //   color: gray;
+  //   margin-top: -16px;
+  // }
 }
