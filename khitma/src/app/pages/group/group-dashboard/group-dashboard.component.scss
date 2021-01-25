@@ -9,3 +9,15 @@ button {
 .done-btn {
   height: 80px;
 }
+
+.current-juz {
+  text-align: center;
+  font-size: 200%;
+  padding: 10px;
+  display: block;
+  font-weight: bold;
+
+  span {
+    color: #3f51b5;
+  }
+}

@@ -6,10 +6,15 @@
     <mat-card>
 
         <mat-card-content>
-            جزؤك الحالي: {{myJuzIndex}}
 
-            <button mat-raised-button color="accent" class="block done-btn" (click)="juzDone()">أتممت قراءة
-                جزئي</button>
+            <label class="current-juz" *ngIf="myJuzIndex != null">جزؤك الحالي: <span>{{myJuzIndex + 1}}</span> </label>
+
+
+            <button mat-raised-button color="accent" class="block done-btn" (click)="juzDone()"
+                [disabled]="myJuzIndex == null">
+                أتممت قراءة جزئي</button>
+
+
             <button mat-flat-button class="block">تنازل عن الجزء</button>
 
         </mat-card-content>

@@ -8,23 +8,32 @@
 
 .juz {
   display: block;
-  padding: 20px 0;
+  // padding: 20px 0;
   background: #fafafa;
   margin: 5px auto;
+  font-weight: bold;
+  padding: 24px 16px;
 }
 
 .juz.idle {
-  background-color: red;
+  background-color: #ff9090;
 }
 
 .juz.booked {
-  background-color: yellow;
+  background-color: #f0f090;
 }
 
 .juz.my-juz {
-  background-color: blue;
+  // background-color: #90d8f0;
+  font-size: 150%;
+  background-color: #3f51b5;
+  color: white;
 }
 
 .juz.done {
-  background-color: green;
+  background-color: #a8f0a8;
+}
+
+.index {
+  margin-left: 8px;
 }

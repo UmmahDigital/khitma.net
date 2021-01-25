@@ -28,7 +28,13 @@ export class GroupDashboardComponent implements OnInit {
 
       this.group = group;
 
+
       this.myJuzIndex = this.localDB.getMyJuz(this.group.id);
+
+      if (group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
+        this.myJuzIndex = null;
+      }
+
       this.username = this.localDB.getUsername(this.group.id);
 
     });
@@ -37,14 +43,20 @@ export class GroupDashboardComponent implements OnInit {
 
   juzSelected(juz: Juz) {
 
-    this.localDB.setMyJuz(this.group.id, juz.index);
+    if (juz.status != JUZ_STATUS.IDLE || this.myJuzIndex != null) {
+      return;
+    }
 
+    this.myJuzIndex = juz.index;
+
+    this.localDB.setMyJuz(this.group.id, juz.index);
     this.groupsApi.updateJuz(this.group.id, juz.index, this.username, JUZ_STATUS.BOOKED);
   }
 
   juzDone() {
-
+    // add confirmation modal
     this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
+    this.myJuzIndex = null;
 
   }
 }
