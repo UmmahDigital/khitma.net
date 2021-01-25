@@ -1,13 +1,17 @@
-<div *ngIf="group">
+<div *ngIf="group" class="group-invite">
 
     <app-khitma-info [group]="group" [showLink]="flase"></app-khitma-info>
 
 
-    <p>{{inviteLink}}</p>
+    <p class="invite-link">{{inviteLink}}</p>
 
-    <a href="whatsapp://send?text={{inviteMsg}}">مشاركة عبر الوتسأب</a>
+    <!-- <a href="whatsapp://send?text={{inviteMsg}}">مشاركة عبر الوتسأب</a> -->
 
 
-    <button class="block" mat-raised-button color="accent" [cdkCopyToClipboard]="inviteMsg">نسخ رسالة الدعوة</button>
+    <button class="block copy-msg-btn" mat-raised-button color="accent" [cdkCopyToClipboard]="inviteMsg">نسخ رسالة
+        الدعوة</button>
+
+    <a mat-raised-button color="primary" class="block" href="{{inviteLink}}">الذهاب لصفحة الختمة</a>
+
 
 </div>

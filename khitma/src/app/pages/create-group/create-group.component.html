@@ -1,15 +1,15 @@
 <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="block">
         <mat-label>عنوان الختمة</mat-label>
         <input matInput [(ngModel)]="title" name="title" required="true">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="block">
         <mat-label>اسمك</mat-label>
         <input matInput [(ngModel)]="author" name="author" required="true">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="block">
         <mat-label>نص إضافي (اختياري)</mat-label>
         <textarea matInput [(ngModel)]="description" name="description"></textarea>
     </mat-form-field>

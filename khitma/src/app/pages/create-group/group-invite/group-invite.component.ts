@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
@@ -7,7 +7,8 @@ import { KhitmaGroupService } from '../../../khitma-group.service';
 @Component({
   selector: 'app-group-invite',
   templateUrl: './group-invite.component.html',
-  styleUrls: ['./group-invite.component.scss']
+  styleUrls: ['./group-invite.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GroupInviteComponent implements OnInit {
 

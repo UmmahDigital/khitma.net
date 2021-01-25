@@ -7,3 +7,22 @@
     margin: 16px auto;
   }
 }
+
+.invite-link {
+  background: lightgray;
+  padding: 20px;
+  text-align: left;
+  word-break: break-all;
+}
+
+.group-invite > * {
+  text-align: center !important;
+
+  margin: 20px auto !important;
+  //   background-color: red;
+}
+
+.copy-msg-btn {
+  margin-top: -20px !important;
+  border-radius: 0 0 !important;
+}

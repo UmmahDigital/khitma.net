@@ -31,7 +31,7 @@ export class GroupDashboardComponent implements OnInit {
 
       this.myJuzIndex = this.localDB.getMyJuz(this.group.id);
 
-      if (group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
+      if (this.myJuzIndex && group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
         this.myJuzIndex = null;
       }
 
@@ -56,7 +56,15 @@ export class GroupDashboardComponent implements OnInit {
   juzDone() {
     // add confirmation modal
     this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
+    this.localDB.setMyJuz(this.group.id, null);
     this.myJuzIndex = null;
 
+  }
+
+  juzGiveup() {
+    // add confirmation modal
+    this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.IDLE);
+    this.localDB.setMyJuz(this.group.id, null);
+    this.myJuzIndex = null;
   }
 }

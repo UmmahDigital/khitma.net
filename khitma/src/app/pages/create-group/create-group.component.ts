@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
@@ -8,7 +8,9 @@ import { LocalDatabaseService } from 'src/app/local-database.service';
 @Component({
   selector: 'app-create-group',
   templateUrl: './create-group.component.html',
-  styleUrls: ['./create-group.component.scss']
+  styleUrls: ['./create-group.component.scss'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class CreateGroupComponent implements OnInit {
 

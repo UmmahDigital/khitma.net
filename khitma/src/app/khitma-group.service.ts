@@ -95,7 +95,12 @@ export class KhitmaGroupService {
       owner: ownerName
     };
 
+    if (juzStatus == JUZ_STATUS.IDLE) {
+      this._currentGroupObj.ajza[juzIndex].owner = "";
+    }
+
     this.db.doc<KhitmaGroup>('groups/' + groupId).update({ ajza: this._currentGroupObj.ajza });
+
   }
 
 }

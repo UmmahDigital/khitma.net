@@ -3,11 +3,11 @@
     <app-khitma-info [group]="group"></app-khitma-info>
 
 
-    <mat-card>
+    <mat-card *ngIf="myJuzIndex != null">
 
         <mat-card-content>
 
-            <label class="current-juz" *ngIf="myJuzIndex != null">جزؤك الحالي: <span>{{myJuzIndex + 1}}</span> </label>
+            <label class="current-juz">جزؤك الحالي: <span>{{myJuzIndex + 1}}</span> </label>
 
 
             <button mat-raised-button color="accent" class="block done-btn" (click)="juzDone()"
@@ -15,27 +15,22 @@
                 أتممت قراءة جزئي</button>
 
 
-            <button mat-flat-button class="block">تنازل عن الجزء</button>
+            <button mat-flat-button class="block" (click)="juzGiveup()">تنازل عن الجزء</button>
 
         </mat-card-content>
 
     </mat-card>
 
 
+    <section>
+        <header>أجزاء الختمة</header>
+
+        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" (onJuzSelection)="juzSelected($event)">
+        </app-juz-list>
+
+    </section>
 
 
-    <mat-card>
 
-        <mat-card-title>أجزاء الختمة</mat-card-title>
-
-        <!-- <mat-card-subtitle>يمكنك إنشاء ختمة جديدة </mat-card-subtitle> -->
-
-        <mat-card-content>
-            <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" (onJuzSelection)="juzSelected($event)">
-            </app-juz-list>
-
-        </mat-card-content>
-
-    </mat-card>
 
 </div>

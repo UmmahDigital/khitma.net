@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { KhitmaGroupService } from 'src/app/khitma-group.service';
 
@@ -6,7 +6,9 @@ import { KhitmaGroupService } from 'src/app/khitma-group.service';
 @Component({
   selector: 'app-khitma-info',
   templateUrl: './khitma-info.component.html',
-  styleUrls: ['./khitma-info.component.scss']
+  styleUrls: ['./khitma-info.component.scss'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class KhitmaInfoComponent implements OnInit {
 
