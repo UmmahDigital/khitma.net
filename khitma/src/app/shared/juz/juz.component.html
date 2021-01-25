@@ -1,7 +1,11 @@
-<div class="juz" [ngClass]="stateClass">
+<div class="juz" [ngClass]="getCssClasses()">
 
     <span class="index">{{juz.index+1}}</span>
 
     <span class="owner"> {{juz.owner}}</span>
+
+
+    <button *ngIf="stateName =='idle'" type="submit" class="block" mat-raised-button color="primary">اقرأ جزء
+        {{juz.index+1}} </button>
 
 </div>

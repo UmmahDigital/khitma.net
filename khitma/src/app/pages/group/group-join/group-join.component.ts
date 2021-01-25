@@ -22,19 +22,18 @@ export class GroupJoinComponent implements OnInit {
 
   ngOnInit() {
 
-    this.groupsApi.currentGroup.subscribe(
+    this.groupsApi.getCurrentGroup().subscribe(
       (value: KhitmaGroup) => this.group = value
     )
 
   }
 
   join() {
-    this.localDB.setUserName(this.username);
-    this.localDB.insertGroup(this.group.id);
-    // this.router.navigate(['/group/' + this.group.id + '/dashboard']);
+
+    this.localDB.joinGroup(this.group.id, this.username);
 
     window.location.href = '/group/' + this.group.id + '/dashboard'
-
+    // this.router.navigate(['/group/' + this.group.id + '/dashboard']);
   }
 
 

@@ -2,6 +2,23 @@
 
     <app-khitma-info [group]="group"></app-khitma-info>
 
+
+    <mat-card>
+
+        <mat-card-content>
+            جزؤك الحالي: {{myJuzIndex}}
+
+            <button mat-raised-button color="accent" class="block done-btn" (click)="juzDone()">أتممت قراءة
+                جزئي</button>
+            <button mat-flat-button class="block">تنازل عن الجزء</button>
+
+        </mat-card-content>
+
+    </mat-card>
+
+
+
+
     <mat-card>
 
         <mat-card-title>أجزاء الختمة</mat-card-title>
@@ -9,7 +26,8 @@
         <!-- <mat-card-subtitle>يمكنك إنشاء ختمة جديدة </mat-card-subtitle> -->
 
         <mat-card-content>
-            <app-juz-list [ajza]="group.ajza" (onJuzSelection)="juzSelected($event)"></app-juz-list>
+            <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" (onJuzSelection)="juzSelected($event)">
+            </app-juz-list>
 
         </mat-card-content>
 

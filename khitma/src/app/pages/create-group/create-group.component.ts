@@ -12,7 +12,7 @@ import { LocalDatabaseService } from 'src/app/local-database.service';
 })
 export class CreateGroupComponent implements OnInit {
 
-  @Output() groupCreated = new EventEmitter<string>();
+  @Output() groupCreated = new EventEmitter<object>();
 
   title: string;
   description: string;
@@ -31,13 +31,16 @@ export class CreateGroupComponent implements OnInit {
 
       this.alert.show("تمّ إنشاء مجموعة الختمة بنجاح!", 5000);
 
-      this.localDB.insertGroup(groupId);
 
-      this.groupCreated.emit(groupId);
+      this.localDB.joinGroup(groupId, this.author);
+
+
+      // window.location.href = '/group/' + result.groupId + '/dashboard/invite';
+      //   this.groupCreated.emit({ "groupId": groupId, "username": this.author });
+
+
 
       this.router.navigateByUrl('/group/' + groupId + '/invite');
-
-      // window.location.href = '/group/' + groupId + '/invite';
 
 
     });

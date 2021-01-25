@@ -5,27 +5,43 @@ import { Injectable } from '@angular/core';
 })
 export class LocalDatabaseService {
 
-  groups: object;
+  groups: object; // [todo]: watch and save() upon change?
 
   constructor() {
     this.groups = JSON.parse(localStorage.getItem("groups")) || {};
   }
 
-  setUserName(name) {
-    localStorage.setItem('username', name);
-  }
-
-  getUserName() {
-    localStorage.getItem('username');
-  }
-
-  insertGroup(groupId) {
-    this.groups[groupId] = 'joined';
+  private _save() {
     localStorage.setItem("groups", JSON.stringify(this.groups));
+
+  }
+
+  // setUsername(groupId, name) {
+
+  //   if (!this.groups[groupId]) {
+  //     return;
+  //   }
+
+  //   this.groups[groupId].userName = name
+  //   this._save();
+  // }
+
+  getUsername(groupId) {
+    return this.groups[groupId].username;
+  }
+
+  joinGroup(groupId, username) {
+
+    this.groups[groupId] = {
+      isJoined: true,
+      username: username
+    };
+
+    this._save();
   }
 
   isGroupJoined(groupId) {
-    return (this.groups[groupId] != null);
+    return (this.groups[groupId] && this.groups[groupId].isJoined);
   }
 
   getGroups() {
@@ -35,6 +51,20 @@ export class LocalDatabaseService {
 
   deleteGroup(groupId) {
 
+  }
+
+  getMyJuz(groupId) {
+    return this.groups[groupId].juzIndex;
+  }
+
+  setMyJuz(groupId, juzIndex) {
+
+    if (!this.groups[groupId]) {
+      return;
+    }
+
+    this.groups[groupId].juzIndex = juzIndex;
+    this._save();
   }
 
 

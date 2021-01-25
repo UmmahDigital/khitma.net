@@ -1,1 +1,4 @@
-<app-juz *ngFor="let juz of ajza" [juz]="juz" (click)="juzClicked(juz)"></app-juz>
+<section [ngClass]="{'has-juz': myJuzIndex>=0}">
+    <app-juz *ngFor="let juz of ajza" [juz]="juz" [isMyJuz]="juz.index == myJuzIndex" (click)="juzClicked(juz)">
+    </app-juz>
+</section>

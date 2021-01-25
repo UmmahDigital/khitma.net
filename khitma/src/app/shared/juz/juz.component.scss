@@ -9,8 +9,22 @@
 .juz {
   display: block;
   padding: 20px 0;
+  background: #fafafa;
+  margin: 5px auto;
+}
+
+.juz.idle {
+  background-color: red;
 }
 
 .juz.booked {
-  color: gray;
+  background-color: yellow;
+}
+
+.juz.my-juz {
+  background-color: blue;
+}
+
+.juz.done {
+  background-color: green;
 }

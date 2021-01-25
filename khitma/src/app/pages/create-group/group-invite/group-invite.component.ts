@@ -25,7 +25,7 @@ export class GroupInviteComponent implements OnInit {
 
         const groupId = params.groupId;
 
-        this.groupsApi.getGroupDetails(groupId).subscribe((group: KhitmaGroup) => {
+        this.groupsApi.getGroupDetailsOnce(groupId).subscribe((group: KhitmaGroup) => {
           this.group = group;
 
           this.inviteLink = this.groupsApi.getGroupURL(this.group.id);

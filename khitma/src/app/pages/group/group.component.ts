@@ -27,27 +27,24 @@ export class GroupComponent implements OnInit {
 
         const groupId = params.groupId;
 
-        this.groupsApi.getGroupDetails(groupId).subscribe((group: KhitmaGroup) => {
+        this.groupsApi.setCurrentGroup(groupId).subscribe((group) => {
 
           if (!this.groupsApi.isValidGroup(group)) {
             this.alert.show("لم يتم العثور على الختمة المطلوبة.");
             // this.router.navigate(['notfound']);
             window.location.href = '/';
+            // this.router.navigate(['/']);
 
           }
-
-          this.groupsApi.currentGroup.next(group);
 
           const isJoind = this.localDB.isGroupJoined(groupId);
           const redirecTo = isJoind ? '/dashboard' : '/join';
 
           if (!this.router.url.includes(redirecTo)) {
             window.location.href = '/group/' + groupId + redirecTo;
+            // this.router.navigate(['/group/' + groupId + redirecTo]);
+
           }
-
-
-
-          // this.router.navigate(['/group/' + groupId + redirecTo]);
 
         });
 

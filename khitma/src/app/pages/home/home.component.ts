@@ -15,12 +15,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  groupCreated(groupId) {
+  groupCreated(result) {
 
-    this.localDB.insertGroup(groupId);
-    // this.router.navigate(['/group/' + groupId + '/dashboard/invite']);
+    // this.localDB.joinGroup(result.groupId, result.username);
 
-    window.location.href = '/group/' + groupId + '/dashboard/invite';
+    // window.location.href = '/group/' + result.groupId + '/dashboard/invite';
+
+    //  // this.router.navigate(['/group/' + groupId + '/dashboard/invite']);
 
   }
 
