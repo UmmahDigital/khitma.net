@@ -2,14 +2,16 @@
   width: 25px;
   height: 25px;
   border-radius: 100%;
+  font-size: larger;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .juz.toggle.idle {
-  background-color: #ff9090;
+  background-color: #fa897b;
 }
 
 .juz.toggle.booked {
-  background-color: #f0f090;
+  background-color: #ffdd94;
 }
 
 .juz.toggle.my-juz {
@@ -20,5 +22,5 @@
 }
 
 .juz.toggle.done {
-  background-color: #a8f0a8;
+  background-color: #d0e6a5;
 }

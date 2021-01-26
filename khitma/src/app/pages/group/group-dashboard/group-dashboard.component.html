@@ -4,12 +4,14 @@
         <app-khitma-info [group]="group"></app-khitma-info>
     </section>
 
-    <section>
+
+    <section class="juz-grid-section">
 
         <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
             (onJuzSelection)="juzSelected($event)">
         </app-juz-grid>
     </section>
+
 
     <section class="action-panel mat-elevation-z16">
 

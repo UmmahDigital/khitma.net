@@ -1,12 +1,30 @@
-<mat-card *ngIf="group">
-    <mat-card-title>{{group.title}}</mat-card-title>
+<section *ngIf="group" class="khitma-info">
+    <header class="title">{{group.title}}</header>
 
-    <mat-card-subtitle> مُنشئ الختمة: {{group.author}} </mat-card-subtitle>
+    <label class="subtitle"> مُنشئ الختمة: {{group.author}} </label>
 
-    <mat-card-content>
+    <p class="description">
+        {{group.description}}
+    </p>
+
+    <label *ngIf="showLink">{{groupLink}}</label>
+
+</section>
+
+
+
+
+
+<!-- 
+<mat-card *ngIf="group" class="khitma-info">
+    <mat-card-title class="title">{{group.title}}</mat-card-title>
+
+    <mat-card-subtitle class="subtitle"> مُنشئ الختمة: {{group.author}} </mat-card-subtitle>
+
+    <mat-card-content class="description">
         {{group.description}}
     </mat-card-content>
 
     <span *ngIf="showLink">{{groupLink}}</span>
 
-</mat-card>
+</mat-card> -->

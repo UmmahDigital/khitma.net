@@ -1,7 +1,7 @@
 <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
     <mat-form-field appearance="fill" class="block">
         <mat-label>عنوان الختمة</mat-label>
-        <input matInput [(ngModel)]="title" name="title" required="true">
+        <input matInput [(ngModel)]="title" name="title" required="true" autocomplete="off">
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="block">

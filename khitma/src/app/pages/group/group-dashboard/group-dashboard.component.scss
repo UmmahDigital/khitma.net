@@ -2,9 +2,9 @@
   padding-bottom: 80px;
 }
 
-mat-card {
-  margin: 16px auto;
-}
+// mat-card {
+//   margin: 16px auto;
+// }
 
 button {
   margin-top: 16px !important;
@@ -14,6 +14,8 @@ button {
   height: 70px;
   line-height: 70px !important;
   padding: 0 16px !important;
+  background-color: #0cc078 !important;
+  font-weight: bold;
 }
 
 .current-juz {
@@ -76,7 +78,7 @@ button {
     left: 0;
     right: 0;
     color: gray;
-    margin-top: -16px;
+    margin-top: -12px;
   }
 }
 
@@ -107,4 +109,11 @@ section {
     padding: 20px;
     margin-bottom: -16px;
   }
+}
+
+.juz-grid-section {
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 32px 0;
+  margin: 0;
 }

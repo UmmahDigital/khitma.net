@@ -10,9 +10,11 @@ import { Juz, JUZ_STATUS } from 'src/app/entities/entities';
 export class JuzComponent implements OnInit {
 
   @Input() juz: Juz;
-  @Input() isMyJuz: boolean;
+  @Input() myJuzIndex: number;
 
   stateName: string;
+  msg: string;
+  cssClasses: string;
 
   constructor() { }
 
@@ -24,18 +26,24 @@ export class JuzComponent implements OnInit {
       case JUZ_STATUS.DONE: this.stateName = "done"; break;
     }
 
+    let _cssClasses = this.stateName;
 
-  }
+    this.msg = "لم تتم قراءته بعد..";
 
-  getCssClasses() {
+    if (this.juz.index == this.myJuzIndex) {
+      _cssClasses += " my-juz";
 
-    let classes = this.stateName;
-
-    if (this.isMyJuz) {
-      classes += " my-juz";
     }
 
-    return classes;
+    if (this.myJuzIndex == null && this.juz.status == JUZ_STATUS.IDLE) {
+      _cssClasses += " mat-elevation-z8"; // add elevation --> clickable
+      this.msg = "إضغط لاختيار هذا الجزء";
+    }
+
+
+
+    this.cssClasses = _cssClasses;
   }
+
 
 }

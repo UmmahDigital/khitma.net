@@ -9,17 +9,21 @@ body {
   height: 100%;
   margin: 0;
   // font-family: "Scheherazade", serif !important;
-  font-size: 100% !important;
+  // font-size: 100% !important;
   line-height: 150% !important;
   overflow-x: hidden;
   background-color: #fafafa;
+  // font-size: larger;
 }
 
 $custom-typography: mat-typography-config(
   $font-family: "Markazi Text",
   $headline: mat-typography-level(32px, 48px, 700),
   $body-1: mat-typography-level(16px, 24px, 500),
+  $button: mat-typography-level(16px, 24px, 500),
+  $input: mat-typography-level(inherit, 1.125, 400),
 );
 
 @include mat-base-typography($custom-typography);
 @include angular-material-typography($custom-typography);
+// @include mat-button-typography($custom-typography);

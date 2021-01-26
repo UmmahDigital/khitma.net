@@ -1,9 +1,14 @@
-:host {
+.home {
+  font-size: x-large;
+  line-height: normal;
+  text-align: justify;
+
+  a {
+    font-size: x-large;
+  }
 }
 
 .home > * {
-  text-align: center !important;
-
-  margin: 20px auto !important;
+  margin: 32px auto !important;
   //   background-color: red;
 }

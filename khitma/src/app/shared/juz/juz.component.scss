@@ -8,15 +8,15 @@
 
 .juz.list-item {
   margin: 5px auto;
-  padding: 24px 16px;
+  padding: 16px;
 }
 
 .juz.list-item.idle .index {
-  background-color: #ff9090;
+  background-color: #fa897b;
 }
 
 .juz.list-item.booked .index {
-  background-color: #f0f090;
+  background-color: #ffdd94;
 }
 
 .juz.list-item.my-juz .index {
@@ -27,7 +27,7 @@
 }
 
 .juz.list-item.done .index {
-  background-color: #a8f0a8;
+  background-color: #d0e6a5;
 }
 
 .index {
@@ -41,6 +41,8 @@
   text-align: center;
   border-radius: 100%;
   padding: 5px;
+  font-size: x-large;
+  color: rgba(0, 0, 0, 0.8);
 
   // &:before {
   //   content: "جزء";
@@ -53,4 +55,15 @@
   //   color: gray;
   //   margin-top: -16px;
   // }
+}
+
+.juz.list-item.my-juz {
+  background-color: #3f51b5;
+  color: white;
+  .index {
+    // background-color: #90d8f0;
+    // font-size: 150%;
+    color: #3f51b5;
+    background-color: white;
+  }
 }

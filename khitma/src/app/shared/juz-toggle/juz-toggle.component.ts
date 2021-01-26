@@ -11,7 +11,7 @@ import { Juz, JUZ_STATUS } from 'src/app/entities/entities';
 export class JuzToggleComponent implements OnInit {
 
   @Input() juz: Juz;
-  @Input() isMyJuz: boolean;
+  @Input() myJuzIndex: number;
 
   stateName: string;
 
@@ -32,7 +32,7 @@ export class JuzToggleComponent implements OnInit {
 
     let classes = this.stateName;
 
-    if (this.isMyJuz) {
+    if (this.juz.index == this.myJuzIndex) {
       classes += " my-juz";
     }
 
