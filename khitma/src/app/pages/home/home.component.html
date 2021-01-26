@@ -7,6 +7,19 @@
 
     </p>
 
-    <a mat-raised-button color="accent" class="block" href="/new">ختمة جديدة</a>
+    <a mat-raised-button color="accent" class="block create-btn" href="/new">ختمة جديدة</a>
+
+
+
+
+    <section *ngIf="groups">
+        <header>مجموعاتي الحاليّة</header>
+
+        <app-group-list [groups]="groups"></app-group-list>
+
+
+    </section>
+
+
 
 </div>

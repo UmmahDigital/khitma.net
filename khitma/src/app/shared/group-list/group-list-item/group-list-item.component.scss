@@ -1,0 +1,29 @@
+.group-list-item {
+  margin: 32px auto;
+  padding: 16px;
+  background-color: white;
+
+  .progress {
+    display: flex;
+    margin-top: 16px;
+
+    div {
+      height: 10px;
+    }
+
+    div.done {
+      background-color: #d0e6a5;
+    }
+    div.booked {
+      background-color: #ffdd94;
+    }
+    div.idle {
+      background-color: #fa897b;
+    }
+  }
+}
+
+.group-list-item-link {
+  text-decoration: none;
+  color: black;
+}

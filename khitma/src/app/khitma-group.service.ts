@@ -103,4 +103,8 @@ export class KhitmaGroupService {
 
   }
 
+  getGroups(groupsIds: string[]) {
+    return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
+  }
+
 }

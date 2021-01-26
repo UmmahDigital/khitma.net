@@ -34,6 +34,8 @@ import { environment } from '../environments/environment';
 import { KhitmaInfoComponent } from './shared/khitma-info/khitma-info.component';
 import { JuzComponent } from './shared/juz/juz.component';
 import { JuzGridComponent } from './shared/juz-grid/juz-grid.component';
+import { GroupListComponent } from './shared/group-list/group-list.component';
+import { GroupListItemComponent } from './shared/group-list/group-list-item/group-list-item.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,6 +69,8 @@ const routes: Routes = [
     GroupDashboardComponent,
     JuzComponent,
     JuzGridComponent,
+    GroupListComponent,
+    GroupListItemComponent,
   ],
   imports: [
     BrowserModule,

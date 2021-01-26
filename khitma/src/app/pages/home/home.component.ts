@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { KhitmaGroup } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../khitma-group.service';
 
@@ -12,9 +13,25 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, private localDB: LocalDatabaseService) { }
+  groups: KhitmaGroup[];
+
+  constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService) { }
 
   ngOnInit(): void {
+
+    const ids = ['d6hPPeiHenczGosqQCf7', 'OYlPkrFeq2FMzI9uZGXH'];
+
+    this.groupsApi.getGroups(ids).subscribe((groups) => {
+
+      if (!groups) {
+        return;
+      }
+
+      this.groups = <KhitmaGroup[]>groups;
+
+    });
+
+
   }
 
   groupCreated(result) {
