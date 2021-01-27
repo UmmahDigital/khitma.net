@@ -19,7 +19,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const ids = ['d6hPPeiHenczGosqQCf7', 'OYlPkrFeq2FMzI9uZGXH'];
+    let ids = this.localDB.getMyGroups();
+    ids = ids.slice(Math.max(ids.length - 10, 0)); // firebase IN array limit of 10
 
     this.groupsApi.getGroups(ids).subscribe((groups) => {
 

@@ -68,6 +68,10 @@ export class LocalDatabaseService {
   }
 
 
+  getMyGroups() {
+    return Object.keys(this.groups);
+  }
+
 
 
 }
