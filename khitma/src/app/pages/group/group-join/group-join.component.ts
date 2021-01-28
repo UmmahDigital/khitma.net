@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
@@ -16,7 +17,8 @@ export class GroupJoinComponent implements OnInit {
 
   constructor(
     private groupsApi: KhitmaGroupService,
-    private localDB: LocalDatabaseService) {
+    private localDB: LocalDatabaseService,
+    private $gaService: GoogleAnalyticsService) {
 
   }
 
@@ -29,6 +31,8 @@ export class GroupJoinComponent implements OnInit {
   }
 
   join() {
+
+    this.$gaService.event('group_joined');
 
     this.localDB.joinGroup(this.group.id, this.username);
 

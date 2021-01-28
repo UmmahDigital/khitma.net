@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AlertService } from 'src/app/alert.service';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -17,7 +18,8 @@ export class GroupInviteComponent implements OnInit {
   inviteMsg: string;
 
   constructor(private route: ActivatedRoute,
-    private groupsApi: KhitmaGroupService) { }
+    private groupsApi: KhitmaGroupService,
+    private alert: AlertService) { }
 
   ngOnInit() {
 
@@ -48,6 +50,12 @@ export class GroupInviteComponent implements OnInit {
         });
 
       });
+
+  }
+
+  msgCopied() {
+
+    this.alert.show("تمّ نسخ الرسالة، يمكنك الآن مشاركتها مع معارفك وأصدقائك.", 5000);
 
   }
 

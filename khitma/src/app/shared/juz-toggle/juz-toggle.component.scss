@@ -1,26 +1,32 @@
-.juz.toggle {
-  width: 25px;
-  height: 25px;
+.juz-toggle {
+  display: block;
+  width: 24px;
+  height: 24px;
   border-radius: 100%;
   font-size: larger;
   color: rgba(0, 0, 0, 0.8);
 }
 
-.juz.toggle.idle {
+.juz-toggle.idle {
   background-color: #fa897b;
+  color: darkred;
 }
 
-.juz.toggle.booked {
+.juz-toggle.booked {
   background-color: #ffdd94;
+  color: brown;
 }
 
-.juz.toggle.my-juz {
+.juz-toggle.my-juz {
   // background-color: #90d8f0;
   // font-size: 150%;
-  background-color: #3f51b5;
+  background-color: #614316;
   color: white;
+  transform: scale(1.4);
 }
 
-.juz.toggle.done {
+.juz-toggle.done {
   background-color: #d0e6a5;
+  color: darkgreen;
+  transform: scale(1);
 }

@@ -3,6 +3,7 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class CreateGroupComponent implements OnInit {
   description: string;
   author: string;
 
-  constructor(private groupsApi: KhitmaGroupService, private router: Router, private alert: AlertService, private localDB: LocalDatabaseService) { }
+  constructor(private $gaService: GoogleAnalyticsService, private groupsApi: KhitmaGroupService, private router: Router, private alert: AlertService, private localDB: LocalDatabaseService) { }
 
   ngOnInit(): void {
   }
@@ -30,6 +31,8 @@ export class CreateGroupComponent implements OnInit {
     this.groupsApi.createGroup(this.title, this.description, this.author,).then(docRef => {
 
       const groupId = docRef.id;
+
+      this.$gaService.event('group_created');
 
       this.alert.show("تمّ إنشاء مجموعة الختمة بنجاح!", 5000);
 

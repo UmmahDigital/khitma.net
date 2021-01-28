@@ -8,6 +8,7 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/conf
 
 
 import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 
 @Component({
@@ -24,7 +25,9 @@ export class GroupDashboardComponent implements OnInit {
 
   showCelebration: boolean = false;
 
-  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog) {
+  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
+    private dialog: MatDialog,
+    private $gaService: GoogleAnalyticsService) {
   }
 
   ngOnInit(): void {
@@ -56,6 +59,9 @@ export class GroupDashboardComponent implements OnInit {
       return;
     }
 
+    this.$gaService.event('juz_selected');
+
+
     this.myJuzIndex = juz.index;
 
     this.localDB.setMyJuz(this.group.id, juz.index);
@@ -63,6 +69,9 @@ export class GroupDashboardComponent implements OnInit {
   }
 
   juzDone() {
+
+    this.$gaService.event('juz_done');
+
 
     const title = "تأكيد إتمام الجزء";
     const msg = "هل أتممت قراءة جزء " + (this.myJuzIndex + 1) + "؟";
@@ -85,18 +94,17 @@ export class GroupDashboardComponent implements OnInit {
 
         setTimeout(() => {
           this.showCelebration = false;
-        }, 3000);
+        }, 2000);
 
 
       }
     });
-
-
-
-
   }
 
   juzGiveup() {
+
+    this.$gaService.event('juz_giveup');
+
     // add confirmation modal
     this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.IDLE);
     this.localDB.setMyJuz(this.group.id, null);

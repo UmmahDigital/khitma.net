@@ -8,10 +8,11 @@
     <!-- <a href="whatsapp://send?text={{inviteMsg}}">مشاركة عبر الوتسأب</a> -->
 
 
-    <button class="block copy-msg-btn" mat-raised-button color="accent" [cdkCopyToClipboard]="inviteMsg">نسخ رسالة
+    <button class="block copy-msg-btn " mat-raised-button [cdkCopyToClipboard]="inviteMsg" (click)="msgCopied()">نسخ
+        رسالة
         الدعوة</button>
 
-    <a mat-raised-button color="primary" class="block" href="{{inviteLink}}">الذهاب لصفحة الختمة</a>
+    <a mat-raised-button color="accent" class="block app-btn-primary" href="{{inviteLink}}">الذهاب لصفحة الختمة</a>
 
 
 </div>

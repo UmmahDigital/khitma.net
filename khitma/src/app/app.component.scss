@@ -48,3 +48,19 @@ section {
     margin-bottom: -16px;
   }
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  background: #614316 !important;
+}
+
+.app-btn-primary {
+  background: #797912 !important;
+}
+
+.app-btn-primary[disabled="true"] {
+  background-color: lightgray !important;
+}

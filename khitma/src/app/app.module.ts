@@ -40,6 +40,9 @@ import { GroupListItemComponent } from './shared/group-list/group-list-item/grou
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { CelebrationComponent } from './shared/celebration/celebration.component';
 
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -89,7 +92,8 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     // AngularFireAuthModule, // auth
-    AngularFireStorageModule // storage
+    AngularFireStorageModule, // storage,
+    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId)
   ],
   providers: [],
   bootstrap: [AppComponent]
