@@ -3,6 +3,13 @@ import { KhitmaGroup, Juz, JUZ_STATUS } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+
+
+import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
+
+
 @Component({
   selector: 'app-group-dashboard',
   templateUrl: './group-dashboard.component.html',
@@ -15,7 +22,9 @@ export class GroupDashboardComponent implements OnInit {
   myJuzIndex: number;
   username: string;
 
-  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService) {
+  showCelebration: boolean = false;
+
+  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -54,10 +63,36 @@ export class GroupDashboardComponent implements OnInit {
   }
 
   juzDone() {
-    // add confirmation modal
-    this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
-    this.localDB.setMyJuz(this.group.id, null);
-    this.myJuzIndex = null;
+
+    const title = "تأكيد إتمام الجزء";
+    const msg = "هل أتممت قراءة جزء " + (this.myJuzIndex + 1) + "؟";
+
+    const dialogData = new ConfirmDialogModel(title, msg);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: dialogData,
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        // add confirmation modal
+        this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
+        this.localDB.setMyJuz(this.group.id, null);
+        this.myJuzIndex = null;
+
+        this.showCelebration = true;
+
+        setTimeout(() => {
+          this.showCelebration = false;
+        }, 3000);
+
+
+      }
+    });
+
+
+
 
   }
 

@@ -37,6 +37,10 @@ import { JuzGridComponent } from './shared/juz-grid/juz-grid.component';
 import { GroupListComponent } from './shared/group-list/group-list.component';
 import { GroupListItemComponent } from './shared/group-list/group-list-item/group-list-item.component';
 
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { CelebrationComponent } from './shared/celebration/celebration.component';
+
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
@@ -71,6 +75,8 @@ const routes: Routes = [
     JuzGridComponent,
     GroupListComponent,
     GroupListItemComponent,
+    ConfirmDialogComponent,
+    CelebrationComponent
   ],
   imports: [
     BrowserModule,

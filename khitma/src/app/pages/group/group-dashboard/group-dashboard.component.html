@@ -1,5 +1,11 @@
 <div *ngIf="group">
 
+
+    <app-celebration *ngIf="showCelebration" class="celebration-container"
+        style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000; bottom: 0;">
+    </app-celebration>
+
+
     <section>
         <app-khitma-info [group]="group"></app-khitma-info>
     </section>
