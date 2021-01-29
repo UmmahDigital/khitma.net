@@ -13,7 +13,8 @@ import { KhitmaGroupService } from 'src/app/khitma-group.service';
 export class KhitmaInfoComponent implements OnInit {
 
   @Input() group: KhitmaGroup;
-  @Input() showLink?: KhitmaGroup;
+  @Input() showLink?: boolean;
+  @Input() isExpanded?: boolean;
 
   groupLink: string;
 
