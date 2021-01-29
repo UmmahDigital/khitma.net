@@ -6,10 +6,16 @@
     </app-celebration>
 
 
+    <section *ngIf="isAdmin" class="admin-section center-center">
+        <mat-icon style="margin-left: 8px;">verified</mat-icon>
+
+        <span> لديك صلاحيّات مسؤول في هذه المجموعة </span>
+    </section>
 
     <section>
         <app-khitma-info [group]="group"></app-khitma-info>
     </section>
+
 
 
     <section class="juz-grid-section">
@@ -42,6 +48,7 @@
 
 
 
+
     <section>
         <header>أجزاء الختمة</header>
 
@@ -51,7 +58,6 @@
     </section>
 
     <div class="spacer"></div>
-
 
 
     <span class="center-center" style="opacity: 0.25; padding: 20px;">Admin: {{isAdmin}}</span>

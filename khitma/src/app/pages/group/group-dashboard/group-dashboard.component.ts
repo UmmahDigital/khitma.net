@@ -65,12 +65,35 @@ export class GroupDashboardComponent implements OnInit {
 
   juzSelected(juz: Juz) {
 
+    if (this.isAdmin && juz.owner != this.username) {
+
+      if (juz.status == JUZ_STATUS.BOOKED) {
+        this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
+        return;
+      }
+
+      if (juz.status == JUZ_STATUS.DONE) {
+        this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.BOOKED);
+        return;
+      }
+
+      // if (juz.status == JUZ_STATUS.IDLE) {
+      //   this.groupsApi.updateJuz(this.group.id, juz.index, "عام", JUZ_STATUS.BOOKED);
+      //   return;
+      // }
+
+
+    }
+
+    if (juz.status != JUZ_STATUS.IDLE) {
+      return;
+    }
+
     if (juz.status != JUZ_STATUS.IDLE || this.myJuzIndex != null) {
       return;
     }
 
     this.$gaService.event('juz_selected');
-
 
     this.myJuzIndex = juz.index;
 

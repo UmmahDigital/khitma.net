@@ -21,10 +21,6 @@ export class JuzListComponent implements OnInit {
 
   juzClicked(juz: Juz) {
 
-    if (juz.status != JUZ_STATUS.IDLE) {
-      return;
-    }
-
     this.onJuzSelection.emit(juz);
   }
 

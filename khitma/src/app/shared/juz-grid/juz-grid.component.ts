@@ -21,11 +21,11 @@ export class JuzGridComponent implements OnInit {
 
   juzClicked(juz: Juz) {
 
-    if (juz.status != JUZ_STATUS.IDLE) {
-      return;
-    }
+    // if (juz.status != JUZ_STATUS.IDLE) {
+    //   return;
+    // }
 
-    this.onJuzSelection.emit(juz);
+    // this.onJuzSelection.emit(juz);
   }
 
 }
