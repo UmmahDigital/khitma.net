@@ -41,6 +41,7 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
 import { CelebrationComponent } from './shared/celebration/celebration.component';
 
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -93,7 +94,7 @@ const routes: Routes = [
     AngularFirestoreModule, // firestore
     // AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage,
-    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId)
+    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { PwaService } from './pwa.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 })
 export class AppComponent {
-  title = 'khitma';
+
+  constructor(public pwa: PwaService) { }
+
+  installPwa(): void {
+    this.pwa.promptEvent.prompt();
+  }
+
 }
