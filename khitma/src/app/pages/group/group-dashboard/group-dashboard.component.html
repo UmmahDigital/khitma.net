@@ -1,6 +1,9 @@
 <div *ngIf="group">
 
 
+
+
+
     <app-celebration *ngIf="showCelebration" class="celebration-container"
         style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000; bottom: 0;">
     </app-celebration>
@@ -9,10 +12,23 @@
 
 
 
+    <app-khitma-info [group]="group" isExpanded="false"></app-khitma-info>
 
 
+    <!-- 
     <section class="khitma-info">
 
+
+        <label>
+            {{group.title}}
+        </label>
+
+        <span>
+            <mat-icon (click)="isGroupInfoExpanded = !isGroupInfoExpanded;">
+                {{isGroupInfoExpanded? "expand_less" : "expand_more"}}
+
+            </mat-icon>
+        </span>
 
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -36,20 +52,9 @@
 
 
 
-    </section>
+    </section> -->
 
 
-    <section class="center-center view-mode">
-
-        <mat-button-toggle-group #viewMode="matButtonToggleGroup" value="progress">
-            <mat-button-toggle value="progress" [ngClass]="{'active': viewMode.value == 'progress'}">
-                <label>تقدّم الختمة</label>
-            </mat-button-toggle>
-            <mat-button-toggle value="namesList" [ngClass]="{'active': viewMode.value == 'namesList'}">
-                <label>قائمة الأسماء</label>
-            </mat-button-toggle>
-        </mat-button-toggle-group>
-    </section>
 
 
 
@@ -61,13 +66,33 @@
         </app-juz-grid>
     </section>
 
-    <section *ngIf="viewMode.value == 'namesList'">
+    <section class="juz-list-section" *ngIf="viewMode.value == 'namesList'">
         <!-- <header>أجزاء الختمة</header> -->
 
         <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" (onJuzSelection)="juzSelected($event)">
         </app-juz-list>
 
     </section>
+
+
+
+    <section class="center-center view-mode">
+
+        <mat-button-toggle-group #viewMode="matButtonToggleGroup" value="progress">
+            <mat-button-toggle value="progress" [ngClass]="{'active': viewMode.value == 'progress'}">
+                <label class="center-center">
+                    <mat-icon>check_circle_outline</mat-icon> <span>تقدّم الختمة</span>
+                </label>
+            </mat-button-toggle>
+            <mat-button-toggle value="namesList" [ngClass]="{'active': viewMode.value == 'namesList'}">
+                <label class="center-center">
+                    <mat-icon>format_list_numbered_rtl</mat-icon> <span> قائمة الأسماء</span>
+                </label>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </section>
+
+
 
     <section class="action-panel mat-elevation-z16">
 
@@ -95,10 +120,11 @@
             </div>
 
 
-            <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">رجاء قم باختيار جزء</div>
+            <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div>
 
         </div>
     </section>
+
 
 
 

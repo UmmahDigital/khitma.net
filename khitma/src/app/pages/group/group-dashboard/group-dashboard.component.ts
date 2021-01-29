@@ -28,6 +28,8 @@ export class GroupDashboardComponent implements OnInit {
 
   showCelebration: boolean = false;
 
+  isGroupInfoExpanded: false;
+
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,

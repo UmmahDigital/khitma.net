@@ -43,6 +43,7 @@ import { CelebrationComponent } from './shared/celebration/celebration.component
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
+import { TestComponent } from './test/test.component';
 
 
 
@@ -61,6 +62,7 @@ const routes: Routes = [
       { path: 'dashboard', component: GroupDashboardComponent },
     ]
   },
+  { path: 'test', component: TestComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
@@ -83,7 +85,8 @@ const routes: Routes = [
     GroupListItemComponent,
     ConfirmDialogComponent,
     CelebrationComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

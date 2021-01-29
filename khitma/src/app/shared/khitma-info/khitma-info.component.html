@@ -1,13 +1,24 @@
 <section *ngIf="group" class="khitma-info">
-    <header class="title">{{group.title}}</header>
 
-    <label class="author"> مُنشئ الختمة: {{group.author}} </label>
 
-    <p class="description">
-        {{group.description}}
-    </p>
+    <header class="title center-center" (click)="isExpanded = !isExpanded;">{{group.title}} <mat-icon>
+            {{isExpanded? "expand_less" : "expand_more"}}
 
-    <label *ngIf="showLink">{{groupLink}}</label>
+        </mat-icon>
+    </header>
+
+
+    <div *ngIf="isExpanded">
+        <label class="author"> مُنشئ الختمة: {{group.author}} </label>
+
+        <p class="description">
+            {{group.description}}
+        </p>
+
+        <label *ngIf="showLink">{{groupLink}}</label>
+
+    </div>
+
 
 </section>
 
