@@ -1,13 +1,16 @@
 .juz-toggle {
+  $size: 36px;
+
   display: block;
-  width: 48px;
-  height: 48px;
+  width: $size;
+  height: $size;
+  line-height: $size;
+
   border-radius: 100%;
-  font-size: xx-large;
+  font-size: x-large;
   color: rgba(0, 0, 0, 0.8);
 
   margin: 0 auto;
-  line-height: 48px;
 }
 
 .juz-toggle.idle {

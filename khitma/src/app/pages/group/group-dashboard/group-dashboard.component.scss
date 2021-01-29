@@ -39,24 +39,28 @@
   left: 0;
   right: 0;
   z-index: 10;
-  height: 100px;
+  // height: 100px;
   margin: 0;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  > div {
+  .my-juz-actions {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin: 16px 0;
 
     > * {
       margin: 0 10px !important;
     }
   }
+}
+
+.admin-section {
+  margin: 0;
+  background: lightgray;
+  padding: 10px;
+  // margin: -32px;
+  // margin-bottom: 48px;
 }
 
 .current-juz {
@@ -92,16 +96,45 @@
 }
 
 .juz-grid-section {
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-  padding: 32px 0;
+  // border-top: 1px solid #e5e5e5;
+  // border-bottom: 1px solid #e5e5e5;
+  // padding: 32px 0;
   margin: 0;
 }
 
-.admin-section {
-  margin: 0;
+.khitma-info {
+  mat-expansion-panel {
+    margin: -64px -32px 0px -32px;
+    padding: 32px 0px;
+
+    mat-panel-title {
+      font-size: x-large;
+      color: black;
+    }
+  }
+
+  footer,
+  mat-panel-description {
+    margin-top: 16px;
+  }
+}
+
+.view-mode {
+  margin: -32px -32px 32px -32px;
   background: lightgray;
-  padding: 10px;
-  margin: -32px;
-  margin-bottom: 48px;
+
+  mat-button-toggle-group {
+    width: 100%;
+
+    mat-button-toggle {
+      width: 50%;
+      background: transparent;
+      color: black;
+    }
+
+    mat-button-toggle.active {
+      background-color: #614316;
+      color: white;
+    }
+  }
 }
