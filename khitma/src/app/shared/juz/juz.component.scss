@@ -6,11 +6,6 @@
   }
 }
 
-.juz.list-item {
-  margin: 5px auto;
-  padding: 16px;
-}
-
 .juz.list-item.idle .index {
   background-color: #fa897b;
 }
@@ -57,9 +52,35 @@
   // }
 }
 
+.juz.list-item {
+  // display: block;
+  // background: white;
+  // font-weight: bold;
+  // border: 1px solid rgba(0, 0, 0, 0.12);
+  // margin: 0 auto;
+
+  margin: 5px auto;
+  padding: 0 8px;
+}
+
+.juz.list-item.idle {
+  // background-color: white;
+  padding: 8px;
+  margin: 10px auto;
+
+  // border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mat-elevation-z2 {
+  background-color: white;
+}
+
 .juz.list-item.my-juz {
   background-color: #614316;
   color: white;
+  padding: 16px 8px;
+  margin: 10px auto;
+
   .index {
     // background-color: #90d8f0;
     // font-size: 150%;

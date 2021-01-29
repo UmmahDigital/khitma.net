@@ -7,6 +7,11 @@
   height: 100%;
   overflow: hidden;
   z-index: 1000;
+
+  label {
+    font-weight: bold;
+    zoom: 2;
+  }
 }
 
 .confetti-piece {

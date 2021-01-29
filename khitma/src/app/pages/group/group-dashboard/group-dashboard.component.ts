@@ -94,7 +94,7 @@ export class GroupDashboardComponent implements OnInit {
 
         setTimeout(() => {
           this.showCelebration = false;
-        }, 2000);
+        }, 2250);
 
 
       }

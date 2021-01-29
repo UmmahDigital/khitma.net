@@ -36,7 +36,7 @@ export class JuzComponent implements OnInit {
     }
 
     if (this.myJuzIndex == null && this.juz.status == JUZ_STATUS.IDLE) {
-      _cssClasses += " mat-elevation-z8"; // add elevation --> clickable
+      _cssClasses += " mat-elevation-z2"; // add elevation --> clickable
       this.msg = "إضغط لاختيار هذا الجزء";
     }
 
