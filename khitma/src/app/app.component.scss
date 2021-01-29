@@ -64,3 +64,9 @@ mat-toolbar {
 .app-btn-primary[disabled="true"] {
   background-color: lightgray !important;
 }
+
+.center-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

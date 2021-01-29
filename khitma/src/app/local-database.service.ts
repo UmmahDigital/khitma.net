@@ -49,8 +49,9 @@ export class LocalDatabaseService {
   }
 
 
-  deleteGroup(groupId) {
-
+  removeGroup(groupId) {
+    delete this.groups[groupId];
+    this._save();
   }
 
   getMyJuz(groupId) {

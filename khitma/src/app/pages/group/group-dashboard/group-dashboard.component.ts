@@ -9,6 +9,7 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/conf
 
 import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class GroupDashboardComponent implements OnInit {
 
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
     private dialog: MatDialog,
-    private $gaService: GoogleAnalyticsService) {
+    private $gaService: GoogleAnalyticsService,
+    private titleService: Title) {
   }
 
   ngOnInit(): void {
@@ -37,6 +39,9 @@ export class GroupDashboardComponent implements OnInit {
       if (!group) {
         return;
       }
+
+      this.titleService.setTitle(group.title);
+
 
       this.group = group;
 
@@ -72,7 +77,6 @@ export class GroupDashboardComponent implements OnInit {
 
     this.$gaService.event('juz_done');
 
-
     const title = "تأكيد إتمام الجزء";
     const msg = "هل أتممت قراءة جزء " + (this.myJuzIndex + 1) + "؟";
 
@@ -84,6 +88,7 @@ export class GroupDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
+
       if (dialogResult) {
         // add confirmation modal
         this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
@@ -95,9 +100,8 @@ export class GroupDashboardComponent implements OnInit {
         setTimeout(() => {
           this.showCelebration = false;
         }, 2250);
-
-
       }
+
     });
   }
 

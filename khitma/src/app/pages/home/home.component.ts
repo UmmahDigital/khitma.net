@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
+import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
 
 @Component({
@@ -15,7 +18,8 @@ export class HomeComponent implements OnInit {
 
   groups: KhitmaGroup[];
 
-  constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService) { }
+  constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
+    private $gaService: GoogleAnalyticsService) { }
 
   ngOnInit(): void {
 
@@ -42,6 +46,33 @@ export class HomeComponent implements OnInit {
     // window.location.href = '/group/' + result.groupId + '/dashboard/invite';
 
     //  // this.router.navigate(['/group/' + groupId + '/dashboard/invite']);
+
+  }
+
+  removeGroup(group: KhitmaGroup) {
+
+    this.$gaService.event('group_leave');
+
+    const dialogData = new ConfirmDialogModel(
+      "تأكيد ترك المجموعة",
+      'ترك مجموعة: "' + group.title + '"؟'
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: dialogData,
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+
+      if (confirmed) {
+        this.localDB.removeGroup(group.id);
+        this.groups = this.groups.filter(item => item.id !== group.id);
+
+      }
+
+    });
+
 
   }
 

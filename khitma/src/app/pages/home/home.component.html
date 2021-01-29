@@ -1,4 +1,7 @@
 <div class="home">
+
+    <label style="display:block;text-align: center;">﷽</label>
+
     <p>
 
         يتيح ختمة.نت إنشاء وإدارة مجموعات لختم القرآن الكريم بشكل جماعي. حيث يمكن بسهولة إنشاء مجموعة ختمة جديدة ثمّ
@@ -13,9 +16,9 @@
 
 
     <section *ngIf="groups">
-        <header>مجموعاتي الحاليّة</header>
 
-        <app-group-list [groups]="groups"></app-group-list>
+        <app-group-list [groups]="groups" (onRemoveGroup)="removeGroup($event)"></app-group-list>
+
 
 
     </section>

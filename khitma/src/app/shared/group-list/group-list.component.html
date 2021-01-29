@@ -1,4 +1,30 @@
-<section>
-    <app-group-list-item *ngFor="let group of groups" [group]="group">
-    </app-group-list-item>
+<section *ngIf="groups && groups.length > 0">
+
+    <header class="center-center">
+
+        <header>مجموعاتي الحاليّة</header>
+
+        <span class="spacer"></span>
+
+        <mat-icon style="color:gray" (click)="showSettings=!showSettings">settings</mat-icon>
+
+    </header>
+
+    <section *ngFor="let group of groups" fxLayout="row wrap" fxLayoutGap="12px grid">
+
+
+        <div [fxFlex]="showSettings? '90%' : '100%'">
+            <app-group-list-item [group]="group">
+            </app-group-list-item>
+
+        </div>
+
+        <div *ngIf="showSettings" fxFlex="10%" class="center-center">
+            <mat-icon (click)="removeGroup(group)">remove_circle</mat-icon>
+        </div>
+
+
+    </section>
+
+
 </section>
