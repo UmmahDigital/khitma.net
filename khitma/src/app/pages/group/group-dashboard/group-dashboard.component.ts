@@ -24,6 +24,8 @@ export class GroupDashboardComponent implements OnInit {
   myJuzIndex: number;
   username: string;
 
+  isAdmin: boolean = false;
+
   showCelebration: boolean = false;
 
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
@@ -43,7 +45,8 @@ export class GroupDashboardComponent implements OnInit {
       this.titleService.setTitle(group.title);
 
 
-      this.group = group;
+      this.group = new KhitmaGroup(group);
+      this.group.ajza = group.ajza;
 
 
       this.myJuzIndex = this.localDB.getMyJuz(this.group.id);
@@ -53,6 +56,8 @@ export class GroupDashboardComponent implements OnInit {
       }
 
       this.username = this.localDB.getUsername(this.group.id);
+
+      this.isAdmin = this.group.isAdmin(this.username);
 
     });
 
@@ -103,6 +108,7 @@ export class GroupDashboardComponent implements OnInit {
       }
 
     });
+
   }
 
   juzGiveup() {
