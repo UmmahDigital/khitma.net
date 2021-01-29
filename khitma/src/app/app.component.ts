@@ -10,7 +10,15 @@ import { PwaService } from './pwa.service';
 })
 export class AppComponent {
 
-  constructor(public pwa: PwaService) { }
+  isPwaInstalled = false;
+
+  constructor(public pwa: PwaService) {
+
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      this.isPwaInstalled = true;
+    }
+
+  }
 
   installPwa(): void {
     this.pwa.promptEvent.prompt();

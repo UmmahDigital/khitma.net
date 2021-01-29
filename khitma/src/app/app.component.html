@@ -3,9 +3,9 @@
 
   <span class="spacer"></span>
 
-  <a mat-raised-button color="accent" href="/">
+  <button *ngIf="!isPwaInstalled" mat-raised-button class="pwa-btn">
     <mat-icon>system_update</mat-icon>
-  </a>
+  </button>
 
 
   <a mat-raised-button color="accent" class="app-btn-primary" href="/">مجموعاتي</a>
