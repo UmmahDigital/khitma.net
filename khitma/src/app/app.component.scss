@@ -59,10 +59,18 @@ mat-toolbar {
 
 .app-btn-primary {
   background: #797912 !important;
+  color: white !important;
+}
+
+.app-btn-primary.large {
+  height: 60px;
+  line-height: 60px;
+  font-size: large;
 }
 
 .app-btn-primary[disabled="true"] {
   background-color: lightgray !important;
+  color: gray !important;
 }
 
 .center-center {

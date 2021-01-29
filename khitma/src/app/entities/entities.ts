@@ -69,6 +69,10 @@ export class KhitmaGroup {
         return this.ajza.map((obj) => { return Object.assign({}, obj) });
     }
 
+    isAdmin(username) {
+        return username == this.author;
+    }
+
 
 }
 

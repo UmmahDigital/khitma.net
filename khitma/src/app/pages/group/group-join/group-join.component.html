@@ -8,6 +8,7 @@
             <input matInput [(ngModel)]="username" name="title" required="true">
         </mat-form-field>
 
-        <button class="block join-btn" mat-raised-button color="accent" (click)="join()">الإنضمام للختمة</button>
+        <button class="block app-btn-primary large" mat-raised-button (click)="join()" [disabled]="!username">الإنضمام
+            للختمة</button>
     </mat-card-content>
 </mat-card>

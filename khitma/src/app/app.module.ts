@@ -42,6 +42,7 @@ import { CelebrationComponent } from './shared/celebration/celebration.component
 
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ArchiveComponent } from './pages/archive/archive.component';
 
 
 
@@ -52,6 +53,7 @@ const routes: Routes = [
       { path: 'invite', component: GroupInviteComponent },
     ]
   },
+  { path: 'groups/archive', component: ArchiveComponent },
   { path: 'group/:groupId/invite', component: GroupInviteComponent },
   {
     path: 'group/:groupId', component: GroupComponent, children: [
@@ -80,7 +82,8 @@ const routes: Routes = [
     GroupListComponent,
     GroupListItemComponent,
     ConfirmDialogComponent,
-    CelebrationComponent
+    CelebrationComponent,
+    ArchiveComponent
   ],
   imports: [
     BrowserModule,

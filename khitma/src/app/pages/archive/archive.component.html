@@ -1,0 +1,33 @@
+<div *ngIf=" !archivedGroups  || archivedGroups.length == 0 "> لا توجد لديك مجموعات في الأرشيف</div>
+
+<div *ngIf="  archivedGroups.length > 0" class="group-archive-list">
+
+    <section *ngFor="let group of archivedGroups">
+
+        <a [href]="groupsApi.getGroupURL(group.id)">
+
+            <mat-card>
+                {{group.title}}
+            </mat-card>
+
+        </a>
+
+        <!-- 
+        <div fxFlex="90%">
+
+            
+
+
+        </div>
+
+        <div fxFlex="10%" class="center-center">
+            <mat-icon (click)="removeGroup(group)">remove_circle</mat-icon>
+        </div> -->
+
+
+    </section>
+
+    <button mat-button class="block" style="margin-top:20px;" (click)="clearArchive()">تنظيف الأرشيف</button>
+
+
+</div>

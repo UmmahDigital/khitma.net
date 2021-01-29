@@ -5,23 +5,33 @@
     <p>
 
         يتيح ختمة.نت إنشاء وإدارة مجموعات لختم القرآن الكريم بشكل جماعي. حيث يمكن بسهولة إنشاء مجموعة ختمة جديدة ثمّ
-        دعوة أعضاء المجموعة للإنضمام ومتابعة تقدّم الختمة بشكل مباشر ومتاح للجميع. أنشئوا مجموعتكم الآن ولا تنسونا من
+        دعوة أعضاء المجموعة للإنضمام ومتابعة تقدّم الختمة بشكل مباشر ومتاح للجميع.
+
+    </p>
+
+    <p>
+
+        أنشئوا مجموعتكم الآن ولا تنسونا من
         دعائكم إن شاء الله.
 
     </p>
 
-    <a mat-raised-button color="accent" class="block create-btn app-btn-primary" href="/new">ختمة جديدة</a>
+    <a mat-raised-button color="accent" class="block create-btn app-btn-primary large" href="/new">مجموعة جديدة</a>
 
 
 
 
     <section *ngIf="groups">
 
-        <app-group-list [groups]="groups" (onRemoveGroup)="removeGroup($event)"></app-group-list>
+        <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
 
 
 
     </section>
+
+
+    <a *ngIf="isShowArchive" mat-button class="block" href="/groups/archive">أرشيف الختمات</a>
+
 
 
 

@@ -11,7 +11,7 @@ import { LocalDatabaseService } from '../../local-database.service';
 export class GroupListComponent implements OnInit {
 
   @Input() groups: KhitmaGroup[];
-  @Output() onRemoveGroup = new EventEmitter<object>();
+  @Output() onAction = new EventEmitter<object>();
 
   showSettings: boolean = false;
 
@@ -21,8 +21,8 @@ export class GroupListComponent implements OnInit {
 
   }
 
-  removeGroup(group) {
-    this.onRemoveGroup.emit(group);
+  action(group) {
+    this.onAction.emit(group);
   }
 
 }

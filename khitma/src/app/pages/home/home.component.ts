@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
 
   groups: KhitmaGroup[];
 
+  isShowArchive: boolean;
+
   constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService) { }
 
@@ -26,16 +28,19 @@ export class HomeComponent implements OnInit {
     let ids = this.localDB.getMyGroups();
     ids = ids.slice(Math.max(ids.length - 10, 0)); // firebase IN array limit of 10
 
-    this.groupsApi.getGroups(ids).subscribe((groups) => {
+    if (ids.length > 0) {
+      this.groupsApi.getGroups(ids).subscribe((groups) => {
 
-      if (!groups) {
-        return;
-      }
+        if (!groups) {
+          return;
+        }
 
-      this.groups = <KhitmaGroup[]>groups;
+        this.groups = <KhitmaGroup[]>groups;
 
-    });
+      });
+    }
 
+    this.isShowArchive = this.localDB.hasArchive();
 
   }
 
@@ -49,13 +54,13 @@ export class HomeComponent implements OnInit {
 
   }
 
-  removeGroup(group: KhitmaGroup) {
+  archiveGroup(group: KhitmaGroup) {
 
     this.$gaService.event('group_leave');
 
     const dialogData = new ConfirmDialogModel(
-      "تأكيد ترك المجموعة",
-      'ترك مجموعة: "' + group.title + '"؟'
+      "تأكيد أرشفة المجموعة",
+      'أرشفة مجموعة: "' + group.title + '"؟'
     );
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -66,9 +71,9 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmed => {
 
       if (confirmed) {
-        this.localDB.removeGroup(group.id);
+        this.localDB.archiveGroup(group);
         this.groups = this.groups.filter(item => item.id !== group.id);
-
+        this.isShowArchive = true;
       }
 
     });
