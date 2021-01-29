@@ -25,7 +25,7 @@ export class JuzGridComponent implements OnInit {
     //   return;
     // }
 
-    // this.onJuzSelection.emit(juz);
+    this.onJuzSelection.emit(juz);
   }
 
 }

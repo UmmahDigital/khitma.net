@@ -1,5 +1,5 @@
 <section dir="ltr" [ngClass]="{'has-juz': myJuzIndex>=0}" fxLayout="row wrap" fxLayoutGap="12px grid">
-    <div *ngFor="let juz of ajza" fxFlex="10%" style="text-align:center">
+    <div *ngFor="let juz of ajza" fxFlex="20%" style="text-align:center">
         <app-juz-toggle [juz]="juz" [myJuzIndex]="myJuzIndex" (click)="juzClicked(juz)">
         </app-juz-toggle>
     </div>
