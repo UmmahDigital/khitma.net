@@ -3,6 +3,21 @@
 
 
 
+    <section class="center-center view-mode">
+
+        <mat-button-toggle-group #viewMode="matButtonToggleGroup" value="progress">
+            <mat-button-toggle value="progress" [ngClass]="{'active': viewMode.value == 'progress'}">
+                <label class="center-center">
+                    <mat-icon>check_circle_outline</mat-icon> <span>تقدّم الختمة</span>
+                </label>
+            </mat-button-toggle>
+            <mat-button-toggle value="namesList" [ngClass]="{'active': viewMode.value == 'namesList'}">
+                <label class="center-center">
+                    <mat-icon>format_list_numbered_rtl</mat-icon> <span> قائمة الأسماء</span>
+                </label>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </section>
 
     <app-celebration *ngIf="showCelebration" class="celebration-container"
         style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000; bottom: 0;">
@@ -12,7 +27,7 @@
 
 
 
-    <app-khitma-info [group]="group" isExpanded="false"></app-khitma-info>
+    <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
 
 
     <!-- 
@@ -76,21 +91,6 @@
 
 
 
-    <section class="center-center view-mode">
-
-        <mat-button-toggle-group #viewMode="matButtonToggleGroup" value="progress">
-            <mat-button-toggle value="progress" [ngClass]="{'active': viewMode.value == 'progress'}">
-                <label class="center-center">
-                    <mat-icon>check_circle_outline</mat-icon> <span>تقدّم الختمة</span>
-                </label>
-            </mat-button-toggle>
-            <mat-button-toggle value="namesList" [ngClass]="{'active': viewMode.value == 'namesList'}">
-                <label class="center-center">
-                    <mat-icon>format_list_numbered_rtl</mat-icon> <span> قائمة الأسماء</span>
-                </label>
-            </mat-button-toggle>
-        </mat-button-toggle-group>
-    </section>
 
 
 
