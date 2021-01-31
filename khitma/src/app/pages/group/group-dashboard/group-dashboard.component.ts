@@ -54,6 +54,7 @@ export class GroupDashboardComponent implements OnInit {
       this.group.ajza = group.ajza;
 
       if (!this.isInitiated) {
+
         this.myJuzIndex = this.localDB.getMyJuz(this.group.id);
 
         this.username = this.localDB.getUsername(this.group.id);
@@ -196,8 +197,35 @@ export class GroupDashboardComponent implements OnInit {
   }
 
   startNewKhitmah() {
-    this.group.cycle++;
-    this.groupsApi.startNewKhitmah(this.group.id, this.group.cycle);
+
+    const dialogData = new ConfirmDialogModel(
+      "تأكيد بدء ختمة جديدة",
+      "بدء ختمة جديدة سيقوم بإعادة كل الأجزاء إلى وضعيّة الإتاحة وتمكين كل عضو في المجموعة من اختيار جزئه الجديد.");
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: dialogData,
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+
+        this.group.cycle++;
+        this.groupsApi.startNewKhitmah(this.group.id, this.group.cycle);
+
+        const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
+
+        this.proposeNextJuz(myLastJuz, myLastJuz + 1);
+      }
+
+    });
+
+
+
+
+
+
   }
 
 }

@@ -21,7 +21,7 @@ export class TestComponent implements OnInit {
 
   clicked() {
 
-    for (let i = 0; i < 29; i++) {
+    for (let i = 0; i < 30; i++) {
 
       let updatedObj = {};
       updatedObj[("ajza." + i)] = {
