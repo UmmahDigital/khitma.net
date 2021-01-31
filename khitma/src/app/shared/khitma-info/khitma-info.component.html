@@ -1,7 +1,22 @@
 <section *ngIf="group" class="khitma-info">
 
 
-    <header class="title center-center" (click)="isExpanded = !isExpanded;">{{group.title}} <mat-icon>
+    <header class="title center-center" (click)="isExpanded = !isExpanded;">
+
+
+        <label>
+            {{group.title}}
+
+
+            <span class="khitma-cycle" *ngIf="group.cycle > 0">
+                (ختمة {{group.cycle}})
+
+            </span>
+
+        </label>
+
+
+        <mat-icon>
             {{isExpanded? "expand_less" : "expand_more"}}
 
         </mat-icon>

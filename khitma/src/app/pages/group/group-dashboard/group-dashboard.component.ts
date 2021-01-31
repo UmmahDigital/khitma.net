@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS } from 'src/app/entities/entities';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -30,6 +30,10 @@ export class GroupDashboardComponent implements OnInit {
 
   isGroupInfoExpanded: false;
 
+  currentViewMode: 'progress';
+
+  isInitiated = false;
+
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
@@ -46,20 +50,62 @@ export class GroupDashboardComponent implements OnInit {
 
       this.titleService.setTitle(group.title);
 
-
       this.group = new KhitmaGroup(group);
       this.group.ajza = group.ajza;
 
+      if (!this.isInitiated) {
+        this.myJuzIndex = this.localDB.getMyJuz(this.group.id);
 
-      this.myJuzIndex = this.localDB.getMyJuz(this.group.id);
+        this.username = this.localDB.getUsername(this.group.id);
+        this.isAdmin = this.group.isAdmin(this.username);
 
-      if (this.myJuzIndex && group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
-        this.myJuzIndex = null;
+        const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
+
+        if (myLastJuz != null && this.group.cycle > 0) {
+
+          const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
+
+          if (myCycle < this.group.cycle) {
+
+            const myNextJuz = (myLastJuz + this.group.cycle - myCycle) % NUM_OF_AJZA;
+
+            this.proposeNextJuz(myLastJuz, myNextJuz);
+
+          }
+
+        }
+
+        if (this.myJuzIndex && group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
+          this.myJuzIndex = null;
+        }
+
+        this.isInitiated = true;
       }
 
-      this.username = this.localDB.getUsername(this.group.id);
+    });
 
-      this.isAdmin = this.group.isAdmin(this.username);
+  }
+
+  proposeNextJuz(lastJuz, nextJuz) {
+
+    const dialogData = new ConfirmDialogModel(
+      "تلاوة جزءك التالي",
+      "في المرّة الأخيرة قرأت جزء " + (lastJuz + 1) + ". هل تريد قراءة جزء " + (nextJuz + 1) + " هذه المرّة؟");
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: dialogData,
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+
+        this.groupsApi.updateJuz(this.group.id, nextJuz, this.username, JUZ_STATUS.BOOKED);
+        this.localDB.setMyJuz(this.group.id, this.group.cycle, nextJuz);
+        this.myJuzIndex = nextJuz;
+
+      }
 
     });
 
@@ -67,7 +113,10 @@ export class GroupDashboardComponent implements OnInit {
 
   juzSelected(juz: Juz) {
 
-    if (this.isAdmin && juz.owner != this.username) {
+    const isUpdateForOtherUserCaseAdminCase = (juz.owner != this.username);
+    const isUpdateMyDoneJuzAdminCase = (juz.owner == this.username && juz.status == JUZ_STATUS.DONE);
+
+    if (this.isAdmin && (isUpdateForOtherUserCaseAdminCase || isUpdateMyDoneJuzAdminCase)) {
 
       if (juz.status == JUZ_STATUS.BOOKED) {
         this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
@@ -99,7 +148,7 @@ export class GroupDashboardComponent implements OnInit {
 
     this.myJuzIndex = juz.index;
 
-    this.localDB.setMyJuz(this.group.id, juz.index);
+    this.localDB.setMyJuz(this.group.id, this.group.cycle, juz.index);
     this.groupsApi.updateJuz(this.group.id, juz.index, this.username, JUZ_STATUS.BOOKED);
   }
 
@@ -122,7 +171,7 @@ export class GroupDashboardComponent implements OnInit {
       if (dialogResult) {
         // add confirmation modal
         this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
-        this.localDB.setMyJuz(this.group.id, null);
+        this.localDB.setMyJuz(this.group.id, this.group.cycle, null);
         this.myJuzIndex = null;
 
         this.showCelebration = true;
@@ -142,7 +191,13 @@ export class GroupDashboardComponent implements OnInit {
 
     // add confirmation modal
     this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.IDLE);
-    this.localDB.setMyJuz(this.group.id, null);
+    this.localDB.setMyJuz(this.group.id, this.group.cycle, null);
     this.myJuzIndex = null;
   }
+
+  startNewKhitmah() {
+    this.group.cycle++;
+    this.groupsApi.startNewKhitmah(this.group.id, this.group.cycle);
+  }
+
 }

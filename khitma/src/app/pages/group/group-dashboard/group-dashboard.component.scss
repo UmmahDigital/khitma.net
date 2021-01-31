@@ -163,7 +163,7 @@
       }
     }
 
-    mat-button-toggle.active {
+    .mat-button-toggle-checked {
       color: white;
       background-color: #614316;
     }
@@ -178,4 +178,10 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
+}
+
+.khitma-done {
+  background: #38322f;
+  padding: 32px;
+  margin: -32px -32px 64px -32px;
 }

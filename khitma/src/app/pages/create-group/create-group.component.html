@@ -6,7 +6,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="block">
-        <mat-label>اسمك</mat-label>
+        <mat-label>اسمك (مسؤول المجموعة)</mat-label>
         <input matInput [(ngModel)]="author" name="author" required="true">
     </mat-form-field>
 
@@ -15,7 +15,7 @@
         <textarea matInput [(ngModel)]="description" name="description"></textarea>
     </mat-form-field>
 
-    <button type="submit" class="block app-btn-primary" mat-raised-button
+    <button type="submit" class="block app-btn-primary large" mat-raised-button
         color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">إنشاء
         مجموعة الختمة</button>
 

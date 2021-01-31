@@ -44,6 +44,7 @@ import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
 import { TestComponent } from './test/test.component';
+import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
 
 
 
@@ -86,7 +87,8 @@ const routes: Routes = [
     ConfirmDialogComponent,
     CelebrationComponent,
     ArchiveComponent,
-    TestComponent
+    TestComponent,
+    KhitmaDoneCelebrationComponent
   ],
   imports: [
     BrowserModule,

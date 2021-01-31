@@ -67,22 +67,33 @@ export class LocalDatabaseService {
     return this.groups[groupId].juzIndex;
   }
 
-  setMyJuz(groupId, juzIndex) {
+  setMyJuz(groupId, cycle, juzIndex) {
 
     if (!this.groups[groupId]) {
       return;
     }
 
     this.groups[groupId].juzIndex = juzIndex;
+    this.groups[groupId].cycle = cycle;
+
+    if (juzIndex != null) {
+      this.groups[groupId].lastJuzIndex = juzIndex;
+    }
+
     this._save();
   }
 
+  getMyKhitmaCycle(groupId) {
+    return this.groups[groupId].cycle;
+  }
+
+  getMyLastJuz(groupId) {
+    return this.groups[groupId].lastJuzIndex;
+  }
 
   getMyGroups() {
     return Object.keys(this.groups).sort(this._byDateSorter);
   }
-
-
 
   archiveGroup(group: KhitmaGroup) {
 

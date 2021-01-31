@@ -1,0 +1,23 @@
+<div class="gift-container">
+    <div class="gift" [ngClass]="{'dukdik': !isOpen}" (click)="isOpen = true">
+        <div class="gift-top" [ngClass]="{'boxOpen': isOpen}"></div>
+
+        <div class="gift-text" *ngIf="isOpen" [ngClass]="{'shown': isOpen}">
+            <h1> تمّت الختمة</h1>
+            <h1>بارك الله بكم!</h1>
+
+            <!-- <p>إن شاء الله يكتب لكل منكم  أجر </p> -->
+            <!-- [todo]: add thawab link here? -->
+
+        </div>
+
+
+        <div class="gift-box" [ngClass]="{'boxDown': isOpen}"></div>
+    </div>
+</div>
+
+<!-- <div class="gift" :class="{dukdik: !open}" @click="click">
+    <div class="gift-top" :class="{boxOpen: open}"></div>
+    <h1 class="gift-text" v-if="open">{{text}}</h1>
+    <div class="gift-box" :class="{boxDown: open}"></div>
+</div> -->

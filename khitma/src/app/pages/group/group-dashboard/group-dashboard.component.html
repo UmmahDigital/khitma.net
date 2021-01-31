@@ -2,16 +2,31 @@
 
 
 
+    <section class="khitma-done" *ngIf="group.isDone() > 0">
+
+        <app-khitma-done-celebration></app-khitma-done-celebration>
+
+
+        <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
+            class="block app-btn-primary large new-khitma-btn">بدء
+            ختمة
+            جديدة للمجموعة</button>
+
+    </section>
+
+
+
+
 
     <section class="center-center view-mode">
 
         <mat-button-toggle-group #viewMode="matButtonToggleGroup" value="progress">
-            <mat-button-toggle value="progress" [ngClass]="{'active': viewMode.value == 'progress'}">
+            <mat-button-toggle value="progress">
                 <label class="center-center">
                     <mat-icon>check_circle_outline</mat-icon> <span>تقدّم الختمة</span>
                 </label>
             </mat-button-toggle>
-            <mat-button-toggle value="namesList" [ngClass]="{'active': viewMode.value == 'namesList'}">
+            <mat-button-toggle value="namesList">
                 <label class="center-center">
                     <mat-icon>format_list_numbered_rtl</mat-icon> <span> قائمة الأسماء</span>
                 </label>

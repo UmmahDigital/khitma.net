@@ -1,5 +1,5 @@
 
-const NUM_OF_AJZA = 30;
+export const NUM_OF_AJZA = 30;
 
 
 export const JUZ_STATUS = Object.freeze({
@@ -28,6 +28,7 @@ export class KhitmaGroup {
     author?: string;
     creationDate?: Date;
     ajza?: Juz[];
+    cycle?: number;
 
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);
@@ -66,13 +67,23 @@ export class KhitmaGroup {
     }
 
     getAjzaObj() {
-        return this.ajza.map((obj) => { return Object.assign({}, obj) });
+        return { ...this.ajza.map((obj) => { return Object.assign({}, obj) }) };
     }
 
     public isAdmin(username) {
         return username == this.author;
     }
 
+
+    static getEmptyAjzaObj() {
+
+        let ajza = [];
+        for (var i = 0; i < NUM_OF_AJZA; i++) {
+            ajza.push(new Juz({ index: i, status: JUZ_STATUS.IDLE }))
+        }
+
+        return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
+    }
 
 }
 

@@ -6,6 +6,7 @@ import { map, catchError, take, first } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Injectable({
@@ -17,6 +18,8 @@ export class KhitmaGroupService {
   private _currentGroupObj: KhitmaGroup = null;
 
   private groupsDocs: object = {}; // save references of queried groups
+
+  private _isV2Api = true;
 
   constructor(private db: AngularFirestore) { }
 
@@ -31,9 +34,15 @@ export class KhitmaGroupService {
 
   public setCurrentGroup(groupId: string) {
 
-    this.groupsDocs[groupId] = this.db.doc<KhitmaGroup>('groups/' + groupId);
+    this.groupsDocs[groupId] = this.db.doc<any>('groups/' + groupId); // any should be `KhitmaGroup` after change stabilyzes 
 
-    this.groupsDocs[groupId].valueChanges({ idField: 'id' }).subscribe((group: KhitmaGroup) => {
+    this.groupsDocs[groupId].valueChanges({ idField: 'id' }).subscribe((group: any) => {
+
+      this._isV2Api = !Array.isArray(group.ajza);
+
+      if (this._isV2Api) {
+        group.ajza = this._transform2Array(group.ajza);
+      }
 
       this._currentGroupObj = group;
       this._currentGroup.next(this._currentGroupObj);
@@ -42,6 +51,10 @@ export class KhitmaGroupService {
 
     return this.getGroupDetailsOnce(groupId);
 
+  }
+
+  private _transform2Array(obj) {
+    return Object.values(obj).sort((a: any, b: any) => (a.index > b.index) ? 1 : -1);
   }
 
 
@@ -65,6 +78,7 @@ export class KhitmaGroupService {
       "title": groupToAdd.title,
       "description": groupToAdd.description || '',
       "author": groupToAdd.author,
+      "cycle": 0,
       "ajza": groupToAdd.getAjzaObj()
     });
 
@@ -87,24 +101,36 @@ export class KhitmaGroupService {
 
     // [todo]: might need to change code below when supporting multigroup
 
-    // [todo]: might have to switch to object instead of array for Ajza
-
     this._currentGroupObj.ajza[juzIndex] = {
       index: juzIndex,
       status: juzStatus,
-      owner: ownerName
+      owner: ownerName || ""
     };
 
     if (juzStatus == JUZ_STATUS.IDLE) {
       this._currentGroupObj.ajza[juzIndex].owner = "";
     }
 
-    this.db.doc<KhitmaGroup>('groups/' + groupId).update({ ajza: this._currentGroupObj.ajza });
+    if (this._isV2Api) {
 
+      const updatedObj = {};
+      updatedObj[("ajza." + juzIndex)] = this._currentGroupObj.ajza[juzIndex];
+
+      this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    }
+    else {
+      this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "ajza": this._currentGroupObj.ajza });
+    }
   }
 
   getGroups(groupsIds: string[]) {
     return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
+  }
+
+  startNewKhitmah(groupId, newCycle) {
+
+    this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "cycle": newCycle, "ajza": KhitmaGroup.getEmptyAjzaObj() });
+
   }
 
 }
