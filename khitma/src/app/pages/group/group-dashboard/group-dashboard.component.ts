@@ -51,6 +51,7 @@ export class GroupDashboardComponent implements OnInit {
       this.titleService.setTitle(group.title);
 
       this.group = new KhitmaGroup(group);
+
       this.group.ajza = group.ajza;
 
       if (!this.isInitiated) {

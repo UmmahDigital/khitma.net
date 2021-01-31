@@ -30,10 +30,9 @@ export class TestComponent implements OnInit {
         owner: "hasan"
       };
 
-      this.db.doc<KhitmaGroup>('groups/OafnfTxp88YWw5NTJleK').update(updatedObj);
+      this.db.doc<KhitmaGroup>('groups/hlmyHyxkah2KuPTtUFAz').update(updatedObj);
 
     }
-
   }
 
 }

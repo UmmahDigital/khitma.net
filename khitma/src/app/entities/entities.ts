@@ -32,6 +32,7 @@ export class KhitmaGroup {
 
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);
+        this.cycle = init.cycle || 0;
         this._initAjza();
     }
 
