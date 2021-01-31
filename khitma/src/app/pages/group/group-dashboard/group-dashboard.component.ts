@@ -107,6 +107,8 @@ export class GroupDashboardComponent implements OnInit {
         this.localDB.setMyJuz(this.group.id, this.group.cycle, nextJuz);
         this.myJuzIndex = nextJuz;
 
+        this.$gaService.event('next_juz_accepted');
+
       }
 
     });
@@ -122,11 +124,17 @@ export class GroupDashboardComponent implements OnInit {
 
       if (juz.status == JUZ_STATUS.BOOKED) {
         this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
+
+        this.$gaService.event('admin_juz_update');
+
         return;
       }
 
       if (juz.status == JUZ_STATUS.DONE) {
         this.groupsApi.updateJuz(this.group.id, juz.index, "", JUZ_STATUS.IDLE);
+
+        this.$gaService.event('admin_juz_update');
+
         return;
       }
 
@@ -156,7 +164,6 @@ export class GroupDashboardComponent implements OnInit {
 
   juzDone() {
 
-    this.$gaService.event('juz_done');
 
     const title = "تأكيد إتمام الجزء";
     const msg = "هل أتممت قراءة جزء " + (this.myJuzIndex + 1) + "؟";
@@ -171,7 +178,9 @@ export class GroupDashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
 
       if (dialogResult) {
-        // add confirmation modal
+
+        this.$gaService.event('juz_done');
+
         this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
         this.localDB.setMyJuz(this.group.id, this.group.cycle, null);
         this.myJuzIndex = null;
@@ -212,6 +221,9 @@ export class GroupDashboardComponent implements OnInit {
 
       if (dialogResult) {
 
+        this.$gaService.event('group_new_khitmah');
+
+
         this.group.cycle++;
         this.groupsApi.startNewKhitmah(this.group.id, this.group.cycle);
 
@@ -221,11 +233,6 @@ export class GroupDashboardComponent implements OnInit {
       }
 
     });
-
-
-
-
-
 
   }
 
