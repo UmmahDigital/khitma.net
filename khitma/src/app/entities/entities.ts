@@ -98,5 +98,11 @@ export class KhitmaGroup {
         return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
     }
 
+
+    static convertAjzaToObj(ajza: Juz[]) {
+
+        return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
+    }
+
 }
 

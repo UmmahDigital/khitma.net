@@ -33,16 +33,10 @@
     </app-celebration>
 
 
-
-
-
     <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
 
 
-
-
     <section class="juz-grid-section" *ngIf="viewMode.value == 'progress'">
-
         <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
             (onJuzSelection)="juzSelected($event)">
         </app-juz-grid>
@@ -56,12 +50,10 @@
         </button>
 
 
-
         <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" (onJuzSelection)="juzSelected($event)">
         </app-juz-list>
 
     </section>
-
 
 
     <section class="action-panel mat-elevation-z16">

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS } from './entities/entities';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA } from './entities/entities';
 
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { map, catchError, take, first } from 'rxjs/operators';
@@ -129,7 +129,33 @@ export class KhitmaGroupService {
 
   startNewKhitmah(groupId, newCycle) {
 
-    this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "cycle": newCycle, "ajza": KhitmaGroup.getEmptyAjzaObj() });
+    function _generateNextCycleAjza(oldCycleAjza: Juz[]): Juz[] {
+
+      let newCycleAjza: Juz[] = [];
+
+      newCycleAjza.push(new Juz({
+        index: 0,
+        owner: oldCycleAjza[NUM_OF_AJZA - 1].owner,
+        status: JUZ_STATUS.BOOKED
+
+      }));
+
+      for (let i = 1; i < NUM_OF_AJZA; i++) {
+
+        newCycleAjza.push(new Juz({
+          index: i,
+          owner: oldCycleAjza[i - 1].owner,
+          status: JUZ_STATUS.BOOKED
+        }));
+
+      }
+      return newCycleAjza;
+    }
+
+    let ajza = _generateNextCycleAjza(this._currentGroupObj.ajza);
+    let ajzaObj = KhitmaGroup.convertAjzaToObj(ajza);
+
+    this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "cycle": newCycle, "ajza": ajzaObj });
 
   }
 

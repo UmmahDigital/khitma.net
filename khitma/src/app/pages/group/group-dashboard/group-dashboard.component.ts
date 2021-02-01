@@ -56,6 +56,7 @@ export class GroupDashboardComponent implements OnInit {
 
       if (!this.isInitiated) {
 
+        // My current juz
         this.myJuzIndex = this.localDB.getMyJuz(this.group.id);
 
         this.username = this.localDB.getUsername(this.group.id);
@@ -63,8 +64,18 @@ export class GroupDashboardComponent implements OnInit {
 
         const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
 
+        // Check if this a recurring group
         if (myLastJuz != null && this.group.cycle > 0) {
 
+          let myNextJuzFromCycle = this.group.ajza.find(juz => juz.owner === this.username);
+
+          if (myNextJuzFromCycle) {
+            this.localDB.setMyJuz(this.group.id, this.group.cycle, myNextJuzFromCycle.index);
+            this.myJuzIndex = myNextJuzFromCycle.index;
+            return;
+          }
+
+          // Check if a new cycle was started while I was away
           const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
 
           if (myCycle < this.group.cycle) {
@@ -74,6 +85,11 @@ export class GroupDashboardComponent implements OnInit {
             this.proposeNextJuz(myLastJuz, myNextJuz);
 
           }
+
+
+
+
+
 
         }
 
@@ -272,6 +288,11 @@ export class GroupDashboardComponent implements OnInit {
     });
 
     // return window.encodeURIComponent(msg);
+
+    msg += NEW_LINE;
+    msg += NEW_LINE;
+
+    msg += "رجاء حتلنة جزئكم عن طريق الرابط: " + this.group.getURL();
 
     msg += NEW_LINE;
     msg += NEW_LINE;
