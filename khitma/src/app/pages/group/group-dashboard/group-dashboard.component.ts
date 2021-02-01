@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA } from 'src/app/entities/entities';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, GET_JUZ_READ_EXTERNAL_URL } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -234,6 +234,50 @@ export class GroupDashboardComponent implements OnInit {
 
     });
 
+  }
+
+  getMyJuzReadUrl() {
+    return GET_JUZ_READ_EXTERNAL_URL(this.myJuzIndex);
+  }
+
+  getKhitmaStatusMsg() {
+
+    function getJuzIcon(juz) {
+
+      const ICONS = ['🔴', '🟡', '🟢'];
+
+      return ICONS[juz.status];
+    }
+
+    const NEW_LINE = "\n";
+    const now = new Date();
+
+    let msg = this.group.title;
+
+    msg += NEW_LINE;
+    msg += "وضع الختمة " + now.getHours() + ":" + now.getMinutes();
+    msg += NEW_LINE;
+    msg += NEW_LINE;
+
+    this.group.ajza.forEach(juz => {
+
+      msg += ("0" + (juz.index + 1)).slice(-2) + " " + getJuzIcon(juz) + " " + (juz.owner || "");
+
+      // if (juz.status === JUZ_STATUS.DONE) {
+      //   msg += " 👏";
+      // }
+
+      msg += NEW_LINE;
+
+    });
+
+    // return window.encodeURIComponent(msg);
+
+    msg += NEW_LINE;
+    msg += NEW_LINE;
+
+    msg += "بارك الله بكم!";
+    return msg;
   }
 
 }

@@ -45,6 +45,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
 import { TestComponent } from './test/test.component';
 import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
+import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
 
 
 
@@ -88,7 +89,8 @@ const routes: Routes = [
     CelebrationComponent,
     ArchiveComponent,
     TestComponent,
-    KhitmaDoneCelebrationComponent
+    KhitmaDoneCelebrationComponent,
+    QuranBrowserComponent
   ],
   imports: [
     BrowserModule,

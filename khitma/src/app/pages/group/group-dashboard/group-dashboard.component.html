@@ -1,7 +1,5 @@
 <div *ngIf="group">
 
-
-
     <section class="khitma-done" *ngIf="group.isDone() > 0">
 
         <app-khitma-done-celebration></app-khitma-done-celebration>
@@ -41,48 +39,6 @@
     <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
 
 
-    <!-- 
-    <section class="khitma-info">
-
-
-        <label>
-            {{group.title}}
-        </label>
-
-        <span>
-            <mat-icon (click)="isGroupInfoExpanded = !isGroupInfoExpanded;">
-                {{isGroupInfoExpanded? "expand_less" : "expand_more"}}
-
-            </mat-icon>
-        </span>
-
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{group.title}}
-                </mat-panel-title>
-
-            </mat-expansion-panel-header>
-
-            <mat-panel-description>
-                {{group.description}}
-
-            </mat-panel-description>
-
-            <footer>
-                منشئ الختمة: {{group.author}}
-            </footer>
-
-
-        </mat-expansion-panel>
-
-
-
-    </section> -->
-
-
-
-
 
 
     <section class="juz-grid-section" *ngIf="viewMode.value == 'progress'">
@@ -93,15 +49,18 @@
     </section>
 
     <section class="juz-list-section" *ngIf="viewMode.value == 'namesList'">
-        <!-- <header>أجزاء الختمة</header> -->
+
+        <button *ngIf="isAdmin" target="_blank" mat-raised-button class="block app-btn-primary"
+            [cdkCopyToClipboard]="getKhitmaStatusMsg()" class="copy-group-status-msg-btn block">
+            نسخ وضع الختمة كرسالة
+        </button>
+
+
 
         <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" (onJuzSelection)="juzSelected($event)">
         </app-juz-list>
 
     </section>
-
-
-
 
 
 
@@ -116,19 +75,27 @@
 
         <div>
 
-            <div class="my-juz-actions" *ngIf="myJuzIndex != null">
-                <div class="current-juz"><span>{{myJuzIndex + 1}}</span> </div>
+            <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="12px grid">
 
+                <div fxFlex="25%" class="center-center">
+                    <a target="_blank" [href]="getMyJuzReadUrl()">
+                        <mat-icon class="quran-explorer-btn" [matBadge]="myJuzIndex + 1" matBadgeSize="large"
+                            matBadgePosition="below before">
+                            auto_stories</mat-icon>
+                    </a>
+                </div>
 
-                <!-- جزؤك الحالي:  -->
-                <button mat-raised-button color="accent" class="done-btn app-btn-primary" (click)="juzDone()"
-                    [disabled]="myJuzIndex == null">
-                    أتممت قراءة جزئي</button>
+                <div fxFlex="50%" class="center-center">
+                    <button mat-raised-button color="accent" class="done-btn app-btn-primary" (click)="juzDone()"
+                        [disabled]="myJuzIndex == null">
+                        أتممت قراءة جزئي</button>
+                </div>
 
+                <div fxFlex="25%" class="center-center">
+                    <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
+                </div>
 
-                <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
-
-            </div>
+            </section>
 
 
             <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div>
@@ -138,14 +105,7 @@
 
 
 
-
-
-
-
     <div class="spacer"></div>
-    <!-- 
 
-    <span class="center-center" style="opacity: 0.25; padding: 20px;">Admin: {{isAdmin}}</span>
-    <div class="spacer"></div> -->
 
 </div>

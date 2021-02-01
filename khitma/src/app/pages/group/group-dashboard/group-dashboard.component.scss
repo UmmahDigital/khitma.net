@@ -42,17 +42,27 @@
   // height: 100px;
   margin: 0;
 
-  .my-juz-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 16px 0;
-
-    > * {
-      margin: 0 10px !important;
-    }
+  button,
+  a {
+    width: 100%;
+    text-align: center;
   }
+
+  .my-juz-actions {
+    padding: 12px;
+  }
+
+  // .my-juz-actions {
+  //   display: flex;
+  //   flex-direction: row;
+  //   justify-content: center;
+  //   align-items: center;
+  //   margin: 16px 0;
+
+  //   > * {
+  //     margin: 0 10px !important;
+  //   }
+  // }
 }
 
 .admin-section {
@@ -184,4 +194,19 @@
   background: #38322f;
   padding: 32px;
   margin: -32px -32px 64px -32px;
+}
+
+.copy-group-status-msg-btn {
+  margin: 32px auto 0 auto;
+}
+
+.quran-explorer-btn {
+  font-size: xxx-large;
+  color: #614316;
+  margin-top: 16px;
+
+  span {
+    background-color: #614316;
+    top: -20px;
+  }
 }
