@@ -104,5 +104,9 @@ export class KhitmaGroup {
         return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
     }
 
+    static convertAjzaToArray(ajza: object): Juz[] {
+        return Object.values(ajza).sort((a: any, b: any) => (a.index > b.index) ? 1 : -1);
+    }
+
 }
 

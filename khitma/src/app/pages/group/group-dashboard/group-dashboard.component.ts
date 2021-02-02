@@ -10,6 +10,9 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/conf
 import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Title } from '@angular/platform-browser';
+import { AlertService } from 'src/app/alert.service';
+
+
 
 
 @Component({
@@ -34,10 +37,14 @@ export class GroupDashboardComponent implements OnInit {
 
   isInitiated = false;
 
+  showNames = false;
+
+
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
-    private titleService: Title) {
+    private titleService: Title,
+    private alert: AlertService) {
   }
 
   ngOnInit(): void {
@@ -51,7 +58,6 @@ export class GroupDashboardComponent implements OnInit {
       this.titleService.setTitle(group.title);
 
       this.group = new KhitmaGroup(group);
-
       this.group.ajza = group.ajza;
 
       if (!this.isInitiated) {
@@ -85,12 +91,6 @@ export class GroupDashboardComponent implements OnInit {
             this.proposeNextJuz(myLastJuz, myNextJuz);
 
           }
-
-
-
-
-
-
         }
 
         if (this.myJuzIndex && group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
@@ -298,7 +298,16 @@ export class GroupDashboardComponent implements OnInit {
     msg += NEW_LINE;
 
     msg += "بارك الله بكم!";
+
+
+
+
     return msg;
   }
+
+  groupStatusCopied() {
+    this.alert.show("تمّ نسخ الرسالة بنجاح", 2500);
+  }
+
 
 }

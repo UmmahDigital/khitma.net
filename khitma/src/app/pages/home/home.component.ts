@@ -37,6 +37,15 @@ export class HomeComponent implements OnInit {
 
         this.groups = <KhitmaGroup[]>groups;
 
+        this.groups.forEach(group => {
+          const _isV2Api = !Array.isArray(group.ajza);
+
+          if (_isV2Api) {
+            group.ajza = KhitmaGroup.convertAjzaToArray(group.ajza);
+          }
+
+        });
+
       });
     }
 

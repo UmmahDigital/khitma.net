@@ -28,6 +28,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const materialModules = [
   CdkTreeModule,
@@ -59,6 +60,7 @@ const materialModules = [
   PortalModule,
   MatBadgeModule,
   MatDialogModule,
+  MatSlideToggleModule,
 ];
 
 @NgModule({

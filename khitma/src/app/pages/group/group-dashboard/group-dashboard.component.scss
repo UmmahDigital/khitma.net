@@ -49,7 +49,7 @@
   }
 
   .my-juz-actions {
-    padding: 12px;
+    padding: 16px 0;
   }
 
   // .my-juz-actions {
@@ -63,14 +63,6 @@
   //     margin: 0 10px !important;
   //   }
   // }
-}
-
-.admin-section {
-  margin: 0;
-  background: lightgray;
-  padding: 10px;
-  // margin: -32px;
-  // margin-bottom: 48px;
 }
 
 .current-juz {
@@ -196,17 +188,64 @@
   margin: -32px -32px 64px -32px;
 }
 
-.copy-group-status-msg-btn {
-  margin: 32px auto 0 auto;
-}
-
 .quran-explorer-btn {
   font-size: xxx-large;
   color: #614316;
   margin-top: 16px;
+  width: auto;
+  height: auto;
 
   span {
     background-color: #614316;
     top: -20px;
+    left: 8px !important;
   }
+}
+
+.dashboard-header {
+  margin: -32px -32px 0;
+  padding: 16px;
+  background: darken(#614316, 10%);
+
+  color: white;
+
+  // clip-path: circle(71.8% at 50% 17%);
+
+  .admin-section {
+    margin: 0 0 16px 0;
+    opacity: 0.5;
+    padding: 10px;
+  }
+}
+
+.names-toggle-container {
+  // padding: 32px 0;
+  // margin-top: 32px;
+}
+
+.copy-group-status-msg-btn {
+  // margin: 32px auto 32px auto;
+  background-color: #614316;
+  color: white;
+}
+
+.khitma-info {
+  padding: 0;
+
+  .title {
+    padding: 0;
+    margin-top: 16px;
+  }
+}
+
+.space {
+  height: 48px;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #6143168f;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #614316;
 }

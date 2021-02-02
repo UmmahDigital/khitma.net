@@ -41,7 +41,7 @@ export class KhitmaGroupService {
       this._isV2Api = !Array.isArray(group.ajza);
 
       if (this._isV2Api) {
-        group.ajza = this._transform2Array(group.ajza);
+        group.ajza = KhitmaGroup.convertAjzaToArray(group.ajza);
       }
 
       this._currentGroupObj = group;
@@ -53,9 +53,7 @@ export class KhitmaGroupService {
 
   }
 
-  private _transform2Array(obj) {
-    return Object.values(obj).sort((a: any, b: any) => (a.index > b.index) ? 1 : -1);
-  }
+
 
 
   public getCurrentGroup() {
