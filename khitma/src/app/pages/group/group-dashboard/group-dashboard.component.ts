@@ -40,6 +40,7 @@ export class GroupDashboardComponent implements OnInit {
   showNames = false;
 
   inviteMsg = "";
+  statusMsg = "";
 
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
     private dialog: MatDialog,
@@ -61,6 +62,8 @@ export class GroupDashboardComponent implements OnInit {
       this.group = new KhitmaGroup(group);
       this.group.ajza = group.ajza;
 
+
+      this.statusMsg = this.getKhitmaStatusMsg();
 
       let url = this.group.getURL();
 
@@ -277,12 +280,12 @@ export class GroupDashboardComponent implements OnInit {
     }
 
     function getDateInArabic(date: Date) {
-      var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
-        "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+      // var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
+      //   "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
 
       var days = ["اﻷحد", "اﻷثنين", "الثلاثاء", "اﻷربعاء", "الخميس", "الجمعة", "السبت"];
 
-      return days[date.getDay()] + ", " + date.getDate() + " " + months[date.getMonth()];
+      return days[date.getDay()] + " " + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getUTCFullYear();
     }
 
     const NEW_LINE = "\n";
@@ -292,7 +295,7 @@ export class GroupDashboardComponent implements OnInit {
 
     msg += NEW_LINE;
     msg += NEW_LINE;
-    msg += getDateInArabic(now) + " - " + now.getHours() + ":" + now.getMinutes();
+    msg += getDateInArabic(now);
     msg += NEW_LINE;
     msg += NEW_LINE;
 
