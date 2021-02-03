@@ -62,13 +62,13 @@ mat-toolbar {
   color: white !important;
 }
 
-.app-btn-primary.large {
+button.large {
   height: 80px;
   line-height: 80px;
   font-size: x-large;
 }
 
-.app-btn-primary[disabled="true"] {
+button[disabled="true"] {
   background-color: lightgray !important;
   color: gray !important;
 }

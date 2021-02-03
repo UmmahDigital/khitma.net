@@ -62,12 +62,36 @@
     <div class="space"></div>
 
 
+    <section *ngIf="isAdmin">
+        <button mat-raised-button class="block copy-group-status-msg-btn large"
+            [cdkCopyToClipboard]="getKhitmaStatusMsg()" (cdkCopyToClipboardCopied)="groupStatusCopied()">
+            نسخ وضع الختمة الحالي مع الأسماء
+        </button>
 
-    <button *ngIf="isAdmin" target="_blank" mat-raised-button class="block app-btn-primary"
-        [cdkCopyToClipboard]="getKhitmaStatusMsg()" (cdkCopyToClipboardCopied)="groupStatusCopied()"
-        class="copy-group-status-msg-btn block">
-        نسخ وضع الختمة الحالي مع الأسماء
-    </button>
+
+        <button mat-raised-button [cdkCopyToClipboard]="inviteMsg" (cdkCopyToClipboardCopied)="inviteMsgCopied()"
+            class=" block">
+            نسخ رابط المجموعة ودعوة الانضمام
+        </button>
+    </section>
+
+
+    <!--         
+    <section fxLayout="row wrap" fxLayoutGap="16px grid">
+
+        <div fxFlex="75%" class="center-center">
+        
+
+        </div>
+
+        <div fxFlex="25%" class="center-center">
+     
+
+        </div>
+
+    </section> -->
+
+
 
     <div class="space"></div>
 

@@ -39,6 +39,7 @@ export class GroupDashboardComponent implements OnInit {
 
   showNames = false;
 
+  inviteMsg = "";
 
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
     private dialog: MatDialog,
@@ -59,6 +60,16 @@ export class GroupDashboardComponent implements OnInit {
 
       this.group = new KhitmaGroup(group);
       this.group.ajza = group.ajza;
+
+
+      let url = this.group.getURL();
+
+      this.inviteMsg = "إنضمّوا إلى"
+        + ' "' + this.group.title + '" '
+        + "عبر الرابط "
+        + url;
+
+
 
       if (!this.isInitiated) {
 
@@ -265,13 +276,23 @@ export class GroupDashboardComponent implements OnInit {
       return ICONS[juz.status];
     }
 
+    function getDateInArabic(date: Date) {
+      var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
+        "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+
+      var days = ["اﻷحد", "اﻷثنين", "الثلاثاء", "اﻷربعاء", "الخميس", "الجمعة", "السبت"];
+
+      return days[date.getDay()] + ", " + date.getDate() + " " + months[date.getMonth()];
+    }
+
     const NEW_LINE = "\n";
     const now = new Date();
 
     let msg = this.group.title;
 
     msg += NEW_LINE;
-    msg += "وضع الختمة " + now.getHours() + ":" + now.getMinutes();
+    msg += NEW_LINE;
+    msg += getDateInArabic(now) + " - " + now.getHours() + ":" + now.getMinutes();
     msg += NEW_LINE;
     msg += NEW_LINE;
 
@@ -300,13 +321,15 @@ export class GroupDashboardComponent implements OnInit {
     msg += "بارك الله بكم!";
 
 
-
-
     return msg;
   }
 
   groupStatusCopied() {
     this.alert.show("تمّ نسخ الرسالة بنجاح", 2500);
+  }
+
+  inviteMsgCopied() {
+    this.alert.show("تمّ نسخ الرسالة، يمكنك الآن مشاركتها مع معارفك وأصدقائك.", 5000);
   }
 
 

@@ -33,19 +33,10 @@ export class GroupInviteComponent implements OnInit {
 
           this.inviteLink = this.groupsApi.getGroupURL(this.group.id);
 
-          // this.inviteMsg = "انضمّوا إلى ${this.group.title} عبر الرابط ${this.inviteLink} \
-          // \r\n \r\n ختمة.نت\
-          // \
-          // ";
-
           this.inviteMsg = "إنضمّوا إلى"
             + ' "' + this.group.title + '" '
             + "عبر الرابط "
             + this.inviteLink;
-
-          // this.inviteMsg = "انضمّوا إلى ${this.group.title} عبر الرابط ${this.inviteLink}";
-
-          // this.inviteMsg = this.inviteLink;
 
         });
 
