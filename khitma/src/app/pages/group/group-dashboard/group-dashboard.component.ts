@@ -89,7 +89,7 @@ export class GroupDashboardComponent implements OnInit {
         // Check if this a recurring group
         if (myLastJuz != null && this.group.cycle > 0) {
 
-          let myNextJuzFromCycle = this.group.ajza.find(juz => juz.owner === this.username);
+          let myNextJuzFromCycle = this.getMyLastReadJuz(this.group.ajza);// this.group.ajza.find(juz => juz.owner === this.username); // should return last not first
 
           if (myNextJuzFromCycle) {
             this.localDB.setMyJuz(this.group.id, this.group.cycle, myNextJuzFromCycle.index);
@@ -119,6 +119,17 @@ export class GroupDashboardComponent implements OnInit {
 
     });
 
+  }
+
+  getMyLastReadJuz(ajza: Juz[]) {
+
+    for (let i = (NUM_OF_AJZA - 1); i >= 0; i--) {
+      if (ajza[i].owner === this.username) {
+        return ajza[i];
+      }
+    }
+
+    return null;
   }
 
   // proposeNextJuz(lastJuz, nextJuz) {
