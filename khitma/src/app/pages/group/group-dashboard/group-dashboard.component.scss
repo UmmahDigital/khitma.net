@@ -110,9 +110,9 @@
 }
 
 .khitma-done {
-  background: #38322f;
+  background: lighten($primary-color,70%);
   padding: 32px;
-  margin: -32px -32px 64px -32px;
+  margin: -8px -32px 0px -32px;
 }
 
 .quran-explorer-btn {

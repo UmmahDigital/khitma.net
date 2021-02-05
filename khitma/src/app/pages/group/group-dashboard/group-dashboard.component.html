@@ -1,16 +1,6 @@
 <div *ngIf="group">
 
-    <section class="khitma-done" *ngIf="group.isDone() > 0">
 
-        <app-khitma-done-celebration></app-khitma-done-celebration>
-
-
-        <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
-            class="block app-btn-primary large new-khitma-btn">بدء
-            ختمة
-            جديدة للمجموعة</button>
-
-    </section>
 
 
     <app-celebration *ngIf="showCelebration" class="celebration-container"
@@ -28,6 +18,18 @@
         <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
 
     </header>
+
+    <section class="khitma-done" *ngIf="group.isDone() > 0">
+
+        <app-khitma-done-celebration></app-khitma-done-celebration>
+
+
+        <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
+            class="block large action-btn">بدء
+            ختمة
+            جديدة للمجموعة</button>
+
+    </section>
 
 
     <div class="space"></div>

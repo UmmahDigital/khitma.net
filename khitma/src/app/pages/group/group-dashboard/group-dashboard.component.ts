@@ -97,16 +97,17 @@ export class GroupDashboardComponent implements OnInit {
             return;
           }
 
-          // Check if a new cycle was started while I was away
-          const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
+          // Check if a new cycle was started while I was away. Disable the suggesting of new juz as admin now advances the ajza of everyone.
+          // const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
 
-          if (myCycle < this.group.cycle) {
+          // if (myCycle < this.group.cycle) {
 
-            const myNextJuz = (myLastJuz + this.group.cycle - myCycle) % NUM_OF_AJZA;
+          //   const myNextJuz = (myLastJuz + this.group.cycle - myCycle) % NUM_OF_AJZA;
 
-            this.proposeNextJuz(myLastJuz, myNextJuz);
+          //   this.proposeNextJuz(myLastJuz, myNextJuz);
 
-          }
+          // }
+
         }
 
         if (this.myJuzIndex && group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
@@ -120,32 +121,32 @@ export class GroupDashboardComponent implements OnInit {
 
   }
 
-  proposeNextJuz(lastJuz, nextJuz) {
+  // proposeNextJuz(lastJuz, nextJuz) {
 
-    const dialogData = new ConfirmDialogModel(
-      "تلاوة جزءك التالي",
-      "في المرّة الأخيرة قرأت جزء " + (lastJuz + 1) + ". هل تريد قراءة جزء " + (nextJuz + 1) + " هذه المرّة؟");
+  //   const dialogData = new ConfirmDialogModel(
+  //     "تلاوة جزءك التالي",
+  //     "في المرّة الأخيرة قرأت جزء " + (lastJuz + 1) + ". هل تريد قراءة جزء " + (nextJuz + 1) + " هذه المرّة؟");
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: dialogData,
-      maxWidth: "80%"
-    });
+  //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+  //     data: dialogData,
+  //     maxWidth: "80%"
+  //   });
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
+  //   dialogRef.afterClosed().subscribe(dialogResult => {
 
-      if (dialogResult) {
+  //     if (dialogResult) {
 
-        this.groupsApi.updateJuz(this.group.id, nextJuz, this.username, JUZ_STATUS.BOOKED);
-        this.localDB.setMyJuz(this.group.id, this.group.cycle, nextJuz);
-        this.myJuzIndex = nextJuz;
+  //       this.groupsApi.updateJuz(this.group.id, nextJuz, this.username, JUZ_STATUS.BOOKED);
+  //       this.localDB.setMyJuz(this.group.id, this.group.cycle, nextJuz);
+  //       this.myJuzIndex = nextJuz;
 
-        this.$gaService.event('next_juz_accepted');
+  //       this.$gaService.event('next_juz_accepted');
 
-      }
+  //     }
 
-    });
+  //   });
 
-  }
+  // }
 
   juzSelected(juz: Juz) {
 
@@ -255,13 +256,12 @@ export class GroupDashboardComponent implements OnInit {
 
         this.$gaService.event('group_new_khitmah');
 
-
         this.group.cycle++;
         this.groupsApi.startNewKhitmah(this.group.id, this.group.cycle);
 
-        const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
+        // const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
 
-        this.proposeNextJuz(myLastJuz, myLastJuz + 1);
+        // this.proposeNextJuz(myLastJuz, myLastJuz + 1);
       }
 
     });

@@ -1,3 +1,5 @@
+@import "~src/_variables";
+
 .gift-container {
   font-size: 20px;
   transition: 1s;
@@ -116,7 +118,7 @@
   top: 50%;
   left: 50%;
   margin: 0;
-  color: white;
+  color: $primary-color;
   white-space: nowrap;
   transform: translate3d(-50%, -50%, 0) scale(0.5);
   transform-origin: center center;
