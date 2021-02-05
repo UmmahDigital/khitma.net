@@ -21,7 +21,9 @@ export class AppComponent {
   }
 
   installPwa(): void {
+    if(this.pwa.promptEvent){
     this.pwa.promptEvent.prompt();
+  }
   }
 
 }

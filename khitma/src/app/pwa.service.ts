@@ -20,8 +20,6 @@ export class PwaService {
 
     swUpdate.available.subscribe(event => {
 
-
-
       const dialogData = new ConfirmDialogModel("تحديث البرنامج",
         "هناك نسخة جديدة من الموقع، هل تريد استخدامها الآن. التحديث لا يؤثّر على مجموعاتك أو أجزائك.   ");
 

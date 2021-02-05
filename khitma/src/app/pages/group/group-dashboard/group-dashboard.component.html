@@ -30,26 +30,6 @@
     </header>
 
 
-
-    <!-- <section class="center-center view-mode">
-
-        <mat-button-toggle-group #viewMode="matButtonToggleGroup" value="progress">
-            <mat-button-toggle value="progress">
-                <label class="center-center">
-                    <mat-icon>check_circle_outline</mat-icon> <span>تقدّم الختمة</span>
-                </label>
-            </mat-button-toggle>
-            <mat-button-toggle value="namesList">
-                <label class="center-center">
-                    <mat-icon>format_list_numbered_rtl</mat-icon> <span> قائمة الأسماء</span>
-                </label>
-            </mat-button-toggle>
-        </mat-button-toggle-group>
-    </section> -->
-
-
-
-
     <div class="space"></div>
 
 
@@ -59,20 +39,45 @@
         </app-juz-grid>
     </section>
 
-    <div class="space"></div>
+    <div class="space" style="margin-bottom: -16px;"></div>
 
 
-    <section *ngIf="isAdmin">
-        <button mat-raised-button class="block copy-group-status-msg-btn large" [cdkCopyToClipboard]="statusMsg"
-            (cdkCopyToClipboardCopied)="groupStatusCopied()">
-            نسخ وضع الختمة الحالي مع الأسماء
-        </button>
+    <section *ngIf="isAdmin" class="admin-actions">
+
+        <div *ngIf="!nativeApi.isAvailable">
+
+            <button mat-raised-button class="block large" [cdkCopyToClipboard]="statusMsg"
+                (cdkCopyToClipboardCopied)="groupStatusCopied()">
+                نسخ وضع الختمة الحالي مع الأسماء
+            </button>
 
 
-        <button mat-raised-button [cdkCopyToClipboard]="inviteMsg" (cdkCopyToClipboardCopied)="inviteMsgCopied()"
-            class=" block">
-            نسخ رابط المجموعة ودعوة الانضمام
-        </button>
+            <button mat-button [cdkCopyToClipboard]="inviteMsg" (cdkCopyToClipboardCopied)="inviteMsgCopied()"
+                class=" block">
+                نسخ رابط المجموعة ودعوة الانضمام
+            </button>
+
+        </div>
+
+        <div *ngIf="nativeApi.isAvailable">
+
+
+            <button *ngIf="nativeApi.isAvailable" mat-raised-button class="block large" (click)="shareStatusMsg()">
+                مشاركة وضع الختمة الحالي مع الأسماء
+            </button>
+
+            <button mat-button class=" block" (click)="shareInviteMsg()">
+                مشاركة رابط المجموعة ودعوة الانضمام
+            </button>
+
+        </div>
+
+
+
+
+
+
+
     </section>
 
 
@@ -100,9 +105,6 @@
 
     <section class="action-panel mat-elevation-z16">
 
-
-
-
         <div>
 
             <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="0px grid">
@@ -116,7 +118,7 @@
                 </div>
 
                 <div fxFlex="50%" class="center-center">
-                    <button mat-raised-button color="accent" class="done-btn app-btn-primary" (click)="juzDone()"
+                    <button mat-raised-button color="accent" class="block large action-btn" (click)="juzDone()"
                         [disabled]="myJuzIndex == null">
                         أتممت قراءة جزئي</button>
                 </div>

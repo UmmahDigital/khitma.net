@@ -17,7 +17,7 @@
 
     </p>
 
-    <a mat-raised-button color="accent" class="block create-btn app-btn-primary large" href="/new">مجموعة جديدة</a>
+    <a mat-raised-button color="accent" class="block large action-btn" href="/new">مجموعة جديدة</a>
 
 
 
@@ -25,7 +25,6 @@
     <section *ngIf="groups">
 
         <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
-
 
 
     </section>

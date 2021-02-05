@@ -4,6 +4,9 @@
 
 @import "~@angular/material/theming";
 
+@import "~src/_variables";
+
+
 html,
 body {
   height: 100%;
@@ -11,7 +14,7 @@ body {
   // font-family: "Scheherazade", serif !important;
   // font-size: 100% !important;
   overflow-x: hidden;
-  background-color: #fffef6;
+  background-color: $background-color;
   font-size: large;
 }
 

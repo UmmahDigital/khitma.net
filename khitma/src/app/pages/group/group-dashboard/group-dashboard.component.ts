@@ -11,6 +11,7 @@ import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay'
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from 'src/app/alert.service';
+import { NativeApiService } from 'src/app/native-api.service';
 
 
 
@@ -46,7 +47,8 @@ export class GroupDashboardComponent implements OnInit {
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
     private titleService: Title,
-    private alert: AlertService) {
+    private alert: AlertService,
+    private nativeApi: NativeApiService) {
   }
 
   ngOnInit(): void {
@@ -335,5 +337,12 @@ export class GroupDashboardComponent implements OnInit {
     this.alert.show("تمّ نسخ الرسالة، يمكنك الآن مشاركتها مع معارفك وأصدقائك.", 5000);
   }
 
+  shareStatusMsg() {
+    this.nativeApi.share(("وضع الختمة: " + this.group.title), this.getKhitmaStatusMsg(), null);
+  }
+
+  shareInviteMsg() {
+    this.nativeApi.share(("دعوة انضمام: " + this.group.title), this.inviteMsg, null);
+  }
 
 }

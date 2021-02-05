@@ -1,3 +1,5 @@
+@import "~src/_variables";
+
 .juz-toggle {
   $size: 36px;
 
@@ -26,7 +28,7 @@
 .juz-toggle.my-juz {
   // background-color: #90d8f0;
   // font-size: 150%;
-  background-color: #614316;
+  background-color: $primary-color ;
   color: white;
   transform: scale(1.4);
 }

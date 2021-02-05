@@ -2,24 +2,71 @@
   <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%">
 
     <mat-toolbar color="primary">
+      <button mat-icon-button>
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+      </button>
       <span><a href="/">ختمة.نت</a></span>
 
       <span class="spacer"></span>
 
-      <button *ngIf="!isPwaInstalled" mat-raised-button class="pwa-btn">
-        <mat-icon>system_update</mat-icon>
-      </button>
-
-
-      <a mat-raised-button color="accent" class="app-btn-primary" href="/">مجموعاتي</a>
-
+      <span class="version">v0.7.2</span>
 
     </mat-toolbar>
 
 
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
+
+    <mat-sidenav-container>
+      <mat-sidenav #sidenav mode="push" style="width:50%">
+        <mat-nav-list fxLayout="column" fxFlex>
+
+          <a mat-list-item href="/new"> <button mat-raised-button class="block action-btn">
+              <mat-icon>group</mat-icon> إنشاء مجموعة جديدة
+            </button> </a>
+
+
+          <mat-divider></mat-divider>
+
+
+          <a mat-list-item href="/me"> مجموعاتي</a>
+          <a mat-list-item target="_blank" href="https://app.quranflash.com/book/Medina1?ar#/reader"> المصحف الشريف </a>
+          <a mat-list-item href="/about"> عن ختمة.نت </a>
+
+          <mat-divider></mat-divider>
+
+          <a mat-list-item *ngIf="!isPwaInstalled"> <button mat-raised-button class="block" (click)="installPwa()">
+              <mat-icon>system_update</mat-icon> إضافة كتطبيق
+            </button> </a>
+
+          <!-- <mat-divider></mat-divider>
+          <span fxFlex></span>
+
+          <mat-divider></mat-divider>
+
+          <a mat-list-item> <button *ngIf="!isPwaInstalled" mat-raised-button class="pwa-btn" (click)="installPwa()">
+              <mat-icon>system_update</mat-icon> إضافة كتطبيق
+            </button> </a>
+
+          <a mat-list-item [routerLink]="'/activities'"> شروط الاستخدام </a>
+          <a mat-list-item [routerLink]="'/create-activity'"> سياسة الخصوصيّة </a> -->
+
+
+        </mat-nav-list>
+      </mat-sidenav>
+
+
+
+      <mat-sidenav-content>
+        <div class="content">
+          <router-outlet></router-outlet>
+        </div>
+
+
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+
+
+
+
 
 
 

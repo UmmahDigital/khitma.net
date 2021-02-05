@@ -46,6 +46,8 @@ import { ArchiveComponent } from './pages/archive/archive.component';
 import { TestComponent } from './test/test.component';
 import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
 import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
+import { DashboardComponent } from './pages/me/dashboard/dashboard.component';
+import { AboutComponent } from './pages/about/about.component';
 
 
 
@@ -56,7 +58,8 @@ const routes: Routes = [
       { path: 'invite', component: GroupInviteComponent },
     ]
   },
-  { path: 'groups/archive', component: ArchiveComponent },
+  { path: 'me/groups/archive', component: ArchiveComponent },
+  { path: 'me', component: DashboardComponent },
   { path: 'group/:groupId/invite', component: GroupInviteComponent },
   {
     path: 'group/:groupId', component: GroupComponent, children: [
@@ -65,6 +68,7 @@ const routes: Routes = [
     ]
   },
   { path: 'test', component: TestComponent },
+  { path: 'about', component: AboutComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
@@ -90,7 +94,9 @@ const routes: Routes = [
     ArchiveComponent,
     TestComponent,
     KhitmaDoneCelebrationComponent,
-    QuranBrowserComponent
+    QuranBrowserComponent,
+    DashboardComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

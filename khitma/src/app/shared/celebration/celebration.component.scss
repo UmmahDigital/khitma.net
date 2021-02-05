@@ -1,3 +1,6 @@
+@import "~src/_variables";
+
+
 .confetti {
   display: flex;
   justify-content: center;
@@ -147,5 +150,5 @@
 }
 
 .confetti-piece {
-  color: #614316 !important;
+  color: $primary-color !important;
 }

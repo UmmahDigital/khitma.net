@@ -1,0 +1,9 @@
+<section *ngIf="groups">
+
+    <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
+
+
+</section>
+
+
+<a *ngIf="isShowArchive" mat-button class="block" href="/groups/archive">أرشيف الختمات</a>

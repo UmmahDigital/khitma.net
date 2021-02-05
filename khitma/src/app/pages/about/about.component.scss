@@ -1,0 +1,17 @@
+.about {
+    font-size: larger;
+    line-height: normal;
+    text-align: justify;
+  
+    .logo {
+      display: block;
+      width: 50%;
+      margin: 64px auto 32px auto !important;
+    }
+  }
+  
+  .about > * {
+    margin: 32px auto !important;
+    //   background-color: red;
+  }
+  

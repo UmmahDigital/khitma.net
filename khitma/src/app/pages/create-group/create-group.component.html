@@ -1,22 +1,63 @@
-<form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
+<section>
+    <header>إنشاء مجموعة جديدة</header>
 
-    <mat-form-field appearance="fill" class="block">
-        <mat-label>عنوان الختمة</mat-label>
-        <input matInput [(ngModel)]="title" name="title" required="true" autocomplete="off">
-    </mat-form-field>
 
-    <mat-form-field appearance="fill" class="block">
-        <mat-label>اسمك (مسؤول المجموعة)</mat-label>
-        <input matInput [(ngModel)]="author" name="author" required="true">
-    </mat-form-field>
+    <div id="group-type-selection" class="center-center">
 
-    <mat-form-field appearance="fill" class="block">
-        <mat-label>نص إضافي (اختياري)</mat-label>
-        <textarea matInput [(ngModel)]="description" name="description"></textarea>
-    </mat-form-field>
+        <mat-button-toggle-group #groupType="matButtonToggleGroup" value="recurring">
 
-    <button type="submit" class="block app-btn-primary large" mat-raised-button
-        color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">إنشاء
-        مجموعة الختمة</button>
+            <mat-button-toggle value="recurring">
+                <label class="center-center">
+                    <mat-icon>loop</mat-icon> <span>ختمة دوريّة</span>
+                </label>
+            </mat-button-toggle>
 
-</form>
+            <mat-button-toggle value="oneoff">
+                <label class="center-center">
+                    <mat-icon>looks_one</mat-icon> <span> ختمة لمرّة واحدة</span>
+                </label>
+            </mat-button-toggle>
+
+        </mat-button-toggle-group>
+
+
+    </div>
+
+    <p *ngIf="groupType.value == 'recurring'"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
+        غير
+        ثابتة.
+
+        في حال كانت لديكم مجموعة ختمة جماعيّة عبر الوتسأب مثلا فإنّ إنشاء مجموعة عبر ختمة.نت سيريحكم ويسهّل عملكم بشكل
+        كبير
+        إن شاء الله.
+    </p>
+
+    <p *ngIf="groupType.value == 'oneoff'"> تنتهي المجموعة عند انتهاء ختمة واحدة كاملة. مناسب مثلا للختمات العائليّة عن
+        أرواح
+        الموتى (رحمهم الله) أو في بيوت العزاء أو ختمات خلال المناسبات والنشاطات المختلفة. </p>
+
+
+    <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>عنوان الختمة</mat-label>
+            <input matInput [(ngModel)]="title" name="title" required="true" autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>اسمك (مسؤول المجموعة)</mat-label>
+            <input matInput [(ngModel)]="author" name="author" required="true">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>نص إضافي (اختياري)</mat-label>
+            <textarea matInput [(ngModel)]="description" name="description"></textarea>
+        </mat-form-field>
+
+        <button type="submit" class="block large action-btn" mat-raised-button
+            color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">إنشاء
+            مجموعة الختمة</button>
+
+    </form>
+
+</section>

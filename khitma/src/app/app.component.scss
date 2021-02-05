@@ -1,9 +1,13 @@
+@import "~src/_variables";
+
 .content {
   padding: 32px;
   // display: flex;
   // flex-direction: column;
   // align-items: center;
   overflow-x: hidden;
+  // overflow-y: scroll;
+  background: transparent;
 }
 
 .block {
@@ -14,8 +18,12 @@
 mat-toolbar a {
   text-decoration: none;
   color: white;
-}
 
+
+}
+.version{
+  opacity: 0.25;
+}
 // button,
 // a {
 //   // font-size: 1.1em !important;
@@ -44,8 +52,8 @@ section {
     text-align: center;
     font-size: 150%;
     font-weight: bold;
-    padding: 20px;
-    margin-bottom: -16px;
+    margin-bottom: 32px;
+    // margin-bottom: -16px;
   }
 }
 
@@ -54,21 +62,22 @@ section {
 }
 
 mat-toolbar {
-  background: #614316 !important;
+  background: darken($primary-color, 5%) !important;
 }
 
-.app-btn-primary {
-  background: #797912 !important;
+.action-btn {
+  background: $action-color !important;
   color: white !important;
 }
 
-button.large {
+
+button.large, a.large{
   height: 80px;
   line-height: 80px;
-  font-size: x-large;
+  font-size: larger;
 }
 
-button[disabled="true"] {
+.action-btn[disabled="true"] {
   background-color: lightgray !important;
   color: gray !important;
 }
@@ -83,4 +92,33 @@ button[disabled="true"] {
   background: #d3bd67;
   margin-left: 16px !important;
   color: white;
+}
+
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+// mat-sidenav-container{
+//   height: 100vh;
+// }
+
+
+.mat-drawer-container{
+  background: transparent;
+}
+
+.mat-nav-list .mat-list-item{
+padding:16px 0!important;
+}
+
+section > p {
+  margin: 32px auto !important;
+  //   background-color: red;
 }
