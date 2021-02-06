@@ -38,7 +38,7 @@ export class GroupDashboardComponent implements OnInit {
 
   isInitiated = false;
 
-  showNames = true;
+  showNames = false;
 
   inviteMsg = "";
   statusMsg = "";
@@ -83,6 +83,7 @@ export class GroupDashboardComponent implements OnInit {
 
         this.username = this.localDB.getUsername(this.group.id);
         this.isAdmin = this.group.isAdmin(this.username);
+        this.showNames = this.isAdmin;
 
         const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
 
