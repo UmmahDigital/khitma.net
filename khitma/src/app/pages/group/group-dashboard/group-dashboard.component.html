@@ -99,7 +99,8 @@
 
     <section class="juz-list-section" *ngIf="showNames">
 
-        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" (onJuzSelection)="juzSelected($event)">
+        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="false"
+            (onJuzSelection)="juzSelected($event)">
         </app-juz-list>
 
     </section>

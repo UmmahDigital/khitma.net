@@ -96,7 +96,7 @@ const routes: Routes = [
     KhitmaDoneCelebrationComponent,
     QuranBrowserComponent,
     DashboardComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

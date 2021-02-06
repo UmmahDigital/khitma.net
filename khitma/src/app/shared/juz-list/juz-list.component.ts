@@ -12,6 +12,8 @@ export class JuzListComponent implements OnInit {
 
   @Input() ajza: Juz[];
   @Input() myJuzIndex?: number;
+  @Input() allowEdit?: boolean;
+
   @Output() onJuzSelection = new EventEmitter<Juz>();
 
   constructor() { }

@@ -84,53 +84,59 @@ export class GroupDashboardComponent implements OnInit {
         this.username = this.localDB.getUsername(this.group.id);
         this.isAdmin = this.group.isAdmin(this.username);
 
-        const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
+
+        //******************************************************** */
+        // this is all is not needed now as admin  advances the ajza of everyone.
+        // const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
 
         // Check if this a recurring group
-        if (myLastJuz != null && this.group.cycle > 0) {
+        // if (myLastJuz != null && this.group.cycle > 0) {
 
-          let myNextJuzFromCycle = this.getMyLastReadJuz(this.group.ajza);// this.group.ajza.find(juz => juz.owner === this.username); // should return last not first
+        //   let myNextJuzFromCycle = this.getMyLastReadJuz(this.group.ajza);// this.group.ajza.find(juz => juz.owner === this.username); // should return last not first
 
-          if (myNextJuzFromCycle) {
-            this.localDB.setMyJuz(this.group.id, this.group.cycle, myNextJuzFromCycle.index);
-            this.myJuzIndex = myNextJuzFromCycle.index;
-            return;
-          }
+        //   if (myNextJuzFromCycle) {
+        //     this.localDB.setMyJuz(this.group.id, this.group.cycle, myNextJuzFromCycle.index);
+        //     this.myJuzIndex = myNextJuzFromCycle.index;
+        //     return;
+        //   }
 
-          // Check if a new cycle was started while I was away. Disable the suggesting of new juz as admin now advances the ajza of everyone.
-          // const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
+        //   //Check if a new cycle was started while I was away. 
+        //   const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
 
-          // if (myCycle < this.group.cycle) {
+        //   if (myCycle < this.group.cycle) {
 
-          //   const myNextJuz = (myLastJuz + this.group.cycle - myCycle) % NUM_OF_AJZA;
+        //     const myNextJuz = (myLastJuz + this.group.cycle - myCycle) % NUM_OF_AJZA;
 
-          //   this.proposeNextJuz(myLastJuz, myNextJuz);
+        //     this.proposeNextJuz(myLastJuz, myNextJuz);
 
-          // }
+        //   }
 
-        }
+        // }
+        //******************************************************** */
+
 
         if (this.myJuzIndex && group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
           this.myJuzIndex = null;
         }
 
         this.isInitiated = true;
+
       }
 
     });
 
   }
 
-  getMyLastReadJuz(ajza: Juz[]) {
+  // getMyLastReadJuz(ajza: Juz[]) {
 
-    for (let i = (NUM_OF_AJZA - 1); i >= 0; i--) {
-      if (ajza[i].owner === this.username) {
-        return ajza[i];
-      }
-    }
+  //   for (let i = (NUM_OF_AJZA - 1); i >= 0; i--) {
+  //     if (ajza[i].owner === this.username) {
+  //       return ajza[i];
+  //     }
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
   // proposeNextJuz(lastJuz, nextJuz) {
 

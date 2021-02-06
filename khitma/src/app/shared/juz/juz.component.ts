@@ -11,6 +11,7 @@ export class JuzComponent implements OnInit {
 
   @Input() juz: Juz;
   @Input() myJuzIndex: number;
+  @Input() isEditMode?: boolean;
 
   stateName: string;
   msg: string;
@@ -27,6 +28,10 @@ export class JuzComponent implements OnInit {
     }
 
     let _cssClasses = this.stateName;
+
+    if (this.isEditMode) {
+      _cssClasses += " edit-mode";
+    }
 
     this.msg = "لم تتم قراءته بعد..";
 

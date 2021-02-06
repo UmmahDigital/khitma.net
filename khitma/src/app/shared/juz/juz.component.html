@@ -1,11 +1,29 @@
-<div class="juz list-item noselect" [ngClass]="cssClasses">
+<div class="juz list-item noselect" [ngClass]="cssClasses" fxLayout="row wrap" fxLayoutGap="0px grid">
 
-    <span class="index">{{juz.index+1}}</span>
+    <div fxFlex="20%" class="center-center">
+        <span class="index">{{juz.index+1}}</span>
+    </div>
 
-    <span class="owner"> {{juz.owner || msg }}</span>
+    <div fxFlex="80%">
+        <div *ngIf="isEditMode">
 
-    <!-- 
-    <button *ngIf="stateName =='idle'" type="submit" class="block" mat-raised-button color="primary">اقرأ جزء
-        {{juz.index+1}} </button> -->
+            <input class="owner" type="text" [value]="juz.owner || msg" />
+
+            <button mat-raised-button>
+                <mat-icon>save</mat-icon>
+            </button>
+
+        </div>
+
+        <div *ngIf="!isEditMode">
+
+            <span class="owner"> {{juz.owner || msg }}</span>
+
+        </div>
+
+
+    </div>
+
+
 
 </div>
