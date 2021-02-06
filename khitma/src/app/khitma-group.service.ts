@@ -150,8 +150,40 @@ export class KhitmaGroupService {
       return newCycleAjza;
     }
 
+    function _keepOnlyLastJuz(newCycleAjza: Juz[]): Juz[] { // for example if someone read juz 25-30 in the last cycle. next time she should read 1 (without 26-30).
+
+      for (let i = NUM_OF_AJZA - 1; i > 0; i--) { // special case for juz 1, as 1 comes after 30
+        if (newCycleAjza[i].owner == newCycleAjza[0].owner) {
+          newCycleAjza[i] = {
+            index: newCycleAjza[i].index,
+            owner: "",
+            status: JUZ_STATUS.IDLE
+          };
+        }
+      }
+
+      for (let i = NUM_OF_AJZA - 1; i > 0; i--) {
+        if (newCycleAjza[i].owner != "") {
+          for (let j = 1; j < i; j++) {
+            if (newCycleAjza[j].owner == newCycleAjza[i].owner) {
+              newCycleAjza[j] = {
+                index: newCycleAjza[j].index,
+                owner: "",
+                status: JUZ_STATUS.IDLE
+              };
+            }
+          }
+        }
+      }
+
+      return newCycleAjza;
+
+    }
+
     let ajza = _generateNextCycleAjza(this._currentGroupObj.ajza);
-    let ajzaObj = KhitmaGroup.convertAjzaToObj(ajza);
+    let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
+
+    let ajzaObj = KhitmaGroup.convertAjzaToObj(ajzaWithoutDuplicates);
 
     this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "cycle": newCycle, "ajza": ajzaObj });
 
