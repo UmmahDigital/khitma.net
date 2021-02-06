@@ -84,36 +84,19 @@ export class GroupDashboardComponent implements OnInit {
         this.username = this.localDB.getUsername(this.group.id);
         this.isAdmin = this.group.isAdmin(this.username);
 
+        const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
 
-        //******************************************************** */
-        // this is all is not needed now as admin  advances the ajza of everyone.
-        // const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
+        if (myCycle < this.group.cycle) {
 
-        // Check if this a recurring group
-        // if (myLastJuz != null && this.group.cycle > 0) {
+          let myNextJuzFromCycle = this.getMyLastReadJuz(this.group.ajza);
 
-        //   let myNextJuzFromCycle = this.getMyLastReadJuz(this.group.ajza);// this.group.ajza.find(juz => juz.owner === this.username); // should return last not first
+          if (myNextJuzFromCycle) {
+            this.localDB.setMyJuz(this.group.id, this.group.cycle, myNextJuzFromCycle.index);
+            this.myJuzIndex = myNextJuzFromCycle.index;
+            return;
+          }
 
-        //   if (myNextJuzFromCycle) {
-        //     this.localDB.setMyJuz(this.group.id, this.group.cycle, myNextJuzFromCycle.index);
-        //     this.myJuzIndex = myNextJuzFromCycle.index;
-        //     return;
-        //   }
-
-        //   //Check if a new cycle was started while I was away. 
-        //   const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
-
-        //   if (myCycle < this.group.cycle) {
-
-        //     const myNextJuz = (myLastJuz + this.group.cycle - myCycle) % NUM_OF_AJZA;
-
-        //     this.proposeNextJuz(myLastJuz, myNextJuz);
-
-        //   }
-
-        // }
-        //******************************************************** */
-
+        }
 
         if (this.myJuzIndex && group.ajza[this.myJuzIndex].status == JUZ_STATUS.DONE) {
           this.myJuzIndex = null;
@@ -127,16 +110,45 @@ export class GroupDashboardComponent implements OnInit {
 
   }
 
-  // getMyLastReadJuz(ajza: Juz[]) {
+  //******************************************************** */
+  // this is all is not needed now as admin  advances the ajza of everyone.
+  // const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
 
-  //   for (let i = (NUM_OF_AJZA - 1); i >= 0; i--) {
-  //     if (ajza[i].owner === this.username) {
-  //       return ajza[i];
-  //     }
+  // Check if this a recurring group
+  // if (myLastJuz != null && this.group.cycle > 0) {
+
+  //   let myNextJuzFromCycle = this.getMyLastReadJuz(this.group.ajza);// this.group.ajza.find(juz => juz.owner === this.username); // should return last not first
+
+  //   if (myNextJuzFromCycle) {
+  //     this.localDB.setMyJuz(this.group.id, this.group.cycle, myNextJuzFromCycle.index);
+  //     this.myJuzIndex = myNextJuzFromCycle.index;
+  //     return;
   //   }
 
-  //   return null;
+  //   //Check if a new cycle was started while I was away. 
+  //   const myCycle = this.localDB.getMyKhitmaCycle(this.group.id);
+
+  //   if (myCycle < this.group.cycle) {
+
+  //     const myNextJuz = (myLastJuz + this.group.cycle - myCycle) % NUM_OF_AJZA;
+
+  //     this.proposeNextJuz(myLastJuz, myNextJuz);
+
+  //   }
+
   // }
+  //******************************************************** */
+
+  getMyLastReadJuz(ajza: Juz[]) {
+
+    for (let i = (NUM_OF_AJZA - 1); i >= 0; i--) {
+      if (ajza[i].owner === this.username) {
+        return ajza[i];
+      }
+    }
+
+    return null;
+  }
 
   // proposeNextJuz(lastJuz, nextJuz) {
 
@@ -201,7 +213,11 @@ export class GroupDashboardComponent implements OnInit {
     const isUpdateForOtherUserCaseAdminCase = (juz.owner != this.username);
     const isUpdateMyDoneJuzAdminCase = (juz.owner == this.username && juz.status == JUZ_STATUS.DONE);
 
-    if (this.isAdmin && (isUpdateForOtherUserCaseAdminCase || isUpdateMyDoneJuzAdminCase)) {
+    // if (this.isAdmin && (isUpdateForOtherUserCaseAdminCase || isUpdateMyDoneJuzAdminCase)) {
+    //   this.adminJuzUpdate(juz);
+    // }
+
+    if (this.isAdmin) {
       this.adminJuzUpdate(juz);
     }
 

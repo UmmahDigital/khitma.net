@@ -50,4 +50,31 @@ export class DashboardComponent implements OnInit {
 
   }
 
+
+  archiveGroup(group: KhitmaGroup) {
+
+    this.$gaService.event('group_leave');
+
+    const dialogData = new ConfirmDialogModel(
+      "تأكيد أرشفة المجموعة",
+      'أرشفة مجموعة: "' + group.title + '"؟'
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: dialogData,
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+
+      if (confirmed) {
+        this.localDB.archiveGroup(group);
+        this.groups = this.groups.filter(item => item.id !== group.id);
+        this.isShowArchive = true;
+      }
+
+    });
+
+  }
+
 }

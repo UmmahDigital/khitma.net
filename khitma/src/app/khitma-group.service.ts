@@ -135,7 +135,6 @@ export class KhitmaGroupService {
         index: 0,
         owner: oldCycleAjza[NUM_OF_AJZA - 1].owner,
         status: JUZ_STATUS.BOOKED
-
       }));
 
       for (let i = 1; i < NUM_OF_AJZA; i++) {
@@ -147,6 +146,7 @@ export class KhitmaGroupService {
         }));
 
       }
+
       return newCycleAjza;
     }
 
