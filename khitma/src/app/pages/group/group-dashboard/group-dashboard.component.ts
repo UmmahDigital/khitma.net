@@ -38,7 +38,7 @@ export class GroupDashboardComponent implements OnInit {
 
   isInitiated = false;
 
-  showNames = false;
+  showNames = true;
 
   inviteMsg = "";
   statusMsg = "";
@@ -165,39 +165,44 @@ export class GroupDashboardComponent implements OnInit {
 
   // }
 
+  adminJuzUpdate(juz: Juz) {
+
+    if (juz.status == JUZ_STATUS.BOOKED) {
+      this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
+    }
+
+    if (juz.status == JUZ_STATUS.DONE) {
+
+      const dialogData = new ConfirmDialogModel(
+        "تأكيد إتاحة الجزء",
+        " ستتم ازالة اسم العضو الحالي من جزء" + (juz.index + 1) + " وإتاحته للإختيار.");
+
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: dialogData,
+        maxWidth: "80%"
+      });
+
+      dialogRef.afterClosed().subscribe(dialogResult => {
+
+        if (dialogResult) {
+          this.groupsApi.updateJuz(this.group.id, juz.index, "", JUZ_STATUS.IDLE);
+        }
+
+      });
+
+    }
+
+    this.$gaService.event('admin_juz_update');
+
+  }
+
   juzSelected(juz: Juz) {
 
     const isUpdateForOtherUserCaseAdminCase = (juz.owner != this.username);
     const isUpdateMyDoneJuzAdminCase = (juz.owner == this.username && juz.status == JUZ_STATUS.DONE);
 
     if (this.isAdmin && (isUpdateForOtherUserCaseAdminCase || isUpdateMyDoneJuzAdminCase)) {
-
-      if (juz.status == JUZ_STATUS.BOOKED) {
-        this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
-
-        this.$gaService.event('admin_juz_update');
-
-        return;
-      }
-
-      if (juz.status == JUZ_STATUS.DONE) {
-        this.groupsApi.updateJuz(this.group.id, juz.index, "", JUZ_STATUS.IDLE);
-
-        this.$gaService.event('admin_juz_update');
-
-        return;
-      }
-
-      // if (juz.status == JUZ_STATUS.IDLE) {
-      //   this.groupsApi.updateJuz(this.group.id, juz.index, "عام", JUZ_STATUS.BOOKED);
-      //   return;
-      // }
-
-
-    }
-
-    if (juz.status != JUZ_STATUS.IDLE) {
-      return;
+      this.adminJuzUpdate(juz);
     }
 
     if (juz.status != JUZ_STATUS.IDLE || this.myJuzIndex != null) {
@@ -213,7 +218,6 @@ export class GroupDashboardComponent implements OnInit {
   }
 
   juzDone() {
-
 
     const title = "تأكيد إتمام الجزء";
     const msg = "هل أتممت قراءة جزء " + (this.myJuzIndex + 1) + "؟";
@@ -360,6 +364,22 @@ export class GroupDashboardComponent implements OnInit {
 
   shareInviteMsg() {
     this.nativeApi.share(("دعوة انضمام: " + this.group.title), this.inviteMsg, null);
+  }
+
+  juzOwnerEdited(updatedJuz: Juz) {
+
+
+    if (updatedJuz.owner == "" || updatedJuz.owner == null) {
+      updatedJuz.status = JUZ_STATUS.IDLE;
+    }
+
+    this.groupsApi.updateJuz(this.group.id, updatedJuz.index, updatedJuz.owner, updatedJuz.status);
+
+
+    console.log("dashboard - juz update, new owner: " + updatedJuz.owner);
+
+
+
   }
 
 }

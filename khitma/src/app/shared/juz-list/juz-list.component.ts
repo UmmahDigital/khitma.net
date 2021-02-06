@@ -14,7 +14,9 @@ export class JuzListComponent implements OnInit {
   @Input() myJuzIndex?: number;
   @Input() allowEdit?: boolean;
 
-  @Output() onJuzSelection = new EventEmitter<Juz>();
+  @Output() onEdited?= new EventEmitter<Juz>();
+  @Output() onJuzSelection?= new EventEmitter<Juz>();
+
 
   constructor() { }
 
@@ -22,8 +24,11 @@ export class JuzListComponent implements OnInit {
   }
 
   juzClicked(juz: Juz) {
-
     this.onJuzSelection.emit(juz);
+  }
+
+  juzEdited(juz: Juz) {
+    this.onEdited.emit(juz);
   }
 
 }

@@ -122,3 +122,11 @@ section > p {
   margin: 32px auto !important;
   //   background-color: red;
 }
+
+.tip{
+  background: lighten($primary-color, 50%);
+  color: $primary-color;
+  padding:16px;
+  border-radius: 4px;
+display: block;
+}

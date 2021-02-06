@@ -1,28 +1,56 @@
-<div class="juz list-item noselect" [ngClass]="cssClasses" fxLayout="row wrap" fxLayoutGap="0px grid">
+<div class="juz list-item noselect" [ngClass]="cssClasses">
 
-    <div fxFlex="20%" class="center-center">
-        <span class="index">{{juz.index+1}}</span>
-    </div>
 
-    <div fxFlex="80%">
-        <div *ngIf="isEditMode">
+    <div *ngIf="!isEditMode; else editmode" fxLayout="row wrap" fxLayoutGap="0px grid" (click)="juzClicked()">
 
-            <input class="owner" type="text" [value]="juz.owner || msg" />
-
-            <button mat-raised-button>
-                <mat-icon>save</mat-icon>
-            </button>
-
+        <div fxFlex="20%" class="center-center">
+            <span class="index">{{juz.index+1}}</span>
         </div>
 
-        <div *ngIf="!isEditMode">
-
+        <div fxFlex="80%">
             <span class="owner"> {{juz.owner || msg }}</span>
+        </div>
+
+    </div>
+
+    <ng-template #editmode>
+
+        <div *ngIf="isEditMode" fxLayout="row wrap" fxLayoutGap="0px grid">
+
+
+            <div fxFlex="20%" class="center-center">
+                <span class="index" (click)="juzClicked()">{{juz.index+1}}</span>
+            </div>
+
+            <div fxFlex="80%">
+
+                <div fxLayout="row wrap" fxLayoutGap="0px grid">
+
+                    <div fxFlex="80%">
+                        <mat-form-field class="block">
+                            <!-- <mat-label>صاحب الجزء:</mat-label> -->
+                            <input matInput type="text" [(ngModel)]="updatedOwner" autocomplete="off">
+                            <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                (click)="value=''">
+                                <mat-icon>close</mat-icon>
+                            </button> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div *ngIf="updatedOwner !=  juz.owner" fxFlex="20%" class="center-center"
+                        (click)="updateOwner(updatedOwner)">
+                        <mat-icon>save</mat-icon>
+
+                    </div>
+
+                </div>
+
+
+            </div>
 
         </div>
 
-
-    </div>
+    </ng-template>
 
 
 

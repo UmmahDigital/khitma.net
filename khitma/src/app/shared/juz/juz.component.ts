@@ -13,13 +13,21 @@ export class JuzComponent implements OnInit {
   @Input() myJuzIndex: number;
   @Input() isEditMode?: boolean;
 
+  @Output() onJuzSelection?= new EventEmitter<Juz>();
+  @Output() onEdited?= new EventEmitter<Juz>();
+
   stateName: string;
   msg: string;
   cssClasses: string;
 
-  constructor() { }
+  updatedOwner: string;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+
+    this.updatedOwner = this.juz.owner;
 
     switch (this.juz.status) {
       case JUZ_STATUS.IDLE: this.stateName = "idle"; break;
@@ -37,7 +45,6 @@ export class JuzComponent implements OnInit {
 
     if (this.juz.index == this.myJuzIndex) {
       _cssClasses += " my-juz";
-
     }
 
     if (this.myJuzIndex == null && this.juz.status == JUZ_STATUS.IDLE) {
@@ -45,9 +52,25 @@ export class JuzComponent implements OnInit {
       this.msg = "إضغط لاختيار هذا الجزء";
     }
 
-
-
     this.cssClasses = _cssClasses;
+  }
+
+  juzClicked() {
+    this.onJuzSelection.emit(this.juz);
+  }
+
+  updateOwner(newOwner: string) {
+
+    let updatedStatus = this.juz.status;
+
+    if (this.juz.status == JUZ_STATUS.IDLE && newOwner != "") {
+      this.juz.status = JUZ_STATUS.BOOKED;
+    }
+
+    this.juz.owner = newOwner;
+
+    this.onEdited.emit(this.juz);
+
   }
 
 

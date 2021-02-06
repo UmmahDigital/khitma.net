@@ -10,9 +10,13 @@
 
     <header class="dashboard-header">
         <section *ngIf="isAdmin" class="admin-section center-center">
-            <mat-icon style="margin-left: 8px;">verified</mat-icon>
+            <mat-icon>verified</mat-icon>
 
-            <span> لديك صلاحيّات مسؤول في هذه المجموعة </span>
+            <span style="margin:0 8px;">
+                لديك صلاحيّات مسؤول في هذه المجموعة
+            </span>
+
+            <mat-icon>info</mat-icon>
         </section>
 
         <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
@@ -32,7 +36,17 @@
     </section>
 
 
-    <div class="space"></div>
+    <div class="block" style="margin:32px auto; text-align: center;">
+
+
+        <div *ngIf="this.group.hasIdleAjza(); else noIdleAjza">
+            <span> يمكنك اختيار أي من الأجزاء التي باللون الأحمر</span>
+        </div>
+        <ng-template #noIdleAjza>
+            <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة</span>
+        </ng-template>
+
+    </div>
 
 
     <section class="juz-grid-section">
@@ -99,8 +113,8 @@
 
     <section class="juz-list-section" *ngIf="showNames">
 
-        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="false"
-            (onJuzSelection)="juzSelected($event)">
+        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="isAdmin"
+            (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
         </app-juz-list>
 
     </section>

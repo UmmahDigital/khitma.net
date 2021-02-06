@@ -87,6 +87,16 @@ export class KhitmaGroup {
         return username == this.author;
     }
 
+    public hasIdleAjza() {
+        for (var i = 0; i < NUM_OF_AJZA; i++) {
+            if (this.ajza[i].status == JUZ_STATUS.IDLE) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     static getEmptyAjzaObj() {
 
