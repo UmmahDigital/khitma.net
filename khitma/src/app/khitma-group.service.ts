@@ -125,7 +125,7 @@ export class KhitmaGroupService {
     return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
   }
 
-  startNewKhitmah(groupId, newCycle) {
+  startNewKhitmah(newCycle) {
 
     function _generateNextCycleAjza(oldCycleAjza: Juz[]): Juz[] {
 
@@ -185,7 +185,7 @@ export class KhitmaGroupService {
 
     let ajzaObj = KhitmaGroup.convertAjzaToObj(ajzaWithoutDuplicates);
 
-    this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "cycle": newCycle, "ajza": ajzaObj });
+    this.db.doc<KhitmaGroup>('groups/' + this._currentGroupObj.id).update({ "cycle": newCycle, "ajza": ajzaObj });
 
   }
 

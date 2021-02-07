@@ -97,6 +97,13 @@ export class KhitmaGroup {
         return false;
     }
 
+    public getMyJuzIndex(owner) {
+
+        let myJuz = this.ajza.find(juz => juz.owner === owner && juz.status === JUZ_STATUS.BOOKED);
+
+        return myJuz ? myJuz.index : null;
+    }
+
 
     static getEmptyAjzaObj() {
 
