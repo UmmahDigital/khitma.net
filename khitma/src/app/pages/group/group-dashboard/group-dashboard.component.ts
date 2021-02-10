@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, GET_JUZ_READ_EXTERNAL_URL } from 'src/app/entities/entities';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, GET_JUZ_READ_EXTERNAL_URL, KHITMA_CYCLE_TYPE } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -12,6 +12,8 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from 'src/app/alert.service';
 import { NativeApiService } from 'src/app/native-api.service';
+import { EditKhitmaDetailsComponent } from 'src/app/dialog/edit-khitma-details/edit-khitma-details.component';
+import { StartNewKhitmaComponent } from 'src/app/dialog/start-new-khitma/start-new-khitma.component';
 
 
 
@@ -198,30 +200,53 @@ export class GroupDashboardComponent implements OnInit {
 
   startNewKhitmah() {
 
-    const dialogData = new ConfirmDialogModel(
-      "تأكيد بدء ختمة جديدة",
-      "بدء ختمة جديدة سيقوم بإعادة كل الأجزاء إلى وضعيّة الإتاحة وتمكين كل عضو في المجموعة من اختيار جزئه الجديد.");
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: dialogData,
+    const dialogRef = this.dialog.open(StartNewKhitmaComponent, {
+      data: {
+        title: this.group.title,
+        author: this.group.author,
+        descreption: this.group.description
+      },
       maxWidth: "80%"
     });
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    dialogRef.afterClosed().subscribe(selectedCycleType => {
 
-      if (dialogResult) {
+      if (selectedCycleType == KHITMA_CYCLE_TYPE.AUTO_BOOK || selectedCycleType == KHITMA_CYCLE_TYPE.ALL_IDLE) {
 
         this.$gaService.event('group_new_khitmah');
 
         this.group.cycle++;
-        this.groupsApi.startNewKhitmah(this.group.cycle);
+        this.groupsApi.startNewKhitmah(this.group.cycle, selectedCycleType);
 
-        // const myLastJuz = this.localDB.getMyLastJuz(this.group.id);
-
-        // this.proposeNextJuz(myLastJuz, myLastJuz + 1);
       }
 
     });
+
+
+
+
+    // const dialogData = new ConfirmDialogModel(
+    //   "تأكيد بدء ختمة جديدة",
+    //   "بدء ختمة جديدة سيقوم بإعادة كل الأجزاء إلى وضعيّة الإتاحة وتمكين كل عضو في المجموعة من اختيار جزئه الجديد.");
+
+    // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    //   data: dialogData,
+    //   maxWidth: "80%"
+    // });
+
+    // dialogRef.afterClosed().subscribe(dialogResult => {
+
+    //   if (dialogResult) {
+
+    //     this.$gaService.event('group_new_khitmah');
+
+    //     this.group.cycle++;
+    //     this.groupsApi.startNewKhitmah(this.group.cycle);
+
+    //   }
+
+    // });
 
   }
 
@@ -270,8 +295,6 @@ export class GroupDashboardComponent implements OnInit {
 
     });
 
-    // return window.encodeURIComponent(msg);
-
     msg += NEW_LINE;
     msg += NEW_LINE;
 
@@ -281,7 +304,6 @@ export class GroupDashboardComponent implements OnInit {
     msg += NEW_LINE;
 
     msg += "بارك الله بكم!";
-
 
     return msg;
   }
@@ -322,7 +344,28 @@ export class GroupDashboardComponent implements OnInit {
 
     console.log("dashboard - juz update, new owner: " + updatedJuz.owner);
 
+  }
 
+  showEditGroupDialog() {
+
+    const dialogRef = this.dialog.open(EditKhitmaDetailsComponent, {
+      data: {
+        title: this.group.title,
+        author: this.group.author,
+        descreption: this.group.description
+      },
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+
+        this.groupsApi.updateGroupInfo(this.group.id, dialogResult.title, dialogResult.description);
+
+      }
+
+    });
 
   }
 

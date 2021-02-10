@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>
+    ختمة جديدة للمجموعة
+</h1>
+
+<div mat-dialog-content>
+
+
+
+    <label id="radio-group-label">الرجاء اختيار الحالة المرجوّة للختمة الجديدة</label>
+
+    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="newCycleState">
+
+
+        <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.AUTO_BOOK">
+            حجز الجزء التالي لكل عضو تلقائيّا
+        </mat-radio-button>
+
+        <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.ALL_IDLE">
+            إتاحة جميع الأجزاء للإختيار
+        </mat-radio-button>
+
+
+    </mat-radio-group>
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onDismiss()">الغاء</button>
+    <button mat-raised-button type="submit" class="action-btn" (click)="onConfirm()">موافق</button>
+</div>

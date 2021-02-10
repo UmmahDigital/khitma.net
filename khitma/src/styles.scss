@@ -18,6 +18,16 @@ body {
   font-size: large;
 }
 
+body{
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+}
+
 $custom-typography: mat-typography-config(
   $font-family: "Markazi Text",
   $headline: mat-typography-level(32px, 48px, 700),
@@ -29,3 +39,8 @@ $custom-typography: mat-typography-config(
 @include mat-base-typography($custom-typography);
 @include angular-material-typography($custom-typography);
 // @include mat-button-typography($custom-typography);
+
+
+
+
+

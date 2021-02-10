@@ -7,6 +7,13 @@ export const JUZ_STATUS = Object.freeze({
     DONE: 2
 });
 
+export const KHITMA_CYCLE_TYPE = Object.freeze({
+    AUTO_BOOK: 1,
+    ALL_IDLE: 2,
+
+});
+
+
 export function GET_JUZ_READ_EXTERNAL_URL(juzIndex: number): string {
 
     const JUZ_START_PAGE = [
@@ -41,6 +48,7 @@ export class KhitmaGroup {
     creationDate?: Date;
     ajza?: Juz[];
     cycle?: number;
+    targetDate?: Date;
 
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);

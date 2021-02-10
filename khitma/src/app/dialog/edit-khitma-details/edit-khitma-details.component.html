@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>
+    تعديل تفاصيل الختمة
+</h1>
+
+<div mat-dialog-content>
+
+
+    <form (ngSubmit)="onConfirm()" #editGroupForm="ngForm">
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>عنوان الختمة</mat-label>
+            <input matInput [(ngModel)]="group.title" name="title" required="true" autocomplete="off">
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill" class="block">
+            <mat-label>اسمك (مسؤول المجموعة)</mat-label>
+            <input matInput [(ngModel)]="group.author" name="author" required="true">
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>نص إضافي (اختياري)</mat-label>
+            <textarea matInput [(ngModel)]="group.description" name="description"></textarea>
+        </mat-form-field>
+
+        <button type="submit" class="block action-btn" mat-raised-button
+            color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid">حفظ
+            التغييرات</button>
+
+    </form>
+
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onDismiss()">الغاء</button>
+    <!-- <button mat-raised-button color="primary" type="submit" class="app-btn-primary" (click)="onConfirm()"
+        disabled]="!editGroupForm.form.valid">حفظ</button> -->
+</div>

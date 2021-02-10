@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA } from './entities/entities';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, KHITMA_CYCLE_TYPE } from './entities/entities';
 
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { map, catchError, take, first } from 'rxjs/operators';
@@ -7,6 +7,8 @@ import { environment } from '../environments/environment';
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ThrowStmt } from '@angular/compiler';
+
+
 
 
 @Injectable({
@@ -91,6 +93,16 @@ export class KhitmaGroupService {
     return group && group.title ? true : false;
   }
 
+
+  public updateGroupInfo(groupId, title, description) {
+
+    this.db.doc<KhitmaGroup>('groups/' + groupId).update({
+      title: title,
+      description: description || ""
+    });
+
+  }
+
   public updateJuz(groupId, juzIndex, ownerName, juzStatus) {
 
     if (!groupId) {
@@ -125,7 +137,7 @@ export class KhitmaGroupService {
     return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
   }
 
-  startNewKhitmah(newCycle) {
+  startNewKhitmah(newCycle, newCycleType) {
 
     function _generateNextCycleAjza(oldCycleAjza: Juz[]): Juz[] {
 
@@ -180,12 +192,22 @@ export class KhitmaGroupService {
 
     }
 
-    let ajza = _generateNextCycleAjza(this._currentGroupObj.ajza);
-    let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
 
-    let ajzaObj = KhitmaGroup.convertAjzaToObj(ajzaWithoutDuplicates);
+    let ajzaObj = {};
 
-    this.db.doc<KhitmaGroup>('groups/' + this._currentGroupObj.id).update({ "cycle": newCycle, "ajza": ajzaObj });
+    if (newCycleType == KHITMA_CYCLE_TYPE.AUTO_BOOK) {
+
+      let ajza = _generateNextCycleAjza(this._currentGroupObj.ajza);
+      let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
+
+      ajzaObj = KhitmaGroup.convertAjzaToObj(ajzaWithoutDuplicates);
+
+    }
+    else {
+      ajzaObj = KhitmaGroup.getEmptyAjzaObj();
+    }
+
+    this.db.doc<any>('groups/' + this._currentGroupObj.id).update({ "cycle": newCycle, "ajza": ajzaObj });
 
   }
 

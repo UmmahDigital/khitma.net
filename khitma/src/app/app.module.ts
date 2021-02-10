@@ -48,6 +48,8 @@ import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration
 import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
 import { DashboardComponent } from './pages/me/dashboard/dashboard.component';
 import { AboutComponent } from './pages/about/about.component';
+import { EditKhitmaDetailsComponent } from './dialog/edit-khitma-details/edit-khitma-details.component';
+import { StartNewKhitmaComponent } from './dialog/start-new-khitma/start-new-khitma.component';
 
 
 
@@ -97,6 +99,8 @@ const routes: Routes = [
     QuranBrowserComponent,
     DashboardComponent,
     AboutComponent,
+    EditKhitmaDetailsComponent,
+    StartNewKhitmaComponent,
   ],
   imports: [
     BrowserModule,

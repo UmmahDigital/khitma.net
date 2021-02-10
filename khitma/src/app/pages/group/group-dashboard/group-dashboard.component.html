@@ -9,12 +9,23 @@
 
 
     <header class="dashboard-header">
-        <section *ngIf="isAdmin" class="admin-section center-center">
+
+
+        <section *ngIf="isAdmin" class="admin-section center-center" (click)="showEditGroupDialog()">
+
+
             <mat-icon>verified</mat-icon>
 
             <span style="margin:0 8px;">
                 لديك صلاحيّات مسؤول في هذه المجموعة
             </span>
+
+            <button mat-flat-button style="zoom: 0.75;">
+                <mat-icon alt="تعديل تفاصيل الختمة"> edit</mat-icon>
+            </button>
+
+
+
 
             <!-- <mat-icon>info</mat-icon> -->
         </section>

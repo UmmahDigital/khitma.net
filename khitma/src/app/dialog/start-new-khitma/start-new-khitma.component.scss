@@ -1,0 +1,28 @@
+@import "~src/_variables";
+
+
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.radio-button {
+    margin: 5px;
+    padding: 16px 16px;
+    background: #fafafa;
+
+
+}
+
+
+// .mat-radio-outer-circle{
+//     border-color: red!important;
+
+// }
+
+// .mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple{
+//     background-color: $primary-color!important;   
+
+// }
