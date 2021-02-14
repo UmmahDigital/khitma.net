@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'src/app/alert.service';
 import { KhitmaGroup } from 'src/app/entities/entities';
+import { NativeApiService } from 'src/app/native-api.service';
+import { NativeShareService } from 'src/app/native-share.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
 
@@ -19,7 +21,9 @@ export class GroupInviteComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private groupsApi: KhitmaGroupService,
-    private alert: AlertService) { }
+    private alert: AlertService,
+    private nativeShare: NativeShareService,
+    private nativeApi: NativeApiService) { }
 
   ngOnInit() {
 
@@ -36,7 +40,8 @@ export class GroupInviteComponent implements OnInit {
           this.inviteMsg = "إنضمّوا إلى"
             + ' "' + this.group.title + '" '
             + "عبر الرابط "
-            + this.inviteLink;
+            + this.inviteLink
+            + ". بارك الله فيكم.";
 
         });
 
@@ -47,6 +52,12 @@ export class GroupInviteComponent implements OnInit {
   msgCopied() {
 
     this.alert.show("تمّ نسخ الرسالة، يمكنك الآن مشاركتها مع معارفك وأصدقائك.", 5000);
+
+  }
+
+  share() {
+
+    this.nativeApi.share("دعوة للإنضمام لمجموعة الختمة", this.inviteMsg, null);
 
   }
 

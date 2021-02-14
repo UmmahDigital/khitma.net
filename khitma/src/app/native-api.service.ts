@@ -34,4 +34,31 @@ export class NativeApiService {
     });
 
   }
+
+
+  //   shareFile(filesArray): void {
+
+
+  //     const base64url = "data:image/octet-stream;base64,/9j/4AAQSkZ...."
+  // const blob = await (await fetch(base64url)).blob();
+  // const file = new File([blob], 'fileName.png', { type: blob.type });
+  // navigator.share({
+  //   title: 'Hello',
+  //   text: 'Check out this image!',
+  //   files: [file],
+  // })
+
+
+
+  //     if ((<any>navigator).canShare && (<any>navigator).canShare({ files: filesArray })) {
+  //       navigator.share({
+  //         files: filesArray,
+  //         title: 'Pictures',
+  //         text: 'Our Pictures.',
+  //       })
+  //     }
+
+  //   }
+
+
 }

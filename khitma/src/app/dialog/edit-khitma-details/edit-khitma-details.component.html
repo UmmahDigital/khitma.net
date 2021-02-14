@@ -19,8 +19,22 @@
 
         <mat-form-field appearance="fill" class="block">
             <mat-label>نص إضافي (اختياري)</mat-label>
-            <textarea matInput [(ngModel)]="group.description" name="description"></textarea>
+            <textarea rows="4" matInput [(ngModel)]="group.description" name="description"></textarea>
         </mat-form-field>
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>وقت التسليم</mat-label>
+            <input matInput [(ngModel)]="group.targetDate" name="target-date" autocomplete="off">
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>تاريخ </mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field> -->
+
+
 
         <button type="submit" class="block action-btn" mat-raised-button
             color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid">حفظ

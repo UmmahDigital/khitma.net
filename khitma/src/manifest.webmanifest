@@ -1,7 +1,7 @@
 {
   "name": "ختمة.نت",
   "short_name": "ختمة.نت",
-  "theme_color": "#614316",
+  "theme_color": "#1c6151",
   "background_color": "#fffef6",
   "display": "standalone",
   "scope": "./",

@@ -54,12 +54,16 @@
     <div class="block" style="margin:32px auto; text-align: center;">
 
 
+
         <div *ngIf="this.group.hasIdleAjza(); else noIdleAjza">
             <span> يمكنك اختيار أي من الأجزاء التي باللون الأحمر</span>
         </div>
         <ng-template #noIdleAjza>
             <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة</span>
         </ng-template>
+
+        <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}</span>
+
 
     </div>
 

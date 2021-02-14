@@ -28,7 +28,6 @@ export function GET_JUZ_READ_EXTERNAL_URL(juzIndex: number): string {
 }
 
 
-
 export class Juz {
     index: number;
     status: number;
@@ -48,7 +47,7 @@ export class KhitmaGroup {
     creationDate?: Date;
     ajza?: Juz[];
     cycle?: number;
-    targetDate?: Date;
+    targetDate?: string;
 
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);

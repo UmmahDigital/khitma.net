@@ -3,17 +3,37 @@
     <app-khitma-info [group]="group" [showLink]="flase" [isExpanded]="false"></app-khitma-info>
 
 
-    <p class="invite-link">{{inviteLink}}</p>
+    <p>
+        تمّ إنشاء مجموعة الختمة بنجاح. يمكنك الآن مشاركة رسالة الدعوة مع معارفك وأصدقائك، أو الانتقال إلى صفحة المجموعة
+        ومشاركة الرسالة من هناك.
+    </p>
 
-    <!-- <a href="whatsapp://send?text={{inviteMsg}}">مشاركة عبر الوتسأب</a> -->
+
+    <mat-form-field appearance="fill" class="block">
+        <mat-label>رسالة الدعوة للإنضمام (يمكنك تعديلها)</mat-label>
+        <textarea matInput rows="4" [(ngModel)]="inviteMsg" name="invite-msg"></textarea>
+    </mat-form-field>
+
+    <!-- <p class="invite-link">{{inviteLink}}</p> -->
+
+    <!-- 
+    <button class=" copy-msg-btn large" mat-raised-button [cdkCopyToClipboard]="inviteMsg" (click)="msgCopied()">
+
+        <mat-icon>share</mat-icon> مشاركة
+
+    </button> -->
 
 
-    <button class="block copy-msg-btn " mat-raised-button [cdkCopyToClipboard]="inviteMsg" (click)="msgCopied()">نسخ
-        رسالة
-        الدعوة</button>
+    <button class=" copy-msg-btn large" mat-raised-button (click)="share()">
 
-    <a mat-raised-button color="accent" class="block block large action-btn" href="{{inviteLink}}">الذهاب لصفحة
-        الختمة</a>
+        <mat-icon>share</mat-icon> مشاركة
+
+    </button>
+
+
+
+    <a mat-raised-button color="accent" class="block  large action-btn" href="{{inviteLink}}">الانتقال لصفحة
+        مجموعة الختمة</a>
 
 
 </div>

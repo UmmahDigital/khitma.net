@@ -23,7 +23,23 @@
 }
 
 .copy-msg-btn {
-  margin-top: -20px !important;
-  border-radius: 0 0 !important;
+  // border-radius: 10px !important;
   display: block;
+  width: 50%;
+  margin-top: -68px!important;
+  height: 48px!important;
+  padding: 0;
+  line-height: 48px!important;
+}
+
+mat-form-field{
+
+}
+
+textarea{
+  font-size: larger!important;
+  padding-top: 16px!important;
+  padding-bottom: 48px!important;
+
+  
 }
