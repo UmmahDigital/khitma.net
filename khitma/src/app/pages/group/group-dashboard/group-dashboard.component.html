@@ -51,18 +51,24 @@
     </section>
 
 
-    <div class="block" style="margin:32px auto; text-align: center;">
+    <div class="block user-msg" style="margin:32px auto; text-align: center;">
 
+        <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
 
+        <span *ngIf="myJuzIndex != null; else noCurrentJuz"> جزؤك الحالي هو <strong> جزء {{myJuzIndex +
+                1}}</strong>.</span>
 
-        <div *ngIf="this.group.hasIdleAjza(); else noIdleAjza">
-            <span> يمكنك اختيار أي من الأجزاء التي باللون الأحمر</span>
-        </div>
-        <ng-template #noIdleAjza>
-            <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة</span>
+        <ng-template #noCurrentJuz>
+            <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza"> يمكنك اختيار أي من الأجزاء التي باللون الأحمر.
+            </span>
+            <ng-template #noIdleAjza>
+                <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+            </ng-template>
         </ng-template>
 
-        <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}</span>
+
+
+        <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}.</span>
 
 
     </div>

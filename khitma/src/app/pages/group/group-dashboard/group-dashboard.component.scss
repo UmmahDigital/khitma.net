@@ -1,10 +1,8 @@
 @import "~src/_variables";
 
-
 :host {
   padding-bottom: 80px;
 }
-
 
 .done-btn {
   height: 70px;
@@ -46,7 +44,6 @@
   .my-juz-actions {
     padding: 16px 0;
   }
-
 }
 
 .current-juz {
@@ -110,7 +107,7 @@
 }
 
 .khitma-done {
-  background: lighten($primary-color,70%);
+  background: lighten($primary-color, 70%);
   padding: 32px;
   margin: -8px -32px 0px -32px;
 }
@@ -132,7 +129,7 @@
 .dashboard-header {
   margin: -32px -32px 0;
   padding: 16px;
-  background:$primary-color;
+  background: $primary-color;
 
   color: white;
 
@@ -173,20 +170,26 @@
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: lighten($primary-color,20%);
+  background-color: lighten($primary-color, 20%);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
   background-color: $primary-color;
 }
 
-
-.admin-actions{
-  button{
+.admin-actions {
+  button {
     margin-bottom: 16px;
   }
 }
 
 .khitma-info .title {
-  margin-bottom: 24px!important;
+  margin-bottom: 24px !important;
+}
+
+.user-msg {
+  span {
+    display: block;
+    margin: 8px auto;
+  }
 }

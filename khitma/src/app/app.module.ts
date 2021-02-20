@@ -52,7 +52,6 @@ import { EditKhitmaDetailsComponent } from './dialog/edit-khitma-details/edit-kh
 import { StartNewKhitmaComponent } from './dialog/start-new-khitma/start-new-khitma.component';
 
 
-
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
