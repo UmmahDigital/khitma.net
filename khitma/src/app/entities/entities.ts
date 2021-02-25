@@ -48,6 +48,7 @@ export class KhitmaGroup {
     ajza?: Juz[];
     cycle?: number;
     targetDate?: string;
+    admins?: string;
 
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);
@@ -91,7 +92,7 @@ export class KhitmaGroup {
     }
 
     public isAdmin(username) {
-        return username == this.author;
+        return username == this.author || this.admins?.includes(username);
     }
 
     public hasIdleAjza() {

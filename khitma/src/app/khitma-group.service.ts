@@ -94,14 +94,15 @@ export class KhitmaGroupService {
   }
 
 
-  public updateGroupInfo(groupId, title, description, targetDate) {
+  public updateGroupInfo(groupId, title, description, targetDate, admins) {
 
 
 
     this.db.doc<KhitmaGroup>('groups/' + groupId).update({
       title: title,
       description: description || "",
-      targetDate: targetDate || ""
+      targetDate: targetDate || "",
+      admins: admins || ""
     });
 
   }

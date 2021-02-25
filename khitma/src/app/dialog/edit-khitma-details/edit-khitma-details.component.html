@@ -2,10 +2,12 @@
     تعديل تفاصيل الختمة
 </h1>
 
-<div mat-dialog-content>
+<form (ngSubmit)="onConfirm()" #editGroupForm="ngForm">
+
+    <div mat-dialog-content>
 
 
-    <form (ngSubmit)="onConfirm()" #editGroupForm="ngForm">
+
 
         <mat-form-field appearance="fill" class="block">
             <mat-label>عنوان الختمة</mat-label>
@@ -27,6 +29,12 @@
             <input matInput [(ngModel)]="group.targetDate" name="target-date" autocomplete="off">
         </mat-form-field>
 
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>مسؤولون إضافيّون</mat-label>
+            <input matInput [(ngModel)]="group.admins" name="admins" autocomplete="off">
+        </mat-form-field>
+
         <!-- <mat-form-field appearance="fill">
             <mat-label>تاريخ </mat-label>
             <input matInput [matDatepicker]="picker">
@@ -36,17 +44,33 @@
 
 
 
-        <button type="submit" class="block action-btn" mat-raised-button
+
+
+
+
+
+    </div>
+
+    <div mat-dialog-actions>
+
+
+        <button type="submit" class="action-btn block large" style="margin-bottom: 16px;" mat-raised-button
             color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid">حفظ
             التغييرات</button>
 
-    </form>
+        <button mat-button class="block" (click)="onDismiss()">الغاء</button>
 
 
-</div>
 
-<div mat-dialog-actions>
-    <button mat-button (click)="onDismiss()">الغاء</button>
-    <!-- <button mat-raised-button color="primary" type="submit" class="app-btn-primary" (click)="onConfirm()"
+        <!-- <button mat-raised-button color="primary" type="submit" class="app-btn-primary" (click)="onConfirm()"
         disabled]="!editGroupForm.form.valid">حفظ</button> -->
-</div>
+
+
+
+
+
+
+
+    </div>
+
+</form>

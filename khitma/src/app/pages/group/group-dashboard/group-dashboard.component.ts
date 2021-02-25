@@ -393,7 +393,12 @@ export class GroupDashboardComponent implements OnInit {
 
       if (dialogResult) {
 
-        this.groupsApi.updateGroupInfo(this.group.id, dialogResult.title, dialogResult.description, dialogResult.targetDate);
+        this.groupsApi.updateGroupInfo(this.group.id,
+          dialogResult.title,
+          dialogResult.description,
+          dialogResult.targetDate,
+          dialogResult.admins
+        );
 
       }
 
