@@ -18,12 +18,12 @@
 mat-toolbar a {
   text-decoration: none;
   color: white;
-
-
 }
-.version{
+.version {
   opacity: 0.25;
+  margin-right: 8px;
 }
+
 // button,
 // a {
 //   // font-size: 1.1em !important;
@@ -70,8 +70,8 @@ mat-toolbar {
   color: white !important;
 }
 
-
-button.large, a.large{
+button.large,
+a.large {
   height: 80px;
   line-height: 80px;
   font-size: larger;
@@ -94,32 +94,26 @@ button.large, a.large{
   color: white;
 }
 
-
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
-
-
-
-
 
 // mat-sidenav-container{
 //   height: 100vh;
 // }
 
-
-.mat-drawer-container{
+.mat-drawer-container {
   background: transparent;
 }
 
-.mat-nav-list .mat-list-item{
-padding:16px 0!important;
+.mat-nav-list .mat-list-item {
+  padding: 16px 0 !important;
 }
 
 section > p {
@@ -127,10 +121,23 @@ section > p {
   //   background-color: red;
 }
 
-.tip{
+.tip {
   background: lighten($primary-color, 50%);
   color: $primary-color;
-  padding:16px;
+  padding: 16px;
   border-radius: 4px;
-display: block;
+  display: block;
+}
+
+.help-btn {
+  display: block !important;
+  margin-right: 8px;
+}
+
+.mat-sidenav-container {
+  position: fixed !important;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
 }
