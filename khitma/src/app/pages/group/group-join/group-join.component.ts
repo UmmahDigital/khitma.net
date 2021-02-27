@@ -19,7 +19,6 @@ export class GroupJoinComponent implements OnInit {
     private groupsApi: KhitmaGroupService,
     private localDB: LocalDatabaseService,
     private $gaService: GoogleAnalyticsService) {
-
   }
 
   ngOnInit() {
@@ -34,7 +33,7 @@ export class GroupJoinComponent implements OnInit {
 
     this.$gaService.event('group_joined');
 
-    this.localDB.joinGroup(this.group.id, this.username);
+    this.localDB.joinGroup(this.group.id, KhitmaGroup.refineOwnerName(this.username));
 
     window.location.href = '/group/' + this.group.id + '/dashboard'
     // this.router.navigate(['/group/' + this.group.id + '/dashboard']);

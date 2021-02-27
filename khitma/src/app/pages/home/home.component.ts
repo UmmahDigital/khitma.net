@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit {
 
   archiveGroup(group: KhitmaGroup) {
 
-    this.$gaService.event('group_leave');
 
     const dialogData = new ConfirmDialogModel(
       "تأكيد أرشفة المجموعة",
@@ -80,6 +79,10 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmed => {
 
       if (confirmed) {
+
+        this.$gaService.event('group_leave');
+
+
         this.localDB.archiveGroup(group);
         this.groups = this.groups.filter(item => item.id !== group.id);
         this.isShowArchive = true;

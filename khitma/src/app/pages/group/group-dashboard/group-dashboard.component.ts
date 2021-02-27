@@ -370,6 +370,8 @@ export class GroupDashboardComponent implements OnInit {
       updatedJuz.status = JUZ_STATUS.IDLE;
     }
 
+    updatedJuz.owner = KhitmaGroup.refineOwnerName(updatedJuz.owner);
+
     this.groupsApi.updateJuz(this.group.id, updatedJuz.index, updatedJuz.owner, updatedJuz.status);
 
 
@@ -384,7 +386,8 @@ export class GroupDashboardComponent implements OnInit {
         title: this.group.title,
         author: this.group.author,
         descreption: this.group.description,
-        targetDate: this.group.targetDate
+        targetDate: this.group.targetDate,
+        admins: this.group.admins,
       },
       maxWidth: "80%"
     });
@@ -399,6 +402,34 @@ export class GroupDashboardComponent implements OnInit {
           dialogResult.targetDate,
           dialogResult.admins
         );
+
+      }
+
+    });
+
+  }
+
+  leaveGroup() {
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogModel(
+        "تأكيد ترك المجموعة",
+        "لا ننصح بترك المجموعة كي لا يفوتك الثواب العظيم إن شاء الله، لكن في حال تركت المجموعة فسيتم إتاحة جزئك من جديد وتحويلك للصفحة الرئيسية. "),
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+
+        this.$gaService.event('group_leave');
+
+        if (this.myJuzIndex != null) {
+          this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, "", JUZ_STATUS.IDLE);
+        }
+
+        this.localDB.archiveGroup(this.group);
+        window.location.href = '/';
 
       }
 

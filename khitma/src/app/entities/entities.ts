@@ -133,5 +133,9 @@ export class KhitmaGroup {
         return Object.values(ajza).sort((a: any, b: any) => (a.index > b.index) ? 1 : -1);
     }
 
+    static refineOwnerName(name) {
+        return name.trim();
+    }
+
 }
 
