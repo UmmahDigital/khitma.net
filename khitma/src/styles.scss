@@ -6,25 +6,25 @@
 
 @import "~src/_variables";
 
-
 html,
 body {
   height: 100%;
   margin: 0;
   // font-family: "Scheherazade", serif !important;
   // font-size: 100% !important;
-  overflow-x: hidden;
   background-color: $background-color;
   font-size: large;
+  background: black;
+  overflow: hidden;
 }
 
-body{
+body {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
 }
 
@@ -39,8 +39,3 @@ $custom-typography: mat-typography-config(
 @include mat-base-typography($custom-typography);
 @include angular-material-typography($custom-typography);
 // @include mat-button-typography($custom-typography);
-
-
-
-
-
