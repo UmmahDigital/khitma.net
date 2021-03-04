@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "net.khitma.twa",
+                   "sha256_cert_fingerprints": ["07:8B:71:C2:E5:30:BD:D5:B2:5A:B1:2F:1A:F7:BE:49:D9:97:50:13:F8:FF:C9:0D:8C:13:BC:17:62:1B:9F:2B"] }
+    }]
