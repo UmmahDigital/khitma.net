@@ -1,5 +1,14 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "net.khitma.twa",
-                   "sha256_cert_fingerprints": ["07:8B:71:C2:E5:30:BD:D5:B2:5A:B1:2F:1A:F7:BE:49:D9:97:50:13:F8:FF:C9:0D:8C:13:BC:17:62:1B:9F:2B"] }
-    }]
+[
+      {
+            "relation": [
+                  "delegate_permission/common.handle_all_urls"
+            ],
+            "target": {
+                  "namespace": "android_app",
+                  "package_name": "digital.ummah.khitma",
+                  "sha256_cert_fingerprints": [
+                        "72:9B:47:F2:7B:0D:83:65:01:09:B4:19:B9:5B:2E:BB:AB:F4:BB:DE:F7:F8:C1:4F:45:28:74:C5:03:E8:D1:91"
+                  ]
+            }
+      }
+]
