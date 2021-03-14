@@ -51,6 +51,10 @@ import { AboutComponent } from './pages/about/about.component';
 import { EditKhitmaDetailsComponent } from './dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from './dialog/start-new-khitma/start-new-khitma.component';
 
+import { GroupJoinedGuard } from './group.routeguard';
+import { KhitmaGroupService } from './khitma-group.service';
+
+GroupJoinedGuard
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -63,7 +67,7 @@ const routes: Routes = [
   { path: 'me', component: DashboardComponent },
   { path: 'group/:groupId/invite', component: GroupInviteComponent },
   {
-    path: 'group/:groupId', component: GroupComponent, children: [
+    path: 'group/:groupId', canActivate: [GroupJoinedGuard], children: [
       { path: 'join', component: GroupJoinComponent },
       { path: 'dashboard', component: GroupDashboardComponent },
     ]
@@ -73,6 +77,8 @@ const routes: Routes = [
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
+
+
 
 @NgModule({
   declarations: [
@@ -115,7 +121,7 @@ const routes: Routes = [
     AngularFireStorageModule, // storage,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [GroupJoinedGuard, KhitmaGroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

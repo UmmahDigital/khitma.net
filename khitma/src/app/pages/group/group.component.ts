@@ -24,32 +24,35 @@ export class GroupComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.route.params.subscribe(
-      (params: Params): void => {
-
-        const groupId = params.groupId;
-
-        this.groupsApi.setCurrentGroup(groupId).subscribe((group) => {
-
-          if (!this.groupsApi.isValidGroup(group)) {
-            this.alert.show("لم يتم العثور على الختمة المطلوبة.");
-            this.router.navigate(['/']);
-            return;
-
-          }
-
-          const isJoind = this.localDB.isGroupJoined(groupId);
-          const redirecTo = isJoind ? 'dashboard' : 'join';
-
-          if (!this.router.url.includes(redirecTo)) {
-            this.router.navigate(['group', groupId, redirecTo]);
 
 
-          }
+    // this.route.params.subscribe(
+    //   (params: Params): void => {
 
-        });
+    //     const groupId = params.groupId;
 
-      });
+    //     this.groupsApi.setCurrentGroup(groupId).subscribe((group) => {
+
+    //       if (!this.groupsApi.isValidGroup(group)) {
+    //         this.alert.show("لم يتم العثور على الختمة المطلوبة.");
+    //         this.router.navigate(['/']);
+    //         return;
+
+    //       }
+
+    //       const isJoind = this.localDB.isGroupJoined(groupId);
+    //       const redirecTo = isJoind ? 'dashboard' : 'join';
+
+    //       if (!this.router.url.includes(redirecTo)) {
+    //         this.router.navigate(['group', groupId, redirecTo]);
+
+
+    //       }
+
+    //     });
+
+    //   });
+
   }
 
 }
