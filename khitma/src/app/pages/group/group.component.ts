@@ -33,18 +33,17 @@ export class GroupComponent implements OnInit {
 
           if (!this.groupsApi.isValidGroup(group)) {
             this.alert.show("لم يتم العثور على الختمة المطلوبة.");
-            // this.router.navigate(['notfound']);
-            window.location.href = '/';
-            // this.router.navigate(['/']);
+            this.router.navigate(['/']);
+            return;
 
           }
 
           const isJoind = this.localDB.isGroupJoined(groupId);
-          const redirecTo = isJoind ? '/dashboard' : '/join';
+          const redirecTo = isJoind ? 'dashboard' : 'join';
 
           if (!this.router.url.includes(redirecTo)) {
-            window.location.href = '/group/' + groupId + redirecTo;
-            // this.router.navigate(['/group/' + groupId + redirecTo]);
+            this.router.navigate(['group', groupId, redirecTo]);
+
 
           }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KhitmaGroup } from 'src/app/entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
@@ -18,7 +19,8 @@ export class GroupJoinComponent implements OnInit {
   constructor(
     private groupsApi: KhitmaGroupService,
     private localDB: LocalDatabaseService,
-    private $gaService: GoogleAnalyticsService) {
+    private $gaService: GoogleAnalyticsService,
+    private router: Router,) {
   }
 
   ngOnInit() {
@@ -35,8 +37,8 @@ export class GroupJoinComponent implements OnInit {
 
     this.localDB.joinGroup(this.group.id, KhitmaGroup.refineOwnerName(this.username));
 
-    window.location.href = '/group/' + this.group.id + '/dashboard'
-    // this.router.navigate(['/group/' + this.group.id + '/dashboard']);
+    this.router.navigate(['group', this.group.id, '/dashboard']);
+
   }
 
 

@@ -130,6 +130,11 @@ export class KhitmaGroup {
     }
 
     static convertAjzaToArray(ajza: object): Juz[] {
+
+        if (!ajza) {
+            return [];
+        }
+
         return Object.values(ajza).sort((a: any, b: any) => (a.index > b.index) ? 1 : -1);
     }
 

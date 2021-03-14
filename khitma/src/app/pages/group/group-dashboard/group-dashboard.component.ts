@@ -15,6 +15,7 @@ import { NativeApiService } from 'src/app/native-api.service';
 import { EditKhitmaDetailsComponent } from 'src/app/dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from 'src/app/dialog/start-new-khitma/start-new-khitma.component';
 import { NativeShareService } from 'src/app/native-share.service';
+import { Router } from '@angular/router';
 
 
 
@@ -52,7 +53,8 @@ export class GroupDashboardComponent implements OnInit {
     private titleService: Title,
     private alert: AlertService,
     private nativeApi: NativeApiService,
-    private nativeShare: NativeShareService) {
+    private nativeShare: NativeShareService,
+    private router: Router,) {
   }
 
   ngOnInit(): void {
@@ -429,7 +431,9 @@ export class GroupDashboardComponent implements OnInit {
         }
 
         this.localDB.archiveGroup(this.group);
-        window.location.href = '/';
+
+        this.router.navigate(['/']);
+
 
       }
 

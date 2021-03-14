@@ -5,24 +5,18 @@
       <button mat-icon-button>
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </button>
-      <span><a href="/">ختمة.نت </a></span>
+      <span><a routerLink="">ختمة.نت </a></span>
 
       <!-- <small>- النسخة التجريبيّة</small>  -->
 
-      <span class="version">v0.9.1</span>
+      <span class="version">v0.9.2</span>
 
 
       <span class="spacer"></span>
 
-
-
-      <a href="/about">
+      <a routerLink="about">
         <mat-icon class="help-btn">help_outline</mat-icon>
       </a>
-
-
-
-
 
     </mat-toolbar>
 
@@ -30,7 +24,7 @@
       <mat-sidenav #sidenav mode="push" style="width:50%">
         <mat-nav-list fxLayout="column" fxFlex>
 
-          <a mat-list-item href="/new"> <button mat-raised-button class="block action-btn">
+          <a mat-list-item routerLink="new"> <button mat-raised-button class="block action-btn">
               <mat-icon>group</mat-icon> إنشاء مجموعة جديدة
             </button> </a>
 
@@ -38,9 +32,9 @@
           <mat-divider></mat-divider>
 
 
-          <a mat-list-item href="/me"> مجموعاتي</a>
+          <a mat-list-item routerLink="me"> مجموعاتي</a>
           <a mat-list-item target="_blank" href="https://app.quranflash.com/book/Medina1?ar#/reader"> المصحف الشريف </a>
-          <a mat-list-item href="/about"> عن ختمة.نت </a>
+          <a mat-list-item routerLink="about"> عن ختمة.نت </a>
 
           <mat-divider></mat-divider>
 

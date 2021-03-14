@@ -34,4 +34,6 @@ export class StartNewKhitmaComponent implements OnInit {
     // Close the dialog, return false
     this.dialogRef.close(false);
   }
+
+
 }

@@ -39,12 +39,6 @@ export class CreateGroupComponent implements OnInit {
 
       this.localDB.joinGroup(groupId, this.author);
 
-
-      // window.location.href = '/group/' + result.groupId + '/dashboard/invite';
-      //   this.groupCreated.emit({ "groupId": groupId, "username": this.author });
-
-
-
       this.router.navigateByUrl('/group/' + groupId + '/invite');
 
 

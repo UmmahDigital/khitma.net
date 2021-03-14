@@ -55,12 +55,6 @@ export class HomeComponent implements OnInit {
 
   groupCreated(result) {
 
-    // this.localDB.joinGroup(result.groupId, result.username);
-
-    // window.location.href = '/group/' + result.groupId + '/dashboard/invite';
-
-    //  // this.router.navigate(['/group/' + groupId + '/dashboard/invite']);
-
   }
 
   archiveGroup(group: KhitmaGroup) {
