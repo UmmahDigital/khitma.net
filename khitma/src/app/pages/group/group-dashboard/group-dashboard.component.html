@@ -152,7 +152,7 @@
             <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="0px grid">
 
                 <div fxFlex="25%" class="center-center">
-                    <a target="_blank" [href]="getMyJuzReadUrl()">
+                    <a [routerLink]="['/quran/juz' , myJuzIndex + 1]">
                         <mat-icon class="quran-explorer-btn" [matBadge]="myJuzIndex + 1" matBadgeSize="large"
                             matBadgePosition="below ">
                             auto_stories</mat-icon>

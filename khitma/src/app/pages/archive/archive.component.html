@@ -1,10 +1,10 @@
 <div *ngIf=" !archivedGroups  || archivedGroups.length == 0 "> لا توجد لديك مجموعات في الأرشيف</div>
 
-<div *ngIf="  archivedGroups.length > 0" class="group-archive-list">
+<div *ngIf="archivedGroups.length > 0" class="group-archive-list">
 
     <section *ngFor="let group of archivedGroups">
 
-        <a [href]="groupsApi.getGroupURL(group.id)">
+        <a [routerLink]="['/group',group.id]">
 
             <mat-card>
                 {{group.title}}

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PwaService } from './pwa.service';
 
 @Component({
@@ -21,9 +21,9 @@ export class AppComponent {
   }
 
   installPwa(): void {
-    if(this.pwa.promptEvent){
-    this.pwa.promptEvent.prompt();
-  }
+    if (this.pwa.promptEvent) {
+      this.pwa.promptEvent.prompt();
+    }
   }
 
 }

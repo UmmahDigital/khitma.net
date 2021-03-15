@@ -88,6 +88,9 @@ export class GroupDashboardComponent implements OnInit {
         + "عبر الرابط "
         + url;
 
+
+      window.scroll(0, 0);
+
     });
 
   }

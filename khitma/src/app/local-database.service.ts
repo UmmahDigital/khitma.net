@@ -56,7 +56,7 @@ export class LocalDatabaseService {
   }
 
   isGroupJoined(groupId) {
-    return (this.groups[groupId] && this.groups[groupId].isJoined);
+    return (this.groups[groupId] != null) && this.groups[groupId].isJoined;
   }
 
   getGroups() {

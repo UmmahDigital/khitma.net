@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, KHITMA_CYCLE_TYPE } from './entities/entities';
 
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { map, catchError, take, first } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
@@ -16,7 +16,7 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class KhitmaGroupService {
 
-  private _currentGroup = new BehaviorSubject(null);
+  private _currentGroup = new Subject();
   private _currentGroupObj: KhitmaGroup = null;
 
   private groupsDocs: object = {}; // save references of queried groups
