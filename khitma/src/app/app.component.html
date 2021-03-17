@@ -2,7 +2,7 @@
   <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%" style="height: 100%; position: relative; background: #fafafa;">
 
     <mat-toolbar color="primary">
-      <button mat-icon-button>
+      <button mat-icon-button aria-label="menu">
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </button>
       <span><a routerLink="">ختمة.نت </a></span>
@@ -37,10 +37,10 @@
           <a mat-list-item routerLink="about" (click)="sidenav.close()"> عن ختمة.نت </a>
 
           <mat-divider></mat-divider>
-
+          <!-- 
           <a mat-list-item *ngIf="!isPwaInstalled"> <button mat-raised-button class="block" (click)="installPwa()">
               <mat-icon>system_update</mat-icon> إضافة كتطبيق
-            </button> </a>
+            </button> </a> -->
 
 
         </mat-nav-list>
