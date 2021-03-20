@@ -23,8 +23,15 @@
     <mat-sidenav-container>
 
 
-      <mat-sidenav #sidenav mode="over" style="width:50%">
+      <mat-sidenav #sidenav mode="push" style="width:50%">
         <mat-nav-list fxLayout="column" fxFlex>
+
+          <a mat-list-item routerLink="/" (click)="sidenav.close()"> ختمة.نت</a>
+
+
+          <mat-divider></mat-divider>
+
+
 
           <a mat-list-item routerLink="new" (click)="sidenav.close()">
             <button mat-raised-button class="block action-btn">
