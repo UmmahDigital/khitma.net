@@ -1,11 +1,14 @@
 {
   "name": "ختمة.نت",
   "short_name": "ختمة.نت",
+  "description": "ختمة.نت هو تطبيق يتيح  قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك",
   "theme_color": "#1c6151",
-  "background_color": "#fffef6",
+  "background_color": "transparent",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "lang": "Arabic",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "assets/icons/maskable_icon_x48.png",

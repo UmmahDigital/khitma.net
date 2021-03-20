@@ -54,6 +54,7 @@ import { StartNewKhitmaComponent } from './dialog/start-new-khitma/start-new-khi
 import { GroupJoinedGuard } from './group.routeguard';
 import { KhitmaGroupService } from './khitma-group.service';
 import { QuranComponent } from './pages/quran/quran.component';
+import { GetComponent } from './pages/get/get.component';
 
 GroupJoinedGuard
 
@@ -77,6 +78,7 @@ const routes: Routes = [
   { path: 'quran', component: QuranComponent },
   { path: 'quran/juz/:juzIndex', component: QuranComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'get', component: GetComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
@@ -110,6 +112,7 @@ const routes: Routes = [
     EditKhitmaDetailsComponent,
     StartNewKhitmaComponent,
     QuranComponent,
+    GetComponent,
   ],
   imports: [
     BrowserModule,
