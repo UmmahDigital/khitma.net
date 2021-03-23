@@ -10,9 +10,10 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "appAssociation": "AUTO",
     "rewrites": [
       {
-        "source": "/dynamiclinks/**",
+        "source": "/group/**",
         "dynamicLinks": true
       },
       {
