@@ -13,7 +13,7 @@
     "appAssociation": "AUTO",
     "rewrites": [
       {
-        "source": "/group/**",
+        "source": "/dl/**",
         "dynamicLinks": true
       },
       {
