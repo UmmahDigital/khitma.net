@@ -13,9 +13,12 @@
     "appAssociation": "AUTO",
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html",
+        "source": "/dl/**",
         "dynamicLinks": true
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }
