@@ -14,9 +14,18 @@
             "value": "application/json"
           }
         ]
+      },
+      {
+        "source": "/apple-app-site-association",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
       }
     ],
-    "appAssociation": "NONE",
+    "appAssociation": "AUTO",
     "ignore": [
       "firebase.json",
       "**/.*",
