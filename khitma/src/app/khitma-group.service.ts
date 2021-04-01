@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ThrowStmt } from '@angular/compiler';
+import { LocalDatabaseService } from './local-database.service';
 
 
 
@@ -23,7 +24,7 @@ export class KhitmaGroupService {
 
   private _isV2Api = true;
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private localDB: LocalDatabaseService,) { }
 
   public getGroupDetailsOnce(groupId: string): Observable<KhitmaGroup> {
     this.groupsDocs[groupId] = this.db.doc<KhitmaGroup>('groups/' + groupId);
@@ -121,6 +122,10 @@ export class KhitmaGroupService {
       owner: ownerName || ""
     };
 
+    // update also in the pesonal khitma
+    this.localDB.updateMyPersonalKhitmahJuz(this._currentGroupObj.ajza[juzIndex]);
+
+
     if (juzStatus == JUZ_STATUS.IDLE) {
       this._currentGroupObj.ajza[juzIndex].owner = "";
     }
@@ -135,6 +140,9 @@ export class KhitmaGroupService {
     else {
       this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "ajza": this._currentGroupObj.ajza });
     }
+
+
+
   }
 
   getGroups(groupsIds: string[]) {

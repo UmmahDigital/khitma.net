@@ -55,6 +55,11 @@ import { GroupJoinedGuard } from './group.routeguard';
 import { KhitmaGroupService } from './khitma-group.service';
 import { QuranComponent } from './pages/quran/quran.component';
 import { GetComponent } from './pages/get/get.component';
+import { PersonalKhitmaComponent } from './pages/me/personal-khitma/personal-khitma.component';
+import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
+
+
+
 
 GroupJoinedGuard
 
@@ -66,7 +71,9 @@ const routes: Routes = [
     ]
   },
   { path: 'me/groups/archive', component: ArchiveComponent },
-  { path: 'me', component: DashboardComponent },
+  // { path: 'me', component: DashboardComponent },
+  { path: 'me/groups', component: DashboardComponent },
+  { path: 'me/personal-khitma', component: PersonalKhitmaComponent },
   { path: 'group/:groupId/invite', component: GroupInviteComponent },
   {
     path: 'group/:groupId', canActivate: [GroupJoinedGuard], children: [
@@ -113,6 +120,8 @@ const routes: Routes = [
     StartNewKhitmaComponent,
     QuranComponent,
     GetComponent,
+    PersonalKhitmaComponent,
+    PopMenuComponent
   ],
   imports: [
     BrowserModule,

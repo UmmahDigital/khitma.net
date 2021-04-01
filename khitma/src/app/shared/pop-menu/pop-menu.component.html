@@ -1,0 +1,53 @@
+<!-- <div fxLayout="row wrap" fxLayoutGap="0px grid">
+
+    <div fxFlex="70%" class="center-center">
+        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new">مجموعاتي</a>
+
+    </div>
+
+    <div fxFlex="5%">
+
+    </div>
+
+
+    <div fxFlex="25%" class="center-center">
+        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new">
+            <mat-icon>group_add</mat-icon>
+        </a>
+    </div>
+
+</div> -->
+
+<a mat-flat-button class="block large" routerLink="" routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon>home</mat-icon>
+    الرئيسيّة
+</a>
+
+<a mat-flat-button class="block large" routerLink="/me/groups" routerLinkActive="active-link">
+    <mat-icon>groups</mat-icon>
+    مجموعاتي
+</a>
+
+
+<a mat-flat-button class="block large" routerLink="/new" routerLinkActive="active-link">
+    <mat-icon>group_add</mat-icon>
+    مجموعة جديدة
+</a>
+
+
+<a mat-flat-button class="block large" routerLink="/me/personal-khitma" routerLinkActive="active-link">
+    <mat-icon>turned_in</mat-icon>
+    ختمتي الشخصيّة
+</a>
+
+
+<a mat-flat-button class="block large" routerLink="/quran" routerLinkActive="active-link">
+    <mat-icon>menu_book</mat-icon>
+    المصحف الشريف
+</a>
+
+<a mat-flat-button class="block large" routerLink="/about" routerLinkActive="active-link">
+    <mat-icon>help_outline</mat-icon>
+    عن البرنامج
+</a>

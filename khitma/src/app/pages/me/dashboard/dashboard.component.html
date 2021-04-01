@@ -1,12 +1,30 @@
-<section *ngIf="groups; else noGroups">
-
-    <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
+<!-- <section>
+    <header>ختمتي الشخصيّة</header>
+    <app-personal-khitma></app-personal-khitma>
 
 
 </section>
-<ng-template #noGroups>
-    لا توجد لديك أي مجموعات حاليّا
-</ng-template>
+
+<hr /> -->
+
+<section>
 
 
-<a *ngIf="isShowArchive" mat-button class="block" routerLink="/me/groups/archive">أرشيف الختمات</a>
+    <div *ngIf="groups; else noGroups">
+
+
+
+        <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
+
+
+    </div>
+
+
+    <ng-template #noGroups>
+        لا توجد لديك أي مجموعات حاليّا
+    </ng-template>
+
+
+    <a *ngIf="isShowArchive" mat-button class="block" routerLink="/me/groups/archive">أرشيف الختمات</a>
+
+</section>

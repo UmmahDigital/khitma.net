@@ -37,6 +37,13 @@ export class Juz {
         Object.assign(this, init);
     }
 
+    static nextStatus(juzStatus) {
+
+        const JUZ_STATUS_COUNT = 3;
+
+        return (juzStatus + 1) % JUZ_STATUS_COUNT;
+    }
+
 }
 
 export class KhitmaGroup {
@@ -115,12 +122,19 @@ export class KhitmaGroup {
 
     static getEmptyAjzaObj() {
 
+        let ajza = KhitmaGroup.getEmptyAjzaArray();
+
+        return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
+    }
+
+    static getEmptyAjzaArray() {
+
         let ajza = [];
         for (var i = 0; i < NUM_OF_AJZA; i++) {
             ajza.push(new Juz({ index: i, status: JUZ_STATUS.IDLE }))
         }
 
-        return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
+        return ajza;
     }
 
 

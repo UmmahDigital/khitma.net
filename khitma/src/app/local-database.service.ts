@@ -9,11 +9,15 @@ export class LocalDatabaseService {
   groups: object; // groups = active gorups  // [todo]: watch and save() upon change?
   archivedGroups: object; // [todo]: watch and save() upon change?
 
+  personalKhitma: object;
+
   constructor() {
 
     this.groups = JSON.parse(localStorage.getItem("groups")) || {};
 
     this.archivedGroups = JSON.parse(localStorage.getItem("archivedGroups")) || {};
+
+    this.personalKhitma = JSON.parse(localStorage.getItem("personalKhitma")) || null;
 
   }
 
@@ -131,6 +135,23 @@ export class LocalDatabaseService {
     return Object.keys(this.archivedGroups).length > 0
   }
 
+
+
+
+  getMyPersonalKhitmah() {
+    return this.personalKhitma;
+
+  }
+
+  updateMyPersonalKhitmah(personalKhitmaAjza) {
+    this.personalKhitma = personalKhitmaAjza;
+    localStorage.setItem("personalKhitma", JSON.stringify(this.personalKhitma));
+  }
+
+  updateMyPersonalKhitmahJuz(juz) {
+    this.personalKhitma[juz.index].status = juz.status;
+    localStorage.setItem("personalKhitma", JSON.stringify(this.personalKhitma));
+  }
 
 
 }

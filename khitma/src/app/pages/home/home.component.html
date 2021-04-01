@@ -21,12 +21,20 @@
 
     </p>
 
-    <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new">مجموعة جديدة</a>
+
+    <div>
+
+        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new">مجموعة جديدة</a>
+
+        <a mat-raised-button color="accent" class="block large action-btn" disabled="true">ختمة
+            رمضان العالميّة
+            (قريبا)</a>
+    </div>
 
 
 
 
-    <section *ngIf="groups">
+    <!-- <section *ngIf="groups">
 
         <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
 
@@ -34,7 +42,7 @@
     </section>
 
 
-    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive">أرشيف الختمات</a>
+    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive">أرشيف الختمات</a> -->
 
 
 

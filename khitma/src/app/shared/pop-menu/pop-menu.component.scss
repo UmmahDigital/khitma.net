@@ -1,0 +1,25 @@
+@import "~src/_variables";
+
+a {
+    margin-bottom: 8px;
+    text-align: start;
+
+    mat-icon {
+        margin-inline-end: 8px;
+        display: inline-block;
+        direction: inherit;
+    }
+}
+
+a.active-link {
+    background: $primary-color;
+    color: white;
+}
+
+a:focus {
+    // background: white !important;
+}
+
+app-quran {
+    display: none;
+}

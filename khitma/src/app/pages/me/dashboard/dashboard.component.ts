@@ -17,7 +17,8 @@ export class DashboardComponent implements OnInit {
   groups: KhitmaGroup[];
   isShowArchive: boolean;
 
-  constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
+  constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
+    private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService) { }
 
   ngOnInit(): void {

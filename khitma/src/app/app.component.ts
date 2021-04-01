@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import { PwaService } from './pwa.service';
+import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +14,21 @@ import { PwaService } from './pwa.service';
 export class AppComponent {
 
   isPwaInstalled = false;
+  menuDialogRef;
 
-  constructor(public pwa: PwaService) {
+  constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router) {
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
       this.isPwaInstalled = true;
     }
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) { // NavigationEnd
+        if (this.menuDialogRef) {
+          this.menuDialogRef.close();
+        }
+      }
+    });
 
   }
 
@@ -24,6 +36,13 @@ export class AppComponent {
     if (this.pwa.promptEvent) {
       this.pwa.promptEvent.prompt();
     }
+  }
+
+  openMenu() {
+    this.menuDialogRef = this.dialog.open(PopMenuComponent, {
+      maxWidth: "80%"
+    });
+
   }
 
 }

@@ -1,18 +1,27 @@
 <div fxLayout="row wrap" fxLayoutGap="0px grid" class="center-center" style="height: 100%;">
-  <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%" style="height: 100%; position: relative; background: #fafafa;">
+
+
+  <div id="app-container" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%">
 
     <mat-toolbar color="primary">
       <button mat-icon-button aria-label="menu">
-        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        <mat-icon (click)="openMenu()">menu</mat-icon>
       </button>
-      <span><a routerLink="">ختمة.نت </a></span>
+
+
+      <a routerLink="">
+        <!-- <mat-icon>home</mat-icon> -->
+        <span>ختمة.نت </span>
+      </a>
 
       <!-- <small>- النسخة التجريبيّة</small>  -->
 
-      <span class="version">v0.9.7</span>
 
 
       <span class="spacer"></span>
+
+      <span class="version">v0.9.8</span>
+
 
       <a routerLink="about">
         <mat-icon class="help-btn">help_outline</mat-icon>
@@ -20,9 +29,8 @@
 
     </mat-toolbar>
 
-    <mat-sidenav-container>
+    <!-- <mat-sidenav-container>
 
-      <!-- push -->
       <mat-sidenav #sidenav mode="over" style="width:50%">
         <mat-nav-list fxLayout="column" fxFlex>
 
@@ -47,12 +55,6 @@
 
           <mat-divider></mat-divider>
 
-          <!-- 
-          <a mat-list-item *ngIf="!isPwaInstalled"> <button mat-raised-button class="block" (click)="installPwa()">
-              <mat-icon>system_update</mat-icon> إضافة كتطبيق
-            </button> </a> -->
-
-
         </mat-nav-list>
       </mat-sidenav>
 
@@ -67,9 +69,12 @@
       </mat-sidenav-content>
     </mat-sidenav-container>
 
+ -->
 
 
-
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
 
 
 
