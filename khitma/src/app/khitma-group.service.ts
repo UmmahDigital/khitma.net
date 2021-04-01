@@ -114,6 +114,10 @@ export class KhitmaGroupService {
       groupId = this._currentGroupObj.id;
     }
 
+    if (!juzIndex) {
+      return; // [todo]: handle error
+    }
+
     // [todo]: might need to change code below when supporting multigroup
 
     this._currentGroupObj.ajza[juzIndex] = {
