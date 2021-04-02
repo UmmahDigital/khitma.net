@@ -16,14 +16,8 @@ export class PersonalKhitmaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let ajza = this.localDB.getMyPersonalKhitmah();
 
-    if (!ajza) {
-      ajza = KhitmaGroup.getEmptyAjzaArray();
-      this.localDB.updateMyPersonalKhitmah(ajza);
-    }
-
-    this.ajza = <Juz[]>ajza;
+    this.ajza = <Juz[]>this.localDB.getMyPersonalKhitmah();
 
   }
 

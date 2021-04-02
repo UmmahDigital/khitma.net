@@ -114,7 +114,7 @@ export class KhitmaGroupService {
       groupId = this._currentGroupObj.id;
     }
 
-    if (!juzIndex) {
+    if (juzIndex == null) {
       return; // [todo]: handle error
     }
 
@@ -125,9 +125,6 @@ export class KhitmaGroupService {
       status: juzStatus,
       owner: ownerName || ""
     };
-
-    // update also in the pesonal khitma
-    this.localDB.updateMyPersonalKhitmahJuz(this._currentGroupObj.ajza[juzIndex]);
 
 
     if (juzStatus == JUZ_STATUS.IDLE) {
@@ -144,6 +141,10 @@ export class KhitmaGroupService {
     else {
       this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "ajza": this._currentGroupObj.ajza });
     }
+
+
+    // update also in the pesonal khitma
+    this.localDB.updateMyPersonalKhitmahJuz(this._currentGroupObj.ajza[juzIndex]);
 
 
 

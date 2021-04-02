@@ -19,6 +19,15 @@ export class LocalDatabaseService {
 
     this.personalKhitma = JSON.parse(localStorage.getItem("personalKhitma")) || null;
 
+    if (!this.personalKhitma) {
+      this._initPersonalKhitma();
+    }
+
+  }
+
+  private _initPersonalKhitma() {
+    let ajza = KhitmaGroup.getEmptyAjzaArray();
+    this.updateMyPersonalKhitmah(ajza);
   }
 
   private _byDateSorter(a, b) {
@@ -149,6 +158,11 @@ export class LocalDatabaseService {
   }
 
   updateMyPersonalKhitmahJuz(juz) {
+
+    if (!this.personalKhitma) {
+      return;
+    }
+
     this.personalKhitma[juz.index].status = juz.status;
     localStorage.setItem("personalKhitma", JSON.stringify(this.personalKhitma));
   }

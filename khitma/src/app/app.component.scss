@@ -135,7 +135,13 @@ mat-toolbar {
   overflow-x: hidden;
   // overflow-y: scroll;
   background: transparent;
-  background-color: white;
+  // background-color: white;
+}
+
+#app-container {
+  position: relative;
+  height: 100%;
+  background: #fafafa;
 }
 
 .spacer {
@@ -172,10 +178,4 @@ section > p {
 .mat-drawer-container {
   overflow: visible;
   position: unset !important;
-}
-
-#app-container {
-  position: relative;
-  height: 100%;
-  background: white;
 }

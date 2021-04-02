@@ -37,40 +37,13 @@
   line-height: 25px;
   text-align: center;
   border-radius: 100%;
-  padding: 5px;
+  padding: 4px;
   font-size: x-large;
   color: rgba(0, 0, 0, 0.8);
-
-  // &:before {
-  //   content: "جزء";
-  //   position: absolute;
-  //   top: 0;
-  //   text-align: center;
-  //   font-size: 50%;
-  //   left: 0;
-  //   right: 0;
-  //   color: gray;
-  //   margin-top: -16px;
-  // }
-}
-
-.juz.list-item {
-  // display: block;
-  // background: white;
-  // font-weight: bold;
-  // border: 1px solid rgba(0, 0, 0, 0.12);
-  // margin: 0 auto;
-
-  margin: 5px auto;
-  padding: 0 8px;
 }
 
 .juz.list-item.idle {
-  // background-color: white;
-  // padding: 8px;
   margin: 10px auto;
-
-  // border: 1px solid rgba(0, 0, 0, 0.12);
   border: none !important;
 }
 
@@ -85,16 +58,13 @@
   margin: 10px auto;
 
   .index {
-    // background-color: #90d8f0;
-    // font-size: 150%;
     color: $primary-color;
     background-color: white;
   }
 }
 
 .juz.list-item {
-  padding: 16px 8px;
-  // border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0px 4px;
   margin: 0;
 }
 
