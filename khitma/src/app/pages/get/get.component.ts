@@ -21,7 +21,7 @@ export class GetComponent implements OnInit {
     };
 
     if (navigator.userAgent.toLowerCase().includes("iphone")) {
-      return APP_URLS.ANDROID;
+      return APP_URLS.IOS;
     }
 
     if (navigator.userAgent.toLowerCase().includes("android")) {
