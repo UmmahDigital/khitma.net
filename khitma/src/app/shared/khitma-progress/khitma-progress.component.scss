@@ -7,12 +7,12 @@
     outline: none;
 }
 $bgColor: #fafafa;
-$boxColor: gray;
+$boxColor: black;
 // $waterFColor: #4fa097; // #1c6151;
 // $waterBColor: #208796; // saturate(lighten($waterFColor, 10%), 20%);
 
 $waterFColor: #135156; // #1c6151;
-$waterBColor: #27fdc7; // saturate(lighten($waterFColor, 10%), 20%);
+$waterBColor: $action-color; // #27fdc7; // saturate(lighten($waterFColor, 10%), 20%);
 
 // body {
 //     -webkit-font-smoothing: antialiased;

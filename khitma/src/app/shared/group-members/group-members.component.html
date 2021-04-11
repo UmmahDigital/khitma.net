@@ -1,0 +1,13 @@
+<section *ngIf="members">
+
+    <mat-card *ngFor="let member of members" class="member"
+        [ngClass]="member.isTaskDone ? 'task-done' : 'task-not-done'">
+
+        <label class="name">{{member.name}}</label>
+
+    </mat-card>
+
+
+
+
+</section>

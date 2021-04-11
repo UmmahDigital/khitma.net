@@ -106,6 +106,8 @@ export class GroupDashboardComponent implements OnInit {
 
         this.sameTaskGroupMetadata["myMember"] = tmpGroup.createGroupMember(this.username);
 
+        this.group = tmpGroup;
+
       }
 
 

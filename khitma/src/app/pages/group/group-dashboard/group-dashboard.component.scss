@@ -203,3 +203,14 @@
     margin: 32px auto;
   }
 }
+
+.group-options-menu-button {
+  position: absolute;
+  border-radius: 0 0 100% 100%;
+  color: white;
+  bottom: 0;
+  margin-bottom: -20px;
+  background: $primary-color;
+
+  left: 16px;
+}

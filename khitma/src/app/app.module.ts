@@ -63,6 +63,7 @@ import { GlobalKhitmaComponent } from './pages/global-khitma/global-khitma.compo
 import { MoonComponent } from './shared/moon/moon.component';
 import { GlassButtonComponent } from './shared/glass-button/glass-button.component';
 import { TodoComponent } from './shared/todo/todo.component';
+import { GroupMembersComponent } from './shared/group-members/group-members.component';
 
 
 
@@ -133,7 +134,8 @@ const routes: Routes = [
     GlobalKhitmaComponent,
     MoonComponent,
     GlassButtonComponent,
-    TodoComponent
+    TodoComponent,
+    GroupMembersComponent
   ],
   imports: [
     CommonModule,

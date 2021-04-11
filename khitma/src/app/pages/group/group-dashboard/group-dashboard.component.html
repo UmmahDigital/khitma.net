@@ -9,7 +9,7 @@
 
 
 
-    <header class="dashboard-header">
+    <header class="dashboard-header" style="position: relative;">
 
 
         <section *ngIf="isAdmin" class="admin-section center-center" (click)="showEditGroupDialog()">
@@ -21,9 +21,9 @@
                 لديك صلاحيّات مسؤول في هذه المجموعة
             </span>
 
-            <button mat-flat-button style="zoom: 0.75;">
+            <!-- <button mat-flat-button style="zoom: 0.75;">
                 <mat-icon alt="تعديل تفاصيل الختمة"> edit</mat-icon>
-            </button>
+            </button> -->
 
 
 
@@ -31,7 +31,30 @@
             <!-- <mat-icon>info</mat-icon> -->
         </section>
 
+
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="group-options-menu-button">
+            <mat-icon>more_horiz</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+            <button *ngIf="isAdmin" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>تعديل تفاصيل الختمة</span>
+            </button>
+
+            <button *ngIf="!isAdmin" mat-menu-item (click)="leaveGroup()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>ترك المجموعة</span>
+            </button>
+        </mat-menu>
+
+
+
         <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
+
+
+
 
     </header>
 
@@ -185,18 +208,32 @@
 
     <div *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" class="group-container">
 
+
+        <section style="margin-top: 32px;">
+
+            <!-- <header>
+                وضع المجموعة الحالي
+            </header> -->
+
+            <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
+                [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
+        </section>
+
+
+
         <div class="block user-msg">
 
             <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
 
+            المهمّة الحاليّة في المجموعة هي:
 
         </div>
 
         <section>
 
-            <header>
+            <!-- <header>
                 المهمّة الحاليّة
-            </header>
+            </header> -->
 
             <app-todo [text]="group.task" [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone"
                 (onToggled)="taskToggled($event)"></app-todo>
@@ -210,14 +247,34 @@
         <span *ngIf="this.group.targetDate">موعد التسليم: {{this.group.targetDate}}.</span>
 
 
-        <section>
 
-            <header>
-                وضع الختمة الحالي
-            </header>
 
-            <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
-                [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
+
+
+        <div class="space"></div>
+
+
+
+        <div class="center-center names-toggle-container">
+            <mat-slide-toggle [color]="color" [(ngModel)]="showGroupMembers">
+                إظهار أعضاء المجموعة
+            </mat-slide-toggle>
+        </div>
+
+
+
+
+
+
+        <section *ngIf="showGroupMembers">
+
+            <!-- <header>
+                أعضاء المجموعة
+            </header> -->
+
+            <app-group-members [members]="this.group.members"></app-group-members>
+
+
         </section>
 
 
@@ -225,16 +282,13 @@
 
 
 
+
+
     </div>
 
 
 
-    <div *ngIf="!isAdmin">
 
-        <button style="color:darkred" mat-button class=" block" (click)="leaveGroup()">
-            ترك المجموعة </button>
-
-    </div>
 
 
 

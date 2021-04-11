@@ -1,3 +1,12 @@
-$primary-color:#1c6151;
-$action-color: saturate(lighten($primary-color,10%),20%);
-$background-color: #fafafa;//saturate(lighten($primary-color,75%),20%);
+$primary-color: #1c6151;
+$action-color: saturate(lighten($primary-color, 10%), 20%);
+$background-color: #fafafa; //saturate(lighten($primary-color,75%),20%);
+
+$status-idle-color: darkred;
+$status-idle-bg-color: #fa897b;
+
+$status-booked-color: brown;
+$status-booked-bg-color: #ffdd94;
+
+$status-done-color: darkgreen;
+$status-done-bg-color: #d0e6a5;
