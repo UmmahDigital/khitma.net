@@ -60,9 +60,9 @@ export class TestComponent implements OnInit {
     // ****
     let updatedObj = {};
     updatedObj["members"] = {};
-    updatedObj["members"]["888"] = firebase.default.firestore.FieldValue.delete();
+    updatedObj["members"]["محمد"] = firebase.default.firestore.FieldValue.delete();
 
-    return this.db.doc<any>('groups/' + "JQQVZKetquaDjvtDhFvj").set(updatedObj, { merge: true });
+    return this.db.doc<any>('groups/' + "nHDpOcrv0XRoa2iLbMgq").set(updatedObj, { merge: true });
 
   }
 

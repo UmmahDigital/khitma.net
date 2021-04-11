@@ -274,9 +274,11 @@ export class KhitmaGroupService {
   removeGroupMember(groupId, memberName) {
 
     let updatedObj = {};
-    updatedObj["members." + memberName] = firebase.default.firestore.FieldValue.delete();
+    updatedObj["members"] = {};
+    updatedObj["members"][memberName] = firebase.default.firestore.FieldValue.delete();
 
     return this.db.doc<any>('groups/' + groupId).set(updatedObj, { merge: true });
+
 
   }
 

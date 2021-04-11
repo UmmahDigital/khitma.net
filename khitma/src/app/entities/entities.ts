@@ -203,7 +203,7 @@ export class SameTaskKhitmaGroup extends KhitmaGroup {
 
     public createGroupMember(username) {
 
-        let isDone = this.members.find(m => m.name === username).isTaskDone;
+        let isDone = this.members.find(m => m.name === username)?.isTaskDone;
 
         return new GroupMember({
             name: username,
