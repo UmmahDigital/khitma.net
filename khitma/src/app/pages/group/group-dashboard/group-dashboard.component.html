@@ -185,22 +185,42 @@
 
     <div *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" class="group-container">
 
-        <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
-            [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
-
-
         <div class="block user-msg">
 
             <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
 
-            المهمّة الحاليّة في المجموعة:
 
         </div>
 
-        <app-todo [text]="group.task" [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone"
-            (onToggled)="taskToggled($event)"></app-todo>
+        <section>
+
+            <header>
+                المهمّة الحاليّة
+            </header>
+
+            <app-todo [text]="group.task" [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone"
+                (onToggled)="taskToggled($event)"></app-todo>
+        </section>
+
+
+
+
+
 
         <span *ngIf="this.group.targetDate">موعد التسليم: {{this.group.targetDate}}.</span>
+
+
+        <section>
+
+            <header>
+                وضع الختمة الحالي
+            </header>
+
+            <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
+                [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
+        </section>
+
+
 
 
 

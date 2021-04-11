@@ -58,7 +58,9 @@ $waterBColor: #27fdc7; // saturate(lighten($waterFColor, 10%), 20%);
         height: 100%;
         transform: translate(0, 100%);
         background: $waterFColor;
-        transition: all 0.6s;
+
+        transition: transform 2s;
+
         &_wave {
             width: 200%;
             position: absolute;

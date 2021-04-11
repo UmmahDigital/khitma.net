@@ -25,7 +25,7 @@
 
             </div>
         </div>
-        <div id="water" class="water" style="transform:translate(0,{{100-percent}}%">
+        <div id="water" class="water" [style.transform]="'translate(0,' + (100-percent) + '%'">
             <svg viewBox="0 0 560 20" class="water_wave water_wave_back">
                 <use xlink:href="#wave"></use>
             </svg>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-khitma-progress',
@@ -11,23 +11,24 @@ export class KhitmaProgressComponent implements OnInit {
   @Input() current: number;
 
 
-  percent: number;
+  percent: number = 0;
+
+
 
   constructor() { }
 
   ngOnInit(): void {
 
-    let currentPercent = Math.round(this.current / this.target * 100);
+  }
 
-    this.percent = 0;
+  ngOnChanges(changes: SimpleChanges) {
 
-    let interval = setInterval(() => {
-      this.percent++;
+    setTimeout(() => {
+      this.percent = Math.round(this.current / this.target * 100);
 
-      if (this.percent == currentPercent) {
-        clearInterval(interval);
-      }
-    }, 60);
+    }, 0);
 
   }
+
+
 }
