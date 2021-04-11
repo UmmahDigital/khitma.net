@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, GET_JUZ_READ_EXTERNAL_URL, KHITMA_CYCLE_TYPE } from 'src/app/entities/entities';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, GET_JUZ_READ_EXTERNAL_URL, KHITMA_CYCLE_TYPE, KHITMA_GROUP_TYPE, SameTaskKhitmaGroup, GroupMember } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -18,8 +18,6 @@ import { NativeShareService } from 'src/app/native-share.service';
 import { Router } from '@angular/router';
 
 
-
-
 @Component({
   selector: 'app-group-dashboard',
   templateUrl: './group-dashboard.component.html',
@@ -27,6 +25,11 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class GroupDashboardComponent implements OnInit {
+
+
+  readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
+
+  // [todo]: split using ViewChild?
 
   group: KhitmaGroup;
   myJuzIndex: number;
@@ -46,6 +49,11 @@ export class GroupDashboardComponent implements OnInit {
 
   inviteMsg = "";
   statusMsg = "";
+
+
+  sameTaskGroupMetadata = {};
+
+
 
   constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
     private dialog: MatDialog,
@@ -68,7 +76,7 @@ export class GroupDashboardComponent implements OnInit {
       this.titleService.setTitle(group.title);
 
       this.group = new KhitmaGroup(group);
-      this.group.ajza = group.ajza;
+
 
       if (!this.isInitiated) {
         this.username = this.localDB.getUsername(this.group.id);
@@ -77,16 +85,30 @@ export class GroupDashboardComponent implements OnInit {
         this.isInitiated = true;
       }
 
-      this.myJuzIndex = this.group.getMyJuzIndex(this.username)
+      if (!group.type || group.type === KHITMA_GROUP_TYPE.SEQUENTIAL) {
+        this.group.ajza = group.ajza;
 
-      this.statusMsg = this.getKhitmaStatusMsg();
+        this.myJuzIndex = this.group.getMyJuzIndex(this.username)
 
-      let url = this.group.getURL();
+        this.statusMsg = this.getKhitmaStatusMsg();
 
-      this.inviteMsg = "إنضمّوا إلى"
-        + ' "' + this.group.title + '" '
-        + "عبر الرابط "
-        + url;
+        let url = this.group.getURL();
+
+        this.inviteMsg = "إنضمّوا إلى"
+          + ' "' + this.group.title + '" '
+          + "عبر الرابط "
+          + url;
+      } else if (group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
+
+        let tmpGroup = new SameTaskKhitmaGroup(group);
+
+        this.sameTaskGroupMetadata["counts"] = tmpGroup.getCounts();
+
+        this.sameTaskGroupMetadata["myMember"] = tmpGroup.createGroupMember(this.username);
+
+      }
+
+
 
 
       window.scroll(0, 0);
@@ -435,7 +457,20 @@ export class GroupDashboardComponent implements OnInit {
 
         this.localDB.archiveGroup(this.group);
 
-        this.router.navigate(['/']);
+        if (this.group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
+          this.groupsApi.removeGroupMember(this.group.id, this.username).then(() => {
+            this.router.navigate(['/']);
+
+          });
+
+        }
+        else {
+          this.router.navigate(['/']);
+
+        }
+
+
+
 
 
       }
@@ -443,5 +478,15 @@ export class GroupDashboardComponent implements OnInit {
     });
 
   }
+
+
+
+  //****** */
+
+  taskToggled(isDone: boolean) {
+
+    this.groupsApi.updateMemberTask(this.group.id, this.username, isDone);
+  }
+
 
 }

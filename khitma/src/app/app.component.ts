@@ -4,6 +4,7 @@ import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import { PwaService } from './pwa.service';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,8 +14,12 @@ import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 })
 export class AppComponent {
 
+
+
   isPwaInstalled = false;
   menuDialogRef;
+
+  isDarkStyle = false;
 
   constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router) {
 
@@ -23,11 +28,20 @@ export class AppComponent {
     }
 
     this.router.events.subscribe((event: Event) => {
+
+
       if (event instanceof NavigationStart) { // NavigationEnd
         if (this.menuDialogRef) {
           this.menuDialogRef.close();
         }
       }
+      else if (event instanceof NavigationEnd) {
+        this.isDarkStyle = event.url === "/ramadan";
+
+      }
+
+
+
     });
 
   }

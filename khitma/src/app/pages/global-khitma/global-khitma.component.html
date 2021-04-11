@@ -1,0 +1,46 @@
+<div id='stars'></div>
+
+<div class="container">
+
+
+    <section>
+        <header>
+
+            ختمة رمضان العالميّة
+        </header>
+
+        <p>
+
+            (شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ
+            وَالْفُرْقَانِ) - البقرة ١٨٥
+        </p>
+
+
+    </section>
+
+
+
+    <app-moon [days]="day"></app-moon>
+
+
+    <section>
+        <header>
+
+            {{day}} رمضان
+        </header>
+
+
+
+        <!-- <app-khitma-progress [current]="5" [target]="10"></app-khitma-progress> -->
+
+
+        <button mat-raised-button color="accent" class="block large join">انضم للختمة
+
+        </button>
+
+        <!-- <app-glass-button></app-glass-button> -->
+
+
+    </section>
+
+</div>

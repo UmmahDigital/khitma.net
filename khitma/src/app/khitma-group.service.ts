@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, KHITMA_CYCLE_TYPE } from './entities/entities';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, KHITMA_CYCLE_TYPE, KHITMA_GROUP_TYPE, SameTaskKhitmaGroup } from './entities/entities';
 
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { map, catchError, take, first } from 'rxjs/operators';
@@ -9,6 +9,9 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { ThrowStmt } from '@angular/compiler';
 import { LocalDatabaseService } from './local-database.service';
 
+
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
 
 
@@ -71,17 +74,34 @@ export class KhitmaGroupService {
   //   return this.groupsDocs[groupId].update(KhitmaGroup);
   // }
 
-  public createGroup(title, description, author) {
+  public createGroup(title, description, author, groupType?, firstTask?) {
 
-    const groupToAdd = new KhitmaGroup({ "title": title, "description": description, "author": author });
-
-    return this.db.collection('groups').add({
-      "title": groupToAdd.title,
-      "description": groupToAdd.description || '',
-      "author": groupToAdd.author,
+    let newGroupObj = {
+      "title": title,
+      "description": description || '',
+      "author": author,
+      "type": groupType,
       "cycle": 0,
-      "ajza": groupToAdd.getAjzaObj()
-    });
+
+    };
+
+    if (groupType === KHITMA_GROUP_TYPE.SAME_TASK) {
+
+      newGroupObj["task"] = firstTask;
+      newGroupObj["members"] = {};
+      newGroupObj["members"][author] = {
+        name: author,
+        isTaskDone: false
+      }
+
+    }
+    else {
+      let groupToAdd = new KhitmaGroup({ "title": title, "description": description, "author": author, "type": groupType });
+      newGroupObj["ajza"] = groupToAdd.getAjzaObj(); // [todo]: static function to get empty ajza obj
+
+    }
+
+    return this.db.collection('groups').add(newGroupObj);
 
   }
 
@@ -133,7 +153,7 @@ export class KhitmaGroupService {
 
     if (this._isV2Api) {
 
-      const updatedObj = {};
+      let updatedObj = {};
       updatedObj[("ajza." + juzIndex)] = this._currentGroupObj.ajza[juzIndex];
 
       this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
@@ -144,8 +164,9 @@ export class KhitmaGroupService {
 
 
     // update also in the pesonal khitma
-    this.localDB.updateMyPersonalKhitmahJuz(this._currentGroupObj.ajza[juzIndex]);
-
+    if (ownerName == this.localDB.getUsername) {
+      this.localDB.updateMyPersonalKhitmahJuz(this._currentGroupObj.ajza[juzIndex]);
+    }
 
 
   }
@@ -155,6 +176,7 @@ export class KhitmaGroupService {
   }
 
   startNewKhitmah(newCycle, newCycleType) {
+
 
     function _generateNextCycleAjza(oldCycleAjza: Juz[]): Juz[] {
 
@@ -227,5 +249,47 @@ export class KhitmaGroupService {
     this.db.doc<any>('groups/' + this._currentGroupObj.id).update({ "cycle": newCycle, "ajza": ajzaObj });
 
   }
+
+
+
+
+  updateGroupTask(groupId, newTask, currentCycle) {
+
+    this.db.doc<SameTaskKhitmaGroup>('groups/' + groupId).update({ "task": newTask, "cycle": (currentCycle + 1) });
+  }
+
+
+  addGroupMember(groupId, memberName) {
+
+    let updatedObj = {};
+    updatedObj[("members." + memberName)] = {
+      name: memberName,
+      isTaskDone: false
+    };
+
+    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+
+  }
+
+  removeGroupMember(groupId, memberName) {
+
+    let updatedObj = {};
+    updatedObj["members." + memberName] = firebase.default.firestore.FieldValue.delete();
+
+    return this.db.doc<any>('groups/' + groupId).set(updatedObj, { merge: true });
+
+  }
+
+  updateMemberTask(groupId, memberName, isDone: boolean) {
+
+    let updatedObj = {};
+    updatedObj["members." + memberName + ".isTaskDone"] = isDone;
+
+    this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+
+
+  }
+
+
 
 }

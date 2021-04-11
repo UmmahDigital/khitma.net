@@ -1,11 +1,12 @@
 <div *ngIf="group" style="position: relative;">
 
 
-
-
     <app-celebration *ngIf="showCelebration" class="celebration-container"
         style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000; bottom: 0;">
     </app-celebration>
+
+
+
 
 
     <header class="dashboard-header">
@@ -34,148 +35,177 @@
 
     </header>
 
-    <section class="khitma-done" *ngIf="group.isDone() > 0">
+    <!-- MAY HAVE TO MOVE TO VIEWCHILD OR EXPLORE OTHER OPTIONS -->
+    <div *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)">
 
-        <app-khitma-done-celebration></app-khitma-done-celebration>
+        <section class="khitma-done" *ngIf="group.isDone() > 0">
 
-
-        <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
-            class="block large action-btn">بدء
-            ختمة
-            جديدة للمجموعة</button>
-
-        <button style="margin-top: 16px;" mat-raised-button class="block" (click)="shareKhitmaCompletedDua()"> مشاركة
-            دعاء
-            الختمة</button>
-
-    </section>
+            <app-khitma-done-celebration></app-khitma-done-celebration>
 
 
-    <div class="block user-msg" style="margin:32px auto; text-align: center;">
+            <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
+                class="block large action-btn">بدء
+                ختمة
+                جديدة للمجموعة</button>
 
-        <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
+            <button style="margin-top: 16px;" mat-raised-button class="block" (click)="shareKhitmaCompletedDua()">
+                مشاركة
+                دعاء
+                الختمة</button>
 
-        <span *ngIf="myJuzIndex != null; else noCurrentJuz"> جزؤك الحالي هو <strong> جزء {{myJuzIndex +
-                1}}</strong>.</span>
+        </section>
 
-        <ng-template #noCurrentJuz>
-            <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza"> يمكنك اختيار أي من الأجزاء التي باللون الأحمر.
-            </span>
-            <ng-template #noIdleAjza>
-                <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+
+        <div class="block user-msg" style="margin:32px auto; text-align: center;">
+
+            <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
+
+            <span *ngIf="myJuzIndex != null; else noCurrentJuz"> جزؤك الحالي هو <strong> جزء {{myJuzIndex +
+                    1}}</strong>.</span>
+
+            <ng-template #noCurrentJuz>
+                <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza"> يمكنك اختيار أي من الأجزاء التي باللون الأحمر.
+                </span>
+                <ng-template #noIdleAjza>
+                    <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+                </ng-template>
             </ng-template>
-        </ng-template>
 
 
 
-        <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}.</span>
+            <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}.</span>
+
+
+        </div>
+
+
+        <section class="juz-grid-section">
+            <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
+                (onJuzSelection)="juzSelected($event)">
+            </app-juz-grid>
+        </section>
+
+        <div class="space" style="margin-bottom: -16px;"></div>
+
+
+        <section *ngIf="isAdmin" class="admin-actions">
+
+            <div *ngIf="!nativeApi.isAvailable">
+
+                <button mat-raised-button class="block large" [cdkCopyToClipboard]="statusMsg"
+                    (cdkCopyToClipboardCopied)="groupStatusCopied()">
+                    نسخ وضع الختمة الحالي مع الأسماء
+                </button>
+
+
+                <button mat-button [cdkCopyToClipboard]="inviteMsg" (cdkCopyToClipboardCopied)="inviteMsgCopied()"
+                    class=" block">
+                    نسخ رابط المجموعة ودعوة الانضمام
+                </button>
+
+            </div>
+
+            <div *ngIf="nativeApi.isAvailable">
+
+
+                <button *ngIf="nativeApi.isAvailable" mat-raised-button class="block large" (click)="shareStatusMsg()">
+                    مشاركة وضع الختمة الحالي مع الأسماء
+                </button>
+
+                <button mat-button class=" block" (click)="shareInviteMsg()">
+                    مشاركة رابط المجموعة ودعوة الانضمام
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <div class="space"></div>
+
+
+
+        <div class="center-center names-toggle-container">
+            <mat-slide-toggle [color]="color" [(ngModel)]="showNames">
+                إظهار قائمة الأسماء
+            </mat-slide-toggle>
+        </div>
+
+        <div class="space"></div>
+
+
+
+        <section class="juz-list-section" *ngIf="showNames">
+
+            <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="isAdmin"
+                (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
+            </app-juz-list>
+
+        </section>
+
+
+        <section class="action-panel mat-elevation-z16">
+
+            <div>
+
+                <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="0px grid">
+
+                    <div fxFlex="25%" class="center-center">
+                        <a [routerLink]="['/quran/juz' , myJuzIndex + 1]">
+                            <mat-icon class="quran-explorer-btn" [matBadge]="myJuzIndex + 1" matBadgeSize="large"
+                                matBadgePosition="below ">
+                                menu_book</mat-icon>
+                        </a>
+                    </div>
+
+                    <div fxFlex="50%" class="center-center">
+                        <button mat-raised-button color="accent" class="block large action-btn" (click)="juzDone()"
+                            [disabled]="myJuzIndex == null">
+                            أتممت قراءة جزء {{myJuzIndex + 1}}</button>
+                    </div>
+
+                    <div fxFlex="25%" class="center-center">
+                        <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
+                    </div>
+
+                </section>
+
+
+                <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div>
+
+            </div>
+        </section>
 
 
     </div>
 
 
-    <section class="juz-grid-section">
-        <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
-            (onJuzSelection)="juzSelected($event)">
-        </app-juz-grid>
-    </section>
+    <!-- MAY HAVE TO MOVE TO VIEWCHILD OR EXPLORE OTHER OPTIONS -->
 
-    <div class="space" style="margin-bottom: -16px;"></div>
+    <div *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" class="group-container">
 
-
-    <section *ngIf="isAdmin" class="admin-actions">
-
-        <div *ngIf="!nativeApi.isAvailable">
-
-            <button mat-raised-button class="block large" [cdkCopyToClipboard]="statusMsg"
-                (cdkCopyToClipboardCopied)="groupStatusCopied()">
-                نسخ وضع الختمة الحالي مع الأسماء
-            </button>
+        <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
+            [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
 
 
-            <button mat-button [cdkCopyToClipboard]="inviteMsg" (cdkCopyToClipboardCopied)="inviteMsgCopied()"
-                class=" block">
-                نسخ رابط المجموعة ودعوة الانضمام
-            </button>
+        <div class="block user-msg">
+
+            <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
+
+            المهمّة الحاليّة في المجموعة:
 
         </div>
 
-        <div *ngIf="nativeApi.isAvailable">
+        <app-todo [text]="group.task" [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone"
+            (onToggled)="taskToggled($event)"></app-todo>
 
-
-            <button *ngIf="nativeApi.isAvailable" mat-raised-button class="block large" (click)="shareStatusMsg()">
-                مشاركة وضع الختمة الحالي مع الأسماء
-            </button>
-
-            <button mat-button class=" block" (click)="shareInviteMsg()">
-                مشاركة رابط المجموعة ودعوة الانضمام
-            </button>
-
-        </div>
+        <span *ngIf="this.group.targetDate">موعد التسليم: {{this.group.targetDate}}.</span>
 
 
 
 
-
-
-
-    </section>
-
-
-    <div class="space"></div>
-
-
-
-    <div class="center-center names-toggle-container">
-        <mat-slide-toggle [color]="color" [(ngModel)]="showNames">
-            إظاهر قائمة الأسماء
-        </mat-slide-toggle>
     </div>
-
-    <div class="space"></div>
-
-
-
-    <section class="juz-list-section" *ngIf="showNames">
-
-        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="isAdmin"
-            (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
-        </app-juz-list>
-
-    </section>
-
-
-    <section class="action-panel mat-elevation-z16">
-
-        <div>
-
-            <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="0px grid">
-
-                <div fxFlex="25%" class="center-center">
-                    <a [routerLink]="['/quran/juz' , myJuzIndex + 1]">
-                        <mat-icon class="quran-explorer-btn" [matBadge]="myJuzIndex + 1" matBadgeSize="large"
-                            matBadgePosition="below ">
-                            menu_book</mat-icon>
-                    </a>
-                </div>
-
-                <div fxFlex="50%" class="center-center">
-                    <button mat-raised-button color="accent" class="block large action-btn" (click)="juzDone()"
-                        [disabled]="myJuzIndex == null">
-                        أتممت قراءة جزء {{myJuzIndex + 1}}</button>
-                </div>
-
-                <div fxFlex="25%" class="center-center">
-                    <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
-                </div>
-
-            </section>
-
-
-            <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div>
-
-        </div>
-    </section>
 
 
 
@@ -189,6 +219,12 @@
 
 
     <div class="spacer"></div>
+
+
+
+
+
+
 
 
 </div>

@@ -163,6 +163,7 @@ export class LocalDatabaseService {
       return;
     }
 
+
     this.personalKhitma[juz.index].status = juz.status;
     localStorage.setItem("personalKhitma", JSON.stringify(this.personalKhitma));
   }

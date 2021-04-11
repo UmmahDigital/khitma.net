@@ -1,18 +1,16 @@
 @import "~src/_variables";
 
-
 form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-section > header{
+section > header {
   margin-bottom: 48px;
 }
 
-#group-type-selection {
-
+.multi-choice {
   mat-button-toggle-group {
     width: 100%;
     background: transparent;
@@ -26,7 +24,6 @@ section > header{
     }
 
     mat-button-toggle {
-
       background: transparent;
       color: black;
       border: none !important;

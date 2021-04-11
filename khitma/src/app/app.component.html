@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutGap="0px grid" class="center-center" style="height: 100%;">
 
 
-  <div id="app-container" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%">
+  <div id="app-container" [class.dark]="isDarkStyle" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%">
 
     <mat-toolbar color="primary">
       <button mat-icon-button aria-label="menu">
@@ -11,7 +11,7 @@
 
       <a routerLink="">
         <!-- <mat-icon>home</mat-icon> -->
-        <span>ختمة.نت </span>
+        <span>ختمة.نت</span>
       </a>
 
       <!-- <small>- النسخة التجريبيّة</small>  -->
