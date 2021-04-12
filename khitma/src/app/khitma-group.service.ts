@@ -294,5 +294,25 @@ export class KhitmaGroupService {
   }
 
 
+  // ******** GLOBAL KHITMA
+
+  getGlobalKhitma(id) {
+
+
+    return this.db.doc('global/' + id).valueChanges({ idField: 'id' });
+
+  }
+
+
+  globalKhitmaJuzDone(id, juzIndex) {
+
+    let obj = {};
+
+    obj["ajza." + juzIndex] = firebase.default.firestore.FieldValue.increment(1);
+    return this.db.doc('global/' + id).update(obj);
+
+
+  }
+
 
 }

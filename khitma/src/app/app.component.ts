@@ -38,6 +38,9 @@ export class AppComponent {
       else if (event instanceof NavigationEnd) {
         this.isDarkStyle = event.url === "/ramadan";
 
+        window.scroll(0, 0);
+
+
       }
 
 

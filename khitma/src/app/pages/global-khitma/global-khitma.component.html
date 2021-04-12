@@ -20,27 +20,40 @@
 
 
 
-    <app-moon [days]="day"></app-moon>
+    <app-moon [days]="dayInRamadan"></app-moon>
 
 
-    <section>
-        <header>
+    <!-- <section *ngIf="dayInRamadan>0; else ramadanNotStartedYet"> -->
+    <header>
 
-            {{day}} رمضان
-        </header>
-
-
-
-        <!-- <app-khitma-progress [current]="5" [target]="10"></app-khitma-progress> -->
+        {{dayInRamadan}} رمضان
+    </header>
 
 
-        <button mat-raised-button color="accent" class="block large join">انضم للختمة
-
-        </button>
-
-        <!-- <app-glass-button></app-glass-button> -->
 
 
-    </section>
+    <!-- <app-khitma-progress [current]="5" [target]="10"></app-khitma-progress> -->
+
+
+    <app-todo *ngFor="let juz of ajza" class="juz" [text]="'جزء ' + (juz.index+12)"
+        (onToggled)="taskToggled(juz.index, $event)">
+    </app-todo>
+
+
+
+
+    <button mat-raised-button color="accent" class="block large join">انضم للختمة
+
+    </button>
+
+    <!-- <app-glass-button></app-glass-button> -->
+
+
+    <!-- </section> -->
+    <ng-template #ramadanNotStartedYet>
+        <label>نبدأ ختمتنا مع أوّل أيّام رمضان إن شاء الله</label>
+    </ng-template>
+
+
 
 </div>

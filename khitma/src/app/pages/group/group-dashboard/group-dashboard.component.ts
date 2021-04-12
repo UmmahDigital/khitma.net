@@ -211,15 +211,19 @@ export class GroupDashboardComponent implements OnInit {
         // this.localDB.setMyJuz(this.group.id, this.group.cycle, null);
         this.myJuzIndex = null;
 
-        this.showCelebration = true;
-
-        setTimeout(() => {
-          this.showCelebration = false;
-        }, 2250);
+        this.celebrate();
       }
 
     });
 
+  }
+
+  celebrate() {
+    this.showCelebration = true;
+
+    setTimeout(() => {
+      this.showCelebration = false;
+    }, 2250);
   }
 
   juzGiveup() {
@@ -491,6 +495,11 @@ export class GroupDashboardComponent implements OnInit {
   taskToggled(isDone: boolean) {
 
     this.groupsApi.updateMemberTask(this.group.id, this.username, isDone);
+
+    if (isDone) {
+      this.celebrate();
+
+    }
   }
 
 
@@ -502,6 +511,8 @@ export class GroupDashboardComponent implements OnInit {
     let membersObj = tmpGroup.getMembersObj();
 
     this.groupsApi.updateGroupTask(this.group.id, this.sameTaskGroupMetadata["newTask"], this.group.cycle, membersObj);
+
+
   }
 
 

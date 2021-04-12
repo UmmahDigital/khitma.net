@@ -15,7 +15,12 @@ export class MoonComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.days = this.days || 15;
+    if (this.days <= 0) {
+      this.animationState = "paused";
+      return;
+    }
+
+    this.days = this.days;
     let time = ((this.days * 1000) / 2) % 15000;
 
     setTimeout(() => {
