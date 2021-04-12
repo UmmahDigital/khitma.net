@@ -9,7 +9,21 @@
 
 
             <span class="khitma-cycle" *ngIf="group.cycle > 0">
-                (ختمة {{group.cycle + 1}})
+
+
+                (
+                <span *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
+
+                    مهمّة
+                </span>
+
+                <span *ngIf="group.type != KHITMA_GROUP_TYPE.SAME_TASK">
+
+                    ختمة
+                </span>
+
+                {{group.cycle + 1}})
+
 
             </span>
 
@@ -25,7 +39,7 @@
 
 
     <div *ngIf="isExpanded">
-        <label class="author"> مُنشئ الختمة: {{group.author}} </label>
+        <label class="author"> مُنشئ المجموعة: {{group.author}} </label>
 
         <p class="description">
             {{group.description}}

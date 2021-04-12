@@ -12,7 +12,7 @@
     <header class="dashboard-header" style="position: relative;">
 
 
-        <section *ngIf="isAdmin" class="admin-section center-center" (click)="showEditGroupDialog()">
+        <section *ngIf="isAdmin" class="admin-section center-center">
 
 
             <mat-icon>verified</mat-icon>
@@ -38,7 +38,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
-            <button *ngIf="isAdmin" mat-menu-item>
+            <button *ngIf="isAdmin" mat-menu-item (click)="showEditGroupDialog()">
                 <mat-icon>edit</mat-icon>
                 <span>تعديل تفاصيل الختمة</span>
             </button>
@@ -209,15 +209,6 @@
     <div *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" class="group-container">
 
 
-        <section style="margin-top: 32px;">
-
-            <!-- <header>
-                وضع المجموعة الحالي
-            </header> -->
-
-            <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
-                [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
-        </section>
 
 
 
@@ -241,6 +232,63 @@
 
 
 
+        <section style="margin-top: 32px;" *ngIf="isAdmin" class="update-task-wrapper">
+
+
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon>add_circle</mat-icon> مهمّة جديدة
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                    This is a summary of the content
+                  </mat-panel-description> -->
+                </mat-expansion-panel-header>
+
+                <form (ngSubmit)="updateTask()" #updateTaskForm="ngForm">
+
+                    <mat-form-field appearance="fill" class="block">
+                        <mat-label>
+                            عنوان المهمّة الجديدة
+                        </mat-label>
+                        <input matInput [(ngModel)]="sameTaskGroupMetadata.newTask" name="task" required="true"
+                            autocomplete="off" style="padding: 0;" />
+                    </mat-form-field>
+
+                    <div style="width:20%">
+
+                    </div>
+
+
+                    <button type="submit" class="action-btn block" style="margin-bottom: 16px;" mat-raised-button>
+                        <mat-icon>save</mat-icon> حفظ
+                    </button>
+
+
+
+                </form>
+            </mat-expansion-panel>
+
+
+
+
+
+        </section>
+
+
+
+
+        <section style="margin-top: 32px;">
+
+
+            <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
+                [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
+        </section>
+
+
+
+
+
 
 
 
@@ -249,21 +297,11 @@
 
 
 
-
-
-        <div class="space"></div>
-
-
-
-        <div class="center-center names-toggle-container">
+        <div class="center-center names-toggle-container" style="margin-top: 32px;">
             <mat-slide-toggle [color]="color" [(ngModel)]="showGroupMembers">
                 إظهار أعضاء المجموعة
             </mat-slide-toggle>
         </div>
-
-
-
-
 
 
         <section *ngIf="showGroupMembers">
@@ -272,7 +310,8 @@
                 أعضاء المجموعة
             </header> -->
 
-            <app-group-members [members]="this.group.members"></app-group-members>
+            <app-group-members [members]="this.group.members" (onMemberClick)="toggleMemberTaskState($event)">
+            </app-group-members>
 
 
         </section>

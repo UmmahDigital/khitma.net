@@ -164,7 +164,7 @@ export class KhitmaGroupService {
 
 
     // update also in the pesonal khitma
-    if (ownerName == this.localDB.getUsername) {
+    if (ownerName == this.localDB.getUsername(groupId)) {
       this.localDB.updateMyPersonalKhitmahJuz(this._currentGroupObj.ajza[juzIndex]);
     }
 
@@ -253,9 +253,10 @@ export class KhitmaGroupService {
 
 
 
-  updateGroupTask(groupId, newTask, currentCycle) {
+  updateGroupTask(groupId, newTask, currentCycle, resetedMembers) {
 
-    this.db.doc<SameTaskKhitmaGroup>('groups/' + groupId).update({ "task": newTask, "cycle": (currentCycle + 1) });
+
+    this.db.doc<SameTaskKhitmaGroup>('groups/' + groupId).update({ "task": newTask, "members": resetedMembers, "cycle": (currentCycle + 1) });
   }
 
 

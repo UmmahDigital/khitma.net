@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup } from 'src/app/entities/entities';
+import { KhitmaGroup, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 import { KhitmaGroupService } from 'src/app/khitma-group.service';
 
 
@@ -17,6 +17,7 @@ export class KhitmaInfoComponent implements OnInit {
   @Input() isExpanded?: boolean;
 
   groupLink: string;
+  KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
 
   constructor(private groupsApi: KhitmaGroupService) { }
 

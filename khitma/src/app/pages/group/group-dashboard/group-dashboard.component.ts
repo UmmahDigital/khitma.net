@@ -50,6 +50,7 @@ export class GroupDashboardComponent implements OnInit {
   inviteMsg = "";
   statusMsg = "";
 
+  showGroupMembers = true;
 
   sameTaskGroupMetadata = {};
 
@@ -105,6 +106,8 @@ export class GroupDashboardComponent implements OnInit {
         this.sameTaskGroupMetadata["counts"] = tmpGroup.getCounts();
 
         this.sameTaskGroupMetadata["myMember"] = tmpGroup.createGroupMember(this.username);
+
+        this.sameTaskGroupMetadata["newTask"] = tmpGroup.task;
 
         this.group = tmpGroup;
 
@@ -488,6 +491,30 @@ export class GroupDashboardComponent implements OnInit {
   taskToggled(isDone: boolean) {
 
     this.groupsApi.updateMemberTask(this.group.id, this.username, isDone);
+  }
+
+
+  updateTask() {
+
+    let tmpGroup = (<SameTaskKhitmaGroup>this.group);
+    tmpGroup.resetMembersTaskStatus();
+
+    let membersObj = tmpGroup.getMembersObj();
+
+    this.groupsApi.updateGroupTask(this.group.id, this.sameTaskGroupMetadata["newTask"], this.group.cycle, membersObj);
+  }
+
+
+  toggleMemberTaskState(member: GroupMember) {
+
+    if (!this.isAdmin) {
+      return;
+    }
+
+
+    member.isTaskDone = !member.isTaskDone;
+    this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
+
   }
 
 

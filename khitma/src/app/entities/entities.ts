@@ -18,8 +18,8 @@ export const KHITMA_CYCLE_TYPE = Object.freeze({
 
 
 export const KHITMA_GROUP_TYPE = Object.freeze({
-    SEQUENTIAL: 1,
-    SAME_TASK: 2,
+    SEQUENTIAL: 'SEQUENTIAL',
+    SAME_TASK: 'SAME_TASK',
 });
 
 
@@ -68,7 +68,7 @@ export class KhitmaGroup {
     cycle?: number;
     targetDate?: string;
     admins?: string;
-    type?: number;
+    type?: string;
 
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);
@@ -179,7 +179,7 @@ export class SameTaskKhitmaGroup extends KhitmaGroup {
         super(init);
 
 
-        this.members = Object.values(init.members);
+        this.members = Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
 
     }
 
@@ -211,7 +211,22 @@ export class SameTaskKhitmaGroup extends KhitmaGroup {
         });
     }
 
-    // public set
+    public resetMembersTaskStatus() {
+        this.members.forEach((member) => {
+            member.isTaskDone = false;
+        })
+    }
+
+    public getMembersObj() {
+
+        return this.members.reduce((m, { name, isTaskDone }) => ({
+            ...m, [name]: {
+                name: name,
+                isTaskDone: isTaskDone
+            }
+        }), {});
+
+    }
 }
 
 export class GroupMember {

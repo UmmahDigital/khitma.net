@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GroupMember } from 'src/app/entities/entities';
 
 @Component({
@@ -9,10 +9,16 @@ import { GroupMember } from 'src/app/entities/entities';
 export class GroupMembersComponent implements OnInit {
 
   @Input() members: GroupMember;
+  @Output() onMemberClick?= new EventEmitter<GroupMember>();
+
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  memberClicked(member) {
+    this.onMemberClick.emit(member);
   }
 
 }
