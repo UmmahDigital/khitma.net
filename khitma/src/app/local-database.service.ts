@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup } from './entities/entities';
+import { KhitmaGroup, NUM_OF_AJZA } from './entities/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class LocalDatabaseService {
   archivedGroups: object; // [todo]: watch and save() upon change?
 
   personalKhitma: object;
+  myGlobalKhitmaAjza;
 
   constructor() {
 
@@ -19,8 +20,14 @@ export class LocalDatabaseService {
 
     this.personalKhitma = JSON.parse(localStorage.getItem("personalKhitma")) || null;
 
+    this.myGlobalKhitmaAjza = JSON.parse(localStorage.getItem("myGlobalKhitmaAjza")) || null;
+
     if (!this.personalKhitma) {
       this._initPersonalKhitma();
+    }
+
+    if (!this.myGlobalKhitmaAjza) {
+      this._initMyGlobalKhitmaAjza();
     }
 
   }
@@ -28,6 +35,17 @@ export class LocalDatabaseService {
   private _initPersonalKhitma() {
     let ajza = KhitmaGroup.getEmptyAjzaArray();
     this.updateMyPersonalKhitmah(ajza);
+  }
+
+  private _initMyGlobalKhitmaAjza() {
+
+    let ajza = [];
+
+    for (let i = 0; i < NUM_OF_AJZA; i++) {
+      ajza.push(false);
+    }
+
+    this.updateGlobalKhitmaAjza(ajza);
   }
 
   private _byDateSorter(a, b) {
@@ -166,6 +184,25 @@ export class LocalDatabaseService {
 
     this.personalKhitma[juz.index].status = juz.status;
     localStorage.setItem("personalKhitma", JSON.stringify(this.personalKhitma));
+  }
+
+
+  // ** Global Khitma
+
+  getMyGlobalKhitmaAjza() {
+    return this.myGlobalKhitmaAjza;
+  }
+
+  updateGlobalKhitmaAjza(ajza) {
+    this.myGlobalKhitmaAjza = ajza;
+    localStorage.setItem("myGlobalKhitmaAjza", JSON.stringify(this.myGlobalKhitmaAjza));
+  }
+
+  updateGlobalKhitmaJuz(juzIndex, isDone) {
+
+    this.myGlobalKhitmaAjza[juzIndex] = isDone;
+    this.updateGlobalKhitmaAjza(this.myGlobalKhitmaAjza);
+
   }
 
 

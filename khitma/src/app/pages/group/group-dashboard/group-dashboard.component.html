@@ -34,7 +34,7 @@
 
 
         <button mat-icon-button [matMenuTriggerFor]="menu" class="group-options-menu-button">
-            <mat-icon>more_horiz</mat-icon>
+            <mat-icon>settings</mat-icon>
         </button>
 
         <mat-menu #menu="matMenu">
@@ -47,6 +47,16 @@
                 <mat-icon>exit_to_app</mat-icon>
                 <span>ترك المجموعة</span>
             </button>
+
+
+
+            <button mat-menu-item (click)="shareInviteMsg()">
+                <mat-icon>share</mat-icon>
+                مشاركة رابط المجموعة
+            </button>
+
+
+
         </mat-menu>
 
 
@@ -209,36 +219,12 @@
     <div *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" class="group-container">
 
 
-
-
-
-        <div class="block user-msg">
-
-            <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
-
-            المهمّة الحاليّة في المجموعة هي:
-
-        </div>
-
-        <section>
-
-            <!-- <header>
-                المهمّة الحاليّة
-            </header> -->
-
-            <app-todo [text]="group.task" [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone"
-                (onToggled)="taskToggled($event)"></app-todo>
-        </section>
-
-
-
         <section style="margin-top: 32px;" *ngIf="isAdmin" class="update-task-wrapper">
 
-
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>add_circle</mat-icon> مهمّة جديدة
+                        مهمّة جديدة للمجموعة
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                     This is a summary of the content
@@ -259,40 +245,63 @@
 
                     </div>
 
-
                     <button type="submit" class="action-btn block" style="margin-bottom: 16px;" mat-raised-button>
                         <mat-icon>save</mat-icon> حفظ
                     </button>
 
-
-
                 </form>
             </mat-expansion-panel>
+        </section>
+
+
+        <div class="block user-msg">
+
+            <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
+            <!-- <span> المهمّة الحاليّة في مجموعتك هي: </span> -->
+
+        </div>
 
 
 
 
 
+        <section>
+
+            <header>المهمّة الحاليّة </header>
+
+            <app-todo [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone" (onToggled)="taskToggled($event)">
+                <div content> {{group.task}} </div>
+            </app-todo>
+
+            <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
+
+
+        </section>
+        <!-- 
+
+
+        <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done" style="margin-top: 32px;"
+            [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
+ -->
+
+        <!-- <mat-progress-bar mode="determinate" [value]="40"></mat-progress-bar> -->
+
+
+        <section class="center-center big-counter">
+            <label class="number" dir="ltr">
+
+                <span class="done"> {{sameTaskGroupMetadata?.counts?.done}}</span>
+
+                <span class="total"> / {{sameTaskGroupMetadata?.counts?.total}}</span>
+
+            </label>
+            <span class="text">قاموا بإتمام المهمّة.</span>
         </section>
 
 
 
 
-        <section style="margin-top: 32px;">
 
-
-            <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done"
-                [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
-        </section>
-
-
-
-
-
-
-
-
-        <span *ngIf="this.group.targetDate">موعد التسليم: {{this.group.targetDate}}.</span>
 
 
 
@@ -317,9 +326,13 @@
         </section>
 
 
+        <div class="spacer"></div>
 
 
-
+        <section class="center-center big-counter" *ngIf="group.cycle > 0">
+            <label class="number">{{sameTaskGroupMetadata.totalDoneTasks}}</label>
+            <span class="text">أعمال طيّبة قمتم بها في هذه المجموعة منذ تأسيسها. في ميزان حسناتكم إن شاء الله!</span>
+        </section>
 
 
 

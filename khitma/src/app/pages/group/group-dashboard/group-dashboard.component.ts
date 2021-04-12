@@ -56,7 +56,8 @@ export class GroupDashboardComponent implements OnInit {
 
 
 
-  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
+  constructor(private groupsApi: KhitmaGroupService,
+    private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
     private titleService: Title,
@@ -108,6 +109,8 @@ export class GroupDashboardComponent implements OnInit {
         this.sameTaskGroupMetadata["myMember"] = tmpGroup.createGroupMember(this.username);
 
         this.sameTaskGroupMetadata["newTask"] = tmpGroup.task;
+
+        this.sameTaskGroupMetadata["totalDoneTasks"] = tmpGroup.totalDoneTasks || 0;
 
         this.group = tmpGroup;
 
@@ -500,6 +503,9 @@ export class GroupDashboardComponent implements OnInit {
       this.celebrate();
 
     }
+
+    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+
   }
 
 
@@ -513,6 +519,8 @@ export class GroupDashboardComponent implements OnInit {
     this.groupsApi.updateGroupTask(this.group.id, this.sameTaskGroupMetadata["newTask"], this.group.cycle, membersObj);
 
 
+    this.$gaService.event('new_task', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+
   }
 
 
@@ -522,9 +530,13 @@ export class GroupDashboardComponent implements OnInit {
       return;
     }
 
-
     member.isTaskDone = !member.isTaskDone;
     this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
+
+
+    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+
+
 
   }
 

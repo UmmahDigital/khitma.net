@@ -9,11 +9,11 @@
             ختمة رمضان العالميّة
         </header>
 
-        <p>
+        <!-- <p>
 
             (شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ
             وَالْفُرْقَانِ) - البقرة ١٨٥
-        </p>
+        </p> -->
 
 
     </section>
@@ -24,32 +24,42 @@
 
 
     <!-- <section *ngIf="dayInRamadan>0; else ramadanNotStartedYet"> -->
-    <header>
+    <header id="ramadan-day">
 
         {{dayInRamadan}} رمضان
     </header>
 
 
-
+    <section id="done-ajza-counter">
+        <label class="number">{{totalAjzaCounter}}</label>
+        <span class="text"> أجزاء تمّت تلاوتها عالميّا</span>
+    </section>
 
     <!-- <app-khitma-progress [current]="5" [target]="10"></app-khitma-progress> -->
 
 
-    <app-todo *ngFor="let juz of ajza" class="juz" [text]="'جزء ' + (juz.index+12)"
-        (onToggled)="taskToggled(juz.index, $event)">
+    <p>
+
+        في ما يلي ختمتك الشخصيّة لشهر رمضان المبارك. عندما تقوم بإتمام أحد الأجزاء فإنّ ذلك يضاف مباشرة لعدّاد الأجزاء
+        في الختمة العالميّة. في ميزان حسناتكم إن شاء الله
+    </p>
+
+
+    <app-todo *ngFor="let juz of ajza;" class="juz dark" [text]="'جزء ' + (juz.index+1)"
+        (onToggled)="submitJuz(juz.index, $event)" [isDone]="myAjzaStatuses[juz.index]"
+        [class.today]="(juz.index+1) === dayInRamadan">
+
+        <div content>
+
+
+            جزء {{juz.index+1}}
+
+
+        </div>
+
     </app-todo>
 
 
-
-
-    <button mat-raised-button color="accent" class="block large join">انضم للختمة
-
-    </button>
-
-    <!-- <app-glass-button></app-glass-button> -->
-
-
-    <!-- </section> -->
     <ng-template #ramadanNotStartedYet>
         <label>نبدأ ختمتنا مع أوّل أيّام رمضان إن شاء الله</label>
     </ng-template>

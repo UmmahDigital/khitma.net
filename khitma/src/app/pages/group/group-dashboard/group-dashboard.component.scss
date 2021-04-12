@@ -205,14 +205,20 @@
 }
 
 .group-options-menu-button {
-  position: absolute;
-  border-radius: 0 0 100% 100%;
-  color: white;
-  bottom: 0;
-  margin-bottom: -20px;
-  background: $primary-color;
+  // position: absolute;
+  // border-radius: 0 0 100% 100%;
+  // color: white;
+  // bottom: 0;
+  // margin-bottom: -20px;
+  // background: $primary-color;
 
-  left: 16px;
+  // left: 16px;
+
+  position: fixed;
+  color: white;
+  left: 8px;
+  top: 0;
+  top: 8px;
 }
 
 .update-task-wrapper {
@@ -225,4 +231,40 @@ mat-panel-title {
   mat-icon {
     margin-inline-start: 4px;
   }
+}
+
+.big-counter {
+  display: flex;
+  flex-direction: row;
+
+  .number {
+    display: block;
+    text-align: center;
+    font-size: 500%;
+    font-weight: bold;
+    margin-bottom: 16px;
+    background: -webkit-linear-gradient(#27fdc7, #0fc0f5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    height: 56px;
+    line-height: 56px;
+    margin-left: 4px;
+  }
+
+  .text {
+    font-size: large;
+    display: block;
+    text-align: right;
+  }
+
+  .total {
+    font-size: 50%;
+  }
+}
+
+.task-target-date {
+  text-align: center;
+  display: block;
+  margin-top: 16px;
 }

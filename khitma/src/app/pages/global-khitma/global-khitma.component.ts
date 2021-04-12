@@ -3,6 +3,9 @@ import { KhitmaGroupService } from 'src/app/khitma-group.service';
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import { LocalDatabaseService } from 'src/app/local-database.service';
+import { map } from 'rxjs/operators';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-global-khitma',
@@ -13,33 +16,37 @@ import 'firebase/firestore';
 })
 export class GlobalKhitmaComponent implements OnInit {
 
-  constructor(private groupsApi: KhitmaGroupService) { }
+  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private $gaService: GoogleAnalyticsService,) { }
 
   dayInRamadan = 0;
 
   ajza = [];
 
+  myAjzaStatuses;
+
+  isInit = false;
+
+  totalAjzaCounter;
 
   ngOnInit(): void {
 
 
+    this.groupsApi.getGlobalKhitma("ramadan2021").get().subscribe((res: any) => {
 
-    this.groupsApi.getGlobalKhitma("ramadan2021").subscribe((data: any) => {
-
-
+      let data = res.data();
 
       let ramadanStartDate = new Date(data.startDate);
 
       let dayInRamadan = this.DaysBetween(ramadanStartDate, new Date()) + 1;
 
+      // dayInRamadan = 10;
       this.dayInRamadan = dayInRamadan;//> 0 ? dayInRamadan : 0;
 
-
-
+      this.myAjzaStatuses = this.localDB.getMyGlobalKhitmaAjza();
       this.ajza = this.getAjzaArray(data.ajza);
 
+      this.totalAjzaCounter = data.totalAjzaCounter;
     });
-
 
   }
 
@@ -49,7 +56,7 @@ export class GlobalKhitmaComponent implements OnInit {
 
     for (const [key, value] of Object.entries(ajzaObj)) {
       arr.push({
-        index: key,
+        index: parseInt(key),
         counter: value
       });
 
@@ -76,7 +83,15 @@ export class GlobalKhitmaComponent implements OnInit {
 
   submitJuz(juzIndex, isDone) {
 
-    this.groupsApi.globalKhitmaJuzDone("ramadan2021", juzIndex);
+    this.myAjzaStatuses[juzIndex] = isDone;
+    this.groupsApi.globalKhitmaUpdateJuz("ramadan2021", juzIndex, isDone);
+
+    this.totalAjzaCounter += (isDone ? 1 : -1);
+    this.localDB.updateGlobalKhitmaJuz(juzIndex, isDone);
+
+
+    this.$gaService.event(isDone ? 'juz_done' : 'juz_undone', 'global_khitma', 'ramadan2021');
+
 
   }
 

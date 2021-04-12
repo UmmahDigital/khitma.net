@@ -174,6 +174,7 @@ export class KhitmaGroup {
 export class SameTaskKhitmaGroup extends KhitmaGroup {
     task: string;
     members: GroupMember[];
+    totalDoneTasks: number;
 
     public constructor(init?: Partial<SameTaskKhitmaGroup>) {
         super(init);

@@ -64,5 +64,35 @@ button.join {
     display: block;
 }
 
+#ramadan-day {
+    text-align: center;
+    padding: 16px;
+    margin: 16px auto 32px;
+    font-size: x-large;
+}
+
 .juz {
+    display: block;
+}
+.juz.today {
+    background: #467c743d !important;
+    border-radius: 4px !important;
+}
+
+#done-ajza-counter {
+    .number {
+        display: block;
+        text-align: center;
+        font-size: 500%;
+        letter-spacing: 8px;
+        font-weight: bold;
+        margin-bottom: 16px;
+        color: gold;
+    }
+
+    .text {
+        font-size: large;
+        display: block;
+        text-align: center;
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-moon',
@@ -20,13 +20,30 @@ export class MoonComponent implements OnInit {
       return;
     }
 
+
+    this.animate();
+
+
+  }
+
+  animate() {
+
     this.days = this.days;
     let time = ((this.days * 1000) / 2) % 15000;
+
+    this.animationState = "running";
 
     setTimeout(() => {
       this.animationState = "paused";
 
     }, time);
+  }
+
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['days']) {
+      this.animate();
+    }
   }
 
 }

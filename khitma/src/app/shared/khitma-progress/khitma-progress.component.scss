@@ -7,12 +7,12 @@
     outline: none;
 }
 $bgColor: #fafafa;
-$boxColor: black;
+$boxColor: gray;
 // $waterFColor: #4fa097; // #1c6151;
 // $waterBColor: #208796; // saturate(lighten($waterFColor, 10%), 20%);
 
-$waterFColor: #135156; // #1c6151;
-$waterBColor: $action-color; // #27fdc7; // saturate(lighten($waterFColor, 10%), 20%);
+$waterFColor: $primary-color; // #0fc0f5; // #135156; // #1c6151;
+$waterBColor: #27fdc7; // #27fdc7; // saturate(lighten($waterFColor, 10%), 20%);
 
 // body {
 //     -webkit-font-smoothing: antialiased;
@@ -24,8 +24,8 @@ $waterBColor: $action-color; // #27fdc7; // saturate(lighten($waterFColor, 10%),
 }
 
 .box {
-    height: 280px;
-    width: 280px;
+    height: 256px;
+    width: 256px;
     // position: absolute;
     // top: 50%;
     // left: 50%;

@@ -286,7 +286,10 @@ export class KhitmaGroupService {
   updateMemberTask(groupId, memberName, isDone: boolean) {
 
     let updatedObj = {};
+
     updatedObj["members." + memberName + ".isTaskDone"] = isDone;
+
+    updatedObj["totalDoneTasks"] = firebase.default.firestore.FieldValue.increment(isDone ? 1 : -1);
 
     this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
 
@@ -299,17 +302,22 @@ export class KhitmaGroupService {
   getGlobalKhitma(id) {
 
 
-    return this.db.doc('global/' + id).valueChanges({ idField: 'id' });
+    return this.db.doc('global/' + id);
 
   }
 
 
-  globalKhitmaJuzDone(id, juzIndex) {
+  globalKhitmaUpdateJuz(id, juzIndex, isDone) {
 
     let obj = {};
 
-    obj["ajza." + juzIndex] = firebase.default.firestore.FieldValue.increment(1);
-    return this.db.doc('global/' + id).update(obj);
+    const delta = isDone ? 1 : -1;
+
+    obj["ajza." + juzIndex] = firebase.default.firestore.FieldValue.increment(delta);
+    obj["totalAjzaCounter"] = firebase.default.firestore.FieldValue.increment(delta);
+
+
+    this.db.doc('global/' + id).update(obj);
 
 
   }
