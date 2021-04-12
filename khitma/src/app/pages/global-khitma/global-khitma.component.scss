@@ -1,0 +1,98 @@
+::ng-deep {
+    #app-container.dark {
+        // background-color: #011c2f;
+
+        // background: linear-gradient(rgb(21, 36, 52) 30%, rgb(32, 32, 32));
+        background: linear-gradient(black 30%, rgb(32, 32, 32));
+
+        color: white;
+
+        .mat-toolbar {
+            background: #011c2f !important; // #4fa097 !important;
+        }
+    }
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 32px;
+}
+
+@function multiple-box-shadow($n) {
+    $value: "#{random(2000)}px #{random(500)}px #FFF";
+    @for $i from 2 through $n {
+        $value: "#{$value} , #{random(500)}px #{random(500)}px #FFF";
+    }
+    @return unquote($value);
+}
+
+$shadows-small: multiple-box-shadow(400);
+
+#stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: $shadows-small;
+
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.25;
+
+    &:after {
+        content: " ";
+        position: absolute;
+        top: 500px;
+        width: 1px;
+        height: 1px;
+        background: transparent;
+        box-shadow: $shadows-small;
+    }
+}
+
+button.join {
+    background-color: white;
+    color: #011c2f;
+    width: 80%;
+    margin: 32px auto;
+    display: block;
+}
+
+#ramadan-day {
+    text-align: center;
+    padding: 16px;
+    margin: 16px auto 32px;
+    font-size: x-large;
+}
+
+.juz {
+    display: block;
+}
+.juz.today {
+    background: #467c743d !important;
+    border-radius: 4px !important;
+}
+
+#done-ajza-counter {
+    .number {
+        display: block;
+        text-align: center;
+        font-size: 500%;
+        letter-spacing: 8px;
+        font-weight: bold;
+        margin-bottom: 16px;
+        color: gold;
+    }
+
+    .text {
+        font-size: large;
+        display: block;
+        text-align: center;
+    }
+}

@@ -57,6 +57,13 @@ import { QuranComponent } from './pages/quran/quran.component';
 import { GetComponent } from './pages/get/get.component';
 import { PersonalKhitmaComponent } from './pages/me/personal-khitma/personal-khitma.component';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
+import { KhitmaProgressComponent } from './shared/khitma-progress/khitma-progress.component';
+import { CommonModule } from '@angular/common';
+import { GlobalKhitmaComponent } from './pages/global-khitma/global-khitma.component';
+import { MoonComponent } from './shared/moon/moon.component';
+import { GlassButtonComponent } from './shared/glass-button/glass-button.component';
+import { TodoComponent } from './shared/todo/todo.component';
+import { GroupMembersComponent } from './shared/group-members/group-members.component';
 
 
 
@@ -86,6 +93,7 @@ const routes: Routes = [
   { path: 'quran/juz/:juzIndex', component: QuranComponent },
   { path: 'about', component: AboutComponent },
   { path: 'get', component: GetComponent },
+  { path: 'ramadan', component: GlobalKhitmaComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
@@ -121,9 +129,16 @@ const routes: Routes = [
     QuranComponent,
     GetComponent,
     PersonalKhitmaComponent,
-    PopMenuComponent
+    PopMenuComponent,
+    KhitmaProgressComponent,
+    GlobalKhitmaComponent,
+    MoonComponent,
+    GlassButtonComponent,
+    TodoComponent,
+    GroupMembersComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     ClipboardModule,
     BrowserAnimationsModule,

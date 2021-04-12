@@ -7,11 +7,22 @@ export const JUZ_STATUS = Object.freeze({
     DONE: 2
 });
 
+
+
+
 export const KHITMA_CYCLE_TYPE = Object.freeze({
     AUTO_BOOK: 1,
     ALL_IDLE: 2,
 
 });
+
+
+export const KHITMA_GROUP_TYPE = Object.freeze({
+    SEQUENTIAL: 'SEQUENTIAL',
+    SAME_TASK: 'SAME_TASK',
+});
+
+
 
 
 export function GET_JUZ_READ_EXTERNAL_URL(juzIndex: number): string {
@@ -46,6 +57,7 @@ export class Juz {
 
 }
 
+
 export class KhitmaGroup {
     id?: string;
     title?: string;
@@ -56,6 +68,7 @@ export class KhitmaGroup {
     cycle?: number;
     targetDate?: string;
     admins?: string;
+    type?: string;
 
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);
@@ -158,3 +171,70 @@ export class KhitmaGroup {
 
 }
 
+export class SameTaskKhitmaGroup extends KhitmaGroup {
+    task: string;
+    members: GroupMember[];
+    totalDoneTasks: number;
+
+    public constructor(init?: Partial<SameTaskKhitmaGroup>) {
+        super(init);
+
+
+        this.members = Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
+
+    }
+
+    public getCounts() {
+
+        return {
+            total: this.members.length,
+            done: this.members.filter(function (item) { return item.isTaskDone; }).length
+        };
+
+    }
+
+    public isTaskDone(member: GroupMember) {
+
+        return {
+            total: this.members.length,
+            done: this.members.filter(function (item) { return item.isTaskDone; }).length
+        };
+
+    }
+
+    public createGroupMember(username) {
+
+        let isDone = this.members.find(m => m.name === username)?.isTaskDone;
+
+        return new GroupMember({
+            name: username,
+            isTaskDone: isDone
+        });
+    }
+
+    public resetMembersTaskStatus() {
+        this.members.forEach((member) => {
+            member.isTaskDone = false;
+        })
+    }
+
+    public getMembersObj() {
+
+        return this.members.reduce((m, { name, isTaskDone }) => ({
+            ...m, [name]: {
+                name: name,
+                isTaskDone: isTaskDone
+            }
+        }), {});
+
+    }
+}
+
+export class GroupMember {
+    name: string
+    isTaskDone: boolean;
+
+    public constructor(init?: Partial<GroupMember>) {
+        Object.assign(this, init);
+    }
+}

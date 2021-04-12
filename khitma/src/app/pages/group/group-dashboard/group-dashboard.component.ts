@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, GET_JUZ_READ_EXTERNAL_URL, KHITMA_CYCLE_TYPE } from 'src/app/entities/entities';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, GET_JUZ_READ_EXTERNAL_URL, KHITMA_CYCLE_TYPE, KHITMA_GROUP_TYPE, SameTaskKhitmaGroup, GroupMember } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -18,8 +18,6 @@ import { NativeShareService } from 'src/app/native-share.service';
 import { Router } from '@angular/router';
 
 
-
-
 @Component({
   selector: 'app-group-dashboard',
   templateUrl: './group-dashboard.component.html',
@@ -27,6 +25,11 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class GroupDashboardComponent implements OnInit {
+
+
+  readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
+
+  // [todo]: split using ViewChild?
 
   group: KhitmaGroup;
   myJuzIndex: number;
@@ -47,7 +50,14 @@ export class GroupDashboardComponent implements OnInit {
   inviteMsg = "";
   statusMsg = "";
 
-  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService,
+  showGroupMembers = true;
+
+  sameTaskGroupMetadata = {};
+
+
+
+  constructor(private groupsApi: KhitmaGroupService,
+    private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
     private titleService: Title,
@@ -68,7 +78,7 @@ export class GroupDashboardComponent implements OnInit {
       this.titleService.setTitle(group.title);
 
       this.group = new KhitmaGroup(group);
-      this.group.ajza = group.ajza;
+
 
       if (!this.isInitiated) {
         this.username = this.localDB.getUsername(this.group.id);
@@ -77,16 +87,36 @@ export class GroupDashboardComponent implements OnInit {
         this.isInitiated = true;
       }
 
-      this.myJuzIndex = this.group.getMyJuzIndex(this.username)
+      if (!group.type || group.type === KHITMA_GROUP_TYPE.SEQUENTIAL) {
+        this.group.ajza = group.ajza;
 
-      this.statusMsg = this.getKhitmaStatusMsg();
+        this.myJuzIndex = this.group.getMyJuzIndex(this.username)
 
-      let url = this.group.getURL();
+        this.statusMsg = this.getKhitmaStatusMsg();
 
-      this.inviteMsg = "إنضمّوا إلى"
-        + ' "' + this.group.title + '" '
-        + "عبر الرابط "
-        + url;
+        let url = this.group.getURL();
+
+        this.inviteMsg = "إنضمّوا إلى"
+          + ' "' + this.group.title + '" '
+          + "عبر الرابط "
+          + url;
+      } else if (group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
+
+        let tmpGroup = new SameTaskKhitmaGroup(group);
+
+        this.sameTaskGroupMetadata["counts"] = tmpGroup.getCounts();
+
+        this.sameTaskGroupMetadata["myMember"] = tmpGroup.createGroupMember(this.username);
+
+        this.sameTaskGroupMetadata["newTask"] = tmpGroup.task;
+
+        this.sameTaskGroupMetadata["totalDoneTasks"] = tmpGroup.totalDoneTasks || 0;
+
+        this.group = tmpGroup;
+
+      }
+
+
 
 
       window.scroll(0, 0);
@@ -184,15 +214,19 @@ export class GroupDashboardComponent implements OnInit {
         // this.localDB.setMyJuz(this.group.id, this.group.cycle, null);
         this.myJuzIndex = null;
 
-        this.showCelebration = true;
-
-        setTimeout(() => {
-          this.showCelebration = false;
-        }, 2250);
+        this.celebrate();
       }
 
     });
 
+  }
+
+  celebrate() {
+    this.showCelebration = true;
+
+    setTimeout(() => {
+      this.showCelebration = false;
+    }, 2250);
   }
 
   juzGiveup() {
@@ -435,7 +469,20 @@ export class GroupDashboardComponent implements OnInit {
 
         this.localDB.archiveGroup(this.group);
 
-        this.router.navigate(['/']);
+        if (this.group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
+          this.groupsApi.removeGroupMember(this.group.id, this.username).then(() => {
+            this.router.navigate(['/']);
+
+          });
+
+        }
+        else {
+          this.router.navigate(['/']);
+
+        }
+
+
+
 
 
       }
@@ -443,5 +490,55 @@ export class GroupDashboardComponent implements OnInit {
     });
 
   }
+
+
+
+  //****** */
+
+  taskToggled(isDone: boolean) {
+
+    this.groupsApi.updateMemberTask(this.group.id, this.username, isDone);
+
+    if (isDone) {
+      this.celebrate();
+
+    }
+
+    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+
+  }
+
+
+  updateTask() {
+
+    let tmpGroup = (<SameTaskKhitmaGroup>this.group);
+    tmpGroup.resetMembersTaskStatus();
+
+    let membersObj = tmpGroup.getMembersObj();
+
+    this.groupsApi.updateGroupTask(this.group.id, this.sameTaskGroupMetadata["newTask"], this.group.cycle, membersObj);
+
+
+    this.$gaService.event('new_task', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+
+  }
+
+
+  toggleMemberTaskState(member: GroupMember) {
+
+    if (!this.isAdmin) {
+      return;
+    }
+
+    member.isTaskDone = !member.isTaskDone;
+    this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
+
+
+    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+
+
+
+  }
+
 
 }

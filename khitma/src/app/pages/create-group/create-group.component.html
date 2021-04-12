@@ -2,17 +2,17 @@
     <header>إنشاء مجموعة جديدة</header>
 
 
-    <div id="group-type-selection" class="center-center">
+    <div class="center-center multi-choice">
 
-        <mat-button-toggle-group #groupType="matButtonToggleGroup" value="recurring">
+        <mat-button-toggle-group #isRecurring="matButtonToggleGroup" value="true">
 
-            <mat-button-toggle value="recurring">
+            <mat-button-toggle value="true">
                 <label class="center-center">
                     <mat-icon>loop</mat-icon> <span>ختمة دوريّة</span>
                 </label>
             </mat-button-toggle>
 
-            <mat-button-toggle value="oneoff">
+            <mat-button-toggle value="false">
                 <label class="center-center">
                     <mat-icon>looks_one</mat-icon> <span> ختمة لمرّة واحدة</span>
                 </label>
@@ -23,7 +23,7 @@
 
     </div>
 
-    <p *ngIf="groupType.value == 'recurring'"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
+    <p *ngIf="isRecurring.value == 'true'"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
         غير
         ثابتة.
 
@@ -32,12 +32,61 @@
         إن شاء الله.
     </p>
 
-    <p *ngIf="groupType.value == 'oneoff'"> تنتهي المجموعة عند انتهاء ختمة واحدة كاملة. مناسب مثلا للختمات العائليّة عن
+    <p *ngIf="isRecurring.value == 'false'"> تنتهي المجموعة عند انتهاء ختمة واحدة كاملة. مناسب مثلا للختمات العائليّة عن
         أرواح
         الموتى (رحمهم الله) أو في بيوت العزاء أو ختمات خلال المناسبات والنشاطات المختلفة. </p>
 
 
+    <section *ngIf="isRecurring.value == 'true'">
+
+        <h2>نوع الختمة الدوريّة</h2>
+        <div class="center-center multi-choice">
+
+            <mat-button-toggle-group [(ngModel)]="groupType">
+
+                <mat-button-toggle [value]="KHITMA_GROUP_TYPE.SAME_TASK">
+                    <label class="center-center">
+                        <mat-icon>layers</mat-icon> <span>ختمة موحّدة</span>
+                    </label>
+                </mat-button-toggle>
+
+                <mat-button-toggle [value]="KHITMA_GROUP_TYPE.SEQUENTIAL">
+                    <label class="center-center">
+                        <mat-icon>linear_scale</mat-icon> <span>أجزاء متتابعة</span>
+                    </label>
+                </mat-button-toggle>
+
+            </mat-button-toggle-group>
+
+
+        </div>
+
+
+        <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SAME_TASK">
+
+            جميع الأعضاء يتشاركون في نفس المهمّة خلال فترة محدّدة. مثلا: جميع الأعضاء يقرؤون الجزء الأوّل في اليوم
+            الأوّل
+            والجزء الثاني في اليوم الثاني وهكذا. في هذا النوع من الختمة يمكن لمسؤول الختمة تحديد المهمّة والفترة بشكل
+            مرن،
+            فيمكن مثلا عمل مجموعة لقراءة خمس صفحات في اليوم (للأطفال مثلا) أو عمل مجموعة تقرأ جزئين أو ثلاثة في اليوم أو
+            مجموعة تتم ختمة كاملة بشكل أسبوعي الخ...
+        </p>
+
+        <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SEQUENTIAL">
+
+            في هذه الختمة يقوم كل عضو في المجموعة بتلاوة أحد الأجزاء بحيث أنّ المجموعة مكتملة تتم ختمة كاملة، لإهدائها
+            لروح أحد المتوفّيْن مثلا. في حال كانت الختمة دوريّة فإنّ التطبيق يتيح امكانيّة تعيين الجزء التالي لكل عضور
+            بشكل تلقائي وكذلك مشاركة رسالة وتسأب فيها حالة الجزء التابع لكل عضو.
+        </p>
+
+
+
+    </section>
+
     <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
+
+        <h2>تفاصيل الختمة</h2>
+
 
         <mat-form-field appearance="fill" class="block">
             <mat-label>عنوان الختمة</mat-label>
@@ -47,6 +96,12 @@
         <mat-form-field appearance="fill" class="block">
             <mat-label>اسمك (مسؤول المجموعة)</mat-label>
             <input matInput [(ngModel)]="author" name="author" required="true" autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="block" *ngIf="groupType === KHITMA_GROUP_TYPE.SAME_TASK">
+            <mat-label>المهمّة الأولى</mat-label>
+            <input matInput [(ngModel)]="firstTask" name="firstTask" required="true" autocomplete="off"
+                placeholder="مثلا: الجزء الأوّل، أو صفحة 1-10">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="block">
@@ -59,5 +114,6 @@
             مجموعة الختمة</button>
 
     </form>
+
 
 </section>

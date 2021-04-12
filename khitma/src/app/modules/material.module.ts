@@ -30,6 +30,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 const materialModules = [
   CdkTreeModule,
@@ -62,7 +64,8 @@ const materialModules = [
   MatBadgeModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatRadioModule
+  MatRadioModule,
+  MatProgressBarModule
 ];
 
 @NgModule({

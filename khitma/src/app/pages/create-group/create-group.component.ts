@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 
 
 @Component({
@@ -21,6 +22,12 @@ export class CreateGroupComponent implements OnInit {
   description: string;
   author: string;
 
+  firstTask: string;
+
+  readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
+  groupType = KHITMA_GROUP_TYPE.SAME_TASK;
+
+
   constructor(private $gaService: GoogleAnalyticsService, private groupsApi: KhitmaGroupService, private router: Router, private alert: AlertService, private localDB: LocalDatabaseService) { }
 
   ngOnInit(): void {
@@ -28,7 +35,8 @@ export class CreateGroupComponent implements OnInit {
 
   createGroup() {
 
-    this.groupsApi.createGroup(this.title, this.description, this.author,).then(docRef => {
+
+    this.groupsApi.createGroup(this.title, this.description, this.author, this.groupType, this.firstTask).then(docRef => {
 
       const groupId = docRef.id;
 
