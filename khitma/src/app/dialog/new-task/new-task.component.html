@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>
+    مهمّة جديدة
+</h1>
+
+<form (ngSubmit)="onConfirm()" #editGroupForm="ngForm">
+
+    <div mat-dialog-content>
+
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>عنوان المهمّة الجديدة</mat-label>
+            <input matInput [(ngModel)]="newTask" name="newTask" required="true" autocomplete="off">
+        </mat-form-field>
+
+
+    </div>
+
+    <div mat-dialog-actions>
+
+
+        <button type="submit" class="action-btn block large" style="margin-bottom: 16px;" mat-raised-button
+            color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid">حفظ
+        </button>
+
+        <button mat-button class="block" (click)="onDismiss()">الغاء</button>
+
+
+
+    </div>
+
+</form>

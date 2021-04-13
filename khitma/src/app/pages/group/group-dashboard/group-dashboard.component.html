@@ -12,24 +12,7 @@
     <header class="dashboard-header" style="position: relative;">
 
 
-        <section *ngIf="isAdmin" class="admin-section center-center">
 
-
-            <mat-icon>verified</mat-icon>
-
-            <span style="margin:0 8px;">
-                لديك صلاحيّات مسؤول في هذه المجموعة
-            </span>
-
-            <!-- <button mat-flat-button style="zoom: 0.75;">
-                <mat-icon alt="تعديل تفاصيل الختمة"> edit</mat-icon>
-            </button> -->
-
-
-
-
-            <!-- <mat-icon>info</mat-icon> -->
-        </section>
 
 
 
@@ -38,10 +21,36 @@
         </button>
 
         <mat-menu #menu="matMenu">
-            <button *ngIf="isAdmin" mat-menu-item (click)="showEditGroupDialog()">
-                <mat-icon>edit</mat-icon>
-                <span>تعديل تفاصيل الختمة</span>
+
+
+            <div *ngIf="isAdmin">
+
+
+                <button mat-menu-item (click)="shareStatusMsg()">
+                    <mat-icon>format_list_numbered_rtl</mat-icon>
+                    <span>مشاركة وضع الختمة</span>
+                </button>
+
+
+                <button mat-menu-item (click)="showNewTaskDialog()" *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
+                    <mat-icon>sports_score</mat-icon>
+                    <span>مهمّة جديدة</span>
+                </button>
+
+
+                <button mat-menu-item (click)="showEditGroupDialog()">
+                    <mat-icon>edit</mat-icon>
+                    <span>تعديل تفاصيل الختمة</span>
+                </button>
+
+
+            </div>
+
+            <button mat-menu-item (click)="shareInviteMsg()">
+                <mat-icon>link</mat-icon>
+                مشاركة رابط المجموعة
             </button>
+
 
             <button *ngIf="!isAdmin" mat-menu-item (click)="leaveGroup()">
                 <mat-icon>exit_to_app</mat-icon>
@@ -50,10 +59,8 @@
 
 
 
-            <button mat-menu-item (click)="shareInviteMsg()">
-                <mat-icon>share</mat-icon>
-                مشاركة رابط المجموعة
-            </button>
+
+
 
 
 
@@ -67,6 +74,25 @@
 
 
     </header>
+
+
+
+    <section class="block user-msg">
+
+        <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
+
+        <span *ngIf="isAdmin" style="display: flex;">
+
+            <mat-icon style="opacity: 0.5;">verified</mat-icon>
+
+            <span style="margin:0 8px;">
+                لديك صلاحيّات مسؤول في هذه المجموعة.
+            </span>
+
+        </span>
+
+    </section>
+
 
     <!-- MAY HAVE TO MOVE TO VIEWCHILD OR EXPLORE OTHER OPTIONS -->
     <div *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)">
@@ -90,8 +116,6 @@
 
 
         <div class="block user-msg" style="margin:32px auto; text-align: center;">
-
-            <span> السلام عليكم يا <strong>{{username}}</strong>, </span>
 
             <span *ngIf="myJuzIndex != null; else noCurrentJuz"> جزؤك الحالي هو <strong> جزء {{myJuzIndex +
                     1}}</strong>.</span>
@@ -219,16 +243,14 @@
     <div *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" class="group-container">
 
 
-        <section style="margin-top: 32px;" *ngIf="isAdmin" class="update-task-wrapper">
+        <!-- <section style="margin-top: 32px;" *ngIf="isAdmin" class="update-task-wrapper">
 
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         مهمّة جديدة للمجموعة
                     </mat-panel-title>
-                    <!-- <mat-panel-description>
-                    This is a summary of the content
-                  </mat-panel-description> -->
+
                 </mat-expansion-panel-header>
 
                 <form (ngSubmit)="updateTask()" #updateTaskForm="ngForm">
@@ -251,15 +273,10 @@
 
                 </form>
             </mat-expansion-panel>
-        </section>
+        </section> -->
 
 
-        <div class="block user-msg">
 
-            <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
-            <!-- <span> المهمّة الحاليّة في مجموعتك هي: </span> -->
-
-        </div>
 
 
 
@@ -267,7 +284,7 @@
 
         <section>
 
-            <header>المهمّة الحاليّة </header>
+            <!-- <header>المهمّة الحاليّة </header> -->
 
             <app-todo [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone" (onToggled)="taskToggled($event)">
                 <div content> {{group.task}} </div>
@@ -277,17 +294,19 @@
 
 
         </section>
-        <!-- 
+
 
 
         <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done" style="margin-top: 32px;"
             [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
- -->
+
 
         <!-- <mat-progress-bar mode="determinate" [value]="40"></mat-progress-bar> -->
 
 
-        <section class="center-center big-counter">
+
+
+        <!-- <section class="center-center big-counter">
             <label class="number" dir="ltr">
 
                 <span class="done"> {{sameTaskGroupMetadata?.counts?.done}}</span>
@@ -296,7 +315,7 @@
 
             </label>
             <span class="text">قاموا بإتمام المهمّة.</span>
-        </section>
+        </section> -->
 
 
 

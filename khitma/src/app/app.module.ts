@@ -64,6 +64,7 @@ import { MoonComponent } from './shared/moon/moon.component';
 import { GlassButtonComponent } from './shared/glass-button/glass-button.component';
 import { TodoComponent } from './shared/todo/todo.component';
 import { GroupMembersComponent } from './shared/group-members/group-members.component';
+import { NewTaskComponent } from './dialog/new-task/new-task.component';
 
 
 
@@ -135,7 +136,8 @@ const routes: Routes = [
     MoonComponent,
     GlassButtonComponent,
     TodoComponent,
-    GroupMembersComponent
+    GroupMembersComponent,
+    NewTaskComponent
   ],
   imports: [
     CommonModule,

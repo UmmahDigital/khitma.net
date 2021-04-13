@@ -16,6 +16,8 @@ import { EditKhitmaDetailsComponent } from 'src/app/dialog/edit-khitma-details/e
 import { StartNewKhitmaComponent } from 'src/app/dialog/start-new-khitma/start-new-khitma.component';
 import { NativeShareService } from 'src/app/native-share.service';
 import { Router } from '@angular/router';
+import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
+import { StatusMessageGenerators } from './status-messages';
 
 
 @Component({
@@ -297,63 +299,12 @@ export class GroupDashboardComponent implements OnInit {
 
   getKhitmaStatusMsg() {
 
-    function getJuzIcon(juz) {
+    return StatusMessageGenerators[this.group.type](this.group);
 
-      const ICONS = ['🔴', '🟡', '🟢'];
-
-      return ICONS[juz.status];
-    }
-
-    function getDateInArabic(date: Date) {
-      // var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
-      //   "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-
-      var days = ["اﻷحد", "اﻷثنين", "الثلاثاء", "اﻷربعاء", "الخميس", "الجمعة", "السبت"];
-
-      return days[date.getDay()] + " " + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getUTCFullYear();
-    }
-
-    const NEW_LINE = "\n";
-    const now = new Date();
-
-    let msg = this.group.title;
-
-    msg += NEW_LINE;
-    msg += NEW_LINE;
-    msg += getDateInArabic(now);
-    msg += NEW_LINE;
-    msg += NEW_LINE;
-
-    this.group.ajza.forEach(juz => {
-
-      msg += ("0" + (juz.index + 1)).slice(-2) + " " + getJuzIcon(juz) + " " + (juz.owner || "");
-
-      // if (juz.status === JUZ_STATUS.DONE) {
-      //   msg += " 👏";
-      // }
-
-      msg += NEW_LINE;
-
-    });
-
-    msg += NEW_LINE;
-    msg += NEW_LINE;
-
-    if (this.group.targetDate) {
-      msg += "موعد تسليم الختمة: " + this.group.targetDate + ".";
-      msg += NEW_LINE;
-      msg += NEW_LINE;
-    }
-
-    msg += "رجاء حتلنة جزئكم عن طريق الرابط: " + this.group.getURL();
-
-    msg += NEW_LINE;
-    msg += NEW_LINE;
-
-    msg += "بارك الله بكم!";
-
-    return msg;
   }
+
+
+
 
   groupStatusCopied() {
     this.alert.show("تمّ نسخ الرسالة بنجاح", 2500);
@@ -537,6 +488,24 @@ export class GroupDashboardComponent implements OnInit {
     this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', this.sameTaskGroupMetadata["newTask"]);
 
 
+
+  }
+
+
+  showNewTaskDialog() {
+    const dialogRef = this.dialog.open(NewTaskComponent, {
+      width: "90%"
+    });
+
+    dialogRef.afterClosed().subscribe(newTask => {
+
+      if (newTask) {
+
+        this.updateTask();
+
+      }
+
+    });
 
   }
 
