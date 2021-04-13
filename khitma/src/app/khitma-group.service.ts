@@ -169,6 +169,11 @@ export class KhitmaGroupService {
     }
 
 
+    if (juzStatus == JUZ_STATUS.DONE) {
+      this.globalKhitmaUpdateJuzFromGroup('ramadan2021', true);
+    }
+
+
   }
 
   getGroups(groupsIds: string[]) {
@@ -320,6 +325,16 @@ export class KhitmaGroupService {
     this.db.doc('global/' + id).update(obj);
 
 
+  }
+
+
+  globalKhitmaUpdateJuzFromGroup(id, isDone) {
+
+    let obj = {};
+    const delta = isDone ? 1 : -1;
+    obj["totalAjzaCounter"] = firebase.default.firestore.FieldValue.increment(delta);
+
+    this.db.doc('global/' + id).update(obj);
   }
 
 
