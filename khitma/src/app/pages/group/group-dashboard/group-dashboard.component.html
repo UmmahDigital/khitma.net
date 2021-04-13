@@ -147,7 +147,7 @@
 
         <section *ngIf="isAdmin" class="admin-actions">
 
-            <div *ngIf="!nativeApi.isAvailable">
+            <!-- <div *ngIf="!nativeApi.isAvailable">
 
                 <button mat-raised-button class="block large" [cdkCopyToClipboard]="statusMsg"
                     (cdkCopyToClipboardCopied)="groupStatusCopied()">
@@ -160,20 +160,20 @@
                     نسخ رابط المجموعة ودعوة الانضمام
                 </button>
 
-            </div>
+            </div> -->
 
-            <div *ngIf="nativeApi.isAvailable">
+            <!-- <div *ngIf="nativeApi.isAvailable"> -->
 
 
-                <button *ngIf="nativeApi.isAvailable" mat-raised-button class="block large" (click)="shareStatusMsg()">
-                    مشاركة وضع الختمة الحالي مع الأسماء
-                </button>
+            <button mat-raised-button class="block large" (click)="shareStatusMsg()">
+                مشاركة وضع الختمة الحالي مع الأسماء
+            </button>
 
-                <button mat-button class=" block" (click)="shareInviteMsg()">
-                    مشاركة رابط المجموعة ودعوة الانضمام
-                </button>
+            <button mat-button class=" block" (click)="shareInviteMsg()">
+                مشاركة رابط المجموعة ودعوة الانضمام
+            </button>
 
-            </div>
+            <!-- </div> -->
 
 
         </section>

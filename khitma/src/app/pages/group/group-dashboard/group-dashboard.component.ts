@@ -82,6 +82,8 @@ export class GroupDashboardComponent implements OnInit {
       this.group = new KhitmaGroup(group);
 
 
+      this.group.type = this.group.type || KHITMA_GROUP_TYPE.SEQUENTIAL; // compitability
+
       if (!this.isInitiated) {
         this.username = this.localDB.getUsername(this.group.id);
         this.isAdmin = this.group.isAdmin(this.username);
@@ -94,11 +96,11 @@ export class GroupDashboardComponent implements OnInit {
 
         this.myJuzIndex = this.group.getMyJuzIndex(this.username)
 
-        this.statusMsg = this.getKhitmaStatusMsg();
+        // this.statusMsg = this.getKhitmaStatusMsg();
 
         let url = this.group.getURL();
 
-        this.inviteMsg = "إنضمّوا إلى"
+        this.inviteMsg = "إنضمّوا إلى مجموعة"
           + ' "' + this.group.title + '" '
           + "عبر الرابط "
           + url;

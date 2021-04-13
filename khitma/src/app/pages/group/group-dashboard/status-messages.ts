@@ -26,7 +26,6 @@ function statusMsg_Sequential(group) {
     let msg = group.title;
 
     msg += NEW_LINE;
-    msg += NEW_LINE;
     msg += _getDateInArabic(now);
     msg += NEW_LINE;
     msg += NEW_LINE;
@@ -75,11 +74,11 @@ function statusMsg_SameTask(group) {
     let msg = group.title;
 
     msg += NEW_LINE;
-    msg += NEW_LINE;
     msg += _getDateInArabic(now);
     msg += NEW_LINE;
     msg += NEW_LINE;
-    msg += "المهمّة: " + group.task;
+
+    msg += "المهمّة الحاليّة: " + group.task;
     msg += NEW_LINE;
     msg += NEW_LINE;
 
