@@ -264,8 +264,8 @@ export class KhitmaGroupService {
 
     let updatedObj = {};
     updatedObj[("members." + memberName)] = {
-      name: memberName,
-      isTaskDone: false
+      // "name": memberName,
+      "isTaskDone": false
     };
 
     return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);

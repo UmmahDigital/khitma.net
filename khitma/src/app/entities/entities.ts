@@ -180,8 +180,22 @@ export class SameTaskKhitmaGroup extends KhitmaGroup {
         super(init);
 
 
-        this.members = Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
+        this.members = this._createMembersArrab(this.members);//Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
 
+    }
+
+    private _createMembersArrab(membersObj) {
+
+        let arr = [];
+
+        for (let [name, value] of Object.entries(membersObj)) {
+            arr.push({
+                name: name,
+                isTaskDone: (<GroupMember>value).isTaskDone
+            });
+        }
+
+        return arr.sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
     }
 
     public getCounts() {
