@@ -249,7 +249,7 @@ mat-panel-title {
     -webkit-text-fill-color: transparent;
     height: 56px;
     line-height: 56px;
-    margin-left: 4px;
+    margin-left: 16px;
   }
 
   .text {
@@ -314,6 +314,22 @@ mat-panel-title {
   }
 }
 
+.admin-action-btn {
+  display: block;
+  margin: 16px auto;
+  padding: 0 16px;
+  width: 100%;
+  background: $admin-action-color;
+  color: white;
+  font-size: larger;
+  text-align: right;
+  line-height: 64px;
+
+  mat-icon {
+    margin-left: 8px;
+  }
+}
+
 .admin-notes {
   hr {
     margin: 32px 0 16px 0;
@@ -328,4 +344,20 @@ mat-panel-title {
 
 .admin-action-btn {
   background: $admin-action-color !important;
+}
+
+.members-list-edit-btn {
+  background: white;
+  border: 1px solid $admin-action-color;
+  color: $admin-action-color;
+
+  // height: 48px;
+  // width: 48px;
+  // display: block;
+  margin: 16px auto;
+
+  &.mat-button-toggle-checked {
+    background: $admin-action-color;
+    color: white;
+  }
 }

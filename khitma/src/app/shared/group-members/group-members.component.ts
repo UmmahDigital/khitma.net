@@ -9,8 +9,12 @@ import { GroupMember } from 'src/app/entities/entities';
 export class GroupMembersComponent implements OnInit {
 
   @Input() members: GroupMember;
+  @Input() isEditMode: boolean;
   @Output() onMemberClick?= new EventEmitter<GroupMember>();
+  @Output() onMemberRemove?= new EventEmitter<GroupMember>();
+  @Output() onMemberAdd?= new EventEmitter<GroupMember>();
 
+  newMemberName = "";
 
   constructor() { }
 
@@ -20,5 +24,24 @@ export class GroupMembersComponent implements OnInit {
   memberClicked(member) {
     this.onMemberClick.emit(member);
   }
+
+  removeMember(member) {
+    this.onMemberRemove.emit(member);
+  }
+
+  addMember(name) {
+
+    let newMember = new GroupMember({
+      name: name,
+      isTaskDone: false
+    });
+
+    this.onMemberAdd.emit(newMember);
+
+    this.newMemberName = "";
+
+
+  }
+
 
 }

@@ -370,28 +370,44 @@
 
 
 
-        <div class="center-center names-toggle-container" style="margin-top: 32px;">
+        <!-- <div class="center-center names-toggle-container" style="margin-top: 32px;">
             <mat-slide-toggle [color]="color" [(ngModel)]="showGroupMembers">
                 إظهار أعضاء المجموعة
             </mat-slide-toggle>
         </div>
-
+-->
 
 
 
         <section *ngIf="showGroupMembers">
 
-            <span *ngIf="isAdmin" class="center-center tip">
-                <strong>لمسؤول المجموعة:</strong>
 
-                يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه.
-            </span>
-
-            <!-- <header>
+            <header>
                 أعضاء المجموعة
-            </header> -->
+            </header>
 
-            <app-group-members [members]="this.group.members" (onMemberClick)="toggleMemberTaskState($event)">
+            <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
+
+                <div class="tip">
+                    <strong>لمسؤول المجموعة:</strong>
+
+                    يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
+                    على كبسة التعديل أدناه.
+                </div>
+
+                <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
+                    (click)="isMembersListEditMode = !isMembersListEditMode">
+                    <mat-icon>edit</mat-icon>
+                </mat-button-toggle>
+            </div>
+
+
+
+
+
+            <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
+                (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
+                (onMemberAdd)="addGroupMember($event)">
             </app-group-members>
 
 

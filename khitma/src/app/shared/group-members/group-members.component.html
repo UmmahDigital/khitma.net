@@ -1,11 +1,50 @@
-<section *ngIf="members">
+<section *ngIf="members" [class.edit-mode]="isEditMode">
 
-    <mat-card *ngFor="let member of members" (click)="memberClicked(member)" class="member"
-        [ngClass]="member.isTaskDone ? 'task-done' : 'task-not-done'">
 
-        <label class="name">{{member.name}}</label>
+    <section *ngIf="isEditMode" class="add-member">
+        <!-- <header>عضو جديد</header> -->
 
-    </mat-card>
+        <form (ngSubmit)="addMember(newMemberName)" #editGroupForm="ngForm">
+
+            <div style="width: 80%;">
+
+                <mat-form-field class="block">
+                    <mat-label>اسم العضو الجديد</mat-label>
+                    <input matInput [(ngModel)]="newMemberName" name="newMemberName" required="true" autocomplete="off">
+                </mat-form-field>
+            </div>
+
+            <div style="width: 20%;" class="center-center">
+                <button type="submit" [disabled]="!editGroupForm.form.valid">
+
+                    <mat-icon>person_add_alt</mat-icon>
+
+
+                </button>
+            </div>
+
+        </form>
+
+    </section>
+
+    <div *ngFor="let member of members" class="member">
+
+        <mat-card (click)="memberClicked(member)" class="member-panel"
+            [ngClass]="member.isTaskDone ? 'task-done' : 'task-not-done'">
+
+            <label class="name">{{member.name}}</label>
+
+        </mat-card>
+
+        <div class="member-admin-actions center-center">
+            <button>
+                <mat-icon (click)="removeMember(member)">remove_circle_outline</mat-icon>
+            </button>
+        </div>
+
+    </div>
+
+
 
 
 

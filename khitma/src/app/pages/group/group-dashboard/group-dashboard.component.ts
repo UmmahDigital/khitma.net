@@ -38,6 +38,7 @@ export class GroupDashboardComponent implements OnInit {
   username: string;
 
   isAdmin: boolean = false;
+  isMembersListEditMode = false;
 
   showCelebration: boolean = false;
 
@@ -434,10 +435,6 @@ export class GroupDashboardComponent implements OnInit {
 
         }
 
-
-
-
-
       }
 
     });
@@ -490,6 +487,35 @@ export class GroupDashboardComponent implements OnInit {
     this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<SameTaskKhitmaGroup>this.group).task);
 
 
+
+  }
+
+  removeGroupMember(member: GroupMember) {
+
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogModel(
+        "تأكيد حذف عضو المجموعة",
+        ""),
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+        this.groupsApi.removeGroupMember(this.group.id, member.name);
+        this.alert.show("تمّ حذف العضو  (" + member.name + ") بنجاح", 2500);
+      }
+
+    });
+
+  }
+
+
+  addGroupMember(member: GroupMember) {
+    this.groupsApi.addGroupMember(this.group.id, member.name);
+
+    this.alert.show("تمّ إضافة العضو الجديد (" + member.name + ") بنجاح", 2500);
 
   }
 
