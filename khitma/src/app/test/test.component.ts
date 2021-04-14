@@ -26,18 +26,18 @@ export class TestComponent implements OnInit {
 
   clicked() {
 
-    // for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
 
-    //   let updatedObj = {};
-    //   updatedObj[("ajza." + i)] = {
-    //     index: i,
-    //     status: JUZ_STATUS.DONE,
-    //     owner: "hasan"
-    //   };
+      let updatedObj = {};
+      updatedObj[("ajza." + i)] = {
+        index: i,
+        status: JUZ_STATUS.DONE,
+        owner: "hasan" + (i + 1)
+      };
 
-    //   this.db.doc<KhitmaGroup>('groups/ckc0vQMCPrEq4ydOAyBZ').update(updatedObj);
+      this.db.doc<KhitmaGroup>('groups/O5Nd5fcQ9Kx59aYTrGPp').update(updatedObj);
 
-    // }
+    }
 
 
 

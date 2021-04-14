@@ -16,14 +16,14 @@
 
 
 
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="group-options-menu-button">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="group-options-menu-button" *ngIf="!isAdmin">
             <mat-icon>settings</mat-icon>
         </button>
 
         <mat-menu #menu="matMenu">
 
 
-            <div *ngIf="isAdmin">
+            <!-- <div *ngIf="isAdmin">
 
 
                 <button mat-menu-item (click)="shareStatusMsg()">
@@ -44,7 +44,7 @@
                 </button>
 
 
-            </div>
+            </div> -->
 
             <button mat-menu-item (click)="shareInviteMsg()">
                 <mat-icon>link</mat-icon>
@@ -76,20 +76,65 @@
     </header>
 
 
+    <section *ngIf="isAdmin" class="admin-tools">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>verified</mat-icon>
+                    <span>
+                        أدوات مسؤول المجموعة
+                    </span>
+                </mat-panel-title>
+
+            </mat-expansion-panel-header>
+
+
+            <button mat-flat-button (click)="shareStatusMsg()">
+                <mat-icon>format_list_numbered_rtl</mat-icon>
+                <span>مشاركة وضع الختمة</span>
+            </button>
+
+
+            <button mat-flat-button (click)="showNewTaskDialog()" *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
+                <mat-icon>sports_score</mat-icon>
+                <span>مهمّة جديدة</span>
+            </button>
+
+
+            <button mat-flat-button (click)="showEditGroupDialog()">
+                <mat-icon>edit</mat-icon>
+                <span>تعديل تفاصيل الختمة</span>
+            </button>
+
+
+            <button mat-flat-button (click)="shareInviteMsg()">
+                <mat-icon>link</mat-icon>
+                مشاركة رابط المجموعة
+            </button>
+
+
+            <!-- <div class="admin-notes">
+
+                <hr />
+
+
+                <span> يمكنك الوصول إلى هذه الأدوات أيضا عن طريق الضغط على أيقونة <mat-icon>settings</mat-icon> الموجودة
+                    في
+                    أعلى الصفحة على اليسار</span>
+            </div> -->
+
+
+        </mat-expansion-panel>
+    </section>
+
 
     <section class="block user-msg">
 
+
+
         <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
 
-        <span *ngIf="isAdmin" style="display: flex;">
 
-            <mat-icon style="opacity: 0.5;">verified</mat-icon>
-
-            <span style="margin:0 8px;">
-                لديك صلاحيّات مسؤول في هذه المجموعة.
-            </span>
-
-        </span>
 
     </section>
 
@@ -103,7 +148,7 @@
 
 
             <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
-                class="block large action-btn">بدء
+                class="block large action-btn admin-action-btn">بدء
                 ختمة
                 جديدة للمجموعة</button>
 
@@ -145,9 +190,9 @@
         <div class="space" style="margin-bottom: -16px;"></div>
 
 
-        <section *ngIf="isAdmin" class="admin-actions">
+        <!-- <section *ngIf="isAdmin" class="admin-actions"> -->
 
-            <!-- <div *ngIf="!nativeApi.isAvailable">
+        <!-- <div *ngIf="!nativeApi.isAvailable">
 
                 <button mat-raised-button class="block large" [cdkCopyToClipboard]="statusMsg"
                     (cdkCopyToClipboardCopied)="groupStatusCopied()">
@@ -162,21 +207,21 @@
 
             </div> -->
 
-            <!-- <div *ngIf="nativeApi.isAvailable"> -->
+        <!-- <div *ngIf="nativeApi.isAvailable"> -->
 
 
-            <button mat-raised-button class="block large" (click)="shareStatusMsg()">
+        <!-- <button mat-raised-button class="block large" (click)="shareStatusMsg()">
                 مشاركة وضع الختمة الحالي مع الأسماء
             </button>
 
             <button mat-button class=" block" (click)="shareInviteMsg()">
                 مشاركة رابط المجموعة ودعوة الانضمام
-            </button>
+            </button> -->
 
-            <!-- </div> -->
+        <!-- </div> -->
 
 
-        </section>
+        <!-- </section> -->
 
 
         <div class="space"></div>
@@ -332,7 +377,15 @@
         </div>
 
 
+
+
         <section *ngIf="showGroupMembers">
+
+            <span *ngIf="isAdmin" class="center-center tip">
+                <strong>لمسؤول المجموعة:</strong>
+
+                يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه.
+            </span>
 
             <!-- <header>
                 أعضاء المجموعة

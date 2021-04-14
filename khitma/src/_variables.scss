@@ -10,3 +10,6 @@ $status-booked-bg-color: #ffdd94;
 
 $status-done-color: darkgreen;
 $status-done-bg-color: #d0e6a5;
+
+$admin-color: #54325b; //#693c72;
+$admin-action-color: saturate(lighten($admin-color, 20%), 0%);

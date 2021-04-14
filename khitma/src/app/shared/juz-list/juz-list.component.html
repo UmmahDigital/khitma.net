@@ -2,10 +2,11 @@
 
 
     <span *ngIf="allowEdit" class="center-center tip">
-        <strong>نصيحة لمسؤول المجموعة:</strong>
+        <strong>لمسؤول المجموعة:</strong>
 
         يمكنك تعديل الأسماء بالضغط عليها وكتابة اسم
-        عضو حالي آخر أو اسم عضو جديد ثمّ الضغط على كبسة الحفظ التي تظهر بعد التغيير.</span>
+        عضو حالي آخر أو اسم عضو جديد ثمّ الضغط على كبسة الحفظ التي تظهر بعد التغيير.
+    </span>
 
 
     <app-juz *ngFor="let juz of ajza" [juz]="juz" [isEditMode]="allowEdit" [myJuzIndex]="myJuzIndex"

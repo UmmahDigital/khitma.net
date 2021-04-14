@@ -268,3 +268,64 @@ mat-panel-title {
   display: block;
   margin-top: 16px;
 }
+
+.admin-tools {
+  margin: 0 -32px 32px;
+
+  .mat-expansion-panel {
+    border-radius: 0 !important;
+  }
+
+  mat-expansion-panel-header {
+    background: $admin-color !important;
+
+    .mat-expansion-panel-header-title {
+      color: white !important;
+    }
+
+    .mat-expansion-indicator::after {
+      color: rgba(255, 255, 255, 0.54);
+    }
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0px 32px;
+  }
+
+  // mat-expansion-panel-header mat-icon {
+  //   color: gold;
+  // }
+
+  mat-icon {
+    margin-left: 8px;
+    // opacity: 0.5;
+  }
+
+  button {
+    display: block;
+    margin: 16px auto;
+    padding: 0 16px;
+    width: 100%;
+    background: $admin-action-color;
+    color: white;
+    font-size: larger;
+    text-align: right;
+    line-height: 64px;
+  }
+}
+
+.admin-notes {
+  hr {
+    margin: 32px 0 16px 0;
+  }
+
+  mat-icon {
+    margin: 0 4px;
+    transform: translate(0, 6px);
+    zoom: 0.75;
+  }
+}
+
+.admin-action-btn {
+  background: $admin-action-color !important;
+}
