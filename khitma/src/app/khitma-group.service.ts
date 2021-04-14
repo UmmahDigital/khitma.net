@@ -260,7 +260,6 @@ export class KhitmaGroupService {
 
   updateGroupTask(groupId, newTask, currentCycle, resetedMembers) {
 
-
     this.db.doc<SameTaskKhitmaGroup>('groups/' + groupId).update({ "task": newTask, "members": resetedMembers, "cycle": (currentCycle + 1) });
   }
 

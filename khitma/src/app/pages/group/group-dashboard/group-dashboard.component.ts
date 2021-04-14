@@ -112,7 +112,7 @@ export class GroupDashboardComponent implements OnInit {
 
         this.sameTaskGroupMetadata["myMember"] = tmpGroup.createGroupMember(this.username);
 
-        this.sameTaskGroupMetadata["newTask"] = tmpGroup.task;
+        // this.sameTaskGroupMetadata["newTask"] = tmpGroup.task;
 
         this.sameTaskGroupMetadata["totalDoneTasks"] = tmpGroup.totalDoneTasks || 0;
 
@@ -457,22 +457,22 @@ export class GroupDashboardComponent implements OnInit {
 
     }
 
-    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', (<SameTaskKhitmaGroup>this.group).task);
 
   }
 
 
-  updateTask() {
+  updateTask(newTask) {
 
     let tmpGroup = (<SameTaskKhitmaGroup>this.group);
     tmpGroup.resetMembersTaskStatus();
 
     let membersObj = tmpGroup.getMembersObj();
 
-    this.groupsApi.updateGroupTask(this.group.id, this.sameTaskGroupMetadata["newTask"], this.group.cycle, membersObj);
+    this.groupsApi.updateGroupTask(this.group.id, newTask, this.group.cycle, membersObj);
 
 
-    this.$gaService.event('new_task', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+    this.$gaService.event('new_task', 'tasks', newTask);
 
   }
 
@@ -487,7 +487,7 @@ export class GroupDashboardComponent implements OnInit {
     this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
 
 
-    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', this.sameTaskGroupMetadata["newTask"]);
+    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<SameTaskKhitmaGroup>this.group).task);
 
 
 
@@ -503,7 +503,7 @@ export class GroupDashboardComponent implements OnInit {
 
       if (newTask) {
 
-        this.updateTask();
+        this.updateTask(newTask);
 
       }
 
