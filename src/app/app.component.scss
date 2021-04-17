@@ -120,7 +120,7 @@ mat-toolbar {
   height: $toolbar-height;
 }
 
-.content {
+#app-content {
   position: absolute;
   top: $toolbar-height;
   bottom: 0;

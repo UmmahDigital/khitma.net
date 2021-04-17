@@ -124,7 +124,8 @@ export class GroupDashboardComponent implements OnInit {
 
 
 
-      window.scroll(0, 0);
+      // window.scroll(0, 0);
+      document.querySelector('body').scrollTo(0, 0);
 
     });
 
@@ -504,7 +505,7 @@ export class GroupDashboardComponent implements OnInit {
 
       if (dialogResult) {
         this.groupsApi.removeGroupMember(this.group.id, member.name);
-        this.alert.show("تمّ حذف العضو  (" + member.name + ") بنجاح", 2500);
+        this.alert.show("تمّ حذف  " + member.name + "  بنجاح", 2500);
       }
 
     });
@@ -515,7 +516,7 @@ export class GroupDashboardComponent implements OnInit {
   addGroupMember(member: GroupMember) {
     this.groupsApi.addGroupMember(this.group.id, member.name);
 
-    this.alert.show("تمّ إضافة العضو الجديد (" + member.name + ") بنجاح", 2500);
+    this.alert.show("تمّ إضافة  " + member.name + "  بنجاح", 2500);
 
   }
 
