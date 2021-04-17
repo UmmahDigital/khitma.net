@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "khitma/dist/khitma",
+    "public": "dist/khitma",
     "headers": [
       {
         "source": "/.well-known/apple-app-site-association",
