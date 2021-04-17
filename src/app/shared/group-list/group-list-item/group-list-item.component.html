@@ -6,9 +6,9 @@
 
         <div class="progress" dir="ltr">
 
-            <div class="done" style="flex:{{progress.done}}"></div>
-            <div class="booked" style="flex:{{progress.booked}}"></div>
-            <div class="idle" style="flex:{{progress.idle}}"></div>
+            <div class="done" [style]="'flex:' + progress.done"></div>
+            <div class="booked" [style]="'flex:' + progress.booked"></div>
+            <div class="idle" [style]="'flex:' + progress.idle"></div>
 
         </div>
 

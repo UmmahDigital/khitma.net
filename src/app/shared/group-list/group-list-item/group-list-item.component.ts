@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { KhitmaGroupService } from '../../../../app/khitma-group.service';
-import { JUZ_STATUS } from '../../../entities/entities';
+import { GroupMember, JUZ_STATUS, KHITMA_GROUP_TYPE } from '../../../entities/entities';
 
 @Component({
   selector: 'app-group-list-item',
@@ -13,22 +13,23 @@ export class GroupListItemComponent implements OnInit {
 
   link;
 
-  progress = {
-    done: 0,
-    booked: 0,
-    idle: 0
-  };
+  progress;
 
   constructor(private groupsApi: KhitmaGroupService) { }
 
   ngOnInit(): void {
 
-    this.progress = this.calcProgress();
+    if (this.group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
+      this.progress = this.calcProgress_SameTask();
+    }
+    else {
+      this.progress = this.calcProgress_Sequential();
+    }
 
     this.link = this.groupsApi.getGroupURL(this.group.id);
   }
 
-  calcProgress() {
+  calcProgress_Sequential() {
 
     let counters = {
       done: 0,
@@ -48,5 +49,31 @@ export class GroupListItemComponent implements OnInit {
     return counters;
 
   }
+
+
+  calcProgress_SameTask() {
+
+    let counters = {
+      done: 0,
+      idle: 0
+    };
+
+    for (let [name, value] of Object.entries(this.group.members)) {
+
+      let m = <GroupMember>value;
+
+      if (m.isTaskDone) {
+        counters["done"]++;
+      }
+      else {
+        counters["idle"]++;
+      }
+
+    }
+
+    return counters;
+
+  }
+
 
 }
