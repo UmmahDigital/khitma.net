@@ -469,7 +469,6 @@ export class GroupDashboardComponent implements OnInit {
 
     this.groupsApi.updateGroupTask(this.group.id, newTask, this.group.cycle, membersObj);
 
-
     this.$gaService.event('new_task', 'tasks', newTask);
 
   }
@@ -486,7 +485,6 @@ export class GroupDashboardComponent implements OnInit {
 
 
     this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<SameTaskKhitmaGroup>this.group).task);
-
 
 
   }

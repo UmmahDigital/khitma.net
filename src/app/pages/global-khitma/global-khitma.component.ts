@@ -6,6 +6,8 @@ import 'firebase/firestore';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { map } from 'rxjs/operators';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-global-khitma',
@@ -16,7 +18,10 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 })
 export class GlobalKhitmaComponent implements OnInit {
 
-  constructor(private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private $gaService: GoogleAnalyticsService,) { }
+  constructor(private groupsApi: KhitmaGroupService,
+    private localDB: LocalDatabaseService,
+    private $gaService: GoogleAnalyticsService,
+    private dialog: MatDialog,) { }
 
   dayInRamadan = 0;
 
@@ -31,13 +36,25 @@ export class GlobalKhitmaComponent implements OnInit {
   ngOnInit(): void {
 
 
+    function daysBetween(StartDate, EndDate) {
+      // The number of milliseconds in all UTC days (no DST)
+      const oneDay = 1000 * 60 * 60 * 24;
+
+      // A day in UTC always lasts 24 hours (unlike in other time formats)
+      const start = Date.UTC(EndDate.getFullYear(), EndDate.getMonth(), EndDate.getDate());
+      const end = Date.UTC(StartDate.getFullYear(), StartDate.getMonth(), StartDate.getDate());
+
+      // so it's safe to divide by 24 hours
+      return (start - end) / oneDay;
+    }
+
     this.groupsApi.getGlobalKhitma("ramadan2021").get().subscribe((res: any) => {
 
       let data = res.data();
 
       let ramadanStartDate = new Date(data.startDate);
 
-      let dayInRamadan = this.DaysBetween(ramadanStartDate, new Date()) + 1;
+      let dayInRamadan = daysBetween(ramadanStartDate, new Date()) + 1;
 
       // dayInRamadan = 10;
       this.dayInRamadan = dayInRamadan;//> 0 ? dayInRamadan : 0;
@@ -67,20 +84,6 @@ export class GlobalKhitmaComponent implements OnInit {
   }
 
 
-
-  DaysBetween(StartDate, EndDate) {
-    // The number of milliseconds in all UTC days (no DST)
-    const oneDay = 1000 * 60 * 60 * 24;
-
-    // A day in UTC always lasts 24 hours (unlike in other time formats)
-    const start = Date.UTC(EndDate.getFullYear(), EndDate.getMonth(), EndDate.getDate());
-    const end = Date.UTC(StartDate.getFullYear(), StartDate.getMonth(), StartDate.getDate());
-
-    // so it's safe to divide by 24 hours
-    return (start - end) / oneDay;
-  }
-
-
   submitJuz(juzIndex, isDone) {
 
     this.myAjzaStatuses[juzIndex] = isDone;
@@ -91,6 +94,28 @@ export class GlobalKhitmaComponent implements OnInit {
 
 
     this.$gaService.event(isDone ? 'juz_done' : 'juz_undone', 'global_khitma', 'ramadan2021');
+
+
+  }
+
+
+  resetKhitma() {
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogModel(
+        "بدء ختمة جديدة؟",
+        "بارك الله فيك وفي تلاوتك."),
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+        this.localDB.resetMyGlobalKhitmaAjza();
+        this.myAjzaStatuses = this.localDB.getMyGlobalKhitmaAjza();
+      }
+
+    });
 
 
   }

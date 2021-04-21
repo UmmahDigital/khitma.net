@@ -26,15 +26,22 @@ export class CreateGroupComponent implements OnInit {
 
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
   groupType = KHITMA_GROUP_TYPE.SAME_TASK;
+  isRecurring = true;
 
-
-  constructor(private $gaService: GoogleAnalyticsService, private groupsApi: KhitmaGroupService, private router: Router, private alert: AlertService, private localDB: LocalDatabaseService) { }
+  constructor(private $gaService: GoogleAnalyticsService,
+    private groupsApi: KhitmaGroupService,
+    private router: Router,
+    private alert: AlertService,
+    private localDB: LocalDatabaseService) { }
 
   ngOnInit(): void {
   }
 
   createGroup() {
 
+    if (!this.isRecurring) {
+      this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
+    }
 
     this.groupsApi.createGroup(this.title, this.description, this.author, this.groupType, this.firstTask).then(docRef => {
 

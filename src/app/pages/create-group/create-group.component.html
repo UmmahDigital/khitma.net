@@ -4,15 +4,15 @@
 
     <div class="center-center multi-choice">
 
-        <mat-button-toggle-group #isRecurring="matButtonToggleGroup" value="true">
+        <mat-button-toggle-group [(ngModel)]="isRecurring">
 
-            <mat-button-toggle value="true">
+            <mat-button-toggle [value]="true">
                 <label class="center-center">
                     <mat-icon>loop</mat-icon> <span>ختمة دوريّة</span>
                 </label>
             </mat-button-toggle>
 
-            <mat-button-toggle value="false">
+            <mat-button-toggle [value]="false">
                 <label class="center-center">
                     <mat-icon>looks_one</mat-icon> <span> ختمة لمرّة واحدة</span>
                 </label>
@@ -23,7 +23,7 @@
 
     </div>
 
-    <p *ngIf="isRecurring.value == 'true'"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
+    <p *ngIf="isRecurring"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
         غير
         ثابتة.
 
@@ -32,12 +32,12 @@
         إن شاء الله.
     </p>
 
-    <p *ngIf="isRecurring.value == 'false'"> تنتهي المجموعة عند انتهاء ختمة واحدة كاملة. مناسب مثلا للختمات العائليّة عن
+    <p *ngIf="!isRecurring"> تنتهي المجموعة عند انتهاء ختمة واحدة كاملة. مناسب مثلا للختمات العائليّة عن
         أرواح
         الموتى (رحمهم الله) أو في بيوت العزاء أو ختمات خلال المناسبات والنشاطات المختلفة. </p>
 
 
-    <section *ngIf="isRecurring.value == 'true'">
+    <section *ngIf="isRecurring">
 
         <h2>نوع الختمة الدوريّة</h2>
         <div class="center-center multi-choice">
@@ -79,14 +79,11 @@
             بشكل تلقائي وكذلك مشاركة رسالة وتسأب فيها حالة الجزء التابع لكل عضو.
         </p>
 
-
-
     </section>
 
     <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
 
         <h2>تفاصيل الختمة</h2>
-
 
         <mat-form-field appearance="fill" class="block">
             <mat-label>عنوان الختمة</mat-label>

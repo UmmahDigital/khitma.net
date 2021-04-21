@@ -193,6 +193,10 @@ export class LocalDatabaseService {
     return this.myGlobalKhitmaAjza;
   }
 
+  resetMyGlobalKhitmaAjza() {
+    this._initMyGlobalKhitmaAjza();
+  }
+
   updateGlobalKhitmaAjza(ajza) {
     this.myGlobalKhitmaAjza = ajza;
     localStorage.setItem("myGlobalKhitmaAjza", JSON.stringify(this.myGlobalKhitmaAjza));
