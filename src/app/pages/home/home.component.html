@@ -44,7 +44,16 @@
 
     <div>
 
-        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new">مجموعة جديدة</a>
+        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
+            [queryParams]="{type: 'recurring'}">إنشاء مجموعة ختمة
+            دوريّة</a>
+
+        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
+            [queryParams]="{type: 'onetime'}" style="background-color: #16769a!important;">بدء ختمة جماعيّة لمرّة
+            واحدة </a>
+
+        <hr style="margin-bottom:32px" />
+
 
         <a routerLink="/ramadan" mat-raised-button color="accent" class="block large "
             style="background-color: #011c2f;">

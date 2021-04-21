@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { KhitmaGroupService } from '../../khitma-group.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class CreateGroupComponent implements OnInit {
 
   firstTask: string;
 
+  typeParam: string;
+
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
   groupType = KHITMA_GROUP_TYPE.SAME_TASK;
   isRecurring = true;
@@ -32,9 +35,37 @@ export class CreateGroupComponent implements OnInit {
     private groupsApi: KhitmaGroupService,
     private router: Router,
     private alert: AlertService,
-    private localDB: LocalDatabaseService) { }
+    private localDB: LocalDatabaseService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe(params => {
+      this.typeParam = params['type'];
+
+      if (!this.typeParam) {
+        return;
+      }
+
+      let detailedType = this.typeParam.split(".");
+
+      this.isRecurring = (detailedType[0] == 'recurring');
+
+      if (this.isRecurring) {
+
+        switch (detailedType[1]) {
+          case 'sametask': { this.groupType = KHITMA_GROUP_TYPE.SAME_TASK; break; }
+          case 'sequential': { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
+          default: { this.groupType = KHITMA_GROUP_TYPE.SAME_TASK; break; }
+
+        }
+      }
+      else {
+        this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
+      }
+
+    });
+
   }
 
   createGroup() {

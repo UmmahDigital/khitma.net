@@ -40,7 +40,7 @@ export class AppComponent {
 
         // window.scroll(0, 0);
 
-        document.querySelector('body').scrollTo(0, 0);
+        document.querySelector('#app-content').scrollTo(0, 0);
 
 
 
