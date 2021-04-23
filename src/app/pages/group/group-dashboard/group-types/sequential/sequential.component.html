@@ -1,0 +1,105 @@
+<div *ngIf="group">
+
+    <section class="khitma-done" *ngIf="group.isDone() > 0">
+
+        <app-khitma-done-celebration></app-khitma-done-celebration>
+
+
+        <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
+            class="block large action-btn admin-action-btn">بدء
+            ختمة
+            جديدة للمجموعة</button>
+
+        <button style="margin-top: 16px;" mat-raised-button class="block" (click)="shareKhitmaCompletedDua()">
+            مشاركة
+            دعاء
+            الختمة</button>
+
+    </section>
+
+
+    <div class="block user-msg" style="margin:32px auto; text-align: center;">
+
+        <span *ngIf="myJuzIndex != null; else noCurrentJuz"> جزؤك الحالي هو <strong> جزء {{myJuzIndex +
+                1}}</strong>.</span>
+
+        <ng-template #noCurrentJuz>
+            <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza"> يمكنك اختيار أي من الأجزاء التي باللون الأحمر.
+            </span>
+            <ng-template #noIdleAjza>
+                <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+            </ng-template>
+        </ng-template>
+
+        <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}.</span>
+
+    </div>
+
+
+    <section class="juz-grid-section">
+        <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
+            (onJuzSelection)="juzSelected($event)">
+        </app-juz-grid>
+    </section>
+
+    <div class="space" style="margin-bottom: -16px;"></div>
+
+
+    <div class="space"></div>
+
+
+
+    <div class="center-center names-toggle-container">
+        <mat-slide-toggle [(ngModel)]="showNames">
+            إظهار قائمة الأسماء
+        </mat-slide-toggle>
+    </div>
+
+    <div class="space"></div>
+
+
+
+    <section class="juz-list-section" *ngIf="showNames">
+
+        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="isAdmin"
+            (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
+        </app-juz-list>
+
+    </section>
+
+
+    <section class="action-panel mat-elevation-z16">
+
+        <div>
+
+            <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="0px grid">
+
+                <div fxFlex="25%" class="center-center">
+                    <a [routerLink]="['/quran/juz' , myJuzIndex + 1]" class="quran-explorer-btn">
+
+                        <mat-icon>
+                            menu_book</mat-icon>
+
+                        <span>{{myJuzIndex + 1}}</span>
+                    </a>
+                </div>
+
+                <div fxFlex="50%" class="center-center">
+                    <button mat-raised-button color="accent" class="block large action-btn" (click)="juzDone()"
+                        [disabled]="myJuzIndex == null">
+                        أتممت قراءة جزء {{myJuzIndex + 1}}</button>
+                </div>
+
+                <div fxFlex="25%" class="center-center">
+                    <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
+                </div>
+
+            </section>
+
+
+            <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div>
+
+        </div>
+    </section>
+
+</div>

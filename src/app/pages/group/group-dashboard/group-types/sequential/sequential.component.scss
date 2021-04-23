@@ -1,0 +1,131 @@
+@import "~src/_variables";
+
+.done-btn {
+    height: 70px;
+    line-height: 70px !important;
+    padding: 0 16px !important;
+    font-weight: bold;
+}
+
+.current-juz {
+    text-align: center;
+    font-size: 200%;
+    padding: 10px;
+    display: block;
+    font-weight: bold;
+
+    span {
+        color: $primary-color;
+        margin-top: 5px;
+        display: block;
+    }
+}
+
+.action-panel {
+    position: fixed;
+    bottom: 0;
+    background: white;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    // height: 100px;
+    margin: 0;
+
+    button,
+    a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .my-juz-actions {
+        padding: 16px 0;
+    }
+}
+
+.current-juz {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #e5e5e5;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 100%;
+
+    &:before {
+        content: "جزء";
+        position: absolute;
+        top: 0;
+        text-align: center;
+        font-size: 50%;
+        left: 0;
+        right: 0;
+        color: gray;
+        margin-top: -12px;
+    }
+}
+
+.giveup-btn {
+    zoom: 0.75;
+    color: gray;
+}
+
+.juz-grid-section,
+.juz-list-section {
+    margin: 0;
+}
+
+.juz-list-section {
+    margin-top: -32px;
+}
+
+.khitma-info {
+    margin-bottom: 0 !important;
+}
+
+.juz {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome, Edge, Opera and Firefox */
+}
+
+.khitma-done {
+    background: lighten($primary-color, 70%);
+    padding: 32px;
+    margin: -8px -32px 0px -32px;
+}
+
+.quran-explorer-btn {
+    text-decoration: none;
+    position: relative;
+
+    mat-icon {
+        font-size: xxx-large;
+        color: $primary-color;
+        // margin-top: 16px;
+        width: auto;
+        height: auto;
+    }
+
+    span {
+        font-size: x-large;
+        width: 32px;
+        height: 32px;
+        display: block;
+        line-height: 32px;
+        margin: -32px auto;
+        border-radius: 100%;
+        position: absolute;
+        left: 50%;
+        bottom: 45px;
+        margin-left: -27px;
+        color: white;
+        margin-top: -18px;
+        top: 50%;
+        opacity: 0.75;
+    }
+}

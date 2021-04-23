@@ -58,13 +58,13 @@ export class Juz {
 }
 
 
+
 export class KhitmaGroup {
     id?: string;
     title?: string;
     description?: string;
     author?: string;
     creationDate?: Date;
-    ajza?: Juz[];
     cycle?: number;
     targetDate?: string;
     admins?: string;
@@ -73,11 +73,34 @@ export class KhitmaGroup {
     public constructor(init?: Partial<KhitmaGroup>) {
         Object.assign(this, init);
         this.cycle = init.cycle || 0;
-        this._initAjza();
     }
 
-    public isDone() {
-        return this.ajza.every(juz => juz.status === JUZ_STATUS.DONE);
+    public getURL() {
+        return location.origin + '/group/' + this.id;
+    }
+
+    public isAdmin(username) {
+        return username == this.author || this.admins?.includes(username);
+    }
+
+    static refineOwnerName(name) {
+        return name.trim();
+    }
+
+}
+
+
+export class KhitmaGroup_Sequential extends KhitmaGroup {
+
+    ajza?: Juz[];
+
+
+    public constructor(init?: Partial<KhitmaGroup_Sequential>) {
+        super(init);
+
+        if (!this.ajza) {
+            this._initAjza();
+        }
     }
 
     private _initAjza() {
@@ -89,17 +112,17 @@ export class KhitmaGroup {
         // this.ajza = Array(NUM_OF_AJZA).fill(new Juz());
     }
 
+    public isDone() {
+        return this.ajza.every(juz => juz.status === JUZ_STATUS.DONE);
+    }
+
     public assignJuz(juzIndex, owner) {
         this.ajza[juzIndex].owner = owner;
     }
 
-    public getURL() {
-        return location.origin + '/group/' + this.id;
-    }
+    public toJson() {
 
-    toJson() {
-
-        let res = new KhitmaGroup(this);
+        let res = new KhitmaGroup_Sequential(this);
 
         // convert to native js object
         res.ajza = this.ajza.map((obj) => { return Object.assign({}, obj) });
@@ -107,12 +130,8 @@ export class KhitmaGroup {
         return res;
     }
 
-    getAjzaObj() {
+    public getAjzaObj() {
         return { ...this.ajza.map((obj) => { return Object.assign({}, obj) }) };
-    }
-
-    public isAdmin(username) {
-        return username == this.author || this.admins?.includes(username);
     }
 
     public hasIdleAjza() {
@@ -133,9 +152,12 @@ export class KhitmaGroup {
     }
 
 
+
+
+
     static getEmptyAjzaObj() {
 
-        let ajza = KhitmaGroup.getEmptyAjzaArray();
+        let ajza = KhitmaGroup_Sequential.getEmptyAjzaArray();
 
         return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
     }
@@ -149,7 +171,6 @@ export class KhitmaGroup {
 
         return ajza;
     }
-
 
     static convertAjzaToObj(ajza: Juz[]) {
 
@@ -165,21 +186,17 @@ export class KhitmaGroup {
         return Object.values(ajza).sort((a: any, b: any) => (a.index > b.index) ? 1 : -1);
     }
 
-    static refineOwnerName(name) {
-        return name.trim();
-    }
+
 
 }
 
-export class SameTaskKhitmaGroup extends KhitmaGroup {
+export class KhitmaGroup_SameTask extends KhitmaGroup {
     task: string;
     members: GroupMember[];
     totalDoneTasks: number;
 
-    public constructor(init?: Partial<SameTaskKhitmaGroup>) {
+    public constructor(init?: Partial<KhitmaGroup_SameTask>) {
         super(init);
-
-
         this.members = this._createMembersArrab(this.members);//Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
 
     }
@@ -251,4 +268,51 @@ export class GroupMember {
     public constructor(init?: Partial<GroupMember>) {
         Object.assign(this, init);
     }
+}
+
+
+export function GroupTypeConverter(converter?: (value: any) => any) {
+    return (target: Object, key: string) => {
+
+
+        converter = (group: KhitmaGroup) => {
+
+            switch (group.type) {
+                case KHITMA_GROUP_TYPE.SAME_TASK: {
+                    return <KhitmaGroup_SameTask>group;
+                }
+                case KHITMA_GROUP_TYPE.SEQUENTIAL: {
+                    return <KhitmaGroup_Sequential>group;
+                }
+                default: {
+                    return <KhitmaGroup_Sequential>group;
+                }
+            }
+
+        }
+
+        var definition = Object.getOwnPropertyDescriptor(target, key);
+        if (definition) {
+            Object.defineProperty(target, key, {
+                get: definition.get,
+                set: newValue => {
+                    definition.set(converter(newValue));
+                },
+                enumerable: true,
+                configurable: true
+            });
+        } else {
+            Object.defineProperty(target, key, {
+                get: function () {
+                    return this["__" + key];
+                },
+                set: function (newValue) {
+                    this["__" + key] = converter(newValue);
+                },
+                enumerable: true,
+                configurable: true
+            });
+        }
+
+    };
 }

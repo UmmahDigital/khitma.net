@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KhitmaGroup, KHITMA_GROUP_TYPE, SameTaskKhitmaGroup } from 'src/app/entities/entities';
+import { KhitmaGroup, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask } from 'src/app/entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
 

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KhitmaGroup } from 'src/app/entities/entities';
+import { KhitmaGroup, KhitmaGroup_Sequential, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../../khitma-group.service';
@@ -36,10 +36,17 @@ export class DashboardComponent implements OnInit {
         this.groups = <KhitmaGroup[]>groups;
 
         this.groups.forEach(group => {
-          const _isV2Api = !Array.isArray(group.ajza);
 
-          if (_isV2Api) {
-            group.ajza = KhitmaGroup.convertAjzaToArray(group.ajza);
+          if (!group.type || group.type == KHITMA_GROUP_TYPE.SEQUENTIAL) {
+
+            let seqKhitma = <KhitmaGroup_Sequential>group;
+
+            const _isV2Api = !Array.isArray(seqKhitma.ajza);
+
+            if (_isV2Api) {
+              seqKhitma.ajza = KhitmaGroup_Sequential.convertAjzaToArray(seqKhitma.ajza);
+            }
+
           }
 
         });

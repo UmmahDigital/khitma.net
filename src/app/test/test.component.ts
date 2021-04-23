@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { JUZ_STATUS, KhitmaGroup, SameTaskKhitmaGroup } from '../entities/entities';
+import { JUZ_STATUS, KhitmaGroup, KhitmaGroup_SameTask } from '../entities/entities';
 import { map, catchError, take, first } from 'rxjs/operators';
 
 // import * as firestore from "../../../node_modules/firebase";

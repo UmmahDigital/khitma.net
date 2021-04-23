@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, NUM_OF_AJZA } from './entities/entities';
+import { KhitmaGroup, KhitmaGroup_Sequential, NUM_OF_AJZA } from './entities/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class LocalDatabaseService {
   }
 
   private _initPersonalKhitma() {
-    let ajza = KhitmaGroup.getEmptyAjzaArray();
+    let ajza = KhitmaGroup_Sequential.getEmptyAjzaArray();
     this.updateMyPersonalKhitmah(ajza);
   }
 

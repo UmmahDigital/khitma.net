@@ -16,43 +16,9 @@ import { AlertService } from 'src/app/alert.service';
 })
 export class GroupComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private groupsApi: KhitmaGroupService,
-    private localDB: LocalDatabaseService,
-    private alert: AlertService) { }
+  constructor() { }
 
 
   ngOnInit(): void {
-
-
-    // this.route.params.subscribe(
-    //   (params: Params): void => {
-
-    //     const groupId = params.groupId;
-
-    //     this.groupsApi.setCurrentGroup(groupId).subscribe((group) => {
-
-    //       if (!this.groupsApi.isValidGroup(group)) {
-    //         this.alert.show("لم يتم العثور على الختمة المطلوبة.");
-    //         this.router.navigate(['/']);
-    //         return;
-
-    //       }
-
-    //       const isJoind = this.localDB.isGroupJoined(groupId);
-    //       const redirecTo = isJoind ? 'dashboard' : 'join';
-
-    //       if (!this.router.url.includes(redirecTo)) {
-    //         this.router.navigate(['group', groupId, redirecTo]);
-
-
-    //       }
-
-    //     });
-
-    //   });
-
   }
-
 }

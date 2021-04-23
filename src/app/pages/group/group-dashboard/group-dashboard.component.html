@@ -5,46 +5,13 @@
         style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000; bottom: 0;">
     </app-celebration>
 
-
-
-
-
     <header class="dashboard-header" style="position: relative;">
-
-
-
-
-
 
         <button mat-icon-button [matMenuTriggerFor]="menu" class="group-options-menu-button" *ngIf="!isAdmin">
             <mat-icon>settings</mat-icon>
         </button>
 
         <mat-menu #menu="matMenu">
-
-
-            <!-- <div *ngIf="isAdmin">
-
-
-                <button mat-menu-item (click)="shareStatusMsg()">
-                    <mat-icon>format_list_numbered_rtl</mat-icon>
-                    <span>مشاركة وضع الختمة</span>
-                </button>
-
-
-                <button mat-menu-item (click)="showNewTaskDialog()" *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
-                    <mat-icon>sports_score</mat-icon>
-                    <span>مهمّة جديدة</span>
-                </button>
-
-
-                <button mat-menu-item (click)="showEditGroupDialog()">
-                    <mat-icon>edit</mat-icon>
-                    <span>تعديل تفاصيل الختمة</span>
-                </button>
-
-
-            </div> -->
 
             <button mat-menu-item (click)="shareInviteMsg()">
                 <mat-icon>link</mat-icon>
@@ -57,24 +24,11 @@
                 <span>ترك المجموعة</span>
             </button>
 
-
-
-
-
-
-
-
         </mat-menu>
-
-
 
         <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
 
-
-
-
     </header>
-
 
     <section *ngIf="isAdmin" class="admin-tools">
         <mat-expansion-panel>
@@ -113,332 +67,32 @@
             </button>
 
 
-            <!-- <div class="admin-notes">
-
-                <hr />
-
-
-                <span> يمكنك الوصول إلى هذه الأدوات أيضا عن طريق الضغط على أيقونة <mat-icon>settings</mat-icon> الموجودة
-                    في
-                    أعلى الصفحة على اليسار</span>
-            </div> -->
-
-
         </mat-expansion-panel>
     </section>
 
 
     <section class="block user-msg">
 
-
-
         <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
-
-
 
     </section>
 
 
-    <!-- MAY HAVE TO MOVE TO VIEWCHILD OR EXPLORE OTHER OPTIONS -->
-    <div *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)">
 
-        <section class="khitma-done" *ngIf="group.isDone() > 0">
+    <section *ngIf="group" class="group-container">
 
-            <app-khitma-done-celebration></app-khitma-done-celebration>
+        <app-group-sequential *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)" [group]="group"
+            [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
+        </app-group-sequential>
 
+        <app-group-sametask *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" [group]="group" [userWatch$]="userWatch$"
+            [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
+        </app-group-sametask>
 
-            <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
-                class="block large action-btn admin-action-btn">بدء
-                ختمة
-                جديدة للمجموعة</button>
-
-            <button style="margin-top: 16px;" mat-raised-button class="block" (click)="shareKhitmaCompletedDua()">
-                مشاركة
-                دعاء
-                الختمة</button>
-
-        </section>
-
-
-        <div class="block user-msg" style="margin:32px auto; text-align: center;">
-
-            <span *ngIf="myJuzIndex != null; else noCurrentJuz"> جزؤك الحالي هو <strong> جزء {{myJuzIndex +
-                    1}}</strong>.</span>
-
-            <ng-template #noCurrentJuz>
-                <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza"> يمكنك اختيار أي من الأجزاء التي باللون الأحمر.
-                </span>
-                <ng-template #noIdleAjza>
-                    <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
-                </ng-template>
-            </ng-template>
-
-
-
-            <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}.</span>
-
-
-        </div>
-
-
-        <section class="juz-grid-section">
-            <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
-                (onJuzSelection)="juzSelected($event)">
-            </app-juz-grid>
-        </section>
-
-        <div class="space" style="margin-bottom: -16px;"></div>
-
-
-        <!-- <section *ngIf="isAdmin" class="admin-actions"> -->
-
-        <!-- <div *ngIf="!nativeApi.isAvailable">
-
-                <button mat-raised-button class="block large" [cdkCopyToClipboard]="statusMsg"
-                    (cdkCopyToClipboardCopied)="groupStatusCopied()">
-                    نسخ وضع الختمة الحالي مع الأسماء
-                </button>
-
-
-                <button mat-button [cdkCopyToClipboard]="inviteMsg" (cdkCopyToClipboardCopied)="inviteMsgCopied()"
-                    class=" block">
-                    نسخ رابط المجموعة ودعوة الانضمام
-                </button>
-
-            </div> -->
-
-        <!-- <div *ngIf="nativeApi.isAvailable"> -->
-
-
-        <!-- <button mat-raised-button class="block large" (click)="shareStatusMsg()">
-                مشاركة وضع الختمة الحالي مع الأسماء
-            </button>
-
-            <button mat-button class=" block" (click)="shareInviteMsg()">
-                مشاركة رابط المجموعة ودعوة الانضمام
-            </button> -->
-
-        <!-- </div> -->
-
-
-        <!-- </section> -->
-
-
-        <div class="space"></div>
-
-
-
-        <div class="center-center names-toggle-container">
-            <mat-slide-toggle [color]="color" [(ngModel)]="showNames">
-                إظهار قائمة الأسماء
-            </mat-slide-toggle>
-        </div>
-
-        <div class="space"></div>
-
-
-
-        <section class="juz-list-section" *ngIf="showNames">
-
-            <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="isAdmin"
-                (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
-            </app-juz-list>
-
-        </section>
-
-
-        <section class="action-panel mat-elevation-z16">
-
-            <div>
-
-                <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="0px grid">
-
-                    <div fxFlex="25%" class="center-center">
-                        <a [routerLink]="['/quran/juz' , myJuzIndex + 1]">
-                            <mat-icon class="quran-explorer-btn" [matBadge]="myJuzIndex + 1" matBadgeSize="large"
-                                matBadgePosition="below ">
-                                menu_book</mat-icon>
-                        </a>
-                    </div>
-
-                    <div fxFlex="50%" class="center-center">
-                        <button mat-raised-button color="accent" class="block large action-btn" (click)="juzDone()"
-                            [disabled]="myJuzIndex == null">
-                            أتممت قراءة جزء {{myJuzIndex + 1}}</button>
-                    </div>
-
-                    <div fxFlex="25%" class="center-center">
-                        <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
-                    </div>
-
-                </section>
-
-
-                <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div>
-
-            </div>
-        </section>
-
-
-    </div>
-
-
-    <!-- MAY HAVE TO MOVE TO VIEWCHILD OR EXPLORE OTHER OPTIONS -->
-
-    <div *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" class="group-container">
-
-
-        <!-- <section style="margin-top: 32px;" *ngIf="isAdmin" class="update-task-wrapper">
-
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        مهمّة جديدة للمجموعة
-                    </mat-panel-title>
-
-                </mat-expansion-panel-header>
-
-                <form (ngSubmit)="updateTask()" #updateTaskForm="ngForm">
-
-                    <mat-form-field appearance="fill" class="block">
-                        <mat-label>
-                            عنوان المهمّة الجديدة
-                        </mat-label>
-                        <input matInput [(ngModel)]="sameTaskGroupMetadata.newTask" name="task" required="true"
-                            autocomplete="off" style="padding: 0;" />
-                    </mat-form-field>
-
-                    <div style="width:20%">
-
-                    </div>
-
-                    <button type="submit" class="action-btn block" style="margin-bottom: 16px;" mat-raised-button>
-                        <mat-icon>save</mat-icon> حفظ
-                    </button>
-
-                </form>
-            </mat-expansion-panel>
-        </section> -->
-
-
-
-
-
-
-
-
-        <section>
-
-            <!-- <header>المهمّة الحاليّة </header> -->
-
-            <app-todo [isDone]="sameTaskGroupMetadata?.myMember?.isTaskDone" (onToggled)="taskToggled($event)">
-                <div content> {{group.task}} </div>
-            </app-todo>
-
-            <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
-
-
-        </section>
-
-
-
-        <app-khitma-progress [current]="sameTaskGroupMetadata?.counts?.done" style="margin-top: 32px;"
-            [target]="sameTaskGroupMetadata?.counts?.total"></app-khitma-progress>
-
-
-        <!-- <mat-progress-bar mode="determinate" [value]="40"></mat-progress-bar> -->
-
-
-
-
-        <!-- <section class="center-center big-counter">
-            <label class="number" dir="ltr">
-
-                <span class="done"> {{sameTaskGroupMetadata?.counts?.done}}</span>
-
-                <span class="total"> / {{sameTaskGroupMetadata?.counts?.total}}</span>
-
-            </label>
-            <span class="text">قاموا بإتمام المهمّة.</span>
-        </section> -->
-
-
-
-
-
-
-
-
-
-        <!-- <div class="center-center names-toggle-container" style="margin-top: 32px;">
-            <mat-slide-toggle [color]="color" [(ngModel)]="showGroupMembers">
-                إظهار أعضاء المجموعة
-            </mat-slide-toggle>
-        </div>
--->
-
-
-
-        <section *ngIf="showGroupMembers">
-
-
-            <header>
-                أعضاء المجموعة
-            </header>
-
-            <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
-
-                <div class="tip">
-                    <strong>لمسؤول المجموعة:</strong>
-
-                    يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
-                    على كبسة التعديل أدناه.
-                </div>
-
-                <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
-                    (click)="isMembersListEditMode = !isMembersListEditMode">
-                    <mat-icon>edit</mat-icon>
-                </mat-button-toggle>
-            </div>
-
-
-
-
-
-            <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
-                (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
-                (onMemberAdd)="addGroupMember($event)">
-            </app-group-members>
-
-
-        </section>
-
-
-        <div class="spacer"></div>
-
-
-        <section class="center-center big-counter" *ngIf="group.cycle > 0">
-            <label class="number">{{sameTaskGroupMetadata.totalDoneTasks}}</label>
-            <span class="text">أعمال طيّبة قمتم بها في هذه المجموعة منذ تأسيسها. في ميزان حسناتكم إن شاء الله!</span>
-        </section>
-
-
-
-    </div>
-
-
-
-
+    </section>
 
 
 
     <div class="spacer"></div>
-
-
-
-
-
-
-
 
 </div>

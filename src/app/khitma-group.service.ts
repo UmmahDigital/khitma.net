@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, KHITMA_CYCLE_TYPE, KHITMA_GROUP_TYPE, SameTaskKhitmaGroup } from './entities/entities';
+import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, KHITMA_CYCLE_TYPE, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask, KhitmaGroup_Sequential } from './entities/entities';
 
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { map, catchError, take, first } from 'rxjs/operators';
@@ -47,7 +47,7 @@ export class KhitmaGroupService {
       this._isV2Api = !Array.isArray(group.ajza);
 
       if (this._isV2Api) {
-        group.ajza = KhitmaGroup.convertAjzaToArray(group.ajza);
+        group.ajza = KhitmaGroup_Sequential.convertAjzaToArray(group.ajza);
       }
 
       this._currentGroupObj = group;
@@ -59,9 +59,6 @@ export class KhitmaGroupService {
 
   }
 
-
-
-
   public getCurrentGroup() {
     return this._currentGroup;
   }
@@ -70,9 +67,6 @@ export class KhitmaGroupService {
     return this._currentGroupObj.id;
   }
 
-  // public updateGroup(groupId: string, updatedGroup: KhitmaGroup) {
-  //   return this.groupsDocs[groupId].update(KhitmaGroup);
-  // }
 
   public createGroup(title, description, author, groupType?, firstTask?) {
 
@@ -96,9 +90,7 @@ export class KhitmaGroupService {
 
     }
     else {
-      let groupToAdd = new KhitmaGroup({ "title": title, "description": description, "author": author, "type": groupType });
-      newGroupObj["ajza"] = groupToAdd.getAjzaObj(); // [todo]: static function to get empty ajza obj
-
+      newGroupObj["ajza"] = KhitmaGroup_Sequential.getEmptyAjzaObj(); // [todo]: static function to get empty ajza obj
     }
 
     return this.db.collection('groups').add(newGroupObj);
@@ -117,8 +109,6 @@ export class KhitmaGroupService {
 
   public updateGroupInfo(groupId, title, description, targetDate, admins) {
 
-
-
     this.db.doc<KhitmaGroup>('groups/' + groupId).update({
       title: title,
       description: description || "",
@@ -128,7 +118,11 @@ export class KhitmaGroupService {
 
   }
 
-  public updateJuz(groupId, juzIndex, ownerName, juzStatus) {
+  // ******** SEQUENTIAL KHITMA
+
+  updateJuz(groupId, juzIndex, ownerName, juzStatus) {
+
+    let currentSequentialKhitma = <KhitmaGroup_Sequential>this._currentGroupObj;
 
     if (!groupId) {
       groupId = this._currentGroupObj.id;
@@ -140,7 +134,7 @@ export class KhitmaGroupService {
 
     // [todo]: might need to change code below when supporting multigroup
 
-    this._currentGroupObj.ajza[juzIndex] = {
+    currentSequentialKhitma.ajza[juzIndex] = {
       index: juzIndex,
       status: juzStatus,
       owner: ownerName || ""
@@ -148,24 +142,24 @@ export class KhitmaGroupService {
 
 
     if (juzStatus == JUZ_STATUS.IDLE) {
-      this._currentGroupObj.ajza[juzIndex].owner = "";
+      currentSequentialKhitma.ajza[juzIndex].owner = "";
     }
 
     if (this._isV2Api) {
 
       let updatedObj = {};
-      updatedObj[("ajza." + juzIndex)] = this._currentGroupObj.ajza[juzIndex];
+      updatedObj[("ajza." + juzIndex)] = currentSequentialKhitma.ajza[juzIndex];
 
-      this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+      this.db.doc<KhitmaGroup_Sequential>('groups/' + groupId).update(updatedObj);
     }
-    else {
-      this.db.doc<KhitmaGroup>('groups/' + groupId).update({ "ajza": this._currentGroupObj.ajza });
+    else { // LEGACY CODE
+      this.db.doc<KhitmaGroup_Sequential>('groups/' + groupId).update({ "ajza": currentSequentialKhitma.ajza });
     }
 
 
     // update also in the pesonal khitma
     if (ownerName == this.localDB.getUsername(groupId)) {
-      this.localDB.updateMyPersonalKhitmahJuz(this._currentGroupObj.ajza[juzIndex]);
+      this.localDB.updateMyPersonalKhitmahJuz(currentSequentialKhitma.ajza[juzIndex]);
     }
 
 
@@ -180,7 +174,7 @@ export class KhitmaGroupService {
     return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
   }
 
-  startNewKhitmah(newCycle, newCycleType) {
+  startNewSequentialKhitmaCycle(newCycle, newCycleType) {
 
 
     function _generateNextCycleAjza(oldCycleAjza: Juz[]): Juz[] {
@@ -237,18 +231,20 @@ export class KhitmaGroupService {
     }
 
 
+    let currentSequentialKhitma = <KhitmaGroup_Sequential>this._currentGroupObj;
+
     let ajzaObj = {};
 
     if (newCycleType == KHITMA_CYCLE_TYPE.AUTO_BOOK) {
 
-      let ajza = _generateNextCycleAjza(this._currentGroupObj.ajza);
+      let ajza = _generateNextCycleAjza(currentSequentialKhitma.ajza);
       let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
 
-      ajzaObj = KhitmaGroup.convertAjzaToObj(ajzaWithoutDuplicates);
+      ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajzaWithoutDuplicates);
 
     }
     else {
-      ajzaObj = KhitmaGroup.getEmptyAjzaObj();
+      ajzaObj = KhitmaGroup_Sequential.getEmptyAjzaObj();
     }
 
     this.db.doc<any>('groups/' + this._currentGroupObj.id).update({ "cycle": newCycle, "ajza": ajzaObj });
@@ -256,11 +252,11 @@ export class KhitmaGroupService {
   }
 
 
-
+  // ******** SAMETASK KHITMA
 
   updateGroupTask(groupId, newTask, currentCycle, resetedMembers) {
 
-    this.db.doc<SameTaskKhitmaGroup>('groups/' + groupId).update({ "task": newTask, "members": resetedMembers, "cycle": (currentCycle + 1) });
+    this.db.doc<KhitmaGroup_SameTask>('groups/' + groupId).update({ "task": newTask, "members": resetedMembers, "cycle": (currentCycle + 1) });
   }
 
 

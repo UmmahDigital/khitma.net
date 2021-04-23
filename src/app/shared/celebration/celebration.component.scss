@@ -1,5 +1,11 @@
 @import "~src/_variables";
 
+@function randomNum($min, $max) {
+  $rand: random();
+  $randomNum: $min + floor($rand * (($max - $min) + 1));
+
+  @return $randomNum;
+}
 
 .confetti {
   display: flex;
@@ -18,10 +24,119 @@
 }
 
 .confetti-piece {
+  color: $primary-color !important;
+}
+
+.confetti-piece:nth-child(3n) {
+  color: #27fdc7 !important;
+}
+
+.confetti2 {
+  // transform: translate(20px);
+  // background: red;
+
+  .confetti-piece {
+    color: gold !important;
+  }
+
+  .confetti-piece:nth-child(1) {
+    left: 7%;
+    transform: rotate(-40deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(2) {
+    left: 14%;
+    transform: rotate(4deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(3) {
+    left: 21%;
+    transform: rotate(-51deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(4) {
+    left: 28%;
+    transform: rotate(61deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(5) {
+    left: 35%;
+    transform: rotate(-52deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(6) {
+    left: 42%;
+    transform: rotate(38deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(7) {
+    left: 49%;
+    transform: rotate(11deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(8) {
+    left: 56%;
+    transform: rotate(49deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(9) {
+    left: 63%;
+    transform: rotate(-72deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(10) {
+    left: 70%;
+    transform: rotate(10deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(11) {
+    left: 77%;
+    transform: rotate(4deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(12) {
+    left: 84%;
+    transform: rotate(42deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+  .confetti-piece:nth-child(13) {
+    left: 91%;
+    transform: rotate(-72deg);
+    animation: makeItRain 1000ms infinite ease-out;
+    animation-delay: #{randomNum(0, 2000)}ms;
+    animation-duration: #{randomNum(2000, 5000)}ms;
+  }
+}
+
+.confetti-piece {
   position: absolute;
   width: 10px;
   height: 30px;
-  color: #ffdd94;
+  // color: #ffdd94;
   top: -50px;
   opacity: 0;
 }
@@ -29,113 +144,114 @@
   left: 7%;
   transform: rotate(-40deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 182ms;
-  animation-duration: 1116ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(2) {
   left: 14%;
   transform: rotate(4deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 161ms;
-  animation-duration: 1076ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(3) {
   left: 21%;
   transform: rotate(-51deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 481ms;
-  animation-duration: 1103ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(4) {
   left: 28%;
   transform: rotate(61deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 334ms;
-  animation-duration: 708ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(5) {
   left: 35%;
   transform: rotate(-52deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 302ms;
-  animation-duration: 776ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(6) {
   left: 42%;
   transform: rotate(38deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 180ms;
-  animation-duration: 1168ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(7) {
   left: 49%;
   transform: rotate(11deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 395ms;
-  animation-duration: 1200ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(8) {
   left: 56%;
   transform: rotate(49deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 14ms;
-  animation-duration: 887ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(9) {
   left: 63%;
   transform: rotate(-72deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 149ms;
-  animation-duration: 805ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(10) {
   left: 70%;
   transform: rotate(10deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 351ms;
-  animation-duration: 1059ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(11) {
   left: 77%;
   transform: rotate(4deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 307ms;
-  animation-duration: 1132ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(12) {
   left: 84%;
   transform: rotate(42deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 464ms;
-  animation-duration: 776ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
 .confetti-piece:nth-child(13) {
   left: 91%;
   transform: rotate(-72deg);
   animation: makeItRain 1000ms infinite ease-out;
-  animation-delay: 429ms;
-  animation-duration: 818ms;
+  animation-delay: #{randomNum(0, 2000)}ms;
+  animation-duration: #{randomNum(2000, 5000)}ms;
 }
-.confetti-piece:nth-child(odd) {
-  color: #d0e6a5;
-}
-.confetti-piece:nth-child(even) {
-  z-index: 1;
-}
-.confetti-piece:nth-child(4n) {
-  width: 5px;
-  height: 12px;
-  animation-duration: 2000ms;
-}
-.confetti-piece:nth-child(3n) {
-  width: 3px;
-  height: 10px;
-  animation-duration: 2500ms;
-  animation-delay: 1000ms;
-}
-.confetti-piece:nth-child(4n-7) {
-  color: #3f51b5;
-}
+
+// .confetti-piece:nth-child(odd) {
+//   color: #d0e6a5;
+// }
+// .confetti-piece:nth-child(even) {
+//   z-index: 1;
+// }
+// .confetti-piece:nth-child(4n) {
+//   width: 5px;
+//   height: 12px;
+//   animation-duration: 2000ms;
+// }
+// .confetti-piece:nth-child(3n) {
+//   width: 3px;
+//   height: 10px;
+//   animation-duration: 2500ms;
+//   animation-delay: 1000ms;
+// }
+// .confetti-piece:nth-child(4n-7) {
+//   color: #3f51b5;
+// }
 
 @keyframes makeItRain {
   from {
@@ -147,8 +263,4 @@
   to {
     transform: translateY(350px);
   }
-}
-
-.confetti-piece {
-  color: $primary-color !important;
 }

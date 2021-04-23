@@ -28,8 +28,13 @@ $shadow: #111;
     height: 20rem;
     background-color: $shadow;
     border-radius: 50%;
+
     animation: cycle 15s linear reverse; // infinite; //reverse;
     animation-iteration-count: 1;
+
+    -webkit-animation: cycle 15s linear reverse; // infinite; //reverse;
+    -webkit-animation-iteration-count: 1;
+
     filter: blur(0.5rem);
 }
 
@@ -63,6 +68,47 @@ $shadow: #111;
 }
 
 @keyframes cycle {
+    0% {
+        border-left: 0 solid $sunlight;
+        border-right: 10rem solid $shadow;
+        background-color: $shadow;
+        transform: rotate(-10deg);
+    }
+    24.9999% {
+        background-color: $shadow;
+    }
+    25% {
+        border-left: 10rem solid $sunlight;
+        border-right: 10rem solid $shadow;
+        background-color: $sunlight;
+    }
+    50% {
+        border-left: 0 solid $sunlight;
+        border-right: 0 solid $shadow;
+        background-color: $sunlight;
+        transform: rotate(0deg);
+    }
+    50.0001% {
+        border-left: 0 solid $shadow;
+    }
+    74.9999% {
+        background-color: $sunlight;
+        border-right: 0 solid $sunlight;
+    }
+    75% {
+        border-left: 10rem solid $shadow;
+        border-right: 10rem solid $sunlight;
+        background-color: $shadow;
+    }
+    100% {
+        border-left: 10rem solid $shadow;
+        border-right: 0 solid $sunlight;
+        background-color: $shadow;
+        transform: rotate(10deg);
+    }
+}
+
+@-webkit-keyframes cycle {
     0% {
         border-left: 0 solid $sunlight;
         border-right: 10rem solid $shadow;

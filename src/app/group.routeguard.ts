@@ -16,10 +16,6 @@ export class GroupJoinedGuard implements CanActivate {
         const groupId = route.params.groupId;
         const isJoind = this.localDB.isGroupJoined(groupId);
 
-
-
-
-
         this.groupsApi.setCurrentGroup(groupId).subscribe((group) => {
 
             if (!this.groupsApi.isValidGroup(group)) {
@@ -29,22 +25,12 @@ export class GroupJoinedGuard implements CanActivate {
             }
         });
 
-
-        // if (isJoind && !state.url.includes("dashboard")) {
-        //     this.router.navigate(['group', groupId, 'dashboard']);
-        // }
-
-        // if (!isJoind && !state.url.includes("join")) {
-        //     this.router.navigate(['group', groupId, 'join']);
-        // }
-
         const redirecTo = isJoind ? 'dashboard' : 'join';
         if (!state.url.includes(redirecTo)) {
             this.router.navigate(['group', groupId, redirecTo]);
         }
 
         return true;
-
 
 
     }

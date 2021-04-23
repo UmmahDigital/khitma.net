@@ -4,126 +4,8 @@
   padding-bottom: 80px;
 }
 
-.done-btn {
-  height: 70px;
-  line-height: 70px !important;
-  padding: 0 16px !important;
-  font-weight: bold;
-}
-
-.current-juz {
-  text-align: center;
-  font-size: 200%;
-  padding: 10px;
-  display: block;
-  font-weight: bold;
-
-  span {
-    color: $primary-color;
-    margin-top: 5px;
-    display: block;
-  }
-}
-
-.action-panel {
-  position: fixed;
-  bottom: 0;
-  background: white;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  // height: 100px;
-  margin: 0;
-
-  button,
-  a {
-    width: 100%;
-    text-align: center;
-  }
-
-  .my-juz-actions {
-    padding: 16px 0;
-  }
-}
-
-.current-juz {
-  position: relative;
-  display: inline-block;
-  border: 1px solid #e5e5e5;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  text-align: center;
-  border-radius: 100%;
-
-  &:before {
-    content: "جزء";
-    position: absolute;
-    top: 0;
-    text-align: center;
-    font-size: 50%;
-    left: 0;
-    right: 0;
-    color: gray;
-    margin-top: -12px;
-  }
-}
-
-.giveup-btn {
-  zoom: 0.75;
-  color: gray;
-}
-
 .spacer {
   height: 64px;
-}
-
-.juz-grid-section,
-.juz-list-section {
-  margin: 0;
-}
-
-.juz-list-section {
-  margin-top: -32px;
-}
-
-.khitma-info {
-  margin-bottom: 0 !important;
-}
-
-.view-mode {
-  margin-bottom: 60px;
-  margin-top: 0;
-}
-
-.juz {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome, Edge, Opera and Firefox */
-}
-
-.khitma-done {
-  background: lighten($primary-color, 70%);
-  padding: 32px;
-  margin: -8px -32px 0px -32px;
-}
-
-.quran-explorer-btn {
-  font-size: xxx-large;
-  color: $primary-color;
-  margin-top: 16px;
-  width: auto;
-  height: auto;
-
-  span {
-    background-color: $primary-color;
-    top: -20px;
-    left: 8px !important;
-  }
 }
 
 .dashboard-header {
@@ -142,26 +24,13 @@
   }
 }
 
-.names-toggle-container {
-  // padding: 32px 0;
-  // margin-top: 32px;
-}
-
-.copy-group-status-msg-btn {
-  // margin: 32px auto 32px auto;
-  background-color: $primary-color;
-  color: white;
-  margin-bottom: 16px;
-  font-size: large !important;
-  font-weight: bold;
-}
-
 .khitma-info {
   padding: 0;
 
   .title {
     padding: 0;
     margin-top: 16px;
+    margin-bottom: 24px !important;
   }
 }
 
@@ -183,18 +52,11 @@
   }
 }
 
-.khitma-info .title {
-  margin-bottom: 24px !important;
-}
-
 .user-msg {
   span {
     display: block;
     margin: 8px auto;
   }
-}
-
-.current-task {
 }
 
 .group-container {
@@ -205,68 +67,17 @@
 }
 
 .group-options-menu-button {
-  // position: absolute;
-  // border-radius: 0 0 100% 100%;
-  // color: white;
-  // bottom: 0;
-  // margin-bottom: -20px;
-  // background: $primary-color;
-
-  // left: 16px;
-
   position: fixed;
   color: white;
-  left: 8px;
+  left: 42px;
   top: 0;
   top: 8px;
-}
-
-.update-task-wrapper {
-  .mat-form-field-wrapper {
-    // padding: 0;
-  }
 }
 
 mat-panel-title {
   mat-icon {
     margin-inline-start: 4px;
   }
-}
-
-.big-counter {
-  display: flex;
-  flex-direction: row;
-
-  .number {
-    display: block;
-    text-align: center;
-    font-size: 500%;
-    font-weight: bold;
-    margin-bottom: 16px;
-    background: -webkit-linear-gradient(#27fdc7, #0fc0f5);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    height: 56px;
-    line-height: 56px;
-    margin-left: 16px;
-  }
-
-  .text {
-    font-size: large;
-    display: block;
-    text-align: right;
-  }
-
-  .total {
-    font-size: 50%;
-  }
-}
-
-.task-target-date {
-  text-align: center;
-  display: block;
-  margin-top: 16px;
 }
 
 .admin-tools {
@@ -344,20 +155,4 @@ mat-panel-title {
 
 .admin-action-btn {
   background: $admin-action-color !important;
-}
-
-.members-list-edit-btn {
-  background: white;
-  border: 1px solid $admin-action-color;
-  color: $admin-action-color;
-
-  // height: 48px;
-  // width: 48px;
-  // display: block;
-  margin: 16px auto;
-
-  &.mat-button-toggle-checked {
-    background: $admin-action-color;
-    color: white;
-  }
 }
