@@ -56,12 +56,18 @@ export class CreateGroupComponent implements OnInit {
         switch (detailedType[1]) {
           case 'sametask': { this.groupType = KHITMA_GROUP_TYPE.SAME_TASK; break; }
           case 'sequential': { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
-          default: { this.groupType = KHITMA_GROUP_TYPE.SAME_TASK; break; }
+          default: { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
 
         }
       }
       else {
-        this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
+        switch (detailedType[1]) {
+          case 'pagesdistribution': { this.groupType = KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION; break; }
+          case 'sequential': { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
+          default: { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
+
+        }
+
       }
 
     });
@@ -70,9 +76,9 @@ export class CreateGroupComponent implements OnInit {
 
   createGroup() {
 
-    if (!this.isRecurring) {
-      this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
-    }
+    // if (!this.isRecurring) {
+    //   this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
+    // }
 
     this.groupsApi.createGroup(this.title, this.description, this.author, this.groupType, this.firstTask).then(docRef => {
 

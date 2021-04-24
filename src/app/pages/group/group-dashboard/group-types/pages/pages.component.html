@@ -1,1 +1,46 @@
-<p>pages works!</p>
+<section>
+
+    <!-- <header>المهمّة الحاليّة </header> -->
+
+    <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)">
+        <div content> {{group.task}} </div>
+    </app-todo>
+
+    <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
+
+
+</section>
+
+
+<app-khitma-pages-progress [members]="group.members"></app-khitma-pages-progress>
+
+
+
+
+<section *ngIf="showGroupMembers">
+
+    <header>
+        أعضاء المجموعة
+    </header>
+
+    <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
+
+        <div class="tip">
+            <strong>لمسؤول المجموعة:</strong>
+
+            يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
+            على كبسة التعديل أدناه.
+        </div>
+
+        <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
+            (click)="isMembersListEditMode = !isMembersListEditMode">
+            <mat-icon>edit</mat-icon>
+        </mat-button-toggle>
+    </div>
+
+    <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
+        (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
+        (onMemberAdd)="addGroupMember($event)">
+    </app-group-members>
+
+</section>

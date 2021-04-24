@@ -7,7 +7,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/alert.service';
 import { StartNewKhitmaComponent } from 'src/app/dialog/start-new-khitma/start-new-khitma.component';
-import { GET_JUZ_READ_EXTERNAL_URL, GroupTypeConverter, Juz, JUZ_STATUS, KhitmaGroup, KhitmaGroup_Sequential, KHITMA_CYCLE_TYPE, NUM_OF_AJZA } from 'src/app/entities/entities';
+import { GET_JUZ_READ_EXTERNAL_URL, Juz, JUZ_STATUS, KhitmaGroup, KhitmaGroup_Sequential, KHITMA_CYCLE_TYPE, NUM_OF_AJZA } from 'src/app/entities/entities';
 import { KhitmaGroupService } from 'src/app/khitma-group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { NativeApiService } from 'src/app/native-api.service';

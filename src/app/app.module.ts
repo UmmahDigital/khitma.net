@@ -68,6 +68,7 @@ import { NewTaskComponent } from './dialog/new-task/new-task.component';
 import { Group_Pages_Component } from './pages/group/group-dashboard/group-types/pages/pages.component';
 import { Group_SameTask_Component } from './pages/group/group-dashboard/group-types/sametask/sametask.component';
 import { Group_Sequential_Component } from './pages/group/group-dashboard/group-types/sequential/sequential.component';
+import { KhitmaPagesProgressComponent } from './shared/khitma-pages-progress/khitma-pages-progress.component';
 
 
 
@@ -142,7 +143,8 @@ const routes: Routes = [
     NewTaskComponent,
     Group_Sequential_Component,
     Group_SameTask_Component,
-    Group_Pages_Component
+    Group_Pages_Component,
+    KhitmaPagesProgressComponent
   ],
   imports: [
     CommonModule,

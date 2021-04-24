@@ -6,7 +6,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/alert.service';
 import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
-import { GroupMember, KhitmaGroup, KhitmaGroup_SameTask } from 'src/app/entities/entities';
+import { GroupMember, KhitmaGroup_SameTask } from 'src/app/entities/entities';
 import { KhitmaGroupService } from 'src/app/khitma-group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { NativeApiService } from 'src/app/native-api.service';
@@ -125,9 +125,7 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
 
   addGroupMember(member: GroupMember) {
     this.groupsApi.addGroupMember(this.group.id, member.name);
-
     this.alert.show("تمّ إضافة  " + member.name + "  بنجاح", 2500);
-
   }
 
 

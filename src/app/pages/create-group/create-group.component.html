@@ -74,7 +74,7 @@
 
                     <mat-button-toggle [value]="KHITMA_GROUP_TYPE.SAME_TASK">
                         <label class="center-center">
-                            <mat-icon>layers</mat-icon> <span>ختمة موحّدة</span>
+                            <mat-icon>layers</mat-icon> <span>نفس المهمّة</span>
                         </label>
                     </mat-button-toggle>
 
@@ -98,8 +98,7 @@
                 بشكل
                 مرن،
                 فيمكن مثلا عمل مجموعة لقراءة خمس صفحات في اليوم (للأطفال مثلا) أو عمل مجموعة تقرأ جزئين أو ثلاثة في
-                اليوم أو
-                مجموعة تتم ختمة كاملة بشكل أسبوعي الخ...
+                اليوم الخ..
             </p>
 
             <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SEQUENTIAL">
@@ -121,6 +120,55 @@
 
         </section>
 
+
+
+        <section *ngIf="false">
+
+            <div class="center-center multi-choice">
+
+                <mat-button-toggle-group [(ngModel)]="groupType" name="groupType">
+
+                    <mat-button-toggle [value]="KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION">
+                        <label class="center-center">
+                            <mat-icon>layers</mat-icon> <span>توزيع صفحات</span>
+                        </label>
+                    </mat-button-toggle>
+
+                    <mat-button-toggle [value]="KHITMA_GROUP_TYPE.SEQUENTIAL">
+                        <label class="center-center">
+                            <mat-icon>linear_scale</mat-icon> <span>توزيع أجزاء</span>
+                        </label>
+                    </mat-button-toggle>
+
+                </mat-button-toggle-group>
+
+
+            </div>
+
+
+            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION">
+
+                جميع الأعضاء يتشاركون في نفس المهمّة خلال فترة محدّدة. مثلا: جميع الأعضاء يقرؤون الجزء الأوّل في اليوم
+                الأوّل
+                والجزء الثاني في اليوم الثاني وهكذا. في هذا النوع من الختمة يمكن لمسؤول الختمة تحديد المهمّة والفترة
+                بشكل
+                مرن،
+                فيمكن مثلا عمل مجموعة لقراءة خمس صفحات في اليوم (للأطفال مثلا) أو عمل مجموعة تقرأ جزئين أو ثلاثة في
+                اليوم الخ..
+            </p>
+
+            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SEQUENTIAL">
+
+                في هذه الختمة يقوم كل عضو في المجموعة بتلاوة أحد الأجزاء بحيث أنّ المجموعة مكتملة تتم ختمة كاملة،
+                لإهدائها
+                لروح أحد المتوفّيْن مثلا. في حال كانت الختمة دوريّة فإنّ التطبيق يتيح امكانيّة تعيين الجزء التالي لكل
+                عضور
+                بشكل تلقائي وكذلك مشاركة رسالة وتسأب فيها حالة الجزء التابع لكل عضو.
+            </p>
+
+
+
+        </section>
 
 
         <button type="submit" class="block large action-btn" mat-raised-button

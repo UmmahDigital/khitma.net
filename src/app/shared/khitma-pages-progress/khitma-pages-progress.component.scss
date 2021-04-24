@@ -1,0 +1,68 @@
+:host {
+    display: block;
+}
+
+// canvas {
+//     display: block;
+//     background: lightgray;
+//     margin: auto;
+// }
+
+#status-table {
+    margin: 32px auto;
+
+    // transform: perspective(75em) rotateX(18deg);
+    // box-shadow: rgba(22, 31, 39, 0.42) 0px 60px 123px -25px, rgba(19, 26, 32, 0.08) 0px 35px 75px -35px;
+    // border-radius: 10px;
+    // border: 1px solid;
+    // border-color: rgb(213, 220, 226) rgb(213, 220, 226) rgb(184, 194, 204);
+
+    transform: rotateX(51deg) rotateZ(43deg);
+    transform-style: preserve-3d;
+    border-radius: 32px;
+    box-shadow: 1px 1px 0 1px #f9f9fb, -1px 0 28px 0 rgba(34, 33, 81, 0.01), 28px 28px 28px 0 rgba(34, 33, 81, 0.25);
+
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+
+    animation: floating 10s infinite ease-in-out;
+    zoom: 0.8;
+
+    tbody {
+        display: block;
+        background: lightgray;
+        margin: auto;
+    }
+
+    td {
+        background: #1d1f20; //#873737;
+        height: 10px;
+        width: 10px;
+        // filter: blur(1px);
+
+        border: 1px solid rgba(55, 55, 255, 0.4);
+    }
+
+    td.done {
+        background: #d0e6a5;
+    }
+
+    td.disabled {
+        background: transparent;
+    }
+}
+
+@keyframes floating {
+    from {
+        transform: rotateX(51deg) rotateZ(43deg);
+        box-shadow: 1px 1px 0 1px #f9f9fb, -1px 0 28px 0 rgba(34, 33, 81, 0.01), 28px 28px 28px 0 rgba(34, 33, 81, 0.25);
+    }
+    50% {
+        transform: translate3d(0px, -16px, 0px) rotateX(51deg) rotateZ(43deg);
+        box-shadow: 1px 1px 0 1px #f9f9fb, -1px 0 28px 0 rgba(34, 33, 81, 0.01),
+            54px 54px 28px -10px rgba(34, 33, 81, 0.15);
+    }
+    to {
+        transform: rotateX(51deg) rotateZ(43deg);
+        box-shadow: 1px 1px 0 1px #f9f9fb, -1px 0 28px 0 rgba(34, 33, 81, 0.01), 28px 28px 28px 0 rgba(34, 33, 81, 0.25);
+    }
+}

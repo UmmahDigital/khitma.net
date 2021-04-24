@@ -1,0 +1,25 @@
+<!-- progressCanvas:
+
+
+<canvas #progressCanvas></canvas>
+
+
+// END
+ -->
+<!--  -->
+
+<table id='status-table' *ngIf="pagesStatusesMatrix" dir="ltr" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr *ngFor="let row of pagesStatusesMatrix; let i = index">
+            <td *ngFor="let isDone of row" [class.done]="isDone" [class.disabled]="isDone === null">
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<input [(ngModel)]="from" placeholder="from" type="number" autocomplete="false" />
+<input [(ngModel)]="to" placeholder="to" type="number" autocomplete="false" />
+
+
+<button (click)="updatePages(from,to,true)">Fill </button>

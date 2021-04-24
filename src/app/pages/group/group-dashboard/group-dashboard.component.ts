@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask } from 'src/app/entities/entities';
+import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
 import { StatusMessageGenerators } from './status-messages';
 import { Subject } from 'rxjs';
+import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
 
 
 @Component({
@@ -28,6 +29,9 @@ import { Subject } from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 export class GroupDashboardComponent implements OnInit {
+
+  @ViewChild(Group_SameTask_Component) sameTaskGroupChildComponent: Group_SameTask_Component;
+
 
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
 
@@ -75,18 +79,14 @@ export class GroupDashboardComponent implements OnInit {
           this.group = new KhitmaGroup_Sequential(group);
           break;
         }
+        case KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION: {
+          this.group = new KhitmaGroup_Pages(group);
+          break;
+        }
         default: {
           this.group = new KhitmaGroup_Sequential(group);
         }
       }
-
-
-
-
-
-
-
-
 
       this.group.type = this.group.type || KHITMA_GROUP_TYPE.SEQUENTIAL; // compitability
 
@@ -106,9 +106,7 @@ export class GroupDashboardComponent implements OnInit {
   }
 
   getKhitmaStatusMsg() {
-
     return StatusMessageGenerators[this.group.type](this.group);
-
   }
 
 
@@ -196,6 +194,12 @@ export class GroupDashboardComponent implements OnInit {
       }
 
     });
+
+  }
+
+
+  showNewTaskDialog() {
+    this.sameTaskGroupChildComponent.showNewTaskDialog();
 
   }
 

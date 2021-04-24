@@ -20,6 +20,7 @@ export const KHITMA_CYCLE_TYPE = Object.freeze({
 export const KHITMA_GROUP_TYPE = Object.freeze({
     SEQUENTIAL: 'SEQUENTIAL',
     SAME_TASK: 'SAME_TASK',
+    PAGES_DISTRIBUTION: 'PAGES_DISTRIBUTION'
 });
 
 
@@ -151,10 +152,6 @@ export class KhitmaGroup_Sequential extends KhitmaGroup {
         return myJuz ? myJuz.index : null;
     }
 
-
-
-
-
     static getEmptyAjzaObj() {
 
         let ajza = KhitmaGroup_Sequential.getEmptyAjzaArray();
@@ -197,11 +194,11 @@ export class KhitmaGroup_SameTask extends KhitmaGroup {
 
     public constructor(init?: Partial<KhitmaGroup_SameTask>) {
         super(init);
-        this.members = this._createMembersArrab(this.members);//Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
+        this.members = this._createMembersArray(this.members);//Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
 
     }
 
-    private _createMembersArrab(membersObj) {
+    private _createMembersArray(membersObj) {
 
         let arr = [];
 
@@ -216,15 +213,6 @@ export class KhitmaGroup_SameTask extends KhitmaGroup {
     }
 
     public getCounts() {
-
-        return {
-            total: this.members.length,
-            done: this.members.filter(function (item) { return item.isTaskDone; }).length
-        };
-
-    }
-
-    public isTaskDone(member: GroupMember) {
 
         return {
             total: this.members.length,
@@ -264,6 +252,7 @@ export class KhitmaGroup_SameTask extends KhitmaGroup {
 export class GroupMember {
     name: string
     isTaskDone: boolean;
+    task: string; // default is group task
 
     public constructor(init?: Partial<GroupMember>) {
         Object.assign(this, init);
@@ -271,48 +260,91 @@ export class GroupMember {
 }
 
 
-export function GroupTypeConverter(converter?: (value: any) => any) {
-    return (target: Object, key: string) => {
 
 
-        converter = (group: KhitmaGroup) => {
 
-            switch (group.type) {
-                case KHITMA_GROUP_TYPE.SAME_TASK: {
-                    return <KhitmaGroup_SameTask>group;
-                }
-                case KHITMA_GROUP_TYPE.SEQUENTIAL: {
-                    return <KhitmaGroup_Sequential>group;
-                }
-                default: {
-                    return <KhitmaGroup_Sequential>group;
-                }
+export class KhitmaGroup_Pages extends KhitmaGroup {
+    task: string;
+    members: GroupMember_Pages[];
+
+    public constructor(init?: Partial<KhitmaGroup_Pages>) {
+        super(init);
+        this.members = this._createMembersArray(this.members);
+    }
+
+    private _createMembersArray(membersObj) {
+
+        let arr = [];
+
+        for (let [name, value] of Object.entries(membersObj)) {
+
+            let memberData = <GroupMember_Pages>value;
+
+            arr.push({
+                name: name,
+                isTaskDone: memberData.isTaskDone,
+                pages: memberData.pages
+            });
+        }
+
+        return arr.sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
+    }
+
+    public getCounts() {
+
+        return {
+            total: this.members.length,
+            done: this.members.filter(function (item) { return item.isTaskDone; }).length
+        };
+
+    }
+
+    public createGroupMember(username) {
+
+        let member = this.members.find(m => m.name === username);
+
+        return new GroupMember_Pages({
+            name: username,
+            isTaskDone: member?.isTaskDone,
+            pages: member?.pages,
+        });
+    }
+
+    public assignMemberPages(username, startPage, endPage) {
+
+        let member = this.members.find(m => m.name === username);
+
+        member.pages = {
+            start: startPage,
+            end: endPage,
+        }
+    }
+
+
+    public getMembersObj() {
+
+        return this.members.reduce((m, { name, isTaskDone, pages }) => ({
+            ...m, [name]: {
+                name: name,
+                isTaskDone: isTaskDone,
+                pages: pages,
             }
+        }), {});
 
-        }
-
-        var definition = Object.getOwnPropertyDescriptor(target, key);
-        if (definition) {
-            Object.defineProperty(target, key, {
-                get: definition.get,
-                set: newValue => {
-                    definition.set(converter(newValue));
-                },
-                enumerable: true,
-                configurable: true
-            });
-        } else {
-            Object.defineProperty(target, key, {
-                get: function () {
-                    return this["__" + key];
-                },
-                set: function (newValue) {
-                    this["__" + key] = converter(newValue);
-                },
-                enumerable: true,
-                configurable: true
-            });
-        }
-
-    };
+    }
 }
+
+
+export class GroupMember_Pages extends GroupMember {
+
+    pages = {
+        start: null,
+        end: null,
+    };
+
+    public constructor(init?: Partial<GroupMember_Pages>) {
+        super(init);
+    }
+
+}
+

@@ -89,6 +89,10 @@
             [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
         </app-group-sametask>
 
+        <app-group-pages *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION" [group]="group"
+            [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
+        </app-group-pages>
+
     </section>
 
 

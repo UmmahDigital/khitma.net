@@ -79,19 +79,36 @@ export class KhitmaGroupService {
 
     };
 
-    if (groupType === KHITMA_GROUP_TYPE.SAME_TASK) {
+    switch (groupType) {
 
-      newGroupObj["task"] = firstTask;
-      newGroupObj["members"] = {};
-      newGroupObj["members"][author] = {
-        name: author,
-        isTaskDone: false
-      }
+      case KHITMA_GROUP_TYPE.SAME_TASK:
+        {
+          newGroupObj["task"] = firstTask;
+          newGroupObj["members"] = {};
+          newGroupObj["members"][author] = {
+            // name: author,
+            isTaskDone: false
+          }
+          break;
+        }
 
+      case KHITMA_GROUP_TYPE.SEQUENTIAL:
+        {
+          newGroupObj["ajza"] = KhitmaGroup_Sequential.getEmptyAjzaObj(); // [todo]: static function to get empty ajza obj
+          break;
+        }
+
+      case KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION:
+        {
+          newGroupObj["members"] = {};
+          newGroupObj["members"][author] = {
+            // name: author,
+            isTaskDone: false
+          }
+          break;
+        }
     }
-    else {
-      newGroupObj["ajza"] = KhitmaGroup_Sequential.getEmptyAjzaObj(); // [todo]: static function to get empty ajza obj
-    }
+
 
     return this.db.collection('groups').add(newGroupObj);
 

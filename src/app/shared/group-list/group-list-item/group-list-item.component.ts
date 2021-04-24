@@ -19,12 +19,26 @@ export class GroupListItemComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
-      this.progress = this.calcProgress_SameTask();
+
+    switch (this.group.type) {
+      case KHITMA_GROUP_TYPE.SAME_TASK: {
+        this.progress = this.calcProgress_SameTask();
+        break;
+      }
+      case KHITMA_GROUP_TYPE.SEQUENTIAL: {
+        this.progress = this.calcProgress_Sequential();
+        break;
+      }
+      case KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION: {
+
+        break;
+      }
+      default: {
+        this.progress = this.calcProgress_Sequential();
+      }
     }
-    else {
-      this.progress = this.calcProgress_Sequential();
-    }
+
+
 
     this.link = this.groupsApi.getGroupURL(this.group.id);
   }
