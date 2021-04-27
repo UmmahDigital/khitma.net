@@ -30,7 +30,7 @@ export class GroupListItemComponent implements OnInit {
         break;
       }
       case KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION: {
-
+        this.progress = this.calcProgress_SameTask();
         break;
       }
       default: {

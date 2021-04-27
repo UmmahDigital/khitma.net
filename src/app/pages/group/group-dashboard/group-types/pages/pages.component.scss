@@ -51,3 +51,30 @@
     display: block;
     margin-top: 16px;
 }
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: gray !important;
+}
+
+.user-msg {
+    label {
+        font-weight: bold;
+        color: #664d03;
+        background-color: #fff3cd;
+        padding: 16px;
+        border-radius: 4px;
+        display: block;
+        text-align: center;
+    }
+}
+
+.task {
+    font-weight: bold;
+    color: $primary-color;
+
+    .page-num {
+        font-variant-numeric: tabular-nums;
+        font-family: ui-monospace;
+    }
+}

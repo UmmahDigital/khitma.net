@@ -31,7 +31,7 @@
     </header>
 
     <section *ngIf="isAdmin" class="admin-tools">
-        <mat-expansion-panel>
+        <mat-expansion-panel [expanded]="adminPanelOpen">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <mat-icon>verified</mat-icon>
@@ -43,25 +43,49 @@
             </mat-expansion-panel-header>
 
 
-            <button mat-flat-button (click)="shareStatusMsg()">
-                <mat-icon>format_list_numbered_rtl</mat-icon>
-                <span>مشاركة وضع الختمة</span>
-            </button>
+
+            <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION">
+
+                <button *ngIf="!group.isStarted" mat-flat-button
+                    (click)="pagesGroupChildComponent.start(); adminPanelOpen=false;">
+                    <mat-icon>play_arrow</mat-icon>
+                    <span>بدأ الختمة</span>
+                </button>
+
+                <button *ngIf="group.isStarted" mat-flat-button
+                    (click)="pagesGroupChildComponent.restart(); adminPanelOpen=false;">
+                    <mat-icon>restart_alt</mat-icon>
+                    <span>توزيع الصفحات من جديد</span>
+                </button>
+
+            </ng-container>
 
 
-            <button mat-flat-button (click)="showNewTaskDialog()" *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
+
+
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
+                *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
                 <mat-icon>sports_score</mat-icon>
                 <span>مهمّة جديدة</span>
             </button>
 
 
-            <button mat-flat-button (click)="showEditGroupDialog()">
+
+
+            <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
+                <mat-icon>format_list_numbered_rtl</mat-icon>
+                <span>مشاركة وضع الختمة</span>
+            </button>
+
+
+
+            <button mat-flat-button (click)="showEditGroupDialog(); adminPanelOpen=false;">
                 <mat-icon>edit</mat-icon>
                 <span>تعديل تفاصيل الختمة</span>
             </button>
 
 
-            <button mat-flat-button (click)="shareInviteMsg()">
+            <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;">
                 <mat-icon>link</mat-icon>
                 مشاركة رابط المجموعة
             </button>
@@ -81,6 +105,9 @@
 
     <section *ngIf="group" class="group-container">
 
+
+
+
         <app-group-sequential *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)" [group]="group"
             [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
         </app-group-sequential>
@@ -92,6 +119,7 @@
         <app-group-pages *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION" [group]="group"
             [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
         </app-group-pages>
+
 
     </section>
 

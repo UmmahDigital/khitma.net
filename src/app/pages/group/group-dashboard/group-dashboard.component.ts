@@ -20,6 +20,7 @@ import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
 import { StatusMessageGenerators } from './status-messages';
 import { Subject } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
+import { Group_Pages_Component } from './group-types/pages/pages.component';
 
 
 @Component({
@@ -31,6 +32,7 @@ import { Group_SameTask_Component } from './group-types/sametask/sametask.compon
 export class GroupDashboardComponent implements OnInit {
 
   @ViewChild(Group_SameTask_Component) sameTaskGroupChildComponent: Group_SameTask_Component;
+  @ViewChild(Group_Pages_Component) pagesGroupChildComponent: Group_Pages_Component;
 
 
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
@@ -68,7 +70,6 @@ export class GroupDashboardComponent implements OnInit {
       if (!group) {
         return;
       }
-
 
       switch (group.type) {
         case KHITMA_GROUP_TYPE.SAME_TASK: {
@@ -197,11 +198,6 @@ export class GroupDashboardComponent implements OnInit {
 
   }
 
-
-  showNewTaskDialog() {
-    this.sameTaskGroupChildComponent.showNewTaskDialog();
-
-  }
 
 
 

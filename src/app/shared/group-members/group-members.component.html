@@ -32,7 +32,11 @@
         <mat-card (click)="memberClicked(member)" class="member-panel"
             [ngClass]="member.isTaskDone ? 'task-done' : 'task-not-done'">
 
-            <label class="name">{{member.name}}</label>
+            <label class="pages-range" *ngIf="member.pagesTask" dir="ltr"> {{member.pagesTask.start + 1 | number:'3.0'}}
+                -
+                {{member.pagesTask.end + 1 | number:'2.0'}}
+            </label>
+            <label class="name"> {{member.name}}</label>
 
         </mat-card>
 

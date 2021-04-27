@@ -5,12 +5,8 @@ import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/alert.service';
-import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
-import { GroupMember, KhitmaGroup_Pages } from 'src/app/entities/entities';
+import { GroupMember, KhitmaGroup_Pages, NUM_OF_PAGES } from 'src/app/entities/entities';
 import { KhitmaGroupService } from 'src/app/khitma-group.service';
-import { LocalDatabaseService } from 'src/app/local-database.service';
-import { NativeApiService } from 'src/app/native-api.service';
-import { NativeShareService } from 'src/app/native-share.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -37,16 +33,9 @@ export class Group_Pages_Component implements OnInit {
   totalDoneTasks;
 
   constructor(private groupsApi: KhitmaGroupService,
-    private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
-    private titleService: Title,
-    private alert: AlertService,
-    private nativeApi: NativeApiService,
-    private nativeShare: NativeShareService,
-    private router: Router,) {
-  }
-
+    private alert: AlertService) { }
 
 
   ngOnInit(): void {
@@ -116,5 +105,59 @@ export class Group_Pages_Component implements OnInit {
 
   }
 
+  start() {
+
+    this._distributePages();
+    // this.groupsApi.updateGroupMembers(this.group.id, this.group.getMembersObj());
+
+    // this.groupsApi.updateGroupStartStatus(this.group.id, true);
+
+
+    this.groupsApi.updatePagesAndStart(this.group.id, this.group.getMembersObj());
+
+    this.alert.show("تمّ بدء الختمة وتوزيع الصفحات على الأعضاء.", 5000);
+
+
+  }
+
+  restart() {
+    this.start();
+
+    this.alert.show("تمّ بدء  إعادة توزيع الصفحات على الأعضاء.", 5000);
+
+  }
+
+  private _distributePages() {
+
+    const membersCount = this.group.members.length;
+    const pagesCount = NUM_OF_PAGES;
+
+    const pagesPerMember = Math.floor(pagesCount / membersCount);
+
+    let extraPages = pagesCount - (membersCount * pagesPerMember);
+
+    let lastDistributedPage = -1;
+
+    this.group.members.forEach((member, index) => {
+
+      let startPage = lastDistributedPage + 1;
+      let endPage = startPage + pagesPerMember - 1;
+
+      if (extraPages > 0) {
+        endPage++;
+        extraPages--;
+      }
+
+      member.pagesTask = {
+        start: startPage,
+        end: endPage,
+      };
+
+      lastDistributedPage = endPage;
+
+    });
+
+
+  }
 
 }

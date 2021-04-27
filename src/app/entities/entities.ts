@@ -1,5 +1,6 @@
 
 export const NUM_OF_AJZA = 30;
+export const NUM_OF_PAGES = 604;
 
 export const JUZ_STATUS = Object.freeze({
     IDLE: 0,
@@ -241,7 +242,7 @@ export class KhitmaGroup_SameTask extends KhitmaGroup {
 
         return this.members.reduce((m, { name, isTaskDone }) => ({
             ...m, [name]: {
-                name: name,
+                // name: name,
                 isTaskDone: isTaskDone
             }
         }), {});
@@ -264,6 +265,7 @@ export class GroupMember {
 
 
 export class KhitmaGroup_Pages extends KhitmaGroup {
+    isStarted: boolean;
     task: string;
     members: GroupMember_Pages[];
 
@@ -283,7 +285,7 @@ export class KhitmaGroup_Pages extends KhitmaGroup {
             arr.push({
                 name: name,
                 isTaskDone: memberData.isTaskDone,
-                pages: memberData.pages
+                pagesTask: memberData.pagesTask
             });
         }
 
@@ -306,28 +308,28 @@ export class KhitmaGroup_Pages extends KhitmaGroup {
         return new GroupMember_Pages({
             name: username,
             isTaskDone: member?.isTaskDone,
-            pages: member?.pages,
+            pagesTask: member?.pagesTask,
         });
     }
 
-    public assignMemberPages(username, startPage, endPage) {
+    // public assignMemberPages(username, startPage, endPage) {
 
-        let member = this.members.find(m => m.name === username);
+    //     let member = this.members.find(m => m.name === username);
 
-        member.pages = {
-            start: startPage,
-            end: endPage,
-        }
-    }
+    //     member.pagesTask = {
+    //         start: startPage,
+    //         end: endPage,
+    //     }
+    // }
 
 
     public getMembersObj() {
 
-        return this.members.reduce((m, { name, isTaskDone, pages }) => ({
+        return this.members.reduce((m, { name, isTaskDone, pagesTask }) => ({
             ...m, [name]: {
-                name: name,
+                // name: name,
                 isTaskDone: isTaskDone,
-                pages: pages,
+                pagesTask: pagesTask,
             }
         }), {});
 
@@ -337,10 +339,7 @@ export class KhitmaGroup_Pages extends KhitmaGroup {
 
 export class GroupMember_Pages extends GroupMember {
 
-    pages = {
-        start: null,
-        end: null,
-    };
+    pagesTask;
 
     public constructor(init?: Partial<GroupMember_Pages>) {
         super(init);

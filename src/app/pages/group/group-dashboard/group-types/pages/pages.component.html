@@ -1,18 +1,56 @@
-<section>
+<section *ngIf="group.isStarted && myMember?.pagesTask?.start == null">
+    <div class="user-msg">
 
-    <!-- <header>المهمّة الحاليّة </header> -->
+        <label> تمّ توزيع الصفحات في هذه الختمة.
+            يمكنك التوجّه لمسؤول\ة المجموعة وطلب توزيع الصفحات من جديد. يمكنك أيضا قراءة أيّ عدد من الصفحات بدون
+            تسجيلها، فكلّ تلاوة لك مسجّلة في صحيفة أعمالك الصالحة ولك الأجر عليها إن شاء الله :)
+        </label>
 
-    <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)">
-        <div content> {{group.task}} </div>
-    </app-todo>
-
-    <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
-
-
+    </div>
 </section>
 
 
-<app-khitma-pages-progress [members]="group.members"></app-khitma-pages-progress>
+
+<ng-container *ngIf="group.isStarted; else notStarted ">
+
+    <section *ngIf="myMember?.pagesTask?.start != null">
+
+        <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)" class="task">
+            <div content>
+
+                صفحة
+                <span dir="ltr">
+                    <span class="page-num">{{myMember.pagesTask.start +1 | number:'3.0'}}</span>
+                    -
+                    <span class="page-num">{{myMember.pagesTask.end +1 | number:'3.0'}}</span>
+                </span>
+            </div>
+        </app-todo>
+
+        <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
+
+    </section>
+
+
+    <app-khitma-pages-progress [members]="group.members"></app-khitma-pages-progress>
+
+</ng-container>
+
+<ng-template #notStarted>
+
+    <div class="user-msg">
+
+        <label> بانتظار مسؤول المجموعة لتوزيع الصفحات
+        </label>
+
+        <!-- <mat-spinner></mat-spinner> -->
+
+        <app-loading></app-loading>
+
+    </div>
+
+</ng-template>
+
 
 
 
@@ -20,7 +58,7 @@
 <section *ngIf="showGroupMembers">
 
     <header>
-        أعضاء المجموعة
+        أعضاء المجموعة ({{group.members.length}})
     </header>
 
     <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">

@@ -350,4 +350,38 @@ export class KhitmaGroupService {
   }
 
 
+
+  //** PAGES GROUP ************************************************************************************************** */
+
+
+  updatePagesAndStart(groupId, members) {
+
+    let updatedObj = {};
+    updatedObj["members"] = members;
+    updatedObj["isStarted"] = true;
+
+    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+
+  }
+
+
+  updateGroupMembers(groupId, members) {
+
+    let updatedObj = {};
+    updatedObj["members"] = members;
+
+    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+
+  }
+
+
+  updateGroupStartStatus(groupId, isStarted) {
+
+    let updatedObj = {};
+    updatedObj["isStarted"] = isStarted;
+
+    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+
+  }
+
 }

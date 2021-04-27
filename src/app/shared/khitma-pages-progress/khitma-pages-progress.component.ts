@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { GroupMember_Pages } from 'src/app/entities/entities';
 
 
@@ -8,7 +8,7 @@ import { GroupMember_Pages } from 'src/app/entities/entities';
   templateUrl: './khitma-pages-progress.component.html',
   styleUrls: ['./khitma-pages-progress.component.scss']
 })
-export class KhitmaPagesProgressComponent implements OnInit {
+export class KhitmaPagesProgressComponent implements OnInit, OnChanges {
 
 
   // @ViewChild('progressCanvas', { static: false }) progressCanvas: ElementRef;
@@ -34,7 +34,6 @@ export class KhitmaPagesProgressComponent implements OnInit {
 
   ngOnInit(): void {
     this._initMatrix();
-
     this._initMembers();
   }
 
@@ -43,8 +42,8 @@ export class KhitmaPagesProgressComponent implements OnInit {
 
     this.members?.forEach(member => {
 
-      if (member.pages) {
-        this.updatePages(member.pages.start, member.pages.end, member.isTaskDone);
+      if (member.pagesTask) {
+        this.updatePages(member.pagesTask.start, member.pagesTask.end, member.isTaskDone);
       }
 
     });
@@ -102,6 +101,16 @@ export class KhitmaPagesProgressComponent implements OnInit {
 
   // }
 
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    if (!this.pagesStatusesMatrix) {
+      return;
+    }
+
+    this._initMembers();
+
+  }
 
 
 
