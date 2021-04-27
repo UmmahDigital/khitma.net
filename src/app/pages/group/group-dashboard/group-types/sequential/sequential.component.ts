@@ -60,6 +60,8 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   ngOnInit(): void {
 
+    this.showNames = this.isAdmin;
+
     this.userWatch$.subscribe(action => {
 
       switch (action) {

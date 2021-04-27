@@ -45,6 +45,9 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
     private nativeApi: NativeApiService,
     private nativeShare: NativeShareService,
     private router: Router,) {
+
+    this.showGroupMembers = this.isAdmin;
+
   }
 
 
