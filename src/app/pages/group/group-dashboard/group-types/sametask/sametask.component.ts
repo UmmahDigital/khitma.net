@@ -46,13 +46,13 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
     private nativeShare: NativeShareService,
     private router: Router,) {
 
-    this.showGroupMembers = this.isAdmin;
 
   }
 
 
 
   ngOnInit(): void {
+    // this.showGroupMembers = this.isAdmin;
 
   }
 
