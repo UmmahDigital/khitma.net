@@ -14,12 +14,6 @@ import { NativeApiService } from 'src/app/native-api.service';
 import { NativeShareService } from 'src/app/native-share.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
-
-
-
-
-
-
 @Component({
   selector: 'app-group-sequential',
   templateUrl: './sequential.component.html',
@@ -203,14 +197,16 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(selectedCycleType => {
 
-      if (selectedCycleType == KHITMA_CYCLE_TYPE.AUTO_BOOK || selectedCycleType == KHITMA_CYCLE_TYPE.ALL_IDLE) {
-
-        this.$gaService.event('group_new_khitmah');
-
-        this.group.cycle++;
-        this.groupsApi.startNewSequentialKhitmaCycle(this.group.cycle, selectedCycleType);
-
+      if (!selectedCycleType) {
+        return;
       }
+
+
+      this.$gaService.event('group_new_khitmah');
+
+      this.group.cycle++;
+      this.groupsApi.startNewSequentialKhitmaCycle(this.group.cycle, selectedCycleType);
+
 
     });
 

@@ -21,6 +21,7 @@ import { StatusMessageGenerators } from './status-messages';
 import { Subject } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
 import { Group_Pages_Component } from './group-types/pages/pages.component';
+import { Group_Sequential_Component } from './group-types/sequential/sequential.component';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class GroupDashboardComponent implements OnInit {
 
   @ViewChild(Group_SameTask_Component) sameTaskGroupChildComponent: Group_SameTask_Component;
   @ViewChild(Group_Pages_Component) pagesGroupChildComponent: Group_Pages_Component;
+  @ViewChild(Group_Sequential_Component) sequentialGroupChildComponent: Group_Sequential_Component;
 
 
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
