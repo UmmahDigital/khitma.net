@@ -219,7 +219,7 @@ export class KhitmaGroupService {
 
     function _keepOnlyLastJuz(newCycleAjza: Juz[]): Juz[] { // for example if someone read juz 25-30 in the last cycle. next time she should read 1 (without 26-30).
 
-      for (let i = NUM_OF_AJZA - 1; i > 0; i--) { // special case for juz 1, as 1 comes after 30
+      for (let i = NUM_OF_AJZA - 1; i >= 0; i--) { // special case for juz 1, as 1 comes after 30
         if (newCycleAjza[i].owner == newCycleAjza[0].owner) {
           newCycleAjza[i] = {
             index: newCycleAjza[i].index,
@@ -229,7 +229,7 @@ export class KhitmaGroupService {
         }
       }
 
-      for (let i = NUM_OF_AJZA - 1; i > 0; i--) {
+      for (let i = NUM_OF_AJZA - 1; i >= 0; i--) {
         if (newCycleAjza[i].owner != "") {
           for (let j = 1; j < i; j++) {
             if (newCycleAjza[j].owner == newCycleAjza[i].owner) {
@@ -252,16 +252,38 @@ export class KhitmaGroupService {
 
     let ajzaObj = {};
 
-    if (newCycleType == KHITMA_CYCLE_TYPE.AUTO_BOOK) {
+    switch (newCycleType) {
+      case KHITMA_CYCLE_TYPE.AUTO_BOOK: {
 
-      let ajza = _generateNextCycleAjza(currentSequentialKhitma.ajza);
-      let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
+        let ajza = _generateNextCycleAjza(currentSequentialKhitma.ajza);
+        let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
 
-      ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajzaWithoutDuplicates);
+        ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajzaWithoutDuplicates);
 
-    }
-    else {
-      ajzaObj = KhitmaGroup_Sequential.getEmptyAjzaObj();
+
+
+      } break;
+      case KHITMA_CYCLE_TYPE.AUTO_BOOK_FOR_DONE_ONLY: {
+
+        currentSequentialKhitma.ajza.forEach(juz => {
+          if (juz.status != JUZ_STATUS.DONE) {
+            juz.owner = "";
+            juz.status = JUZ_STATUS.IDLE;
+          }
+        });
+
+        let ajza = _generateNextCycleAjza(currentSequentialKhitma.ajza);
+        let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
+
+        ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajzaWithoutDuplicates);
+
+
+      } break;
+      case KHITMA_CYCLE_TYPE.ALL_IDLE: {
+        ajzaObj = KhitmaGroup_Sequential.getEmptyAjzaObj();
+
+
+      } break;
     }
 
     this.db.doc<any>('groups/' + this._currentGroupObj.id).update({ "cycle": newCycle, "ajza": ajzaObj });

@@ -1,8 +1,7 @@
 <div *ngIf="group" style="position: relative;">
 
 
-    <app-celebration *ngIf="showCelebration" class="celebration-container"
-        style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000; bottom: 0;">
+    <app-celebration *ngIf="showCelebration" class="celebration-container">
     </app-celebration>
 
     <header class="dashboard-header" style="position: relative;">
@@ -62,12 +61,31 @@
 
 
 
+            <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
 
-            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
-                *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
-                <mat-icon>sports_score</mat-icon>
-                <span>مهمّة جديدة</span>
-            </button>
+                <button mat-flat-button
+                    (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
+                    <mat-icon>sports_score</mat-icon>
+                    <span>مهمّة جديدة</span>
+                </button>
+
+            </ng-container>
+
+
+
+            <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.SEQUENTIAL">
+
+                <button mat-flat-button
+                    (click)="sequentialGroupChildComponent.startNewKhitmah(); adminPanelOpen=false;">
+                    <mat-icon>refresh</mat-icon>
+                    <span>ختمة
+                        جديدة للمجموعة</span>
+                </button>
+
+
+            </ng-container>
+
+
 
 
 
@@ -105,9 +123,6 @@
 
     <section *ngIf="group" class="group-container">
 
-
-
-
         <app-group-sequential *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)" [group]="group"
             [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
         </app-group-sequential>
@@ -119,7 +134,6 @@
         <app-group-pages *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION" [group]="group"
             [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
         </app-group-pages>
-
 
     </section>
 

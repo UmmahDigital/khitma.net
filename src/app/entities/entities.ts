@@ -14,7 +14,7 @@ export const JUZ_STATUS = Object.freeze({
 export const KHITMA_CYCLE_TYPE = Object.freeze({
     AUTO_BOOK: 1,
     ALL_IDLE: 2,
-
+    AUTO_BOOK_FOR_DONE_ONLY: 3
 });
 
 
