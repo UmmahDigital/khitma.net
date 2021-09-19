@@ -73,6 +73,18 @@
 
 
 
+
+
+
+
+
+
+            <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
+                <mat-icon>format_list_numbered_rtl</mat-icon>
+                <span>مشاركة وضع الختمة</span>
+            </button>
+
+
             <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.SEQUENTIAL">
 
                 <button mat-flat-button
@@ -84,16 +96,6 @@
 
 
             </ng-container>
-
-
-
-
-
-
-            <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
-                <mat-icon>format_list_numbered_rtl</mat-icon>
-                <span>مشاركة وضع الختمة</span>
-            </button>
 
 
 
