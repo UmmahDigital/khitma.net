@@ -201,7 +201,7 @@ export class KhitmaGroupService {
       newCycleAjza.push(new Juz({
         index: 0,
         owner: oldCycleAjza[NUM_OF_AJZA - 1].owner,
-        status: oldCycleAjza[NUM_OF_AJZA - 1].status
+        status: (oldCycleAjza[NUM_OF_AJZA - 1].status == JUZ_STATUS.IDLE) ? JUZ_STATUS.IDLE : JUZ_STATUS.BOOKED
       }));
 
 
@@ -211,7 +211,7 @@ export class KhitmaGroupService {
         newCycleAjza.push(new Juz({
           index: i,
           owner: oldCycleAjza[i - 1].owner,
-          status: oldCycleAjza[i - 1].status
+          status: (oldCycleAjza[i - 1].status == JUZ_STATUS.IDLE) ? JUZ_STATUS.IDLE : JUZ_STATUS.BOOKED
         }));
 
       }
