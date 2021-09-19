@@ -201,16 +201,60 @@ export class KhitmaGroupService {
       newCycleAjza.push(new Juz({
         index: 0,
         owner: oldCycleAjza[NUM_OF_AJZA - 1].owner,
-        status: JUZ_STATUS.BOOKED
+        status: oldCycleAjza[NUM_OF_AJZA - 1].status
       }));
+
+
 
       for (let i = 1; i < NUM_OF_AJZA; i++) {
 
         newCycleAjza.push(new Juz({
           index: i,
           owner: oldCycleAjza[i - 1].owner,
+          status: oldCycleAjza[i - 1].status
+        }));
+
+      }
+
+      return newCycleAjza;
+    }
+
+    function _generateNextCycleAjzaForDoneOnly(oldCycleAjza: Juz[]): Juz[] {
+
+      let newCycleAjza: Juz[] = [];
+
+      if (oldCycleAjza[oldCycleAjza.length - 1].status != JUZ_STATUS.DONE) {
+        newCycleAjza.push(new Juz({
+          index: 0,
+          owner: null,
+          status: JUZ_STATUS.IDLE
+        }));
+      }
+      else {
+        newCycleAjza.push(new Juz({
+          index: 0,
+          owner: oldCycleAjza[oldCycleAjza.length - 1].owner,
           status: JUZ_STATUS.BOOKED
         }));
+      }
+
+
+      for (let i = 1; i < NUM_OF_AJZA; i++) {
+
+        if (oldCycleAjza[i - 1].status != JUZ_STATUS.DONE) {
+          newCycleAjza.push(new Juz({
+            index: i,
+            owner: null,
+            status: JUZ_STATUS.IDLE
+          }));
+        }
+        else {
+          newCycleAjza.push(new Juz({
+            index: i,
+            owner: oldCycleAjza[i - 1].owner,
+            status: JUZ_STATUS.BOOKED
+          }));
+        }
 
       }
 
@@ -219,23 +263,23 @@ export class KhitmaGroupService {
 
     function _keepOnlyLastJuz(newCycleAjza: Juz[]): Juz[] { // for example if someone read juz 25-30 in the last cycle. next time she should read 1 (without 26-30).
 
-      for (let i = NUM_OF_AJZA - 1; i >= 0; i--) { // special case for juz 1, as 1 comes after 30
+      for (let i = NUM_OF_AJZA - 1; i > 0; i--) { // special case for juz 1, as 1 comes after 30
         if (newCycleAjza[i].owner == newCycleAjza[0].owner) {
           newCycleAjza[i] = {
             index: newCycleAjza[i].index,
-            owner: "",
+            owner: null,
             status: JUZ_STATUS.IDLE
           };
         }
       }
 
-      for (let i = NUM_OF_AJZA - 1; i >= 0; i--) {
+      for (let i = NUM_OF_AJZA - 1; i > 0; i--) {
         if (newCycleAjza[i].owner != "") {
           for (let j = 1; j < i; j++) {
             if (newCycleAjza[j].owner == newCycleAjza[i].owner) {
               newCycleAjza[j] = {
                 index: newCycleAjza[j].index,
-                owner: "",
+                owner: null,
                 status: JUZ_STATUS.IDLE
               };
             }
@@ -257,7 +301,6 @@ export class KhitmaGroupService {
 
         let ajza = _generateNextCycleAjza(currentSequentialKhitma.ajza);
         let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
-
         ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajzaWithoutDuplicates);
 
 
@@ -265,16 +308,8 @@ export class KhitmaGroupService {
       } break;
       case KHITMA_CYCLE_TYPE.AUTO_BOOK_FOR_DONE_ONLY: {
 
-        currentSequentialKhitma.ajza.forEach(juz => {
-          if (juz.status != JUZ_STATUS.DONE) {
-            juz.owner = "";
-            juz.status = JUZ_STATUS.IDLE;
-          }
-        });
-
-        let ajza = _generateNextCycleAjza(currentSequentialKhitma.ajza);
+        let ajza = _generateNextCycleAjzaForDoneOnly(currentSequentialKhitma.ajza);
         let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
-
         ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajzaWithoutDuplicates);
 
 

@@ -26,18 +26,20 @@ export class TestComponent implements OnInit {
 
   clicked() {
 
-    for (let i = 0; i < 30; i++) {
+    let updatedObj = {
+      ajza: []
+    };
 
-      let updatedObj = {};
-      updatedObj[("ajza." + i)] = {
+    for (let i = 0; i < 30; i++) {
+      updatedObj.ajza.push({
         index: i,
         status: JUZ_STATUS.DONE,
         owner: "hasan" + (i + 1)
-      };
-
-      this.db.doc<KhitmaGroup>('groups/O5Nd5fcQ9Kx59aYTrGPp').update(updatedObj);
-
+      });
     }
+
+    this.db.doc<any>('groups/Zm5B2MkL3Bt781Y6nsdJ').update(updatedObj);
+
 
 
 
@@ -57,12 +59,12 @@ export class TestComponent implements OnInit {
 
 
 
-    // ****
-    let updatedObj = {};
-    updatedObj["members"] = {};
-    updatedObj["members"]["محمد"] = firebase.default.firestore.FieldValue.delete();
+    // // ****
+    // let updatedObj = {};
+    // updatedObj["members"] = {};
+    // updatedObj["members"]["محمد"] = firebase.default.firestore.FieldValue.delete();
 
-    return this.db.doc<any>('groups/' + "nHDpOcrv0XRoa2iLbMgq").set(updatedObj, { merge: true });
+    // return this.db.doc<any>('groups/' + "nHDpOcrv0XRoa2iLbMgq").set(updatedObj, { merge: true });
 
   }
 
