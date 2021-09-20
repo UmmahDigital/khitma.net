@@ -26,19 +26,35 @@ export class TestComponent implements OnInit {
 
   clicked() {
 
-    let updatedObj = {
-      ajza: []
-    };
+    // let updatedObj = {
+    //   ajza: []
+    // };
+
+    // for (let i = 0; i < 30; i++) {
+    //   updatedObj.ajza.push({
+    //     index: i,
+    //     status: JUZ_STATUS.DONE,
+    //     owner: "hasan" + (i + 1)
+    //   });
+    // }
+
+    // this.db.doc<any>('groups/Zm5B2MkL3Bt781Y6nsdJ').update(updatedObj);
+
+
+
+
+    let updatedObj = {};
 
     for (let i = 0; i < 30; i++) {
-      updatedObj.ajza.push({
-        index: i,
-        status: JUZ_STATUS.DONE,
-        owner: "hasan" + (i + 1)
-      });
+      updatedObj["ajza." + i + ".status"] = JUZ_STATUS.BOOKED
+
     }
 
     this.db.doc<any>('groups/Zm5B2MkL3Bt781Y6nsdJ').update(updatedObj);
+
+
+
+
 
 
 

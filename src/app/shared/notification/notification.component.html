@@ -1,0 +1,26 @@
+<div *ngIf="notification">
+
+    <h1 mat-dialog-title> {{notification.title}} </h1>
+
+    <div mat-dialog-content>
+
+        {{notification.text}}
+
+
+    </div>
+
+
+    <div mat-dialog-actions>
+
+        <a *ngFor="let action of notification.actions" [href]="action.url" mat-raised-button color="primary"
+            class="block">{{action.text}}</a>
+
+
+        <mat-checkbox [(ngModel)]="dontDisplayAgain">عدم الإظهار مرّة أخرى</mat-checkbox>
+
+
+        <button mat-button class="block" (click)="close()">إغلاق</button>
+
+    </div>
+
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
+import { NotificationsService } from './notifications.service';
 import { PwaService } from './pwa.service';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 
@@ -21,7 +22,7 @@ export class AppComponent {
 
   isDarkStyle = false;
 
-  constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router) {
+  constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router, private notificationsService: NotificationsService) {
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
       this.isPwaInstalled = true;

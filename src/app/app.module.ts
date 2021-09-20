@@ -70,6 +70,7 @@ import { Group_SameTask_Component } from './pages/group/group-dashboard/group-ty
 import { Group_Sequential_Component } from './pages/group/group-dashboard/group-types/sequential/sequential.component';
 import { KhitmaPagesProgressComponent } from './shared/khitma-pages-progress/khitma-pages-progress.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { NotificationComponent } from './shared/notification/notification.component';
 
 
 
@@ -146,7 +147,8 @@ const routes: Routes = [
     Group_SameTask_Component,
     Group_Pages_Component,
     KhitmaPagesProgressComponent,
-    LoadingComponent
+    LoadingComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,8 @@ export class LocalDatabaseService {
   personalKhitma: object;
   myGlobalKhitmaAjza;
 
+  lastRecievedNotificationId = "";
+
   constructor() {
 
     this.groups = JSON.parse(localStorage.getItem("groups")) || {};
@@ -21,6 +23,8 @@ export class LocalDatabaseService {
     this.personalKhitma = JSON.parse(localStorage.getItem("personalKhitma")) || null;
 
     this.myGlobalKhitmaAjza = JSON.parse(localStorage.getItem("myGlobalKhitmaAjza")) || null;
+
+    this.lastRecievedNotificationId = localStorage.getItem("lastRecievedNotificationId") || null;
 
     if (!this.personalKhitma) {
       this._initPersonalKhitma();
@@ -207,6 +211,15 @@ export class LocalDatabaseService {
     this.myGlobalKhitmaAjza[juzIndex] = isDone;
     this.updateGlobalKhitmaAjza(this.myGlobalKhitmaAjza);
 
+  }
+
+  setLastRecievedNotificationId(id: string) {
+    this.lastRecievedNotificationId = id;
+    localStorage.setItem("lastRecievedNotificationId", id);
+  }
+
+  getLastRecievedNotificationId() {
+    return this.lastRecievedNotificationId;
   }
 
 
