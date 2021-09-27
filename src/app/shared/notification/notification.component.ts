@@ -16,13 +16,12 @@ export class NotificationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: GloablNotification) {
 
     this.notification = data;
+
+    this.dialogRef.beforeClosed().subscribe(() => dialogRef.close(this.dontDisplayAgain));
+
   }
 
   ngOnInit() {
-  }
-
-  close(): void {
-    this.dialogRef.close(this.dontDisplayAgain);
   }
 
 }

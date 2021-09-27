@@ -44,13 +44,25 @@
 
     <div>
 
-        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
-            [queryParams]="{type: 'recurring'}">إنشاء مجموعة ختمة
+        <a gaEvent="recurring_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
+            class="block large action-btn" routerLink="/new" [queryParams]="{type: 'recurring'}">إنشاء مجموعة ختمة
             دوريّة</a>
 
-        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
-            [queryParams]="{type: 'onetime'}" style="background-color: #16769a!important;">بدء ختمة جماعيّة لمرّة
-            واحدة </a>
+        <a gaEvent="onetime_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
+            class="block large action-btn" routerLink="/new" [queryParams]="{type: 'onetime'}"
+            style="background-color: #16769a!important;">بدء ختمة جماعيّة لمرّة
+            واحدة
+        </a>
+
+        <!-- <small>عن روح أحد المتوفّين مثلا</small> -->
+
+
+        <hr />
+
+
+        <a gaEvent="aqsa_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
+            class="block large action-btn" routerLink="/aqsa" id="aqsa-khitma-btn">ختمة
+            المسجد الأقصى العالميّة</a>
 
 
         <!-- <hr style="margin-bottom:32px" /> -->

@@ -12,9 +12,8 @@ export class NotificationsService {
 
 
   constructor(private db: AngularFirestore, private localDB: LocalDatabaseService, private dialog: MatDialog) {
-    // orderBy('id', 'desc')
 
-    this.db.collection("notifications", ref => ref.limit(1)).valueChanges({ idField: 'id' }).subscribe((_notifications) => {
+    this.db.collection("notifications", ref => ref.orderBy('id', 'desc').limit(1)).valueChanges({ idField: 'id' }).subscribe((_notifications) => {
 
       if (!_notifications.length) {
         return;

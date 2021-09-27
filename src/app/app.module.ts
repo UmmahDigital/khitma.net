@@ -71,6 +71,7 @@ import { Group_Sequential_Component } from './pages/group/group-dashboard/group-
 import { KhitmaPagesProgressComponent } from './shared/khitma-pages-progress/khitma-pages-progress.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { NotificationComponent } from './shared/notification/notification.component';
+import { AqsaKhitmaComponent } from './pages/aqsa-khitma/aqsa-khitma.component';
 
 
 
@@ -100,6 +101,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'get', component: GetComponent },
   { path: 'ramadan', component: GlobalKhitmaComponent },
+  { path: 'aqsa', component: AqsaKhitmaComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
@@ -148,7 +150,8 @@ const routes: Routes = [
     Group_Pages_Component,
     KhitmaPagesProgressComponent,
     LoadingComponent,
-    NotificationComponent
+    NotificationComponent,
+    AqsaKhitmaComponent
   ],
   imports: [
     CommonModule,
