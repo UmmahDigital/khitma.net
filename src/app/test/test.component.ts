@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { JUZ_STATUS, KhitmaGroup, KhitmaGroup_SameTask } from '../entities/entities';
 import { map, catchError, take, first } from 'rxjs/operators';
 
@@ -7,8 +7,8 @@ import { map, catchError, take, first } from 'rxjs/operators';
 import { KhitmaGroupService } from '../khitma-group.service';
 
 
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
+import * as firebase from 'firebase/compat/app';
+// import undefined from 'firebase/compat/firestore';
 
 
 

@@ -5,14 +5,12 @@ import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { map, catchError, take, first } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { ThrowStmt } from '@angular/compiler';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+// import { ThrowStmt } from '@angular/compiler';
 import { LocalDatabaseService } from './local-database.service';
 
-
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
-
+import * as firebase from 'firebase/compat/app';
+// import undefined from 'firebase/compat/firestore';
 
 
 @Injectable({

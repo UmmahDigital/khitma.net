@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { KhitmaGroupService } from 'src/app/khitma-group.service';
 
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
+import * as firebase from 'firebase/compat/app';
+// import undefined from 'firebase/compat/firestore';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { map } from 'rxjs/operators';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
