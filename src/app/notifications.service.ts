@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { GloablNotification } from './entities/notification';
 import { LocalDatabaseService } from './local-database.service';
 import { NotificationComponent } from './shared/notification/notification.component';
@@ -10,10 +12,12 @@ import { NotificationComponent } from './shared/notification/notification.compon
 })
 export class NotificationsService {
 
+  private _newNotification$ = new Subject();
+  private _mostRecentNotification: GloablNotification = null;
 
   constructor(private db: AngularFirestore, private localDB: LocalDatabaseService, private dialog: MatDialog) {
 
-    this.db.collection("notifications", ref => ref.orderBy('id', 'desc').limit(1)).valueChanges({ idField: 'id' }).subscribe((_notifications) => {
+    this.db.collection("notifications", ref => ref.orderBy('id', 'desc').limit(1)).valueChanges({ idField: 'id' }).pipe(map(_notifications => {
 
       if (!_notifications.length) {
         return;
@@ -21,16 +25,27 @@ export class NotificationsService {
 
       let notification: GloablNotification = new GloablNotification(_notifications[0]);
 
+      this._mostRecentNotification = notification;
+
       const lastId = localDB.getLastRecievedNotificationId();
 
-      if (notification.isActive && lastId != notification.id) {
-        this.notify(notification);
+      if (!notification.isActive || lastId == notification.id) {
+        notification = null;
       }
 
+      return notification;
+
+    })).subscribe(notification => {
+      this._newNotification$.next(notification);
     });
+
   }
 
-  notify(notification: GloablNotification) {
+  showNotification(notification: GloablNotification) {
+
+    if (!notification) {
+      notification = this._mostRecentNotification;
+    }
 
     const dialogRef = this.dialog.open(NotificationComponent, {
       data: notification,
@@ -39,11 +54,19 @@ export class NotificationsService {
 
     dialogRef.afterClosed().subscribe(dontDisplayAgain => {
 
-      if (dontDisplayAgain) {
-        this.localDB.setLastRecievedNotificationId(notification.id);
+      this.localDB.setLastRecievedNotificationId(notification.id);
+      this._newNotification$.next(null);
 
-      }
+      // if (dontDisplayAgain) {
+
+      // }
+
     });
 
   }
+
+  getUnreadNotification() {
+    return this._newNotification$;
+  }
+
 }

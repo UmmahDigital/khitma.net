@@ -10,14 +10,14 @@ import { GloablNotification } from 'src/app/entities/notification';
 export class NotificationComponent implements OnInit {
 
   public notification: GloablNotification;
-  public dontDisplayAgain: boolean;
+  // public dontDisplayAgain: boolean;
 
   constructor(public dialogRef: MatDialogRef<NotificationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: GloablNotification) {
 
     this.notification = data;
 
-    this.dialogRef.beforeClosed().subscribe(() => dialogRef.close(this.dontDisplayAgain));
+    // this.dialogRef.beforeClosed().subscribe(() => dialogRef.close(this.dontDisplayAgain));
 
   }
 

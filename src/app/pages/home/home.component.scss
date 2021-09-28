@@ -1,3 +1,5 @@
+@import "~src/_variables";
+
 .home {
   font-size: larger;
   line-height: normal;
@@ -6,13 +8,17 @@
   .logo {
     display: block;
     width: 50%;
-    margin: 64px auto 32px auto !important;
+    margin: 0px auto 32px auto !important;
   }
 }
 
 .home > * {
-  margin: 32px auto !important;
+  margin: 16px auto !important;
   //   background-color: red;
+}
+
+.home > hr{
+  margin: 32px auto !important;
 }
 
 a {
@@ -24,4 +30,57 @@ a {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.25)), url('~src/assets/aqsa-btn-bg.png') !important;
   background-position: center;
   background-size: cover!important;
+}
+
+
+footer{
+  text-align: center;
+  color: gray;
+}
+
+#awrad-btn{
+  background-color: #844f4f !important;
+}
+
+ h2{
+font-weight: bold;
+}
+
+#ayat-count{
+  
+  text-align: center;
+
+  >*{
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .main-counter{
+    display: block;
+    font-size: 150%;
+  }
+
+
+}
+
+
+
+.secondary-counter{
+  color:gray;
+}
+
+.number{
+  font-family: monospace;
+  color:$primary-color;
+  font-weight: bold;
+}
+
+.counter-color{
+  color:$primary-color;
+
+}
+
+mat-card{
+  padding:32px;
+  margin-bottom: 16px;
 }

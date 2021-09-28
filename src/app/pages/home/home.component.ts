@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KhitmaGroup, KhitmaGroup_Sequential, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
+import { GlobalCountersService } from 'src/app/global-counters.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
@@ -20,8 +21,14 @@ export class HomeComponent implements OnInit {
 
   isShowArchive: boolean;
 
+  year = new Date().getFullYear();
+
+  ayatCount = 0;
+  hasanatCount = 0;
+
+
   constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
-    private $gaService: GoogleAnalyticsService) { }
+    private $gaService: GoogleAnalyticsService, private globalCounters: GlobalCountersService) { }
 
   ngOnInit(): void {
 
@@ -60,6 +67,10 @@ export class HomeComponent implements OnInit {
 
     this.isShowArchive = this.localDB.hasArchive();
 
+
+
+    this.globalCounters.getAyatCount().subscribe((count: number) => { this.ayatCount = count });
+    this.globalCounters.getHasanatCount().subscribe((count: number) => { this.hasanatCount = count });
   }
 
   groupCreated(result) {

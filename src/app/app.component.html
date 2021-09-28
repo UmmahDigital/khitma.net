@@ -14,68 +14,19 @@
         <span>ختمة.نت</span>
       </a>
 
-      <!-- <small>- النسخة التجريبيّة</small>  -->
-
-
-
       <span class="spacer"></span>
 
-      <!-- <span class="version">v0.9.9</span> -->
-
-
-      <mat-icon matBadge="5">notifications</mat-icon>
+      <mat-icon matBadge="1" matBadgePosition="before" matBadgeSize="medium" matBadgeColor="accent"
+        (click)="showNotification()" [matBadgeHidden]="!unreadNotification" gaEvent="show_notification_clicked"
+        gaCategory="notifications">notifications
+      </mat-icon>
 
 
       <a routerLink="about">
         <mat-icon class="help-btn">help_outline</mat-icon>
       </a>
 
-
-
     </mat-toolbar>
-
-    <!-- <mat-sidenav-container>
-
-      <mat-sidenav #sidenav mode="over" style="width:50%">
-        <mat-nav-list fxLayout="column" fxFlex>
-
-          <a mat-list-item routerLink="/" (click)="sidenav.close()"> ختمة.نت</a>
-
-
-          <mat-divider></mat-divider>
-
-
-
-          <a mat-list-item routerLink="new" (click)="sidenav.close()">
-            <button mat-raised-button class="block action-btn">
-              <mat-icon>group</mat-icon> مجموعة جديدة
-            </button>
-          </a>
-
-          <mat-divider></mat-divider>
-
-          <a mat-list-item routerLink="me" (click)="sidenav.close()"> مجموعاتي</a>
-          <a mat-list-item routerLink="quran" (click)="sidenav.close()"> المصحف الشريف </a>
-          <a mat-list-item routerLink="about" (click)="sidenav.close()"> عن ختمة.نت </a>
-
-          <mat-divider></mat-divider>
-
-        </mat-nav-list>
-      </mat-sidenav>
-
-
-
-      <mat-sidenav-content>
-        <div class="content">
-          <router-outlet></router-outlet>
-        </div>
-
-
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-
- -->
-
 
     <div id="app-content">
       <router-outlet></router-outlet>

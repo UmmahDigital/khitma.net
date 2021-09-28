@@ -15,12 +15,12 @@ import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 })
 export class AppComponent {
 
-
-
   isPwaInstalled = false;
   menuDialogRef;
 
   isDarkStyle = false;
+
+  unreadNotification = null;
 
   constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router, private notificationsService: NotificationsService) {
 
@@ -29,7 +29,6 @@ export class AppComponent {
     }
 
     this.router.events.subscribe((event: Event) => {
-
 
       if (event instanceof NavigationStart) { // NavigationEnd
         if (this.menuDialogRef) {
@@ -42,13 +41,11 @@ export class AppComponent {
         // window.scroll(0, 0);
 
         document.querySelector('#app-content').scrollTo(0, 0);
-
-
-
       }
+    });
 
-
-
+    this.notificationsService.getUnreadNotification().subscribe(notification => {
+      this.unreadNotification = notification
     });
 
   }
@@ -64,6 +61,10 @@ export class AppComponent {
       maxWidth: "80%"
     });
 
+  }
+
+  showNotification() {
+    this.notificationsService.showNotification(this.unreadNotification);
   }
 
 }
