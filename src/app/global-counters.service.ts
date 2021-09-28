@@ -12,7 +12,7 @@ export class GlobalCountersService {
   private _AVG_HASANAT_IN_AYA = (320015 / 6236) * 10; // 320015 is number of huruf in Quran
 
   private _lastDataSnapshot = {
-    date: new Date("2021-9-28"),
+    date: new Date(Date.parse("2021-09-28 00:00:00-0000".replace(' ', 'T'))), // the replacement is to convert the date to valid ISO 8601:
     ayatCount: 44575551
   };
 
