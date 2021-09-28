@@ -70,7 +70,11 @@ font-weight: bold;
 }
 
 .number{
-  font-family: monospace;
+
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace,
+    'DejaVu Sans Mono', Menlo, Consolas, monospace;
+
+
   color:$primary-color;
   font-weight: bold;
 }
