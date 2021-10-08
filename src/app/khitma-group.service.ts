@@ -378,6 +378,16 @@ export class KhitmaGroupService {
 
   }
 
+  updateGlobalKhitaCounter(khitmaId, counterId, delta) {
+
+    let obj = {};
+    obj[counterId] = firebase.default.firestore.FieldValue.increment(delta);
+
+    this.db.doc('global/' + khitmaId).update(obj);
+
+  }
+
+
 
   globalKhitmaUpdateJuz(id, juzIndex, isDone) {
 

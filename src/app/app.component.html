@@ -3,6 +3,10 @@
 
   <div id="app-container" [class.dark]="isDarkStyle" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%">
 
+
+    <app-celebration *ngIf="showCelebration" class="celebration-container">
+    </app-celebration>
+
     <mat-toolbar color="primary">
       <button mat-icon-button aria-label="menu">
         <mat-icon (click)="openMenu()">menu</mat-icon>

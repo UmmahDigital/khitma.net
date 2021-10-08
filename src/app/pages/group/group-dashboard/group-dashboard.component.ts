@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
 import { Group_Pages_Component } from './group-types/pages/pages.component';
 import { Group_Sequential_Component } from './group-types/sequential/sequential.component';
+import { CelebrationService } from 'src/app/celebration.service';
 
 
 @Component({
@@ -44,7 +45,6 @@ export class GroupDashboardComponent implements OnInit {
 
   username: string;
   isAdmin: boolean = false;
-  showCelebration: boolean = false;
   isGroupInfoExpanded: false;
   isInitiated = false;
 
@@ -60,7 +60,8 @@ export class GroupDashboardComponent implements OnInit {
     private titleService: Title,
     private alert: AlertService,
     private nativeApi: NativeApiService,
-    private router: Router,) {
+    private router: Router,
+    private celebrationService: CelebrationService) {
   }
 
   ngOnInit(): void {
@@ -112,14 +113,6 @@ export class GroupDashboardComponent implements OnInit {
     return StatusMessageGenerators[this.group.type](this.group);
   }
 
-
-  celebrate() {
-    this.showCelebration = true;
-
-    setTimeout(() => {
-      this.showCelebration = false;
-    }, 5000);
-  }
 
   shareStatusMsg() {
     this.nativeApi.share(("وضع الختمة: " + this.group.title), this.getKhitmaStatusMsg(), null);
@@ -198,6 +191,11 @@ export class GroupDashboardComponent implements OnInit {
 
     });
 
+  }
+
+
+  celebrate() {
+    this.celebrationService.celebrate();
   }
 
 

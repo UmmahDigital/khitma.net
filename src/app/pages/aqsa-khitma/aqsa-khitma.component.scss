@@ -1,0 +1,63 @@
+@import "~src/_variables";
+
+
+img{
+    width: 100%;
+}
+
+mat-button-toggle-group{
+    flex-wrap: wrap;
+    width: 100%;
+    display: flex;
+    font-size: 125%;
+
+    mat-button-toggle{
+        flex:1
+    }
+}
+
+.action-btn{
+    margin: 16px auto;
+}
+
+
+
+
+.big-number{
+  
+    text-align: center;
+  
+    >*{
+      margin-bottom: 8px;
+      display: block;
+    }
+  
+    .main-counter{
+      display: block;
+      font-size: 150%;
+    }
+  
+  
+  }
+  
+  
+  
+  .secondary-counter{
+    color:gray;
+  }
+  
+  .number{
+  
+    font-family: 'SF Mono', SFMono-Regular, ui-monospace,
+      'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  
+  
+    color:$primary-color;
+    font-weight: bold;
+  }
+  
+  .counter-color{
+    color:$primary-color;
+  
+  }
+

@@ -20,7 +20,8 @@
     <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive">أرشيف الختمات</a>
 
     <p>
-        ختمة.نت هو تطبيق يتيح قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء
+        ختمة.نت هو تطبيق انطلق من رحاب المسجد الأقصى المبارك ليتيح قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق
+        إنشاء مجموعات لختم القرآن وتوزيع أجزاء
         المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.
 
     </p>
@@ -37,12 +38,6 @@
 
         <br />
 
-        كونوا جزءا من الأجر العظيم إن شاء الله — أنشؤوا مجموعتكم الآن ولا تنسونا من
-        صالح دعائكم.
-
-        <br />
-        <br />
-
 
         <a gaEvent="recurring_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
             class="block large action-btn" routerLink="/new" [queryParams]="{type: 'recurring'}">إنشاء مجموعة ختمة
@@ -55,14 +50,30 @@
         </a>
 
 
+        <a routerLink="/aqsa" gaEvent="aqsa_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button
+            color="accent" class="block large action-btn" id="aqsa-khitma-btn">ختمة
+            المسجد الأقصى العالميّة</a>
+
+
     </section>
 
+    <br />
+
+
+    <span> كونوا جزءا من الأجر العظيم إن شاء الله — أنشؤوا مجموعتكم الآن ولا تنسونا من
+        صالح دعائكم.
+    </span>
+
+    <br />
+    <br />
+
     <small class="secondary-counter">
+
 
         ومن يدري، فلعلّنا نتشارك في
 
         <strong class="counter-color">
-            <span class="mono-font number">{{(hasanatCount/1000000) | number: '1.0-0'}}</span> مليون
+            <span class="mono-font number">{{(hasanatCount/1000000000) | number: '1.0-0'}}</span> مليار
         </strong>
 
         حسنة أو يزيد.
@@ -76,32 +87,39 @@
     <hr />
 
 
-    <section>
-
-        <p>
-            بداية تطوير منصّة ختمة.نت كانت من المسجد الأقصى المبارك، حيث كتبت أولى أسطرها البرمجيّة فيه. واليوم يستمر
-            تطوير
-            المنصّة من أكناف القدس وبيت المقدس. وهنا نضع بين أيديكم ختمة جماعيّة عالميّة للمسجد الأقصى المبارك،
-            داعين
-            المولى عزّ وجلّ أن يرفع عنه الظلم وعن جميع أراضي المسلمين.
-
-        </p>
+    <!-- <section>
 
 
-        <a gaEvent="aqsa_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
-            class="block large action-btn" routerLink="/aqsa" id="aqsa-khitma-btn">ختمة
-            المسجد الأقصى العالميّة</a>
+        <a routerLink="/aqsa" style="text-decoration: none;color:black;">
+
+            <button gaEvent="aqsa_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
+                class="block large action-btn" id="aqsa-khitma-btn">ختمة
+                المسجد الأقصى العالميّة</button>
 
 
 
+            <p>
+                بداية تطوير منصّة ختمة.نت كانت من المسجد الأقصى المبارك، حيث كتبت أولى أسطرها البرمجيّة فيه. واليوم
+                يستمر
+                تطوير
+                المنصّة من أكناف القدس وبيت المقدس. وهنا نضع بين أيديكم ختمة جماعيّة عالميّة للمسجد الأقصى المبارك،
+                داعين
+                المولى عزّ وجلّ أن يرفع عنه الظلم وعن جميع أراضي المسلمين.
+
+            </p>
+
+
+        </a>
 
     </section>
 
 
+    <hr /> -->
+
     <mat-card>
 
 
-        <h2>جديد من أمّة.ديجيتال</h2>
+        <h2>تطبيقات صديقة</h2>
         <p>
             أوراد هي منصّة تقنيّة تتيح تنفيذ الأوراد الإسلاميّة بشكل جماعي، وذلك عن طريق إنشاء مجموعات للأوراد
             المشتركة (لأصدقائك أو عائلتك مثلا) ثمّ مشاركة الأوراد ومتابعة تنفيذها من قبل أعضاء المجموعة بشكل سلس
@@ -132,7 +150,7 @@
 
 
 
-    <hr />
+    <!-- <hr />
 
 
     <footer>
@@ -143,6 +161,6 @@
 
         © {{year}}
 
-    </footer>
+    </footer> -->
 
 </div>

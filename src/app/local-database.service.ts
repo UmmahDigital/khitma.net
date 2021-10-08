@@ -207,4 +207,32 @@ export class LocalDatabaseService {
   }
 
 
+  // Aqsa Khitma
+
+  getMyAqsaKhitmaPages() {
+    let pagesStr = localStorage.getItem("aqsaKhitmaPages") || null;
+
+    if (!pagesStr) {
+      return null;
+    }
+
+    let tmp = pagesStr.split("-");
+
+    return {
+      from: tmp[0],
+      to: tmp[1]
+    }
+  }
+
+
+  setMyAqsaKhitmaPages(pages) {
+
+    if (!pages) {
+      localStorage.removeItem("aqsaKhitmaPages");
+      return;
+    }
+
+    localStorage.setItem("aqsaKhitmaPages", pages.from + "-" + pages.to);
+  }
+
 }

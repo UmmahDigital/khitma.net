@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { KhitmaGroupService } from './khitma-group.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,11 @@ export class GlobalCountersService {
   };
 
 
-
   private _ayatCounter$ = new Subject();
   private _hasanatCounter$ = new Subject();
 
 
-  constructor() {
+  constructor(private groupsApi: KhitmaGroupService) {
 
     setInterval(() => {
 
@@ -44,4 +44,22 @@ export class GlobalCountersService {
   getHasanatCount() {
     return this._hasanatCounter$;
   }
+
+
+  aqsaKhitmaCounters() {
+    return this.groupsApi.getGlobalKhitma("aqsa").valueChanges();
+  }
+
+
+  aqsaKhitmaPagesDone(pages) {
+    this.groupsApi.updateGlobalKhitaCounter("aqsa", 'pages.completed', (pages.to - pages.from + 1));
+  }
+
+  aqsaKhitmaBookPages(numOfPages) {
+
+    numOfPages = parseInt(numOfPages);
+    this.groupsApi.updateGlobalKhitaCounter("aqsa", 'pages.granted', numOfPages);
+    // update doing counter 
+  }
+
 }

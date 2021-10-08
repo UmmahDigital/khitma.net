@@ -17,7 +17,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-// import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { HomeComponent } from './pages/home/home.component';
 import { CreateGroupComponent } from './pages/create-group/create-group.component';
@@ -164,7 +163,6 @@ const routes: Routes = [
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
-    // AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

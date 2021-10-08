@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
+import { CelebrationService } from './celebration.service';
 import { NotificationsService } from './notifications.service';
 import { PwaService } from './pwa.service';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
@@ -22,7 +23,11 @@ export class AppComponent {
 
   unreadNotification = null;
 
-  constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router, private notificationsService: NotificationsService) {
+  showCelebration = false;
+
+  constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router,
+    private notificationsService: NotificationsService,
+    private celebrationService: CelebrationService) {
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
       this.isPwaInstalled = true;
@@ -48,6 +53,19 @@ export class AppComponent {
       this.unreadNotification = notification
     });
 
+
+    this.celebrationService.newCelebration().subscribe(() => {
+      this.celebrate();
+    });
+
+  }
+
+  celebrate() {
+    this.showCelebration = true;
+
+    setTimeout(() => {
+      this.showCelebration = false;
+    }, 5000);
   }
 
   installPwa(): void {
