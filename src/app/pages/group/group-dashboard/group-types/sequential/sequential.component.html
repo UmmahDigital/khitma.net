@@ -20,8 +20,54 @@
 
     <div class="block user-msg" style="margin:32px auto; text-align: center;">
 
-        <span *ngIf="myJuzIndex != null; else noCurrentJuz"> جزؤك الحالي هو <strong> جزء {{myJuzIndex +
-                1}}</strong>.</span>
+        <!-- <span *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
+
+            جزؤك الحالي:
+
+
+            <strong *ngFor="let juzIndex of myAjzaIndexes"> {{juzIndex + 1}} </strong>
+
+            .</span> -->
+
+
+        <div *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
+            <section class="mat-elevation-z16" *ngFor="let juzIndex of myAjzaIndexes">
+
+                <section class="my-juz-actions" fxLayout="row wrap" fxLayoutGap="0px grid">
+
+                    <div fxFlex="25%" class="center-center">
+                        <a [routerLink]="['/quran/juz' , juzIndex + 1]" class="quran-explorer-btn">
+
+                            <mat-icon>
+                                menu_book</mat-icon>
+
+                            <span>{{juzIndex + 1}}</span>
+                        </a>
+                    </div>
+
+                    <div fxFlex="50%" class="center-center">
+                        <button mat-raised-button color="accent" class="block large action-btn"
+                            (click)="juzDone(juzIndex)">
+                            أتممت قراءة جزء {{juzIndex + 1}}</button>
+                    </div>
+
+                    <div fxFlex="25%" class="center-center">
+                        <button class="giveup-btn" mat-flat-button (click)="juzGiveup(juzIndex)">تنازل عن الجزء</button>
+                    </div>
+
+                </section>
+
+
+                <!-- <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div> -->
+
+
+            </section>
+
+
+            <div class="space"></div>
+
+        </div>
+
 
         <ng-template #noCurrentJuz>
             <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza"> يمكنك اختيار أي من الأجزاء التي باللون الأحمر.
@@ -31,13 +77,12 @@
             </ng-template>
         </ng-template>
 
-        <span *ngIf="this.group.targetDate">موعد تسليم الختمة: {{this.group.targetDate}}.</span>
 
     </div>
 
 
     <section class="juz-grid-section">
-        <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myJuzIndex]="myJuzIndex"
+        <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes"
             (onJuzSelection)="juzSelected($event)">
         </app-juz-grid>
     </section>
@@ -46,6 +91,12 @@
 
 
     <div class="space"></div>
+
+
+
+
+    <!-- <section class="action-panel mat-elevation-z16"> -->
+
 
 
 
@@ -61,45 +112,11 @@
 
     <section class="juz-list-section" *ngIf="showNames">
 
-        <app-juz-list [ajza]="group.ajza" [myJuzIndex]="myJuzIndex" [allowEdit]="isAdmin"
+        <app-juz-list [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes" [allowEdit]="isAdmin"
             (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
         </app-juz-list>
 
     </section>
 
-
-    <section class="action-panel mat-elevation-z16">
-
-        <div>
-
-            <section class="my-juz-actions" *ngIf="myJuzIndex != null" fxLayout="row wrap" fxLayoutGap="0px grid">
-
-                <div fxFlex="25%" class="center-center">
-                    <a [routerLink]="['/quran/juz' , myJuzIndex + 1]" class="quran-explorer-btn">
-
-                        <mat-icon>
-                            menu_book</mat-icon>
-
-                        <span>{{myJuzIndex + 1}}</span>
-                    </a>
-                </div>
-
-                <div fxFlex="50%" class="center-center">
-                    <button mat-raised-button color="accent" class="block large action-btn" (click)="juzDone()"
-                        [disabled]="myJuzIndex == null">
-                        أتممت قراءة جزء {{myJuzIndex + 1}}</button>
-                </div>
-
-                <div fxFlex="25%" class="center-center">
-                    <button class="giveup-btn" mat-flat-button (click)="juzGiveup()">تنازل عن الجزء</button>
-                </div>
-
-            </section>
-
-
-            <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div>
-
-        </div>
-    </section>
 
 </div>

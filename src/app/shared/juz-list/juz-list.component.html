@@ -1,5 +1,4 @@
-<section [ngClass]="{'has-juz': myJuzIndex>=0}">
-
+<section>
 
     <span *ngIf="allowEdit" class="center-center tip">
         <strong>لمسؤول المجموعة:</strong>
@@ -9,7 +8,8 @@
     </span>
 
 
-    <app-juz *ngFor="let juz of ajza" [juz]="juz" [isEditMode]="allowEdit" [myJuzIndex]="myJuzIndex"
-        (onJuzSelection)="juzClicked($event)" (onEdited)="juzEdited($event)">
+    <app-juz *ngFor="let juz of ajza" [juz]="juz" [isEditMode]="allowEdit"
+        [isMyJuz]="myAjzaIndexes.indexOf(juz.index) >=0" (onJuzSelection)="juzClicked($event)"
+        (onEdited)="juzEdited($event)">
     </app-juz>
 </section>

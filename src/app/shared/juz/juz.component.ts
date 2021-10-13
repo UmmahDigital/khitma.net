@@ -10,7 +10,7 @@ import { Juz, JUZ_STATUS } from 'src/app/entities/entities';
 export class JuzComponent implements OnInit {
 
   @Input() juz: Juz;
-  @Input() myJuzIndex: number;
+  @Input() isMyJuz: boolean;
   @Input() isEditMode?: boolean;
 
   @Output() onJuzSelection?= new EventEmitter<Juz>();
@@ -43,11 +43,11 @@ export class JuzComponent implements OnInit {
 
     this.msg = "لم تتم قراءته بعد..";
 
-    if (this.juz.index == this.myJuzIndex) {
+    if (this.isMyJuz) {
       _cssClasses += " my-juz";
     }
 
-    if (this.myJuzIndex == null && this.juz.status == JUZ_STATUS.IDLE) {
+    if (this.juz.status == JUZ_STATUS.IDLE) {
       _cssClasses += " mat-elevation-z2"; // add elevation --> clickable
       this.msg = "إضغط لاختيار هذا الجزء";
     }

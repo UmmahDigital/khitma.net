@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, KhitmaGroup_Sequential, NUM_OF_AJZA } from './entities/entities';
+import { Juz, KhitmaGroup, KhitmaGroup_Sequential, NUM_OF_AJZA } from './entities/entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalDatabaseService {
 
-  groups: object; // groups = active gorups  // [todo]: watch and save() upon change?
+  groups: object; // Record<string,Juz>; // groups = active gorups  // [todo]: watch and save() upon change?
   archivedGroups: object; // [todo]: watch and save() upon change?
 
   personalKhitma: object;
@@ -98,16 +98,8 @@ export class LocalDatabaseService {
     return this.groups;
   }
 
-  getMyJuz(groupId) {
-    return this.groups[groupId].juzIndex;
-  }
-
   getMyKhitmaCycle(groupId) {
     return this.groups[groupId].cycle;
-  }
-
-  getMyLastJuz(groupId) {
-    return this.groups[groupId].lastJuzIndex;
   }
 
   getMyGroups() {
