@@ -36,7 +36,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   @Output() onAchievement?= new EventEmitter();
 
 
-  myJuzIndex: number;
+  myAjzaIndexes: number[];
   showNames = false;
 
 
@@ -61,10 +61,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       switch (action) {
         case 'leave-group': {
 
-          if (this.myJuzIndex != null) {
-            this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, "", JUZ_STATUS.IDLE);
-          }
-
+          this.myAjzaIndexes.forEach(juzIndex => {
+            this.groupsApi.updateJuz(this.group.id, juzIndex, "", JUZ_STATUS.IDLE);
+          });
           break;
         }
       }
@@ -72,7 +71,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.myJuzIndex = this.group.getMyJuzIndex(this.username); // [todo]: validate need
+    this.myAjzaIndexes = this.group.getMyAjzaIndexes(this.username); // [todo]: validate need
   }
 
 
@@ -119,6 +118,10 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   }
 
+  private _hasAjza(): boolean {
+    return this.myAjzaIndexes.length > 0;
+  }
+
   juzSelected(juz: Juz) {
 
     const isUpdateForOtherUserCaseAdminCase = (juz.owner != this.username);
@@ -132,27 +135,22 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       this.adminJuzUpdate(juz);
     }
 
-    if (juz.status != JUZ_STATUS.IDLE || this.myJuzIndex != null) {
+    if (juz.status != JUZ_STATUS.IDLE) {
       return;
     }
 
     this.$gaService.event('juz_selected');
 
-    this.myJuzIndex = juz.index;
+    this.myAjzaIndexes.push(juz.index);
 
-    // this.localDB.setMyJuz(this.group.id, this.group.cycle, juz.index);
     this.groupsApi.updateJuz(this.group.id, juz.index, this.username, JUZ_STATUS.BOOKED);
   }
 
-  juzDone() {
-
-    const title = "تأكيد إتمام الجزء";
-    const msg = "هل أتممت قراءة جزء " + (this.myJuzIndex + 1) + "؟";
-
-    const dialogData = new ConfirmDialogModel(title, msg);
+  juzDone(juzIndex) {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: dialogData,
+      data: new ConfirmDialogModel("تأكيد إتمام الجزء",
+        "هل أتممت قراءة جزء " + (juzIndex + 1) + "؟"),
       maxWidth: "80%"
     });
 
@@ -162,9 +160,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
         this.$gaService.event('juz_done');
 
-        this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.DONE);
-        // this.localDB.setMyJuz(this.group.id, this.group.cycle, null);
-        this.myJuzIndex = null;
+        this.groupsApi.updateJuz(this.group.id, juzIndex, this.username, JUZ_STATUS.DONE);
+
+        this.myAjzaIndexes = this.myAjzaIndexes.filter(_juzIndex => _juzIndex !== juzIndex)
 
         this.onAchievement.emit();
       }
@@ -174,14 +172,14 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   }
 
 
-  juzGiveup() {
+  juzGiveup(juzIndex) {
 
     this.$gaService.event('juz_giveup');
 
     // add confirmation modal
-    this.groupsApi.updateJuz(this.group.id, this.myJuzIndex, this.username, JUZ_STATUS.IDLE);
-    // this.localDB.setMyJuz(this.group.id, this.group.cycle, null);
-    this.myJuzIndex = null;
+    this.groupsApi.updateJuz(this.group.id, juzIndex, this.username, JUZ_STATUS.IDLE);
+    this.myAjzaIndexes = this.myAjzaIndexes.filter(_juzIndex => _juzIndex !== juzIndex)
+
   }
 
   startNewKhitmah() {
@@ -213,9 +211,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   }
 
-  getMyJuzReadUrl() {
-    return GET_JUZ_READ_EXTERNAL_URL(this.myJuzIndex);
-  }
+  // getMyJuzReadUrl(juzIndex) {
+  //   return GET_JUZ_READ_EXTERNAL_URL(juzIndex);
+  // }
 
   shareKhitmaCompletedDua() {
 

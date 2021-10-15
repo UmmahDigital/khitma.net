@@ -146,11 +146,13 @@ export class KhitmaGroup_Sequential extends KhitmaGroup {
         return false;
     }
 
-    public getMyJuzIndex(owner) {
+    public getMyAjzaIndexes(owner) {
 
-        let myJuz = this.ajza.find(juz => juz.owner === owner && juz.status === JUZ_STATUS.BOOKED);
+        let myAjza = this.ajza.filter(juz => juz.owner === owner && juz.status === JUZ_STATUS.BOOKED);
 
-        return myJuz ? myJuz.index : null;
+        let myAjzaIndexes = myAjza.map(j => j.index);
+
+        return myAjzaIndexes;
     }
 
     static getEmptyAjzaObj() {

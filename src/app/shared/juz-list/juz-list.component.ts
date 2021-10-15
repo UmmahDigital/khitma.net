@@ -11,7 +11,7 @@ import { Juz, JUZ_STATUS } from '../../entities/entities';
 export class JuzListComponent implements OnInit {
 
   @Input() ajza: Juz[];
-  @Input() myJuzIndex?: number;
+  @Input() myAjzaIndexes?: number[];
   @Input() allowEdit?: boolean;
 
   @Output() onEdited?= new EventEmitter<Juz>();
