@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { KhitmaGroup, Juz, JUZ_STATUS, NUM_OF_AJZA, KHITMA_CYCLE_TYPE, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask, KhitmaGroup_Sequential } from './entities/entities';
 
-import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subject, throwError } from 'rxjs';
 import { map, catchError, take, first } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
@@ -186,7 +186,22 @@ export class KhitmaGroupService {
   }
 
   getGroups(groupsIds: string[]) {
-    return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
+
+
+
+    let groups$ = [];
+
+    groupsIds.forEach(groupId => {
+      groups$.push(this.getGroupDetailsOnce(groupId));
+    });
+
+    return forkJoin(groups$);
+
+
+
+    // return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
+
+
   }
 
   startNewSequentialKhitmaCycle(newCycle, newCycleType) {
