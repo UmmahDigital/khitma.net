@@ -187,8 +187,6 @@ export class KhitmaGroupService {
 
   getGroups(groupsIds: string[]) {
 
-
-
     let groups$ = [];
 
     groupsIds.forEach(groupId => {
@@ -196,8 +194,6 @@ export class KhitmaGroupService {
     });
 
     return forkJoin(groups$);
-
-
 
     // return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
 
