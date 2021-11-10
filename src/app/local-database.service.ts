@@ -76,14 +76,14 @@ export class LocalDatabaseService {
   // }
 
   getUsername(groupId) {
-    return this.groups[groupId].username;
+    return this.groups[groupId].username.trim();
   }
 
   joinGroup(groupId, username) {
 
     this.groups[groupId] = {
       isJoined: true,
-      username: username,
+      username: username.trim(),
       joinTimestamp: Date.now()
     };
 

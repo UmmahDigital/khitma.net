@@ -68,6 +68,8 @@ export class KhitmaGroupService {
 
   public createGroup(title, description, author, groupType?, firstTask?) {
 
+    author = author.trim();
+
     let newGroupObj = {
       "title": title,
       "description": description || '',
@@ -324,6 +326,8 @@ export class KhitmaGroupService {
 
 
   addGroupMember(groupId, memberName) {
+
+    memberName = memberName.trim();
 
     let updatedObj = {};
     updatedObj[("members." + memberName)] = {
