@@ -71,6 +71,8 @@ import { KhitmaPagesProgressComponent } from './shared/khitma-pages-progress/khi
 import { LoadingComponent } from './shared/loading/loading.component';
 import { NotificationComponent } from './shared/notification/notification.component';
 import { AqsaKhitmaComponent } from './pages/aqsa-khitma/aqsa-khitma.component';
+import { ProfileComponent } from './user/profile/profile.component';
+import { RegisterComponent } from './user/register/register.component';
 
 
 
@@ -150,7 +152,9 @@ const routes: Routes = [
     KhitmaPagesProgressComponent,
     LoadingComponent,
     NotificationComponent,
-    AqsaKhitmaComponent
+    AqsaKhitmaComponent,
+    ProfileComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
