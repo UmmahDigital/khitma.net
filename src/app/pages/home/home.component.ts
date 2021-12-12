@@ -5,6 +5,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KhitmaGroup, KhitmaGroup_Sequential, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 import { GlobalCountersService } from 'src/app/global-counters.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
+import { UserService } from 'src/app/service/user.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
 
@@ -28,15 +29,16 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
-    private $gaService: GoogleAnalyticsService, private globalCounters: GlobalCountersService) { }
+    private $gaService: GoogleAnalyticsService, private globalCounters: GlobalCountersService, private svcUser: UserService) { }
 
   ngOnInit(): void {
 
     let ids = this.localDB.getMyGroups();
     ids = ids.slice(Math.max(ids.length - 10, 0)); // firebase IN array limit of 10
+    const authorId = this.svcUser.currentUser?.email;
 
-    if (ids.length > 0) {
-      this.groupsApi.getGroups(ids).subscribe((groups) => {
+    if (ids.length > 0 || authorId) {
+      this.groupsApi.getGroups(ids, authorId).subscribe((groups) => {
 
         if (!groups) {
           return;

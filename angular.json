@@ -87,6 +87,10 @@
               "browserTarget": "khitma:build:development"
             }
           },
+          "options": {
+            "browserTarget": "khitma:build",
+            "ssl": true
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

@@ -5,7 +5,7 @@ import { BehaviorSubject, forkJoin, Observable, of, Subject, throwError } from '
 import { map, catchError, take, first } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 // import { ThrowStmt } from '@angular/compiler';
 import { LocalDatabaseService } from './local-database.service';
 
@@ -34,6 +34,12 @@ export class KhitmaGroupService {
       const id = (<any>res).id;
       return { id, ...data };
     }));
+  }
+
+  public getAllGroupsDetailsForUser(authorId: string): AngularFirestoreCollection<KhitmaGroup> {
+    return this.db.collection<KhitmaGroup>('groups', (doc) => {
+      return doc.where('authorId', "==", authorId)
+    });
   }
 
   public setCurrentGroup(groupId: string) {
@@ -65,8 +71,11 @@ export class KhitmaGroupService {
     return this._currentGroupObj.id;
   }
 
-
   public createGroup(title, description, author, groupType?, firstTask?) {
+    return this.createGroupForUser(title, description, author, null, groupType, firstTask);
+  }
+
+  public createGroupForUser(title, description, author, authorId, groupType?, firstTask?) {
 
     author = author.trim();
 
@@ -76,7 +85,7 @@ export class KhitmaGroupService {
       "author": author,
       "type": groupType,
       "cycle": 0,
-
+      "authorId": authorId
     };
 
     switch (groupType) {
@@ -187,13 +196,21 @@ export class KhitmaGroupService {
 
   }
 
-  getGroups(groupsIds: string[]) {
+  getGroups(groupsIds: string[], authorId?: string) {
 
     let groups$ = [];
 
     groupsIds.forEach(groupId => {
       groups$.push(this.getGroupDetailsOnce(groupId));
     });
+
+    if (authorId) {
+      this.getAllGroupsDetailsForUser(authorId).valueChanges().subscribe(groups => {
+        groups.forEach(group => {
+          groups$.push(group);
+        })
+      })
+    }
 
     return forkJoin(groups$);
 
