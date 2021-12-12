@@ -73,7 +73,7 @@ export class KhitmaGroup {
   public isAdmin(username) {
     return (
       KhitmaGroup.refineOwnerName(username) ===
-        KhitmaGroup.refineOwnerName(this.author) ||
+      KhitmaGroup.refineOwnerName(this.author) ||
       this.admins?.includes(KhitmaGroup.refineOwnerName(username))
     );
   }
