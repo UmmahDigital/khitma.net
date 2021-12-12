@@ -82,7 +82,6 @@ import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './common/login/login.component';
 //
 
-
 GroupJoinedGuard
 
 const routes: Routes = [
