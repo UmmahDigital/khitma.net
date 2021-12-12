@@ -18,6 +18,12 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
+
 import { HomeComponent } from './pages/home/home.component';
 import { CreateGroupComponent } from './pages/create-group/create-group.component';
 import { GroupInviteComponent } from './pages/create-group/group-invite/group-invite.component';
@@ -73,6 +79,7 @@ import { NotificationComponent } from './shared/notification/notification.compon
 import { AqsaKhitmaComponent } from './pages/aqsa-khitma/aqsa-khitma.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { RegisterComponent } from './user/register/register.component';
+import { LoginComponent } from './common/login/login.component';
 
 
 
@@ -154,7 +161,8 @@ const routes: Routes = [
     NotificationComponent,
     AqsaKhitmaComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -168,9 +176,27 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     AngularFireStorageModule, // storage,
-    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SocialLoginModule
   ],
-  providers: [GroupJoinedGuard, KhitmaGroupService],
+  providers: [GroupJoinedGuard, KhitmaGroupService, {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            '220375398314-mnqgol2uls5dkt92et2dom61utorjfhe.apps.googleusercontent.com'
+          )
+        },
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider('632795004523692')
+        }
+      ]
+    } as SocialAuthServiceConfig,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,8 @@ import { LocalDatabaseService } from 'src/app/local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 import { switchMap } from 'rxjs/operators';
+import { UserService } from 'src/app/service/user.service';
+import { User } from 'src/app/common/model';
 
 
 @Component({
@@ -22,7 +24,7 @@ export class CreateGroupComponent implements OnInit {
   title: string;
   description: string;
   author: string;
-
+  user: User;
   firstTask: string;
 
   typeParam: string;
@@ -36,9 +38,15 @@ export class CreateGroupComponent implements OnInit {
     private router: Router,
     private alert: AlertService,
     private localDB: LocalDatabaseService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private svcUser: UserService) { }
 
   ngOnInit(): void {
+
+    this.user = this.svcUser.currentUser;
+    if (this.user != null) {
+      this.author = this.user.fullName;
+    }
 
     this.route.queryParams.subscribe(params => {
       this.typeParam = params['type'];
@@ -80,7 +88,7 @@ export class CreateGroupComponent implements OnInit {
     //   this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
     // }
 
-    this.groupsApi.createGroup(this.title, this.description, this.author, this.groupType, this.firstTask).then(docRef => {
+    this.groupsApi.createGroupForUser(this.title, this.description, this.author, this.user?.email, this.groupType, this.firstTask).then(docRef => {
 
       const groupId = docRef.id;
 
