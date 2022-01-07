@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NativeApiService {
-
   public isAvailable = false;
 
   constructor() {
@@ -13,8 +12,13 @@ export class NativeApiService {
     }
   }
 
-
   share(title, text, url) {
+    if (window['Flutter']) {
+      window['Flutter'].postMessage(
+        'Hello World being called from Javascript code'
+      );
+      return;
+    }
 
     if (!this.isAvailable) {
       return;
@@ -30,14 +34,11 @@ export class NativeApiService {
     return navigator.share({
       title: title,
       text: text,
-      url: url
+      url: url,
     });
-
   }
 
-
   //   shareFile(filesArray): void {
-
 
   //     const base64url = "data:image/octet-stream;base64,/9j/4AAQSkZ...."
   // const blob = await (await fetch(base64url)).blob();
@@ -48,8 +49,6 @@ export class NativeApiService {
   //   files: [file],
   // })
 
-
-
   //     if ((<any>navigator).canShare && (<any>navigator).canShare({ files: filesArray })) {
   //       navigator.share({
   //         files: filesArray,
@@ -59,6 +58,4 @@ export class NativeApiService {
   //     }
 
   //   }
-
-
 }
