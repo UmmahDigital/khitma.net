@@ -15,8 +15,13 @@ export class NativeApiService {
   share(title, text, url) {
     if (window['Flutter']) {
       window['Flutter'].postMessage(
-        'Hello World being called from Javascript code'
+        JSON.stringify({
+          title: title,
+          text: text,
+          url: url,
+        })
       );
+
       return;
     }
 
