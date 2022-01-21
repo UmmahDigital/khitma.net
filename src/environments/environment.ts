@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   firebaseConfig: {
     apiKey: 'AIzaSyBmYOSvW0bB1XOc9Kr9D7xXcAKh8Iwoot4',
-    // authDomain: "quran-khitma.firebaseapp.com",
+    authDomain: 'quran-khitma.firebaseapp.com',
     projectId: 'quran-khitma',
     storageBucket: 'quran-khitma.appspot.com',
     messagingSenderId: '220375398314',
