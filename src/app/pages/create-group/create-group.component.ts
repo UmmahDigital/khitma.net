@@ -2,10 +2,11 @@ import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@ang
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
-import { LocalDatabaseService } from 'src/app/local-database.service';
+import { LocalDatabaseService } from '../../local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
+import { KHITMA_GROUP_TYPE } from '../../entities/entities';
 import { switchMap } from 'rxjs/operators';
+import { CommonService } from '../../service/common.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class CreateGroupComponent implements OnInit {
     private router: Router,
     private alert: AlertService,
     private localDB: LocalDatabaseService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    public common: CommonService) { }
 
   ngOnInit(): void {
 
@@ -86,7 +88,7 @@ export class CreateGroupComponent implements OnInit {
 
       this.$gaService.event('group_created');
 
-      this.alert.show("تمّ إنشاء مجموعة الختمة بنجاح!", 5000);
+      this.alert.show(this.common.translation.gCreate?.success, 5000);
 
 
       this.localDB.joinGroup(groupId, this.author);

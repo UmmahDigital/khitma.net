@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlertService } from 'src/app/alert.service';
-import { KhitmaGroup } from 'src/app/entities/entities';
-import { NativeApiService } from 'src/app/native-api.service';
-import { NativeShareService } from 'src/app/native-share.service';
+import { AlertService } from '../../../alert.service';
+import { KhitmaGroup } from '../../../entities/entities';
+import { NativeApiService } from '../../../native-api.service';
+import { NativeShareService } from '../../../native-share.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
+import { CommonService } from '../../../service/common.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class GroupInviteComponent implements OnInit {
     private groupsApi: KhitmaGroupService,
     private alert: AlertService,
     private nativeShare: NativeShareService,
-    private nativeApi: NativeApiService) { }
+    private nativeApi: NativeApiService,
+    public common: CommonService) { }
 
   ngOnInit() {
 
@@ -37,11 +39,11 @@ export class GroupInviteComponent implements OnInit {
 
           this.inviteLink = this.groupsApi.getGroupURL(this.group.id);
 
-          this.inviteMsg = "إنضمّوا إلى"
+          this.inviteMsg = this.common.translation.gInvite?.join
             + ' "' + this.group.title + '" '
-            + "عبر الرابط "
-            + this.inviteLink
-            + ". بارك الله فيكم.";
+            + this.common.translation.gInvite?.link
+            + this.inviteLink + "\n"
+            + this.common.translation.gInvite?.bless;
 
         });
 
@@ -51,13 +53,13 @@ export class GroupInviteComponent implements OnInit {
 
   msgCopied() {
 
-    this.alert.show("تمّ نسخ الرسالة، يمكنك الآن مشاركتها مع معارفك وأصدقائك.", 5000);
+    this.alert.show(this.common.translation.gInvite?.alert, 5000);
 
   }
 
   share() {
 
-    this.nativeApi.share("دعوة للإنضمام لمجموعة الختمة", this.inviteMsg, null);
+    this.nativeApi.share(this.common.translation.gInvite?.share, this.inviteMsg, null);
 
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from 'src/app/entities/entities';
-import { LocalDatabaseService } from 'src/app/local-database.service';
+import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from '../../../entities/entities';
+import { LocalDatabaseService } from '../../../local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -10,19 +10,20 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/conf
 import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Title } from '@angular/platform-browser';
-import { AlertService } from 'src/app/alert.service';
-import { NativeApiService } from 'src/app/native-api.service';
-import { EditKhitmaDetailsComponent } from 'src/app/dialog/edit-khitma-details/edit-khitma-details.component';
-import { StartNewKhitmaComponent } from 'src/app/dialog/start-new-khitma/start-new-khitma.component';
-import { NativeShareService } from 'src/app/native-share.service';
+import { AlertService } from '../../../alert.service';
+import { NativeApiService } from '../../../native-api.service';
+import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
+import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
+import { NativeShareService } from '../../../native-share.service';
 import { Router } from '@angular/router';
-import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
+import { NewTaskComponent } from '../../../dialog/new-task/new-task.component';
 import { StatusMessageGenerators } from './status-messages';
 import { Subject } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
 import { Group_Pages_Component } from './group-types/pages/pages.component';
 import { Group_Sequential_Component } from './group-types/sequential/sequential.component';
-import { CelebrationService } from 'src/app/celebration.service';
+import { CelebrationService } from '../../../celebration.service';
+import { CommonService } from '../../../service/common.service';
 
 
 @Component({
@@ -61,7 +62,7 @@ export class GroupDashboardComponent implements OnInit {
     private alert: AlertService,
     private nativeApi: NativeApiService,
     private router: Router,
-    private celebrationService: CelebrationService) {
+    private celebrationService: CelebrationService, public common: CommonService) {
   }
 
   ngOnInit(): void {
@@ -100,9 +101,9 @@ export class GroupDashboardComponent implements OnInit {
         this.isInitiated = true;
       }
 
-      this.inviteMsg = "إنضمّوا إلى مجموعة"
+      this.inviteMsg = this.common.translation.gDashboard?.join
         + ' "' + this.group.title + '" '
-        + "عبر الرابط "
+        + this.common.translation.gDashboard?.link
         + this.group.getURL();
 
     });
@@ -115,11 +116,11 @@ export class GroupDashboardComponent implements OnInit {
 
 
   shareStatusMsg() {
-    this.nativeApi.share(("وضع الختمة: " + this.group.title), this.getKhitmaStatusMsg(), null);
+    this.nativeApi.share((this.common.translation.gDashboard?.status + this.group.title), this.getKhitmaStatusMsg(), null);
   }
 
   shareInviteMsg() {
-    this.nativeApi.share(("دعوة انضمام: " + this.group.title), this.inviteMsg, null);
+    this.nativeApi.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, null);
   }
 
 
@@ -156,9 +157,8 @@ export class GroupDashboardComponent implements OnInit {
   leaveGroup() {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogModel(
-        "تأكيد ترك المجموعة",
-        "لا ننصح بترك المجموعة كي لا يفوتك الثواب العظيم إن شاء الله، لكن في حال تركت المجموعة فسيتم إتاحة جزئك من جديد وتحويلك للصفحة الرئيسية."),
+      data: new ConfirmDialogModel(this.common.translation.gDashboard?.confirm, this.common.translation.gDashboard?.advice
+      ),
       maxWidth: "80%"
     });
 

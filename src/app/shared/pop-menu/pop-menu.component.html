@@ -20,19 +20,19 @@
 
 <a mat-flat-button class="block large" routerLink="" routerLinkActive="active-link"
     [routerLinkActiveOptions]="{ exact: true }">
-    <mat-icon>home</mat-icon>
-    الرئيسيّة
+    <mat-icon>home</mat-icon><span [translate]="'menu.home'">الرئيسيّة</span>
+
 </a>
 
 <a mat-flat-button class="block large" routerLink="/me/groups" routerLinkActive="active-link">
-    <mat-icon>groups</mat-icon>
-    مجموعاتي
+    <mat-icon>groups</mat-icon><span [translate]="'menu.groups'">مجموعاتي</span>
+
 </a>
 
 
 <a mat-flat-button class="block large" routerLink="/new" routerLinkActive="active-link">
-    <mat-icon>group_add</mat-icon>
-    مجموعة جديدة
+    <mat-icon>group_add</mat-icon><span [translate]="'menu.group_add'">مجموعة جديدة</span>
+
 </a>
 
 <!-- 
@@ -43,11 +43,11 @@
 
 
 <a mat-flat-button class="block large" routerLink="/quran" routerLinkActive="active-link">
-    <mat-icon>menu_book</mat-icon>
-    المصحف الشريف
+    <mat-icon>menu_book</mat-icon><span [translate]="'menu.book'">المصحف الشريف</span>
+
 </a>
 
 <a mat-flat-button class="block large" routerLink="/about" routerLinkActive="active-link">
-    <mat-icon>help_outline</mat-icon>
-    عن البرنامج
+    <mat-icon>help_outline</mat-icon><span [translate]="'menu.about'">عن البرنامج</span>
+
 </a>

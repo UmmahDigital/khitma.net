@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroupService } from 'src/app/khitma-group.service';
+import { KhitmaGroupService } from '../../khitma-group.service';
 
 import * as firebase from 'firebase/compat/app';
 // import undefined from 'firebase/compat/firestore';
-import { LocalDatabaseService } from 'src/app/local-database.service';
+import { LocalDatabaseService } from '../../local-database.service';
 import { map } from 'rxjs/operators';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { CommonService } from '../../service/common.service';
 
 @Component({
   selector: 'app-global-khitma',
@@ -21,7 +22,7 @@ export class GlobalKhitmaComponent implements OnInit {
   constructor(private groupsApi: KhitmaGroupService,
     private localDB: LocalDatabaseService,
     private $gaService: GoogleAnalyticsService,
-    private dialog: MatDialog,) { }
+    private dialog: MatDialog, public common: CommonService) { }
 
   dayInRamadan = 0;
 
@@ -103,8 +104,8 @@ export class GlobalKhitmaComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
-        "بدء ختمة جديدة؟",
-        "بارك الله فيك وفي تلاوتك."),
+        this.common.translation.gKhitma?.new,
+        this.common.translation.gKhitma?.bless),
       maxWidth: "80%"
     });
 

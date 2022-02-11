@@ -6,11 +6,12 @@
 
 
         <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
-            class="block large action-btn admin-action-btn">بدء
+            class="block large action-btn admin-action-btn" [translate]="'sequential.start'">بدء
             ختمة
             جديدة للمجموعة</button>
 
-        <button style="margin-top: 16px;" mat-raised-button class="block" (click)="shareKhitmaCompletedDua()">
+        <button style="margin-top: 16px;" mat-raised-button class="block" (click)="shareKhitmaCompletedDua()"
+            [translate]="'sequential.doaa'">
             مشاركة
             دعاء
             الختمة</button>
@@ -47,12 +48,13 @@
 
                     <div fxFlex="50%" class="center-center">
                         <button mat-raised-button color="accent" class="block large action-btn"
-                            (click)="juzDone(juzIndex)">
-                            أتممت قراءة جزء {{juzIndex + 1}}</button>
+                            (click)="juzDone(juzIndex)"><span [translate]="'sequential.finished'">أتممت قراءة جزء</span>
+                            {{juzIndex + 1}}</button>
                     </div>
 
                     <div fxFlex="25%" class="center-center">
-                        <button class="giveup-btn" mat-flat-button (click)="juzGiveup(juzIndex)">تنازل عن الجزء</button>
+                        <button class="giveup-btn" mat-flat-button (click)="juzGiveup(juzIndex)"><span
+                                [translate]="'sequential.release'">تنازل عن الجزء</span></button>
                     </div>
 
                 </section>
@@ -70,10 +72,11 @@
 
 
         <ng-template #noCurrentJuz>
-            <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza"> يمكنك اختيار أي من الأجزاء التي باللون الأحمر.
+            <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza" [translate]="'sequential.select'"> يمكنك اختيار أي
+                من الأجزاء التي باللون الأحمر.
             </span>
             <ng-template #noIdleAjza>
-                <span class="large"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+                <span class="large" [translate]="'sequential.all'"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
             </ng-template>
         </ng-template>
 
@@ -101,8 +104,7 @@
 
 
     <div class="center-center names-toggle-container">
-        <mat-slide-toggle [(ngModel)]="showNames">
-            إظهار قائمة الأسماء
+        <mat-slide-toggle [(ngModel)]="showNames"><span [translate]="'sequential.toggle'">إظهار قائمة الأسماء</span>
         </mat-slide-toggle>
     </div>
 

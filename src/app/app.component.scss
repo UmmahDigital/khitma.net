@@ -180,26 +180,23 @@ section > p {
   position: unset !important;
 }
 
-
-.mat-radio-label-content{
-  white-space: normal!important;
+.mat-radio-label-content {
+  white-space: normal !important;
 }
 
-hr{
+hr {
   border: none;
   border-top: 1px solid lightgray;
   margin: 16px 16px;
 }
 
-
-.mat-badge-accent .mat-badge-content{
+.mat-badge-accent .mat-badge-content {
   background-color: #f02849;
   font-size: 75%;
 }
 
-
-.mat-button-toggle-checked{
+.mat-button-toggle-checked {
   background-color: $primary-color;
-  color: white!important;
+  color: white !important;
   font-weight: bold;
 }

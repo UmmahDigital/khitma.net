@@ -6,14 +6,13 @@
 <section *ngIf="counters" class="big-number">
 
     <label class="main-counter number">{{counters.completed | number}}</label>
-    <span>صفحة تمّت تلاوتها في ختمة المسجد الأقصى المبارك</span>
-
+    <span [translate]="'aqsa.pagesDone'">صفحة تمّت تلاوتها في ختمة المسجد الأقصى المبارك</span>
 </section>
 
 
 <section *ngIf="!myPages; else hasPages">
 
-    <h2>كم صفحة تريد\ين تلاوتها؟</h2>
+    <h2 [translate]="'aqsa.howMuch'">كم صفحة تريد\ين تلاوتها؟</h2>
     <!-- <span>رجاء اختيار عدد الصفحات التي تريد\ين تلاوتها من أجل المسجد الأقصى المبارك</span> -->
 
 
@@ -29,7 +28,8 @@
 
     <button mat-raised-button class="action-btn block large" (click)="giveMePages(numOfPagesToggleGroup.value)">
 
-        أريد تلاوة {{numOfPagesToggleGroup.value}} صحفات
+        <span [translate]="'aqsa.want'">أريد تلاوة</span> {{numOfPagesToggleGroup.value}} <span
+            [translate]="'aqsa.num'">صحفات</span>
 
     </button>
 
@@ -42,7 +42,7 @@
     <mat-card>
 
         <div class="big-number">
-            <span>صفحاتك الحاليّة</span>
+            <span [translate]="'aqsa.currentPages'">صفحاتك الحاليّة</span>
             <label class="main-counter number" dir="ltr">{{myPages.from}} - {{myPages.to}}</label>
 
 
@@ -51,7 +51,8 @@
 
 
 
-        <button mat-raised-button class="action-btn block large" (click)="doneReadingMyPages()">
+        <button mat-raised-button class="action-btn block large" (click)="doneReadingMyPages()"
+            [translate]="'aqsa.finished'">
 
             أتممت تلاوة صفحاتي
 
@@ -67,7 +68,7 @@
 
 <hr />
 
-<p>
+<p [translate]="'aqsa.description'">
     بداية تطوير منصّة ختمة.نت كانت من المسجد الأقصى المبارك، حيث كتبت أولى أسطرها البرمجيّة فيه. واليوم يستمر
     تطوير
     المنصّة من أكناف القدس وبيت المقدس. وهنا نضع بين أيديكم ختمة جماعيّة عالميّة للمسجد الأقصى المبارك،

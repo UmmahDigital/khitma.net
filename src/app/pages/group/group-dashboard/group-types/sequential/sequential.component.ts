@@ -5,14 +5,15 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
-import { AlertService } from 'src/app/alert.service';
-import { StartNewKhitmaComponent } from 'src/app/dialog/start-new-khitma/start-new-khitma.component';
-import { GET_JUZ_READ_EXTERNAL_URL, Juz, JUZ_STATUS, KhitmaGroup, KhitmaGroup_Sequential, KHITMA_CYCLE_TYPE, NUM_OF_AJZA } from 'src/app/entities/entities';
-import { KhitmaGroupService } from 'src/app/khitma-group.service';
-import { LocalDatabaseService } from 'src/app/local-database.service';
-import { NativeApiService } from 'src/app/native-api.service';
-import { NativeShareService } from 'src/app/native-share.service';
-import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { AlertService } from '../../../../../alert.service';
+import { StartNewKhitmaComponent } from '../../../../../dialog/start-new-khitma/start-new-khitma.component';
+import { GET_JUZ_READ_EXTERNAL_URL, Juz, JUZ_STATUS, KhitmaGroup, KhitmaGroup_Sequential, KHITMA_CYCLE_TYPE, NUM_OF_AJZA } from '../../../../../entities/entities';
+import { KhitmaGroupService } from '../../../../../khitma-group.service';
+import { LocalDatabaseService } from '../../../../../local-database.service';
+import { NativeApiService } from '../../../../../native-api.service';
+import { NativeShareService } from '../../../../../native-share.service';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
+import { CommonService } from '../../../../../service/common.service';
 
 @Component({
   selector: 'app-group-sequential',
@@ -48,7 +49,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     private alert: AlertService,
     private nativeApi: NativeApiService,
     private nativeShare: NativeShareService,
-    private router: Router,) {
+    private router: Router, public common: CommonService) {
   }
 
 
@@ -95,9 +96,8 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
     if (juz.status == JUZ_STATUS.DONE) {
 
-      const dialogData = new ConfirmDialogModel(
-        "تأكيد إتاحة الجزء",
-        " ستتم ازالة اسم العضو الحالي من جزء" + (juz.index + 1) + " وإتاحته للإختيار.");
+      const dialogData = new ConfirmDialogModel(this.common.translation.sequential?.dialog,
+        this.common.translation.sequential?.remove + (juz.index + 1) + this.common.translation.sequential?.choice);
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         data: dialogData,
@@ -149,8 +149,8 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   juzDone(juzIndex) {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogModel("تأكيد إتمام الجزء",
-        "هل أتممت قراءة جزء " + (juzIndex + 1) + "؟"),
+      data: new ConfirmDialogModel(this.common.translation.sequential?.dialog2,
+        this.common.translation.sequential?.dialog2Q + (juzIndex + 1) + "؟"),
       maxWidth: "80%"
     });
 
@@ -218,7 +218,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   shareKhitmaCompletedDua() {
 
     const dua = "اللهم ارحمنى بالقرآن وأجعله لى إماما ونورا وهدى ورحمة اللهم ذكرنى منه مانسيت وعلمنى منه ماجهلت وارزقني تلاوته آناء الليل وأطراف النهار واجعله لي حجة يارب العالمين . اللهم أصلح لى دينى الذى هو عصمة أمري، وأصلح لي دنياي التي فيها معاشي، وأصلح لي آخرتي التي فيها معادي، وأجعل الحياة زيادة لي في كل خير وأجعل الموت راحة لي من كل شر . اللهم أجعل خير عمري آخره وخير عملي خواتمه وخير أيامي يوم ألقاك فيه . اللهم إني أسألك عيشة هنية وميتة سوية ومردا غير مخز ولا فاضح . اللهم إنى أسألك خير المسألة وخير الدعاء وخير النجاح وخير العلم وخير العمل وخير الثواب وخير الحياة وخير الممات وثبتنى وثقل موازيني وحقق إيماني وارفع درجتي وتقبل صلاتي واغفر خطيئاتي وأسألك العلا من الجنة . اللهم إني أسألك موجبات رحمتك وعزائم مغفرتك والسلامة من كل إثم والغنيمة من كل بر والفوز بالجنة والنجاة من النار . اللهم أحسن عاقبتنا في الأمور كلها، وأجرنا من خزي الدنيا وعذاب الآخرة . اللهم اقسم لنا من خشيتك ماتحول به بيننا وبين معصيتك ومن طاعتك ماتبلغنا بها جنتك ومن اليقين ماتهون به علينا مصائب الدنيا ومتعنا بأسماعنا وأبصارنا وقوتنا ماأحييتنا واجعله الوارث منا واجعل ثأرنا على من ظلمنا وانصرنا على من عادانا ولا تجعل مصيبتنا في ديننا ولا تجعل الدنيا أكبر همنا ولا مبلغ علمنا ولا تسلط علينا من لا يرحمنا . اللهم لا تدع لنا ذنبا إلا غفرته ولا هما إلا فرجته ولا دينا إلا قضيته ولا حاجة من حوائج الدنيا والآخرة إلا قضيتها يا أرحم الراحمين. ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار وصلى الله على سيدنا ونبينا محمد وعلى آله وأصحابه الأخيار وسلم تسليما كثيرا.";
-    this.nativeApi.share((this.group.title + " - تمّت الختمة بفضل الله"), dua, null);
+    this.nativeApi.share((this.group.title + this.common.translation.sequential?.done), dua, null);
 
     // fetch(location.origin + '/assets/dua.png')
     //   .then(function (response) {

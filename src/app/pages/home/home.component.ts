@@ -2,11 +2,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KhitmaGroup, KhitmaGroup_Sequential, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
-import { GlobalCountersService } from 'src/app/global-counters.service';
-import { LocalDatabaseService } from 'src/app/local-database.service';
-import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { KhitmaGroup, KhitmaGroup_Sequential, KHITMA_GROUP_TYPE } from '../../entities/entities';
+import { GlobalCountersService } from '../../global-counters.service';
+import { LocalDatabaseService } from '../../local-database.service';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
+import { CommonService } from '../../service/common.service';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
-    private $gaService: GoogleAnalyticsService, private globalCounters: GlobalCountersService) { }
+    private $gaService: GoogleAnalyticsService, private globalCounters: GlobalCountersService, public common: CommonService) { }
 
   ngOnInit(): void {
 
@@ -80,9 +81,9 @@ export class HomeComponent implements OnInit {
   archiveGroup(group: KhitmaGroup) {
 
 
-    const dialogData = new ConfirmDialogModel(
-      "تأكيد أرشفة المجموعة",
-      'أرشفة مجموعة: "' + group.title + '"؟'
+    const dialogData = new ConfirmDialogModel(this.common.translation.home?.archiveConfirm
+      , this.common.translation.home?.archiveGroup
+      + group.title + '"؟'
     );
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

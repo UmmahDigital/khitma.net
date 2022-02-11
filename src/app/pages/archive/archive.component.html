@@ -1,4 +1,5 @@
-<div *ngIf=" !archivedGroups  || archivedGroups.length == 0 "> لا توجد لديك مجموعات في الأرشيف</div>
+<div *ngIf=" !archivedGroups  || archivedGroups.length == 0 " [translate]="'archive.no'"> لا توجد لديك مجموعات في
+    الأرشيف</div>
 
 <div *ngIf="archivedGroups.length > 0" class="group-archive-list">
 
@@ -27,7 +28,8 @@
 
     </section>
 
-    <button mat-button class="block" style="margin-top:20px;" (click)="clearArchive()">تنظيف الأرشيف</button>
+    <button mat-button class="block" style="margin-top:20px;" (click)="clearArchive()"
+        [translate]="'archive.clean'">تنظيف الأرشيف</button>
 
 
 </div>

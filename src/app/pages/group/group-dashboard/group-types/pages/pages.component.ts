@@ -4,10 +4,11 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
-import { AlertService } from 'src/app/alert.service';
-import { GroupMember, KhitmaGroup_Pages, NUM_OF_PAGES } from 'src/app/entities/entities';
-import { KhitmaGroupService } from 'src/app/khitma-group.service';
-import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { AlertService } from '../../../../../alert.service';
+import { GroupMember, KhitmaGroup_Pages, NUM_OF_PAGES } from '../../../../../entities/entities';
+import { KhitmaGroupService } from '../../../../../khitma-group.service';
+import { CommonService } from '../../../../../service/common.service';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-group-pages',
@@ -35,7 +36,7 @@ export class Group_Pages_Component implements OnInit {
   constructor(private groupsApi: KhitmaGroupService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
-    private alert: AlertService) { }
+    private alert: AlertService, public common: CommonService) { }
 
 
   ngOnInit(): void {
@@ -81,7 +82,7 @@ export class Group_Pages_Component implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
-        "تأكيد حذف عضو المجموعة",
+        this.common.translation.gPages?.confirm,
         ""),
       maxWidth: "80%"
     });
@@ -90,7 +91,7 @@ export class Group_Pages_Component implements OnInit {
 
       if (dialogResult) {
         this.groupsApi.removeGroupMember(this.group.id, member.name);
-        this.alert.show("تمّ حذف  " + member.name + "  بنجاح", 2500);
+        this.alert.show(this.common.translation.gPages?.deleted + member.name + this.common.translation.gPages?.success, 2500);
       }
 
     });
@@ -101,7 +102,7 @@ export class Group_Pages_Component implements OnInit {
   addGroupMember(member: GroupMember) {
     this.groupsApi.addGroupMember(this.group.id, member.name);
 
-    this.alert.show("تمّ إضافة  " + member.name + "  بنجاح", 2500);
+    this.alert.show(this.common.translation.gPages?.add + member.name + this.common.translation.gPages?.success, 2500);
 
   }
 
@@ -115,7 +116,7 @@ export class Group_Pages_Component implements OnInit {
 
     this.groupsApi.updatePagesAndStart(this.group.id, this.group.getMembersObj());
 
-    this.alert.show("تمّ بدء الختمة وتوزيع الصفحات على الأعضاء.", 5000);
+    this.alert.show(this.common.translation.gPages?.started, 5000);
 
 
   }
@@ -123,7 +124,7 @@ export class Group_Pages_Component implements OnInit {
   restart() {
     this.start();
 
-    this.alert.show("تمّ بدء  إعادة توزيع الصفحات على الأعضاء.", 5000);
+    this.alert.show(this.common.translation.gPages?.restart, 5000);
 
   }
 

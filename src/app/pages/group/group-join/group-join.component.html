@@ -4,11 +4,11 @@
     <mat-card-content>
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>اسمك</mat-label>
+            <mat-label [translate]="'gJoin.name'">اسمك</mat-label>
             <input matInput [(ngModel)]="username" name="title" required="true">
         </mat-form-field>
 
-        <button class="block large action-btn" mat-raised-button (click)="join()" [disabled]="!username">الإنضمام
-            للختمة</button>
+        <button class="block large action-btn" mat-raised-button (click)="join()" [disabled]="!username"
+            [translate]="'gJoin.join'">الإنضمام للختمة</button>
     </mat-card-content>
 </mat-card>

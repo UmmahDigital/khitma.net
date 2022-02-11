@@ -5,8 +5,8 @@
 
     <section>
         <header>
+            <span [translate]="'gKhitma.header'">ختمة المسجد الأقصى الرمضانيّة</span>
 
-            ختمة المسجد الأقصى الرمضانيّة
             <br />
             <!-- <small> (ختمة عالميّة)</small> -->
         </header>
@@ -28,33 +28,33 @@
     <!-- <section *ngIf="dayInRamadan>0; else ramadanNotStartedYet"> -->
     <header id="ramadan-day">
 
-        {{dayInRamadan}} رمضان
+        {{dayInRamadan}} <span [translate]="'gKhitma.ramadan'">رمضان</span>
     </header>
 
 
     <section id="done-ajza-counter">
         <label class="number">{{totalAjzaCounter}}</label>
-        <span class="text"> أجزاء تمّت تلاوتها عالميّا</span>
+        <span class="text" [translate]="'gKhitma.world'"> أجزاء تمّت تلاوتها عالميّا</span>
     </section>
 
     <!-- <app-khitma-progress [current]="5" [target]="10"></app-khitma-progress> -->
 
 
-    <p>
+    <p [translate]="'gKhitma.worldDesc'">
 
         في ما يلي ختمتك الشخصيّة لشهر رمضان المبارك. عندما تقوم بإتمام أحد الأجزاء فإنّ ذلك يضاف مباشرة لعدّاد الأجزاء
         في الختمة العالميّة. في ميزان حسناتكم إن شاء الله
     </p>
 
 
-    <app-todo *ngFor="let juz of ajza;" class="juz dark" [text]="'جزء ' + (juz.index+1)"
+    <app-todo *ngFor="let juz of ajza;" class="juz dark" [text]="common.translation.gKhitma?.part +' ' + (juz.index+1)"
         (onToggled)="submitJuz(juz.index, $event)" [isDone]="myAjzaStatuses[juz.index]"
         [class.today]="(juz.index+1) === dayInRamadan">
 
         <div content>
 
 
-            جزء {{juz.index+1}}
+            <span [translate]="'gKhitma.part'">جزء</span> {{juz.index+1}}
 
 
         </div>
@@ -63,12 +63,12 @@
 
 
     <button id="reset-khitma-btn" mat-stroked-button (click)="resetKhitma()">
-        <span>هل أتممت الختمة؟</span>
+        <span [translate]="'gKhitma.done'">هل أتممت الختمة؟</span>
     </button>
 
 
     <ng-template #ramadanNotStartedYet>
-        <label>نبدأ ختمتنا مع أوّل أيّام رمضان إن شاء الله</label>
+        <label [translate]="'gKhitma.day'">نبدأ ختمتنا مع أوّل أيّام رمضان إن شاء الله</label>
     </ng-template>
 
 

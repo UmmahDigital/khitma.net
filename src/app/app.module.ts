@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 
@@ -71,6 +71,8 @@ import { KhitmaPagesProgressComponent } from './shared/khitma-pages-progress/khi
 import { LoadingComponent } from './shared/loading/loading.component';
 import { NotificationComponent } from './shared/notification/notification.component';
 import { AqsaKhitmaComponent } from './pages/aqsa-khitma/aqsa-khitma.component';
+import { TranslateDirective } from './directives/translate.directive';
+import { CommonService } from './service/common.service';
 
 
 
@@ -150,11 +152,13 @@ const routes: Routes = [
     KhitmaPagesProgressComponent,
     LoadingComponent,
     NotificationComponent,
-    AqsaKhitmaComponent
+    AqsaKhitmaComponent,
+    TranslateDirective
   ],
   imports: [
     CommonModule,
     BrowserModule,
+    HttpClientModule,
     ClipboardModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'always', scrollPositionRestoration: 'enabled' }),
@@ -166,7 +170,7 @@ const routes: Routes = [
     AngularFireStorageModule, // storage,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [GroupJoinedGuard, KhitmaGroupService],
+  providers: [GroupJoinedGuard, KhitmaGroupService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

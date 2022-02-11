@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { Juz, JUZ_STATUS } from 'src/app/entities/entities';
+import { Juz, JUZ_STATUS } from '../../entities/entities';
+import { CommonService } from '../../service/common.service';
 
 @Component({
   selector: 'app-juz',
@@ -22,7 +23,7 @@ export class JuzComponent implements OnInit {
 
   updatedOwner: string;
 
-  constructor() {
+  constructor(public common: CommonService) {
   }
 
   ngOnInit(): void {
@@ -41,7 +42,7 @@ export class JuzComponent implements OnInit {
       _cssClasses += " edit-mode";
     }
 
-    this.msg = "لم تتم قراءته بعد..";
+    this.msg = this.common.translation.juz?.notRead;
 
     if (this.isMyJuz) {
       _cssClasses += " my-juz";
@@ -49,7 +50,7 @@ export class JuzComponent implements OnInit {
 
     if (this.juz.status == JUZ_STATUS.IDLE) {
       _cssClasses += " mat-elevation-z2"; // add elevation --> clickable
-      this.msg = "إضغط لاختيار هذا الجزء";
+      this.msg = this.common.translation.juz?.select;
     }
 
     this.cssClasses = _cssClasses;

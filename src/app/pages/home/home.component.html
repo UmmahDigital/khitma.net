@@ -17,9 +17,11 @@
 
     </section>
 
-    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive">أرشيف الختمات</a>
+    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive"><span
+            [translate]="'home.archive'">أرشيف
+            الختمات</span></a>
 
-    <p>
+    <p [translate]="'home.intro'">
         ختمة.نت هو تطبيق انطلق من رحاب المسجد الأقصى المبارك ليتيح قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق
         إنشاء مجموعات لختم القرآن وتوزيع أجزاء
         المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.
@@ -30,29 +32,29 @@
 
     <section id="ayat-count">
 
-        <span> ما يعدل</span>
+        <span [translate]="'home.equal'"> ما يعدل</span>
         <label class="main-counter number" *ngIf="ayatCount">{{ayatCount | number}}</label>
 
 
-        <span>آية تمّ تلاوتها من قبل أعضاء مجموعات ختمة.نت</span>
+        <span [translate]="'home.ayat'">آية تمّ تلاوتها من قبل أعضاء مجموعات ختمة.نت</span>
 
         <br />
 
 
         <a gaEvent="recurring_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
-            class="block large action-btn" routerLink="/new" [queryParams]="{type: 'recurring'}">إنشاء مجموعة ختمة
-            دوريّة</a>
+            class="block large action-btn" routerLink="/new" [queryParams]="{type: 'recurring'}"><span
+                [translate]="'home.creatA'">إنشاء مجموعة ختمة دوريّة</span></a>
 
         <a gaEvent="onetime_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
             class="block large action-btn" routerLink="/new" [queryParams]="{type: 'onetime'}"
-            style="background-color: #16769a!important;">بدء ختمة جماعيّة لمرّة
-            واحدة
+            style="background-color: #16769a!important;"><span [translate]="'home.createB'">بدء ختمة جماعيّة لمرّة
+                واحدة</span>
         </a>
 
 
         <a routerLink="/aqsa" gaEvent="aqsa_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button
-            color="accent" class="block large action-btn" id="aqsa-khitma-btn">ختمة
-            المسجد الأقصى العالميّة</a>
+            color="accent" class="block large action-btn" id="aqsa-khitma-btn"><span [translate]="'home.aqsa'">ختمة
+                المسجد الأقصى العالميّة</span></a>
 
 
     </section>
@@ -60,7 +62,7 @@
     <br />
 
 
-    <span> كونوا جزءا من الأجر العظيم إن شاء الله — أنشؤوا مجموعتكم الآن ولا تنسونا من
+    <span [translate]="'home.duaa'"> كونوا جزءا من الأجر العظيم إن شاء الله — أنشؤوا مجموعتكم الآن ولا تنسونا من
         صالح دعائكم.
     </span>
 
@@ -69,17 +71,18 @@
 
     <small class="secondary-counter">
 
+        <span [translate]="'home.maybe'">ومن يدري، فلعلّنا نتشارك في</span>
 
-        ومن يدري، فلعلّنا نتشارك في
 
         <strong class="counter-color">
-            <span class="mono-font number">{{(hasanatCount/1000000000) | number: '1.0-0'}}</span> مليار
+            <span class="mono-font number">{{(hasanatCount/1000000000) | number: '1.0-0'}}</span> <span
+                [translate]="'home.bilion'">مليار</span>
         </strong>
+        <span [translate]="'home.more'">حسنة أو يزيد.
 
-        حسنة أو يزيد.
+            فـ "من قرأ حرفا من كتاب الله فله حسنة والحسنة بعشر أمثالها"، والله
+            يضاعف لمن يشاء.</span>
 
-        فـ "من قرأ حرفا من كتاب الله فله حسنة والحسنة بعشر أمثالها"، والله
-        يضاعف لمن يشاء.
     </small>
 
 
@@ -119,16 +122,17 @@
     <mat-card>
 
 
-        <h2>تطبيقات صديقة</h2>
-        <p>
+        <h2 [translate]="'home.apps'">تطبيقات صديقة</h2>
+        <p [translate]="'home.appsDesc'">
             أوراد هي منصّة تقنيّة تتيح تنفيذ الأوراد الإسلاميّة بشكل جماعي، وذلك عن طريق إنشاء مجموعات للأوراد
             المشتركة (لأصدقائك أو عائلتك مثلا) ثمّ مشاركة الأوراد ومتابعة تنفيذها من قبل أعضاء المجموعة بشكل سلس
             ومتاح لجميع أعضاء المجموعة.
         </p>
 
         <a gaEvent="awrad_btn_clicked" gaCategory="home_page_buttons" mat-raised-button color="accent"
-            class="block large action-btn" target="_blank" href="https://awrad.app" id="awrad-btn">منصّة أوراد -
-            الإصدار التجريبي</a>
+            class="block large action-btn" target="_blank" href="https://awrad.app" id="awrad-btn"><span
+                [translate]="'home.awrad'">منصّة أوراد -
+                الإصدار التجريبي</span></a>
 
     </mat-card>
 

@@ -1,7 +1,7 @@
 <section *ngIf="group.isStarted && myMember?.pagesTask?.start == null">
     <div class="user-msg">
 
-        <label> تمّ توزيع الصفحات في هذه الختمة.
+        <label [translate]="'gPages.header'"> تمّ توزيع الصفحات في هذه الختمة.
             يمكنك التوجّه لمسؤول\ة المجموعة وطلب توزيع الصفحات من جديد. يمكنك أيضا قراءة أيّ عدد من الصفحات بدون
             تسجيلها، فكلّ تلاوة لك مسجّلة في صحيفة أعمالك الصالحة ولك الأجر عليها إن شاء الله :)
         </label>
@@ -18,7 +18,7 @@
         <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)" class="task">
             <div content>
 
-                صفحة
+                <span [translate]="'gPages.page'">صفحة</span>
                 <span dir="ltr">
                     <span class="page-num">{{myMember.pagesTask.start +1 | number:'3.0'}}</span>
                     -
@@ -40,8 +40,7 @@
 
     <div class="user-msg">
 
-        <label> بانتظار مسؤول المجموعة لتوزيع الصفحات
-        </label>
+        <label [translate]="'gPages.pending'"> بانتظار مسؤول المجموعة لتوزيع الصفحات</label>
 
         <!-- <mat-spinner></mat-spinner> -->
 
@@ -57,17 +56,18 @@
 
 <section *ngIf="showGroupMembers">
 
-    <header>
-        أعضاء المجموعة ({{group.members.length}})
+    <header><span [translate]="'gPages.members'">أعضاء المجموعة</span>
+        ({{group.members.length}})
     </header>
 
     <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
 
         <div class="tip">
-            <strong>لمسؤول المجموعة:</strong>
+            <strong [translate]="'gPages.responsible'">لمسؤول المجموعة:</strong>
+            <span [translate]="'gPages.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
+                ويمكنك تعديل الأعضاء عن طريق الضغط
+                على كبسة التعديل أدناه.</span>
 
-            يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
-            على كبسة التعديل أدناه.
         </div>
 
         <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"

@@ -6,7 +6,8 @@
         <div content> {{group.task}} </div>
     </app-todo>
 
-    <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
+    <span *ngIf="this.group.targetDate" class="task-target-date"><span [translate]="'sametask.date'">موعد
+            التسليم:</span> {{this.group.targetDate}}.</span>
 
 
 </section>
@@ -18,17 +19,18 @@
 <section *ngIf="showGroupMembers">
 
 
-    <header>
-        أعضاء المجموعة ({{group.members.length}})
+    <header><span [translate]="'sametask.members'">أعضاء المجموعة</span>
+        ({{group.members.length}})
     </header>
 
     <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
 
         <div class="tip">
-            <strong>لمسؤول المجموعة:</strong>
+            <strong [translate]="'sametask.responsible'">لمسؤول المجموعة:</strong>
+            <span [translate]="'sametask.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
+                ويمكنك تعديل الأعضاء عن طريق الضغط
+                على كبسة التعديل أدناه.</span>
 
-            يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
-            على كبسة التعديل أدناه.
         </div>
 
         <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
@@ -55,5 +57,6 @@
 
 <section class="center-center big-counter" *ngIf="group.cycle > 0">
     <label class="number">{{totalDoneTasks}}</label>
-    <span class="text">أعمال طيّبة قمتم بها في هذه المجموعة منذ تأسيسها. في ميزان حسناتكم إن شاء الله!</span>
+    <span class="text" [translate]="'sametask.bless'">أعمال طيّبة قمتم بها في هذه المجموعة منذ تأسيسها. في ميزان حسناتكم
+        إن شاء الله!</span>
 </section>

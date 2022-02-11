@@ -12,12 +12,12 @@
 
 
                 (
-                <span *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
+                <span *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" [translate]="'khitma.task'">
 
                     مهمّة
                 </span>
 
-                <span *ngIf="group.type != KHITMA_GROUP_TYPE.SAME_TASK">
+                <span *ngIf="group.type != KHITMA_GROUP_TYPE.SAME_TASK" [translate]="'khitma.khitma'">
 
                     ختمة
                 </span>
@@ -39,7 +39,7 @@
 
 
     <div *ngIf="isExpanded">
-        <label class="author"> مُنشئ المجموعة: {{group.author}} </label>
+        <label class="author"><span [translate]="'khitma.creator'">مُنشئ المجموعة:</span> {{group.author}} </label>
 
         <p class="description">
             {{group.description}}

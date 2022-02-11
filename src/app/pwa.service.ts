@@ -3,6 +3,7 @@ import { SwUpdate } from '@angular/service-worker';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { CommonService } from './service/common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PwaService {
 
   promptEvent;
 
-  constructor(private swUpdate: SwUpdate, private dialog: MatDialog) {
+  constructor(private swUpdate: SwUpdate, private dialog: MatDialog, private common: CommonService) {
 
     window.addEventListener('beforeinstallprompt', event => {
       this.promptEvent = event;
@@ -20,8 +21,8 @@ export class PwaService {
 
     swUpdate.available.subscribe(event => {
 
-      const dialogData = new ConfirmDialogModel("تحديث البرنامج",
-        "هناك نسخة جديدة من الموقع، هل تريد استخدامها الآن. التحديث لا يؤثّر على مجموعاتك أو أجزائك.   ");
+      const dialogData = new ConfirmDialogModel(this.common.translation.dialog?.update, this.common.translation.dialog?.updateDesc
+      );
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         data: dialogData,

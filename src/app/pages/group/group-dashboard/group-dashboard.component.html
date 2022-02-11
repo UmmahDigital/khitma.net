@@ -1,144 +1,136 @@
-<div *ngIf="group" style="position: relative;">
+<header class="dashboard-header" style="position: relative;">
 
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="group-options-menu-button" *ngIf="!isAdmin">
+        <mat-icon>settings</mat-icon>
+    </button>
 
+    <mat-menu #menu="matMenu">
 
-    <header class="dashboard-header" style="position: relative;">
+        <button mat-menu-item (click)="shareInviteMsg()">
+            <mat-icon>link</mat-icon><span [translate]="'gDashboard.shareLink'">مشاركة رابط المجموعة</span>
 
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="group-options-menu-button" *ngIf="!isAdmin">
-            <mat-icon>settings</mat-icon>
         </button>
 
-        <mat-menu #menu="matMenu">
 
-            <button mat-menu-item (click)="shareInviteMsg()">
-                <mat-icon>link</mat-icon>
-                مشاركة رابط المجموعة
+        <button *ngIf="!isAdmin" mat-menu-item (click)="leaveGroup()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span [translate]="'gDashboard.leave'">ترك المجموعة</span>
+        </button>
+
+    </mat-menu>
+
+    <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
+
+</header>
+
+<section *ngIf="isAdmin" class="admin-tools">
+    <mat-expansion-panel [expanded]="adminPanelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>verified</mat-icon>
+                <span [translate]="'gDashboard.tools'">
+                    أدوات مسؤول المجموعة
+                </span>
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+
+
+
+        <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION">
+
+            <button *ngIf="!group.isStarted" mat-flat-button
+                (click)="pagesGroupChildComponent.start(); adminPanelOpen=false;">
+                <mat-icon>play_arrow</mat-icon>
+                <span [translate]="'gDashboard.start'">بدأ الختمة</span>
+            </button>
+
+            <button *ngIf="group.isStarted" mat-flat-button
+                (click)="pagesGroupChildComponent.restart(); adminPanelOpen=false;">
+                <mat-icon>restart_alt</mat-icon>
+                <span [translate]="'gDashboard.distribute'">توزيع الصفحات من جديد</span>
+            </button>
+
+        </ng-container>
+
+
+
+        <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
+
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
+                <mat-icon>sports_score</mat-icon>
+                <span [translate]="'gDashboard.task'">مهمّة جديدة</span>
+            </button>
+
+        </ng-container>
+
+
+
+
+
+
+
+
+
+        <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
+            <mat-icon>format_list_numbered_rtl</mat-icon>
+            <span [translate]="'gDashboard.shareStatus'">مشاركة وضع الختمة</span>
+        </button>
+
+
+        <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.SEQUENTIAL">
+
+            <button mat-flat-button (click)="sequentialGroupChildComponent.startNewKhitmah(); adminPanelOpen=false;">
+                <mat-icon>refresh</mat-icon>
+                <span [translate]="'gDashboard.new'">ختمة
+                    جديدة للمجموعة</span>
             </button>
 
 
-            <button *ngIf="!isAdmin" mat-menu-item (click)="leaveGroup()">
-                <mat-icon>exit_to_app</mat-icon>
-                <span>ترك المجموعة</span>
-            </button>
-
-        </mat-menu>
-
-        <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
-
-    </header>
-
-    <section *ngIf="isAdmin" class="admin-tools">
-        <mat-expansion-panel [expanded]="adminPanelOpen">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <mat-icon>verified</mat-icon>
-                    <span>
-                        أدوات مسؤول المجموعة
-                    </span>
-                </mat-panel-title>
-
-            </mat-expansion-panel-header>
+        </ng-container>
 
 
 
-            <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION">
-
-                <button *ngIf="!group.isStarted" mat-flat-button
-                    (click)="pagesGroupChildComponent.start(); adminPanelOpen=false;">
-                    <mat-icon>play_arrow</mat-icon>
-                    <span>بدأ الختمة</span>
-                </button>
-
-                <button *ngIf="group.isStarted" mat-flat-button
-                    (click)="pagesGroupChildComponent.restart(); adminPanelOpen=false;">
-                    <mat-icon>restart_alt</mat-icon>
-                    <span>توزيع الصفحات من جديد</span>
-                </button>
-
-            </ng-container>
+        <button mat-flat-button (click)="showEditGroupDialog(); adminPanelOpen=false;">
+            <mat-icon>edit</mat-icon>
+            <span [translate]="'gDashboard.update'">تعديل تفاصيل الختمة</span>
+        </button>
 
 
+        <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;">
+            <mat-icon>link</mat-icon><span [translate]="'gDashboard.new'">مشاركة رابط المجموعة</span>
 
-            <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK">
+        </button>
 
-                <button mat-flat-button
-                    (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
-                    <mat-icon>sports_score</mat-icon>
-                    <span>مهمّة جديدة</span>
-                </button>
 
-            </ng-container>
+    </mat-expansion-panel>
+</section>
+
+
+<section class="block user-msg">
+
+    <span> <strong><b [translate]="'gDashboard.hi'">السلام عليكم يا</b> {{username}}</strong>، </span>
+
+</section>
 
 
 
+<section *ngIf="group" class="group-container">
+
+    <app-group-sequential *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)" [group]="group"
+        [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
+    </app-group-sequential>
+
+    <app-group-sametask *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" [group]="group" [userWatch$]="userWatch$"
+        [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
+    </app-group-sametask>
+
+    <app-group-pages *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION" [group]="group"
+        [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
+    </app-group-pages>
+
+</section>
 
 
 
-
-
-
-            <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
-                <mat-icon>format_list_numbered_rtl</mat-icon>
-                <span>مشاركة وضع الختمة</span>
-            </button>
-
-
-            <ng-container *ngIf="group.type === KHITMA_GROUP_TYPE.SEQUENTIAL">
-
-                <button mat-flat-button
-                    (click)="sequentialGroupChildComponent.startNewKhitmah(); adminPanelOpen=false;">
-                    <mat-icon>refresh</mat-icon>
-                    <span>ختمة
-                        جديدة للمجموعة</span>
-                </button>
-
-
-            </ng-container>
-
-
-
-            <button mat-flat-button (click)="showEditGroupDialog(); adminPanelOpen=false;">
-                <mat-icon>edit</mat-icon>
-                <span>تعديل تفاصيل الختمة</span>
-            </button>
-
-
-            <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;">
-                <mat-icon>link</mat-icon>
-                مشاركة رابط المجموعة
-            </button>
-
-
-        </mat-expansion-panel>
-    </section>
-
-
-    <section class="block user-msg">
-
-        <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
-
-    </section>
-
-
-
-    <section *ngIf="group" class="group-container">
-
-        <app-group-sequential *ngIf="!group.type || (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL)" [group]="group"
-            [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
-        </app-group-sequential>
-
-        <app-group-sametask *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" [group]="group" [userWatch$]="userWatch$"
-            [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
-        </app-group-sametask>
-
-        <app-group-pages *ngIf="group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION" [group]="group"
-            [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
-        </app-group-pages>
-
-    </section>
-
-
-
-    <div class="spacer"></div>
-
-</div>
+<div class="spacer"></div>

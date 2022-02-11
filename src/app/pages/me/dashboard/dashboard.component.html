@@ -20,11 +20,11 @@
     </div>
 
 
-    <ng-template #noGroups>
-        لا توجد لديك أي مجموعات حاليّا
+    <ng-template #noGroups><span [translate]="'me.no'"></span>
     </ng-template>
 
 
-    <a *ngIf="isShowArchive" mat-button class="block" routerLink="/me/groups/archive">أرشيف الختمات</a>
+    <a *ngIf="isShowArchive" mat-button class="block" routerLink="/me/groups/archive"><span
+            [translate]="'me.archive'">أرشيف الختمات</span></a>
 
 </section>

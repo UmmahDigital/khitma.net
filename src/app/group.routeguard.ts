@@ -4,11 +4,12 @@ import { Observable } from "rxjs";
 import { AlertService } from "./alert.service";
 import { KhitmaGroupService } from "./khitma-group.service";
 import { LocalDatabaseService } from "./local-database.service";
+import { CommonService } from "./service/common.service";
 
 @Injectable()
 export class GroupJoinedGuard implements CanActivate {
     constructor(
-        private localDB: LocalDatabaseService, private router: Router, private groupsApi: KhitmaGroupService, private alert: AlertService) { }
+        private localDB: LocalDatabaseService, private router: Router, private groupsApi: KhitmaGroupService, private alert: AlertService, private common: CommonService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
         Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -19,7 +20,7 @@ export class GroupJoinedGuard implements CanActivate {
         this.groupsApi.setCurrentGroup(groupId).subscribe((group) => {
 
             if (!this.groupsApi.isValidGroup(group)) {
-                this.alert.show("لم يتم العثور على الختمة المطلوبة.");
+                this.alert.show(this.common.translation.khitma?.notFound);
                 this.router.navigate(['/']);
                 return;
             }

@@ -1,7 +1,7 @@
 <section>
     <header>
 
-        {{isRecurring ? "مجموعة ختمة دوريّة" : "ختمة جماعيّة لمرّة واحدة"}}
+        {{isRecurring ?common.translation.recurringYes : common.translation.recurringNo}}
 
 
     </header>
@@ -12,13 +12,13 @@
 
             <mat-button-toggle [value]="true">
                 <label class="center-center">
-                    <mat-icon>loop</mat-icon> <span>ختمة دوريّة</span>
+                    <mat-icon>loop</mat-icon> <span [translate]="'gCreate.loop'">ختمة دوريّة</span>
                 </label>
             </mat-button-toggle>
 
             <mat-button-toggle [value]="false">
                 <label class="center-center">
-                    <mat-icon>looks_one</mat-icon> <span> ختمة لمرّة واحدة</span>
+                    <mat-icon>looks_one</mat-icon> <span [translate]="'gCreate.one'"> ختمة لمرّة واحدة</span>
                 </label>
             </mat-button-toggle>
 
@@ -27,7 +27,8 @@
 
     </div>
 
-    <p *ngIf="isRecurring"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
+    <p *ngIf="isRecurring" [translate]="'gCreate.recurringYesDesc'"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري،
+        حتّى لو كان ذلك بوتيرة
         غير
         ثابتة.
 
@@ -36,7 +37,7 @@
         إن شاء الله.
     </p>
 
-    <p *ngIf="!isRecurring">
+    <p *ngIf="!isRecurring" [translate]="'gCreate.recurringNoDesc'">
         مناسب للختمات العائليّة عن
         أرواح
         الموتى (رحمهم الله) أو في بيوت العزاء أو ختمات خلال المناسبات والنشاطات المختلفة. </p>
@@ -45,21 +46,21 @@
 
     <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
 
-        <h2>تفاصيل الختمة</h2>
+        <h2 [translate]="'gCreate.details'">تفاصيل الختمة</h2>
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>عنوان الختمة</mat-label>
+            <mat-label [translate]="'gCreate.title'">عنوان الختمة</mat-label>
             <input matInput [(ngModel)]="title" name="title" required="true" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>اسمك (مسؤول الختمة)</mat-label>
+            <mat-label [translate]="'gCreate.name'">اسمك (مسؤول الختمة)</mat-label>
             <input matInput [(ngModel)]="author" name="author" required="true" autocomplete="off">
         </mat-form-field>
 
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>نص إضافي (اختياري)</mat-label>
+            <mat-label [translate]="'gCreate.more'">نص إضافي (اختياري)</mat-label>
             <textarea rows="4" matInput [(ngModel)]="description" name="description"></textarea>
         </mat-form-field>
 
@@ -67,20 +68,20 @@
 
         <section *ngIf="isRecurring">
 
-            <h2>نوع الختمة الدوريّة</h2>
+            <h2 [translate]="'gCreate.recurringType'">نوع الختمة الدوريّة</h2>
             <div class="center-center multi-choice">
 
                 <mat-button-toggle-group [(ngModel)]="groupType" name="groupType">
 
                     <mat-button-toggle [value]="KHITMA_GROUP_TYPE.SAME_TASK">
                         <label class="center-center">
-                            <mat-icon>layers</mat-icon> <span>نفس المهمّة</span>
+                            <mat-icon>layers</mat-icon> <span [translate]="'gCreate.same'">نفس المهمّة</span>
                         </label>
                     </mat-button-toggle>
 
                     <mat-button-toggle [value]="KHITMA_GROUP_TYPE.SEQUENTIAL">
                         <label class="center-center">
-                            <mat-icon>linear_scale</mat-icon> <span>أجزاء متتابعة</span>
+                            <mat-icon>linear_scale</mat-icon> <span [translate]="'gCreate.parts'">أجزاء متتابعة</span>
                         </label>
                     </mat-button-toggle>
 
@@ -90,7 +91,7 @@
             </div>
 
 
-            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SAME_TASK">
+            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SAME_TASK" [translate]="'gCreate.sameDesc'">
 
                 جميع الأعضاء يتشاركون في نفس المهمّة خلال فترة محدّدة. مثلا: جميع الأعضاء يقرؤون الجزء الأوّل في اليوم
                 الأوّل
@@ -101,7 +102,7 @@
                 اليوم الخ..
             </p>
 
-            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SEQUENTIAL">
+            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SEQUENTIAL" [translate]="'gCreate.notSameDesc'">
 
                 في هذه الختمة يقوم كل عضو في المجموعة بتلاوة أحد الأجزاء بحيث أنّ المجموعة مكتملة تتم ختمة كاملة،
                 لإهدائها
@@ -112,9 +113,9 @@
 
 
             <mat-form-field appearance="fill" class="block" *ngIf="groupType === KHITMA_GROUP_TYPE.SAME_TASK">
-                <mat-label>المهمّة الأولى</mat-label>
+                <mat-label [translate]="'gCreate.mission'">المهمّة الأولى</mat-label>
                 <input matInput [(ngModel)]="firstTask" name="firstTask" required="true" autocomplete="off"
-                    placeholder="مثلا: الجزء الأوّل، أو صفحة 1-10">
+                    [placeholder]="common.translation.gCreate?.placeholder">
             </mat-form-field>
 
 
@@ -130,13 +131,13 @@
 
                     <mat-button-toggle [value]="KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION">
                         <label class="center-center">
-                            <mat-icon>layers</mat-icon> <span>توزيع صفحات</span>
+                            <mat-icon>layers</mat-icon> <span [translate]="'gCreate.pages'">توزيع صفحات</span>
                         </label>
                     </mat-button-toggle>
 
                     <mat-button-toggle [value]="KHITMA_GROUP_TYPE.SEQUENTIAL">
                         <label class="center-center">
-                            <mat-icon>linear_scale</mat-icon> <span>توزيع أجزاء</span>
+                            <mat-icon>linear_scale</mat-icon> <span [translate]="'gCreate.partsB'">توزيع أجزاء</span>
                         </label>
                     </mat-button-toggle>
 
@@ -146,7 +147,7 @@
             </div>
 
 
-            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION">
+            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION" [translate]="'gCreate.distr'">
 
                 يقوم الأعضاء بالإنضمام للمجموعة وبعد ذلك يمكنك بدء الختمة ليقوم التطبيق بتوزيع صفحات المصحف بشكل متساوٍ
                 على جميع الأعضاء. هذا النوع من الختمة ملائم في الأساس للمجموعات الكبيرة، فمثلا إذا شارك 60 شخص فسيحصل
@@ -154,7 +155,7 @@
                 منهم على عشر صفحات تقريبا، أي ما يعادل نصف جزء.
             </p>
 
-            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SEQUENTIAL">
+            <p *ngIf="groupType  === KHITMA_GROUP_TYPE.SEQUENTIAL" [translate]="'gCreate.distrNo'">
 
                 في هذه الختمة يقوم كل عضو في المجموعة بتلاوة أحد الأجزاء بحيث أنّ المجموعة مكتملة تتم ختمة كاملة،
                 لإهدائها
@@ -170,7 +171,7 @@
             color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">
 
 
-            {{isRecurring ? "إنشاء مجموعة الختمة" : "إنشاء الختمة الجماعيّة"}}
+            {{isRecurring ? common.translation.gCreate?.createA :common.translation.gCreate?.createB }}
 
 
 

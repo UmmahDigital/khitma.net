@@ -3,8 +3,8 @@
         <div class="gift-top" [ngClass]="{'boxOpen': isOpen}"></div>
 
         <div class="gift-text" *ngIf="isOpen" [ngClass]="{'shown': isOpen}">
-            <h1> تمّت الختمة</h1>
-            <h1>بارك الله بك!</h1>
+            <h1 [translate]="'khitma.done'"> تمّت الختمة</h1>
+            <h1 [translate]="'khitma.bless'">بارك الله بك!</h1>
 
             <!-- <p>إن شاء الله يكتب لكل منكم  أجر </p> -->
             <!-- [todo]: add thawab link here? -->
