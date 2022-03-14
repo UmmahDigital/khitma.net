@@ -25,6 +25,7 @@ export class AppComponent {
   unreadNotification = null;
 
   showCelebration = false;
+  showLang = false;
 
   constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router,
     private notificationsService: NotificationsService,
@@ -86,6 +87,8 @@ export class AppComponent {
     this.notificationsService.showNotification(this.unreadNotification);
   }
 
-
+  changeLanguage(value) {
+    this.common.currentLanguage = value;
+  }
 
 }

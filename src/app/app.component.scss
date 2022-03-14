@@ -200,3 +200,26 @@ hr {
   color: white !important;
   font-weight: bold;
 }
+.lang-wrapper {
+  position: relative;
+  .lang-toggle {
+    margin: 0.5rem;
+  }
+  .lang-list {
+    position: absolute;
+    width: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #169a7b;
+    z-index: 10;
+    border-radius: 2px;
+    box-shadow: 3px 4px 5px #77d9c2;
+    .mat-list-item {
+      height: auto;
+      padding: 0 !important;
+    }
+    .mat-list-item-content {
+      padding: 0 0.5rem !important;
+    }
+  }
+}

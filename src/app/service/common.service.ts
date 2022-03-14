@@ -6,31 +6,49 @@ import { Injectable } from '@angular/core';
 })
 export class CommonService {
 
-  currentLanguage: string;
+
   translation: any = { loaded: false }
   missingTranslation: any = { loaded: true }
-
+  languages = [
+    { text: "العربية", value: "Ar" },
+    { text: "English", value: "En" }
+  ]
   constructor(private httpClient: HttpClient) {
     this.loadTranslationFile();
   }
 
 
+  get currentLanguage() {
+    let lng = window.localStorage.getItem('lng');
+    if (!lng) {
+      lng = 'ar';
+    }
+    return lng;
+  }
 
+  set currentLanguage(value) {
+    window.localStorage.setItem('lng', value.toLocaleLowerCase());
+    this.translation.loaded = false;
+    window.location.reload();
+  }
 
   loadTranslationFile() {
-    this.currentLanguage = window.localStorage.getItem('lng');
-    if (!this.currentLanguage) {
-      this.currentLanguage = 'ar';
-    }
+    const lng = this.currentLanguage;
     if (!this.translation.loaded) {
-      this.httpClient.get(`assets/translate/${this.currentLanguage}.json`, { responseType: 'json' })
+      this.httpClient.get(`assets/translate/${lng}.json`, { responseType: 'json' })
         .subscribe(data => {
           this.translation = data;
-          console.log('loaded');
-
+          let dir = "rtl";
+          if (lng !== "ar") {
+            dir = "ltr";
+          }
+          document.body.classList.remove("rtl", "ltr");
+          document.body.classList.add(dir);
         }
         );
     }
   }
+
+
 }
 

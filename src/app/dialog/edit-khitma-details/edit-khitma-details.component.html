@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>
+<h1 mat-dialog-title [translate]="'dialog.header'">
     تعديل تفاصيل الختمة
 </h1>
 
@@ -10,7 +10,7 @@
 
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>عنوان الختمة</mat-label>
+            <mat-label [translate]="'dialog.title'">عنوان الختمة</mat-label>
             <input matInput [(ngModel)]="group.title" name="title" required="true" autocomplete="off">
         </mat-form-field>
 
@@ -20,18 +20,18 @@
         </mat-form-field> -->
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>نص إضافي (اختياري)</mat-label>
+            <mat-label [translate]="'dialog.more'">نص إضافي (اختياري)</mat-label>
             <textarea rows="4" matInput [(ngModel)]="group.description" name="description"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>موعد التسليم</mat-label>
+            <mat-label [translate]="'dialog.date'">موعد التسليم</mat-label>
             <input matInput [(ngModel)]="group.targetDate" name="target-date" autocomplete="off">
         </mat-form-field>
 
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>مسؤولون إضافيّون</mat-label>
+            <mat-label [translate]="'dialog.others'"> مسؤولون إضافيّون</mat-label>
             <input matInput [(ngModel)]="group.admins" name="admins" autocomplete="off">
         </mat-form-field>
 
@@ -55,10 +55,10 @@
 
 
         <button type="submit" class="action-btn block large" style="margin-bottom: 16px;" mat-raised-button
-            color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid">حفظ
-            التغييرات</button>
+            color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid"><span
+                [translate]="'dialog.save'">حفظ التغييرات</span></button>
 
-        <button mat-button class="block" (click)="onDismiss()">الغاء</button>
+        <button mat-button class="block" (click)="onDismiss()"><span [translate]="'dialog.cancel'">الغاء</span></button>
 
 
 

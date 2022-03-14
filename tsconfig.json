@@ -20,6 +20,9 @@
       "tslib": [
         "path/to/node_modules/tslib/tslib.d.ts"
       ]
-    }
-  }
+    },
+  },
+  "include": [
+    "./src/assets/translate/en.ts"
+  ]
 }

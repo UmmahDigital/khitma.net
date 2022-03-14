@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>
+<h1 mat-dialog-title [translate]="'dialog.newTask'">
     مهمّة جديدة
 </h1>
 
@@ -8,7 +8,7 @@
 
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>عنوان المهمّة الجديدة</mat-label>
+            <mat-label [translate]="'dialog.newTaskTitle'">عنوان المهمّة الجديدة</mat-label>
             <input matInput [(ngModel)]="newTask" name="newTask" required="true" autocomplete="off">
         </mat-form-field>
 
@@ -19,10 +19,11 @@
 
 
         <button type="submit" class="action-btn block large" style="margin-bottom: 16px;" mat-raised-button
-            color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid">حفظ
+            color="{{editGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!editGroupForm.form.valid"><span
+                [translate]="'dialog.add'">حفظ</span>
         </button>
 
-        <button mat-button class="block" (click)="onDismiss()">الغاء</button>
+        <button mat-button class="block" (click)="onDismiss()"><span [translate]="'dialog.cancel'">الغاء</span></button>
 
 
 
