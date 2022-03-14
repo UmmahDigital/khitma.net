@@ -11,7 +11,10 @@ export class CommonService {
   missingTranslation: any = { loaded: true }
   languages = [
     { text: "العربية", value: "Ar" },
-    { text: "English", value: "En" }
+    { text: "English", value: "En" },
+    { text: "Français", value: "Fr" },
+    { text: "Espaniol", value: "Es" },
+    { text: "Deutsch", value: "De" },
   ]
   constructor(private httpClient: HttpClient) {
     this.loadTranslationFile();

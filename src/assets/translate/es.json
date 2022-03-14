@@ -1,0 +1,226 @@
+{
+    "lang": "Espaniol",
+    "test": "Experimentar",
+    "loaded": true,
+    "app": {
+        "title": "El"
+    },
+    "about": {
+        "intro": "La solicitud se lanzó desde la Mezquita de la Rehab Al-Aqsa para permitir que lea y selle el Sagrado Corán colectivamente, al establecer grupos para sellar el Corán y distribuir las partes del Corán en los miembros de una serie, y luego continúe ofreciendo convenientemente y Disponible para todos los participantes en su grupo.",
+        "title": "Explicar el uso",
+        "video": "En el siguiente video explicó WAF por cómo usarlo.",
+        "youtube": "Explicación de video en YouTube",
+        "bless": "Dios acepta tu obediencia y te mantendrás salvar a Dios y cuidarás."
+    },
+    "privacy": "Acuerdo de privacidad",
+    "terms": "Términos de Uso",
+    "share": "para compartir",
+    "aqsa": {
+        "currentPages": "Páginas actuales",
+        "finished": "Recuerdo mis páginas",
+        "description": "El comienzo del desarrollo de una plataforma de amortiguación. Hoy en día, el podio se está desarrollando desde Jerusalén y la Casa Sagrada. Aquí ponemos en tus manos un conflicto colectivo global de la mezquita de AL-AQSA, llamando al Todopoderoso criar la injusticia y todo el territorio de los musulmanes.",
+        "howMuch": "¿Cuánto quieres \\ yen?",
+        "want": "Quiero recitar",
+        "num": "La sofisticación",
+        "pagesDone": "La página se llevó a cabo en el sucesor de la mezquita Al-Aqsa."
+    },
+    "archive": {
+        "no": "No tienes sets en el archivo.",
+        "clean": "Limpiar el archivo"
+    },
+    "gInvite": {
+        "done": "El grupo set fue creado con éxito. Ahora puede compartir un mensaje de invitación con sus conocimientos y amigos, o pasar a la página del grupo y compartir el mensaje desde allí.",
+        "message": "El mensaje de invitación para unirse (puede editar)",
+        "join": "Entrar",
+        "link": "A través del enlace",
+        "bless": ". Salud.",
+        "alert": "El mensaje fue copiado, ahora puede compartir con sus conocimientos y amigos.",
+        "share": "Invitación a unirse al grupo de conspiadores.",
+        "go": "Transición a la página SET"
+    },
+    "gCreate": {
+        "recurringYes": "Conjunto periódico",
+        "recurringNo": "Consusión de una sola vez",
+        "placeholder": "Por ejemplo: la primera parte, o página 1-10",
+        "success": "El conjunto de set fue creado con éxito!",
+        "createA": "Crear un grupo de configuración",
+        "createB": "Crear confusión colectiva",
+        "sameDesc": "Todos los miembros están participando en la misma tarea durante un período específico. Por ejemplo, todos los miembros leen la primera parte el primer día y la segunda parte en el segundo día y así sucesivamente. En este tipo de confusión, el administrador de la prueba puede determinar la tarea y el período flexible, por ejemplo, puede funcionar durante cinco páginas al día (por ejemplo) o un grupo que lea dos o tres partes por día.",
+        "mission": "La primera tarea",
+        "details": "Detalles de pie",
+        "title": "Dirección fija",
+        "name": "Tu nombre (Oficial Confundido)",
+        "more": "Texto adicional (opcional)",
+        "loop": "Periódico",
+        "one": "Una vez",
+        "recurringYesDesc": "Adecuado para grupos que sellan el Corán juntos periódicamente, incluso si es un ritmo inestable. Si tiene un grupo colectivo de colectivo a través de los ows, por ejemplo, el establecimiento de un grupo a través de la confusión.",
+        "recurringType": "Tipo de tipo periódico",
+        "same": "La misma tarea",
+        "parts": "Partes secuenciales",
+        "pages": "Distribución de páginas",
+        "partsB": "Piezas de distribución",
+        "distr": "Los miembros se unen al grupo y luego puede iniciar la aplicación para distribuir las páginas del Corán por igual en todos los miembros. Este tipo de conclusión es esencialmente apropiado para grupos grandes, por ejemplo, si comparte 60 personas, todas comparten casi diez páginas, equivalentes a la mitad de la mitad.",
+        "distrNo": "En esta conferencia, cada miembro del grupo recita una de las partes para que el grupo esté completo completo, por ejemplo, el espíritu de uno de los fallecidos, por ejemplo.",
+        "recurringNoDesc": "Adecuado para sellos familiares sobre las vidas de los muertos (la misericordia de Dios) o en los hogares de condolencias o sellos durante diferentes ocasiones y actividades."
+    },
+    "redirect": "Conversión actual.",
+    "gKhitma": {
+        "header": "AL-AQSA AL-AQSA AL - Mezquita AQSA",
+        "new": "¿Comienza una nueva confusión?",
+        "bless": "Dios te bendiga y en tu garganta.",
+        "ramadan": "Ramadán",
+        "world": "Partes hechas globalmente",
+        "worldDesc": "Aquí está su sello personal para el mes sagrado de Ramadán. Cuando complete una de las partes, esto se agrega directamente a las partes en la confusión global. En el equilibrio de tus buenas obras, Dios quiere.",
+        "done": "¿Concluiste?",
+        "part": "parte"
+    },
+    "gPages": {
+        "header": "Las páginas fueron distribuidas en esta confusión. Puede ir al administrador del grupo y volver a solicitar la distribución de páginas. También puede leer cualquier número de páginas sin grabación, cada recitación está registrada en su buen periódico y usted paga, Dios quiere :)",
+        "page": "página",
+        "pending": "Esperando a que el administrador del grupo distribuya las páginas.",
+        "members": "Miembros del grupo",
+        "responsible": "Para el administrador del grupo:",
+        "responsibleDesc": "Puede presionar el nombre de miembro para modificar el estado de la tarea que tiene. También puede editar miembros presionando la lista de modificaciones a continuación.",
+        "confirm": "Confirmar al miembro del grupo del grupo",
+        "deleted": "Eliminar el tema",
+        "success": "Exitosamente",
+        "add": "Adicional",
+        "started": "Las páginas fueron iniciadas y distribuidas a los miembros.",
+        "restart": "Páginas redistribuidas en miembros."
+    },
+    "sametask": {
+        "date": "El tiempo de entrega:",
+        "members": "Miembros del grupo",
+        "responsibleDesc": "Puede presionar el nombre de miembro para modificar el estado de la tarea que tiene. También puede editar miembros presionando la lista de modificaciones a continuación.",
+        "bless": "Se han hecho buenas obras en este grupo desde su establecimiento. ¡En el equilibrio de tus buenas obras, Dios quiere!",
+        "responsible": "Para el administrador del grupo:"
+    },
+    "sequential": {
+        "start": "Inicia una nueva colección del grupo.",
+        "doaa": "Compartir Duaa al-Khafma",
+        "finished": "Completa una porción de lectura",
+        "release": "Exención",
+        "select": "Puedes elegir cualquiera de las partes en rojo.",
+        "all": "Todas las partes en este grupo reservado.",
+        "toggle": "Mostrar la lista de nombres",
+        "dialog": "Confirmar la parte de acceso",
+        "remove": "El nombre del miembro actual será eliminado de parte",
+        "choice": "Y hazlo disponible para la elección.",
+        "dialog2": "Confirmar la finalización de la pieza.",
+        "dialog2Q": "¿Leíste una parte?",
+        "dua": "Oh Dios, tendré misericordia del Corán y lo hará Imam y Nora, y yo daré y de misericordia. Oh, Dios, ore a mí religión, que es un essama estadounidense, y reparó mi religión de que él está con mis sentimientos, y me refiero a mi en otro lugar, y hacer que la vida me aumente en todo lo mejor y me hagan la muerte de todo el mal. Oh Dios, haz lo mejor de mi vida y bien, mi hija y los buenos días están en ti. Oh Dios, les pido que viva Haniyeh y unas unidas y infelices e inusuales. Oh Dios, les pregunto lo mejor del asunto y lo mejor del Du'aa 'y el buen éxito y la buena ciencia y buen trabajo y buena recompensa y buena vida y buena vida y buena vida y buena vida y buenas matrices, y me apuñalaron y el peso de mi Equilibrio y para lograr mis sellos y aceptar mis oraciones y perdonar mis pecados y preguntarte. Oh, Dios, les pido que obedezcas tu misericordia y olvidé tu perdón y seguridad de todo el pecado y la dignidad de toda la justicia y ganan el comité y sobrevive del fuego. Oh Dios, nos escucharé en todas las cosas, y nos dirigimos de la bestia del mundo y del castigo del más allá. Oh Dios, lo juro por temernos. La cantidad de nuestro conocimiento y no nos lleva a no ayudarnos. Oh Dios, no nos dejemos un pecado, excepto el perdón y nada, pero no tienen causa ni necesidad y la necesidad del mundo y el más allá. Nuestro Señor está en el mundo es bueno y en lo sucesivo es bueno y el tormento del fuego y oró a nuestro maestro y profeta Muhammad y su familia y su buena salud y paz.",
+        "done": "- Gracias a Dios"
+    },
+    "gDashboard": {
+        "join": "Únete al grupo",
+        "link": "A través del enlace",
+        "status": "Modo de conflicto:",
+        "invite": "Invitación a unirse:",
+        "confirm": "Confirmar el grupo de licencia",
+        "advice": "No recomendamos dejar al grupo para no perder la gran recompensa, Dios quiere, pero si abandona el grupo, estará disponible de nuevo y le entregará la página principal.",
+        "start": "Comenzó",
+        "distribute": "Distribuir páginas de nuevo",
+        "task": "Una nueva tarea",
+        "shareStatus": "Compartir la confección",
+        "new": "Enlace de grupo compartido",
+        "update": "Modificar los detalles de la conclusión.",
+        "hi": "La paz sea con vosotros",
+        "shareLink": "Enlace de grupo compartido",
+        "leave": "Salir del grupo",
+        "tools": "Herramientas de administrador de grupo"
+    },
+    "status": {
+        "day0": "domingo",
+        "day1": "lunes",
+        "day2": "martes",
+        "day3": "miércoles",
+        "day4": "jueves",
+        "day5": "viernes",
+        "day6": "sábado"
+    },
+    "gJoin": {
+        "name": "tu nombre",
+        "join": "Unión"
+    },
+    "home": {
+        "archive": "Sellos de archivo",
+        "intro": "La solicitud se lanzó desde la Mezquita de la Rehab Al-Aqsa para permitir que lea y selle el Sagrado Corán colectivamente, al establecer grupos para sellar el Corán y distribuir las partes del Corán en los miembros de una serie, y luego continúe ofreciendo convenientemente y Disponible para todos los participantes en su grupo.",
+        "equal": "Que modificado",
+        "ayat": "He sido invitado por miembros del grupo.",
+        "creatA": "Crea un conjunto periódico",
+        "createB": "Empezar a recoger por una vez",
+        "aqsa": "Mezquita Internacional de AL-AQSA",
+        "duaa": "Sé parte de la gran recompensa, Dios quiere, ahora están configurando y no nos olvidan de tu favor.",
+        "maybe": "Quien sabe, vamos a participar en",
+        "bilion": "Billón",
+        "more": "Bueno o aumenta. El que lee personajes del libro de Dios es bueno y Dios es diez \".",
+        "apps": "Aplicaciones amistosas",
+        "appsDesc": "ORAD es una plataforma técnica que permite colectivamente los países islámicos estableciendo grupos de acciones conjuntas (para sus amigos o familiares, por ejemplo) y luego la implementación y la implementación de seguimiento por parte de los miembros del grupo son suaves y están disponibles para todos los miembros del grupo.",
+        "awrad": "Plataforma Orad - Demografía",
+        "archiveConfirm": "Confirmar archivo de grupo",
+        "archiveGroup": "Grupo de archivo:"
+    },
+    "me": {
+        "no": "No tienes ningún grupo actualmente",
+        "me": "Sellos de archivo",
+        "header": "Mi sello personal",
+        "intro": "Puede cambiar entre diferentes situaciones de la parte presionándola. Además, al reservar o completar su lectura para parte en un grupo, la situación se ajustará automáticamente aquí en su sello personal",
+        "groups": "Mis grupos actuales"
+    },
+    "celebration": {
+        "a": "Dios te quiere",
+        "b": "Dios te bendiga",
+        "c": "Dios te recompensa",
+        "d": "Que Dios te haga feliz.",
+        "e": "En el balance de tus buenas obras.",
+        "f": "Que Allah esté satisfecho con usted",
+        "g": "Dios acepta",
+        "h": "Dios te quiere",
+        "i": "Dios te bendiga",
+        "j": "Dios te recompensa",
+        "k": "Que Dios te haga feliz.",
+        "l": "En el balance de tus buenas obras.",
+        "m": "Que Allah esté satisfecho con usted",
+        "n": "Dios acepta"
+    },
+    "dialog": {
+        "yes": "sí",
+        "no": "No",
+        "update": "software de actualización",
+        "updateDesc": "Hay una nueva versión del sitio, quiere usarlo ahora. La actualización no afecta a sus grupos o sus partes.",
+        "header": "Modificar los detalles de la conclusión.",
+        "title": "Dirección fija",
+        "more": "Texto adicional (opcional)",
+        "date": "El tiempo de entrega",
+        "others": "Funcionarios adicionales",
+        "save": "Guardando cambios",
+        "cancel": "cancelación",
+        "newTask": "Una nueva tarea",
+        "newTaskTitle": "Nuevo título de la tarea",
+        "add": "Mantenido"
+    },
+    "groups": {
+        "member": "El nombre del nuevo miembro"
+    },
+    "juz": {
+        "notRead": "No leer después ..",
+        "select": "Haga clic para elegir esta parte",
+        "responsible": "Para el administrador del grupo:",
+        "intro": "Puede modificar los nombres haciendo clic en ellos y escribiendo el nombre de otro miembro actual o un nuevo nombre de miembro y luego presionando la Guardar como aparece después del cambio."
+    },
+    "khitma": {
+        "done": "La conclusión",
+        "bless": "¡Dios te bendiga!",
+        "task": "una tarea",
+        "khitma": "Gesto",
+        "creator": "Constructor de grupo:",
+        "notFound": "No se encontró la configuración requerida."
+    },
+    "menu": {
+        "home": "Principal",
+        "groups": "Mis grupos",
+        "group_add": "Nuevo grupo",
+        "book": "Sagrado Corán",
+        "about": "sobre el programa"
+    }
+}
