@@ -60,6 +60,7 @@ export class KhitmaGroup {
   targetDate?: string;
   admins?: string;
   type?: string;
+  authorId?: string;
 
   public constructor(init?: Partial<KhitmaGroup>) {
     Object.assign(this, init);

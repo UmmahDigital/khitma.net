@@ -10,6 +10,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { LocalDatabaseService } from './local-database.service';
 
 import * as firebase from 'firebase/compat/app';
+import { User } from './common/model';
+import { UserService } from './service/user.service';
 // import undefined from 'firebase/compat/firestore';
 
 
@@ -25,7 +27,7 @@ export class KhitmaGroupService {
 
   private _isV2Api = true;
 
-  constructor(private db: AngularFirestore, private localDB: LocalDatabaseService,) { }
+  constructor(private db: AngularFirestore, private localDB: LocalDatabaseService, private svcUser: UserService) { }
 
   public getGroupDetailsOnce(groupId: string): Observable<KhitmaGroup> {
     this.groupsDocs[groupId] = this.db.doc<KhitmaGroup>('groups/' + groupId);
@@ -36,11 +38,6 @@ export class KhitmaGroupService {
     }));
   }
 
-  public getAllGroupsDetailsForUser(authorId: string): AngularFirestoreCollection<KhitmaGroup> {
-    return this.db.collection<KhitmaGroup>('groups', (doc) => {
-      return doc.where('authorId', "==", authorId)
-    });
-  }
 
   public setCurrentGroup(groupId: string) {
 
@@ -205,13 +202,15 @@ export class KhitmaGroupService {
     });
 
     if (authorId) {
-      this.getAllGroupsDetailsForUser(authorId).valueChanges().subscribe(groups => {
-        groups.forEach(group => {
-          groups$.push(group);
+      const user = this.svcUser.currentUser;
+      if (user) {
+        user.groupIds.forEach(group => {
+          if (!groups$.includes(group)) {
+            groups$.push(group);
+          }
         })
-      })
+      }
     }
-
     return forkJoin(groups$);
 
     // return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
