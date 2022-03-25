@@ -12,7 +12,7 @@ export class UserService {
   user: User;
   constructor(private db: AngularFirestore) { }
 
-  saveUserLoging(user: User) {
+  saveUserLogin(user: User) {
     this.saveUserToDbIfNotExists(user);
     return this.user;
   }
@@ -41,7 +41,8 @@ export class UserService {
     const userDocRef = this.db.collection<User>('users');
     const querySnapshot = await userDocRef.ref.where("email", "==", email).get();
     if (querySnapshot.size > 0) {
-      return querySnapshot.docs[0].data();
+      const id = querySnapshot.docs[0].id;
+      return { ...querySnapshot.docs[0].data(), id };
     } else {
       return null;
     }
@@ -66,6 +67,17 @@ export class UserService {
   }
 
 
+  joinToGroup(groupId) {
+    const user = this.currentUser;
+    if (!user) {
+      return;
+    }
+    user.groupIds.push(groupId);
+    this.db.doc<User>('users/' + user.id).update(user).then(res => {
+      console.log("joined", res);
 
+    });
+
+  }
 
 }

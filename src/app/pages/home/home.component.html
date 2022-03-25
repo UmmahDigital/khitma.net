@@ -8,7 +8,7 @@
     <img class="logo" src="assets/khitma-logo.png" alt="logo of khitmah" />
 
     <hr />
-    <app-login></app-login>
+    <app-login (onLogin)="onLogin($event)"></app-login>
 
     <section *ngIf="groups">
 

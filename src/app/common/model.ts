@@ -5,4 +5,5 @@ export interface User {
     photoUrl?: string;
     provider?: string;
     created?: Date;
+    groupIds: string[];
 }

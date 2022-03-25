@@ -91,7 +91,7 @@ export class CreateGroupComponent implements OnInit {
     this.groupsApi.createGroupForUser(this.title, this.description, this.author, this.user?.email, this.groupType, this.firstTask).then(docRef => {
 
       const groupId = docRef.id;
-
+      this.svcUser.joinToGroup(groupId);
       this.$gaService.event('group_created');
 
       this.alert.show("تمّ إنشاء مجموعة الختمة بنجاح!", 5000);

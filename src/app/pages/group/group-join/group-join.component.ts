@@ -1,7 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KhitmaGroup, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask } from 'src/app/entities/entities';
+import { KhitmaGroup, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask } from '../../../entities/entities';
+import { UserService } from '../../../service/user.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
 
@@ -21,7 +22,8 @@ export class GroupJoinComponent implements OnInit {
     private localDB: LocalDatabaseService,
     private $gaService: GoogleAnalyticsService,
     private router: Router,
-    private _ngZone: NgZone) {
+    private _ngZone: NgZone,
+    private svcUser: UserService) {
   }
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class GroupJoinComponent implements OnInit {
     let username = KhitmaGroup.refineOwnerName(this.username);
 
     this.localDB.joinGroup(this.group.id, username);
-
+    this.svcUser.joinToGroup(this.group.id);
     if (this.group.type === KHITMA_GROUP_TYPE.SAME_TASK || this.group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION) {
 
       this.groupsApi.addGroupMember(this.group.id, username).then(() => {

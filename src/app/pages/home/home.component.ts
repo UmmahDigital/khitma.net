@@ -32,11 +32,22 @@ export class HomeComponent implements OnInit {
     private $gaService: GoogleAnalyticsService, private globalCounters: GlobalCountersService, private svcUser: UserService) { }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
 
     let ids = this.localDB.getMyGroups();
     ids = ids.slice(Math.max(ids.length - 10, 0)); // firebase IN array limit of 10
-    const authorId = this.svcUser.currentUser?.email;
-
+    const user = this.svcUser.currentUser;
+    if (user) {
+      user.groupIds.forEach(id => {
+        if (!ids.includes(id)) {
+          ids.push(id);
+        }
+      })
+    }
+    const authorId = user?.email;
     if (ids.length > 0 || authorId) {
       this.groupsApi.getGroups(ids, authorId).subscribe((groups) => {
 
@@ -107,5 +118,13 @@ export class HomeComponent implements OnInit {
     });
 
   }
+
+  onLogin($event) {
+    if ($event === "loggedIn") {
+      this.loadData();
+      // this.router.navigateByUrl("/me/groups")
+    }
+  }
+
 
 }
