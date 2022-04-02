@@ -1,9 +1,16 @@
-<div fxLayout="row wrap" fxLayoutGap="0px grid" class="center-center" style="height: 100%;">
-
-
-  <div id="app-container" [class.dark]="isDarkStyle" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%">
-
-
+<div
+  fxLayout="row wrap"
+  fxLayoutGap="0px grid"
+  class="center-center"
+  style="height: 100%"
+>
+  <div
+    id="app-container"
+    [class.dark]="isDarkStyle"
+    fxFlex="33%"
+    fxFlex.xs="100%"
+    fxFlex.sm="100%"
+  >
     <app-celebration *ngIf="showCelebration" class="celebration-container">
     </app-celebration>
 
@@ -12,7 +19,6 @@
         <mat-icon (click)="openMenu()">menu</mat-icon>
       </button>
 
-
       <a routerLink="">
         <!-- <mat-icon>home</mat-icon> -->
         <span [translate]="'app.title'">ختمة.نت</span>
@@ -20,16 +26,37 @@
 
       <span class="spacer"></span>
 
-      <span class="lang-wrapper">
-        <mat-icon class="lang-toggle" aria-hidden="false" aria-label="Language" (click)="showLang=!showLang">language
-        </mat-icon>
-        <mat-nav-list *ngIf="showLang" class="lang-list">
+      <!-- <mat-icon
+          class="lang-toggle"
+          aria-hidden="false"
+          aria-label="Language"
+          (click)="showLang = !showLang"
+          >language
+        </mat-icon> -->
+
+      <mat-icon
+        aria-label="Language"
+        [matMenuTriggerFor]="langMenu"
+        style="margin-inline-start: 8px"
+        >language
+      </mat-icon>
+      <mat-menu #langMenu="matMenu" [class.dark]="isDarkStyle">
+        <button
+          mat-menu-item
+          *ngFor="let lang of common.languages"
+          (click)="changeLanguage(lang.value)"
+        >
+          <!-- <mat-icon></mat-icon> -->
+
+          {{ lang.text }}
+        </button>
+      </mat-menu>
+
+      <!-- <mat-nav-list *ngIf="showLang" class="lang-list">
           <mat-list-item *ngFor="let lang of common.languages">
             <a href="javascript:;" (click)="changeLanguage(lang.value)">{{ lang.text }}</a>
           </mat-list-item>
-        </mat-nav-list>
-      </span>
-
+        </mat-nav-list> -->
 
       <!-- <mat-form-field appearance="fill" class="lang-dropdown">
         <mat-icon aria-hidden="false" aria-label="Language">language</mat-icon>
@@ -39,24 +66,25 @@
         </mat-select>
       </mat-form-field> -->
 
-      <mat-icon matBadge="1" matBadgePosition="before" matBadgeSize="medium" matBadgeColor="accent"
-        (click)="showNotification()" [matBadgeHidden]="!unreadNotification" gaEvent="show_notification_clicked"
-        gaCategory="notifications">notifications
+      <mat-icon
+        matBadge="1"
+        matBadgePosition="before"
+        matBadgeSize="medium"
+        matBadgeColor="accent"
+        (click)="showNotification()"
+        [matBadgeHidden]="!unreadNotification"
+        gaEvent="show_notification_clicked"
+        gaCategory="notifications"
+        >notifications
       </mat-icon>
-
 
       <a routerLink="about">
         <mat-icon class="help-btn">help_outline</mat-icon>
       </a>
-
     </mat-toolbar>
 
     <div id="app-content">
       <router-outlet></router-outlet>
     </div>
-
-
-
   </div>
-
 </div>
