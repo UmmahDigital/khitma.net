@@ -60,6 +60,7 @@ export class KhitmaGroup {
   targetDate?: string;
   admins?: string;
   type?: string;
+  authorId?: string;
 
   public constructor(init?: Partial<KhitmaGroup>) {
     Object.assign(this, init);
@@ -73,7 +74,7 @@ export class KhitmaGroup {
   public isAdmin(username) {
     return (
       KhitmaGroup.refineOwnerName(username) ===
-        KhitmaGroup.refineOwnerName(this.author) ||
+      KhitmaGroup.refineOwnerName(this.author) ||
       this.admins?.includes(KhitmaGroup.refineOwnerName(username))
     );
   }

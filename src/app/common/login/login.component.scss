@@ -1,0 +1,14 @@
+:host {
+    text-align: center;
+}
+
+button {
+    border: 0;
+    background-color: transparent;
+    margin: 0 0.5rem;
+    &.signOut {
+        .material-icons {
+            transform: translateY(7px);
+        }
+    }
+}

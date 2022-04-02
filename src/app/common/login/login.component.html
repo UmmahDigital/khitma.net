@@ -1,0 +1,12 @@
+<div *ngIf="user == null">
+    <h2>تسجيل الدخول</h2>
+    <div><button (click)="signInWithGoogle()"><img src="assets/icons/google.svg" /></button><button
+            (click)="signInWithFB()"><img src="assets/icons/fb.svg" /></button></div>
+</div>
+
+<div *ngIf="user != null">
+    <span>أهلا وسهلا </span> <b> {{user?.fullName}}</b> <button class="signOut" (click)="signOut()"><span
+            class="material-icons">
+            power_settings_new
+        </span><span>خروج</span></button>
+</div>

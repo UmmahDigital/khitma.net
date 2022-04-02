@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material.module';
@@ -13,10 +12,18 @@ import { FormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from 'angularx-social-login';
 
 import { HomeComponent } from './pages/home/home.component';
 import { CreateGroupComponent } from './pages/create-group/create-group.component';
@@ -73,17 +80,18 @@ import { NotificationComponent } from './shared/notification/notification.compon
 import { AqsaKhitmaComponent } from './pages/aqsa-khitma/aqsa-khitma.component';
 import { TranslateDirective } from './directives/translate.directive';
 import { CommonService } from './service/common.service';
+import { ProfileComponent } from './user/profile/profile.component';
+import { RegisterComponent } from './user/register/register.component';
+import { LoginComponent } from './common/login/login.component';
 
-
-
-GroupJoinedGuard
+GroupJoinedGuard;
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
-    path: 'new', component: CreateGroupComponent, children: [
-      { path: 'invite', component: GroupInviteComponent },
-    ]
+    path: 'new',
+    component: CreateGroupComponent,
+    children: [{ path: 'invite', component: GroupInviteComponent }],
   },
   { path: 'me/groups/archive', component: ArchiveComponent },
   // { path: 'me', component: DashboardComponent },
@@ -91,10 +99,12 @@ const routes: Routes = [
   { path: 'me/personal-khitma', component: PersonalKhitmaComponent },
   { path: 'group/:groupId/invite', component: GroupInviteComponent },
   {
-    path: 'group/:groupId', canActivate: [GroupJoinedGuard], children: [
+    path: 'group/:groupId',
+    canActivate: [GroupJoinedGuard],
+    children: [
       { path: 'join', component: GroupJoinComponent },
       { path: 'dashboard', component: GroupDashboardComponent },
-    ]
+    ],
   },
   { path: 'test', component: TestComponent },
   { path: 'quran', component: QuranComponent },
@@ -104,10 +114,7 @@ const routes: Routes = [
   { path: 'ramadan', component: GlobalKhitmaComponent },
   { path: 'aqsa', component: AqsaKhitmaComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
-
 ];
-
-
 
 @NgModule({
   declarations: [
@@ -153,7 +160,10 @@ const routes: Routes = [
     LoadingComponent,
     NotificationComponent,
     AqsaKhitmaComponent,
-    TranslateDirective
+    TranslateDirective,
+    ProfileComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -161,16 +171,45 @@ const routes: Routes = [
     HttpClientModule,
     ClipboardModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'always', scrollPositionRestoration: 'enabled' }),
+    RouterModule.forRoot(routes, {
+      paramsInheritanceStrategy: 'always',
+      scrollPositionRestoration: 'enabled',
+    }),
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     AngularFireStorageModule, // storage,
-    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
+    SocialLoginModule,
   ],
-  providers: [GroupJoinedGuard, KhitmaGroupService, CommonService],
-  bootstrap: [AppComponent]
+  providers: [
+    GroupJoinedGuard,
+    KhitmaGroupService,
+    CommonService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '220375398314-mnqgol2uls5dkt92et2dom61utorjfhe.apps.googleusercontent.com'
+            ),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('632795004523692'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -5,11 +5,13 @@ import { BehaviorSubject, forkJoin, Observable, of, Subject, throwError } from '
 import { map, catchError, take, first } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 // import { ThrowStmt } from '@angular/compiler';
 import { LocalDatabaseService } from './local-database.service';
 
 import * as firebase from 'firebase/compat/app';
+import { User } from './common/model';
+import { UserService } from './service/user.service';
 // import undefined from 'firebase/compat/firestore';
 
 
@@ -25,7 +27,7 @@ export class KhitmaGroupService {
 
   private _isV2Api = true;
 
-  constructor(private db: AngularFirestore, private localDB: LocalDatabaseService,) { }
+  constructor(private db: AngularFirestore, private localDB: LocalDatabaseService, private svcUser: UserService) { }
 
   public getGroupDetailsOnce(groupId: string): Observable<KhitmaGroup> {
     this.groupsDocs[groupId] = this.db.doc<KhitmaGroup>('groups/' + groupId);
@@ -35,6 +37,7 @@ export class KhitmaGroupService {
       return { id, ...data };
     }));
   }
+
 
   public setCurrentGroup(groupId: string) {
 
@@ -65,8 +68,11 @@ export class KhitmaGroupService {
     return this._currentGroupObj.id;
   }
 
-
   public createGroup(title, description, author, groupType?, firstTask?) {
+    return this.createGroupForUser(title, description, author, null, groupType, firstTask);
+  }
+
+  public createGroupForUser(title, description, author, authorId, groupType?, firstTask?) {
 
     author = author.trim();
 
@@ -76,7 +82,7 @@ export class KhitmaGroupService {
       "author": author,
       "type": groupType,
       "cycle": 0,
-
+      "authorId": authorId
     };
 
     switch (groupType) {
@@ -187,7 +193,7 @@ export class KhitmaGroupService {
 
   }
 
-  getGroups(groupsIds: string[]) {
+  getGroups(groupsIds: string[], authorId?: string) {
 
     let groups$ = [];
 
@@ -195,6 +201,16 @@ export class KhitmaGroupService {
       groups$.push(this.getGroupDetailsOnce(groupId));
     });
 
+    if (authorId) {
+      const user = this.svcUser.currentUser;
+      if (user) {
+        user.groupIds.forEach(group => {
+          if (!groups$.includes(group)) {
+            groups$.push(group);
+          }
+        })
+      }
+    }
     return forkJoin(groups$);
 
     // return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
