@@ -13,8 +13,8 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { KHITMA_GROUP_TYPE } from '../../entities/entities';
 import { switchMap } from 'rxjs/operators';
 import { CommonService } from '../../service/common.service';
-import { UserService } from 'src/app/service/user.service';
-import { User } from 'src/app/common/model';
+import { UserService } from '../../../app/service/user.service';
+import { User } from '../../../app/common/model';
 
 @Component({
   selector: 'app-create-group',

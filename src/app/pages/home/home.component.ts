@@ -2,29 +2,31 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+// import {
+//   KhitmaGroup,
+//   KhitmaGroup_Sequential,
+//   KHITMA_GROUP_TYPE,
+// } from '../../entities/entities';
+// import { GlobalCountersService } from '../../global-counters.service';
+// import { LocalDatabaseService } from '../../local-database.service';
+// import {
+//   ConfirmDialogComponent,
+//   ConfirmDialogModel,
+// } from '../../shared/confirm-dialog/confirm-dialog.component';
+
 import {
   KhitmaGroup,
   KhitmaGroup_Sequential,
   KHITMA_GROUP_TYPE,
-} from '../../entities/entities';
-import { GlobalCountersService } from '../../global-counters.service';
-import { LocalDatabaseService } from '../../local-database.service';
+} from '@app/entities/entities';
+
+import { GlobalCountersService } from '@app/global-counters.service';
+import { LocalDatabaseService } from '@app/local-database.service';
+import { UserService } from '@app/service/user.service';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
-} from '../../shared/confirm-dialog/confirm-dialog.component';
-import {
-  KhitmaGroup,
-  KhitmaGroup_Sequential,
-  KHITMA_GROUP_TYPE,
-} from 'src/app/entities/entities';
-import { GlobalCountersService } from 'src/app/global-counters.service';
-import { LocalDatabaseService } from 'src/app/local-database.service';
-import { UserService } from 'src/app/service/user.service';
-import {
-  ConfirmDialogComponent,
-  ConfirmDialogModel,
-} from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+} from '@app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { CommonService } from '../../service/common.service';
 
