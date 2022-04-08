@@ -1,99 +1,123 @@
 <div class="home">
+  <label style="display: block; text-align: center">﷽</label>
 
+  <img class="logo" src="assets/khitma-logo.png" alt="logo of khitmah" />
 
-    <label style="display:block;text-align: center;">﷽</label>
+  <!-- <hr /> -->
+  <!-- <app-login (onLogin)="onLogin($event)"></app-login> -->
 
+  <section *ngIf="groups">
+    <hr style="margin-bottom: 32px" />
 
+    <app-group-list
+      [groups]="groups"
+      (onAction)="archiveGroup($event)"
+    ></app-group-list>
+  </section>
 
-    <img class="logo" src="assets/khitma-logo.png" alt="logo of khitmah" />
+  <a
+    *ngIf="isShowArchive"
+    mat-button
+    class="block"
+    routerLink="me/groups/archive"
+    ><span [translate]="'home.archive'">أرشيف الختمات</span></a
+  >
 
-    <hr />
-    <app-login (onLogin)="onLogin($event)"></app-login>
+  <p [translate]="'home.intro'">
+    ختمة.نت هو تطبيق انطلق من رحاب المسجد الأقصى المبارك ليتيح قراءة وختم القرآن
+    الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء
+    المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح
+    لجميع المشتركين في مجموعتك.
+  </p>
 
-    <section *ngIf="groups">
+  <hr />
 
-        <hr style="margin-bottom:32px" />
+  <section id="ayat-count">
+    <span [translate]="'home.equal'"> ما يعدل</span>
+    <label class="main-counter number" *ngIf="ayatCount">{{
+      ayatCount | number
+    }}</label>
 
-        <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
-
-
-    </section>
-
-    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive"><span
-            [translate]="'home.archive'">أرشيف
-            الختمات</span></a>
-
-    <p [translate]="'home.intro'">
-        ختمة.نت هو تطبيق انطلق من رحاب المسجد الأقصى المبارك ليتيح قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق
-        إنشاء مجموعات لختم القرآن وتوزيع أجزاء
-        المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.
-
-    </p>
-
-
-    <hr />
-
-    <section id="ayat-count">
-
-        <span [translate]="'home.equal'"> ما يعدل</span>
-        <label class="main-counter number" *ngIf="ayatCount">{{ayatCount | number}}</label>
-
-
-        <span [translate]="'home.ayat'">آية تمّ تلاوتها من قبل أعضاء مجموعات ختمة.نت</span>
-
-        <br />
-
-
-        <a gaEvent="recurring_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
-            class="block large action-btn" routerLink="/new" [queryParams]="{type: 'recurring'}"><span
-                [translate]="'home.creatA'">إنشاء مجموعة ختمة دوريّة</span></a>
-
-        <a gaEvent="onetime_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button color="accent"
-            class="block large action-btn" routerLink="/new" [queryParams]="{type: 'onetime'}"
-            style="background-color: #16769a!important;"><span [translate]="'home.createB'">بدء ختمة جماعيّة لمرّة
-                واحدة</span>
-        </a>
-
-
-        <a routerLink="/aqsa" gaEvent="aqsa_khitma_button_click" gaCategory="home_page_buttons" mat-raised-button
-            color="accent" class="block large action-btn" id="aqsa-khitma-btn"><span [translate]="'home.aqsa'">ختمة
-                المسجد الأقصى العالميّة</span></a>
-
-
-    </section>
+    <span [translate]="'home.ayat'"
+      >آية تمّ تلاوتها من قبل أعضاء مجموعات ختمة.نت</span
+    >
 
     <br />
 
+    <a
+      gaEvent="recurring_khitma_button_click"
+      gaCategory="home_page_buttons"
+      mat-raised-button
+      color="accent"
+      class="block large action-btn"
+      routerLink="/new"
+      [queryParams]="{ type: 'recurring' }"
+      ><span [translate]="'home.creatA'">إنشاء مجموعة ختمة دوريّة</span></a
+    >
 
-    <span [translate]="'home.duaa'"> كونوا جزءا من الأجر العظيم إن شاء الله — أنشؤوا مجموعتكم الآن ولا تنسونا من
-        صالح دعائكم.
+    <a
+      gaEvent="onetime_khitma_button_click"
+      gaCategory="home_page_buttons"
+      mat-raised-button
+      color="accent"
+      class="block large action-btn"
+      routerLink="/new"
+      [queryParams]="{ type: 'onetime' }"
+      style="background-color: #16769a !important"
+      ><span [translate]="'home.createB'">بدء ختمة جماعيّة لمرّة واحدة</span>
+    </a>
+
+    <a
+      gaEvent="ramadan_khitma_button_click"
+      gaCategory="home_page_buttons"
+      mat-raised-button
+      color="accent"
+      class="block large action-btn"
+      routerLink="/ramadan"
+      style="background-color: #0d2731 !important"
+      ><span [translate]="'home.createC'"> ختمة رمضان العالميّة </span>
+    </a>
+
+    <a
+      routerLink="/aqsa"
+      gaEvent="aqsa_khitma_button_click"
+      gaCategory="home_page_buttons"
+      mat-raised-button
+      color="accent"
+      class="block large action-btn"
+      id="aqsa-khitma-btn"
+      ><span [translate]="'home.aqsa'">ختمة المسجد الأقصى العالميّة</span></a
+    >
+  </section>
+
+  <br />
+
+  <span [translate]="'home.duaa'">
+    كونوا جزءا من الأجر العظيم إن شاء الله — أنشؤوا مجموعتكم الآن ولا تنسونا من
+    صالح دعائكم.
+  </span>
+
+  <br />
+  <br />
+
+  <small class="secondary-counter">
+    <span [translate]="'home.maybe'">ومن يدري، فلعلّنا نتشارك في</span>
+
+    <strong class="counter-color">
+      <span class="mono-font number">{{
+        hasanatCount / 1000000000 | number: "1.0-0"
+      }}</span>
+      <span [translate]="'home.bilion'"> مليار </span>
+    </strong>
+    <span [translate]="'home.more'">
+      حسنة أو يزيد. فـ "من قرأ حرفا من كتاب الله فله حسنة والحسنة بعشر أمثالها"،
+      والله يضاعف لمن يشاء.
     </span>
+  </small>
 
-    <br />
-    <br />
+  <hr />
 
-    <small class="secondary-counter">
-
-        <span [translate]="'home.maybe'">ومن يدري، فلعلّنا نتشارك في</span>
-
-
-        <strong class="counter-color">
-            <span class="mono-font number">{{(hasanatCount/1000000000) | number: '1.0-0'}}</span> <span
-                [translate]="'home.bilion'">مليار</span>
-        </strong>
-        <span [translate]="'home.more'">حسنة أو يزيد.
-
-            فـ "من قرأ حرفا من كتاب الله فله حسنة والحسنة بعشر أمثالها"، والله
-            يضاعف لمن يشاء.</span>
-
-    </small>
-
-
-
-    <hr />
-
-
-    <!-- <section>
+  <!-- <section>
 
 
         <a routerLink="/aqsa" style="text-decoration: none;color:black;">
@@ -122,42 +146,38 @@
 
     <hr /> -->
 
-    <mat-card>
+  <mat-card>
+    <h2 [translate]="'home.apps'">تطبيقات صديقة</h2>
+    <p [translate]="'home.appsDesc'">
+      أوراد هي منصّة تقنيّة تتيح تنفيذ الأوراد الإسلاميّة بشكل جماعي، وذلك عن
+      طريق إنشاء مجموعات للأوراد المشتركة (لأصدقائك أو عائلتك مثلا) ثمّ مشاركة
+      الأوراد ومتابعة تنفيذها من قبل أعضاء المجموعة بشكل سلس ومتاح لجميع أعضاء
+      المجموعة.
+    </p>
 
+    <a
+      gaEvent="awrad_btn_clicked"
+      gaCategory="home_page_buttons"
+      mat-raised-button
+      color="accent"
+      class="block large action-btn"
+      target="_blank"
+      href="https://awrad.app"
+      id="awrad-btn"
+      ><span [translate]="'home.awrad'">منصّة أوراد - الإصدار التجريبي</span></a
+    >
+  </mat-card>
 
-        <h2 [translate]="'home.apps'">تطبيقات صديقة</h2>
-        <p [translate]="'home.appsDesc'">
-            أوراد هي منصّة تقنيّة تتيح تنفيذ الأوراد الإسلاميّة بشكل جماعي، وذلك عن طريق إنشاء مجموعات للأوراد
-            المشتركة (لأصدقائك أو عائلتك مثلا) ثمّ مشاركة الأوراد ومتابعة تنفيذها من قبل أعضاء المجموعة بشكل سلس
-            ومتاح لجميع أعضاء المجموعة.
-        </p>
+  <!-- <hr style="margin-bottom:32px" /> -->
 
-        <a gaEvent="awrad_btn_clicked" gaCategory="home_page_buttons" mat-raised-button color="accent"
-            class="block large action-btn" target="_blank" href="https://awrad.app" id="awrad-btn"><span
-                [translate]="'home.awrad'">منصّة أوراد -
-                الإصدار التجريبي</span></a>
-
-    </mat-card>
-
-
-    <!-- <hr style="margin-bottom:32px" /> -->
-
-    <!-- <a routerLink="/ramadan" mat-raised-button color="accent" class="block large "
+  <!-- <a routerLink="/ramadan" mat-raised-button color="accent" class="block large "
             style="background-color: #011c2f;">
             <mat-icon style="transform: rotate(-23deg);color: gold;">nightlight_round</mat-icon>
             ختمة المسجد الأقصى الرمضانيّة
 
         </a> -->
 
-
-
-
-
-
-
-
-
-    <!-- <hr />
+  <!-- <hr />
 
 
     <footer>
@@ -169,5 +189,4 @@
         © {{year}}
 
     </footer> -->
-
 </div>
