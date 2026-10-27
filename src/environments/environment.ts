@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  useEmulators: false,
   firebaseConfig: {
     apiKey: 'AIzaSyBmYOSvW0bB1XOc9Kr9D7xXcAKh8Iwoot4',
     authDomain: 'quran-khitma.firebaseapp.com',

@@ -73,6 +73,16 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "e2e": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.e2e.ts"
+                }
+              ],
+              "serviceWorker": false,
+              "outputPath": "dist/khitma-e2e"
             }
           },
           "defaultConfiguration": "production"
