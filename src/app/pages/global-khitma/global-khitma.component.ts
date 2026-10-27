@@ -3,7 +3,7 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 
 import { LocalDatabaseService } from '../../local-database.service';
 import { map } from 'rxjs/operators';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../analytics';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmDialogComponent,

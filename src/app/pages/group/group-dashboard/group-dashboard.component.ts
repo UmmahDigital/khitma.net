@@ -8,7 +8,7 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/conf
 
 
 import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../../analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from '../../../alert.service';
 import { NativeApiService } from '../../../native-api.service';

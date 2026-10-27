@@ -34,7 +34,7 @@ import { GroupListItemComponent } from './shared/group-list/group-list-item/grou
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { CelebrationComponent } from './shared/celebration/celebration.component';
 
-import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+import { AnalyticsModule } from './analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
 import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
@@ -156,7 +156,7 @@ const routes: Routes = [
     }),
     MaterialModule,
     FormsModule,
-    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
+    AnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production && !environment.useEmulators,
     }),

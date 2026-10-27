@@ -9,7 +9,7 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from '../../local-database.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../analytics';
 import { KHITMA_GROUP_TYPE } from '../../entities/entities';
 import { switchMap } from 'rxjs/operators';
 import { CommonService } from '../../service/common.service';
