@@ -12,12 +12,6 @@ import { FormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AngularFireModule } from '@angular/fire/compat';
-import {
-  AngularFirestoreModule,
-  USE_EMULATOR as USE_FIRESTORE_EMULATOR,
-} from '@angular/fire/compat/firestore';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 
 import { HomeComponent } from './pages/home/home.component';
@@ -164,9 +158,6 @@ const routes: Routes = [
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule, // firestore
-    AngularFireStorageModule, // storage,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production && !environment.useEmulators,
@@ -176,10 +167,6 @@ const routes: Routes = [
     GroupJoinedGuard,
     KhitmaGroupService,
     CommonService,
-    {
-      provide: USE_FIRESTORE_EMULATOR,
-      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
-    },
   ],
   bootstrap: [AppComponent],
 })

@@ -50,6 +50,19 @@ test.describe('personal and global khitmahs', () => {
   });
 });
 
+test.describe('Ramadan 2021 global khitmah (still reachable at /ramadan)', () => {
+  test('loads the shared counters without errors', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+
+    await openApp(page, '/ramadan');
+
+    await expect(page.getByText('أجزاء تمّت تلاوتها عالميّا')).toBeVisible();
+    await expect(page.locator('app-global-khitma app-todo')).toHaveCount(30);
+    expect(errors).toEqual([]);
+  });
+});
+
 test.describe('archive', () => {
   test('lists archived groups and can be cleared after confirming', async ({ page }) => {
     await openApp(page, '/me/groups/archive', {

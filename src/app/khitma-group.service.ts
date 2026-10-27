@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   KhitmaGroup,
   Juz,
@@ -10,27 +10,21 @@ import {
   KhitmaGroup_Sequential,
 } from './entities/entities';
 
+import { forkJoin, from, Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
-  BehaviorSubject,
-  forkJoin,
-  Observable,
-  of,
-  Subject,
-  throwError,
-} from 'rxjs';
-import { map, catchError, take, first } from 'rxjs/operators';
-import { environment } from '../environments/environment';
-
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
-// import { ThrowStmt } from '@angular/compiler';
+  addDoc,
+  collection,
+  deleteField,
+  doc,
+  Firestore,
+  getDoc,
+  increment,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import { FIRESTORE, watchDoc } from './firestore';
 import { LocalDatabaseService } from './local-database.service';
-
-import * as firebase from 'firebase/compat/app';
-// import undefined from 'firebase/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -39,31 +33,29 @@ export class KhitmaGroupService {
   private _currentGroup = new Subject();
   private _currentGroupObj: KhitmaGroup = null;
 
-  private groupsDocs: object = {}; // save references of queried groups
-
   private _isV2Api = true;
 
   constructor(
-    private db: AngularFirestore,
+    @Inject(FIRESTORE) private db: Firestore,
     private localDB: LocalDatabaseService
   ) {}
 
+  private groupDoc(groupId: string) {
+    return doc(this.db, 'groups', groupId);
+  }
+
   public getGroupDetailsOnce(groupId: string): Observable<KhitmaGroup> {
-    this.groupsDocs[groupId] = this.db.doc<KhitmaGroup>('groups/' + groupId);
-    return this.groupsDocs[groupId].get().pipe(
-      map((res) => {
-        const data = (<any>res).data();
-        const id = (<any>res).id;
-        return { id, ...data };
+    return from(getDoc(this.groupDoc(groupId))).pipe(
+      map((snapshot) => {
+        const data = snapshot.data();
+        const id = snapshot.id;
+        return { id, ...data } as KhitmaGroup;
       })
     );
   }
 
   public setCurrentGroup(groupId: string) {
-    this.groupsDocs[groupId] = this.db.doc<any>('groups/' + groupId); // any should be `KhitmaGroup` after change stabilyzes
-
-    this.groupsDocs[groupId]
-      .valueChanges({ idField: 'id' })
+    watchDoc(this.groupDoc(groupId), 'id')
       .subscribe((group: any) => {
         this._isV2Api = !Array.isArray(group.ajza);
 
@@ -142,7 +134,7 @@ export class KhitmaGroupService {
       }
     }
 
-    return this.db.collection('groups').add(newGroupObj);
+    return addDoc(collection(this.db, 'groups'), newGroupObj);
   }
 
   public getGroupURL(groupId: string) {
@@ -154,7 +146,7 @@ export class KhitmaGroupService {
   }
 
   public updateGroupInfo(groupId, title, description, targetDate, admins) {
-    this.db.doc<KhitmaGroup>('groups/' + groupId).update({
+    updateDoc(this.groupDoc(groupId), {
       title: title,
       description: description || '',
       targetDate: targetDate || '',
@@ -191,14 +183,10 @@ export class KhitmaGroupService {
       let updatedObj = {};
       updatedObj['ajza.' + juzIndex] = currentSequentialKhitma.ajza[juzIndex];
 
-      this.db
-        .doc<KhitmaGroup_Sequential>('groups/' + groupId)
-        .update(updatedObj);
+      updateDoc(this.groupDoc(groupId), updatedObj);
     } else {
       // LEGACY CODE
-      this.db
-        .doc<KhitmaGroup_Sequential>('groups/' + groupId)
-        .update({ ajza: currentSequentialKhitma.ajza });
+      updateDoc(this.groupDoc(groupId), { ajza: currentSequentialKhitma.ajza });
     }
 
     // update also in the pesonal khitma
@@ -221,8 +209,6 @@ export class KhitmaGroupService {
     });
 
     return forkJoin(groups$);
-
-    // return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
   }
 
   startNewSequentialKhitmaCycle(newCycle, newCycleType) {
@@ -341,15 +327,13 @@ export class KhitmaGroupService {
         break;
     }
 
-    this.db
-      .doc<any>('groups/' + this._currentGroupObj.id)
-      .update({ cycle: newCycle, ajza: ajzaObj });
+    updateDoc(this.groupDoc(this._currentGroupObj.id), { cycle: newCycle, ajza: ajzaObj });
   }
 
   // ******** SAMETASK KHITMA
 
   updateGroupTask(groupId, newTask, currentCycle, resetedMembers) {
-    this.db.doc<KhitmaGroup_SameTask>('groups/' + groupId).update({
+    updateDoc(this.groupDoc(groupId), {
       task: newTask,
       members: resetedMembers,
       cycle: currentCycle + 1,
@@ -365,18 +349,15 @@ export class KhitmaGroupService {
       isTaskDone: false,
     };
 
-    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    return updateDoc(this.groupDoc(groupId), updatedObj);
   }
 
   removeGroupMember(groupId, memberName) {
     let updatedObj = {};
     updatedObj['members'] = {};
-    updatedObj['members'][memberName] =
-      firebase.default.firestore.FieldValue.delete();
+    updatedObj['members'][memberName] = deleteField();
 
-    return this.db
-      .doc<any>('groups/' + groupId)
-      .set(updatedObj, { merge: true });
+    return setDoc(this.groupDoc(groupId), updatedObj, { merge: true });
   }
 
   updateMemberTask(groupId, memberName, isDone: boolean) {
@@ -384,23 +365,30 @@ export class KhitmaGroupService {
 
     updatedObj['members.' + memberName + '.isTaskDone'] = isDone;
 
-    updatedObj['totalDoneTasks'] =
-      firebase.default.firestore.FieldValue.increment(isDone ? 1 : -1);
+    updatedObj['totalDoneTasks'] = increment(isDone ? 1 : -1);
 
-    this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    updateDoc(this.groupDoc(groupId), updatedObj);
   }
 
   // ******** GLOBAL KHITMA
 
-  getGlobalKhitma(id) {
-    return this.db.doc('global/' + id);
+  private globalDoc(id: string) {
+    return doc(this.db, 'global', id);
+  }
+
+  watchGlobalKhitma(id: string): Observable<any> {
+    return watchDoc(this.globalDoc(id));
+  }
+
+  getGlobalKhitmaOnce(id: string): Observable<any> {
+    return from(getDoc(this.globalDoc(id))).pipe(map((snapshot) => snapshot.data()));
   }
 
   updateGlobalKhitaCounter(khitmaId, counterId, delta) {
     let obj = {};
-    obj[counterId] = firebase.default.firestore.FieldValue.increment(delta);
+    obj[counterId] = increment(delta);
 
-    this.db.doc('global/' + khitmaId).update(obj);
+    updateDoc(this.globalDoc(khitmaId), obj);
   }
 
   globalKhitmaUpdateJuz(id, juzIndex, isDone) {
@@ -408,21 +396,18 @@ export class KhitmaGroupService {
 
     const delta = isDone ? 1 : -1;
 
-    obj['ajza.' + juzIndex] =
-      firebase.default.firestore.FieldValue.increment(delta);
-    obj['totalAjzaCounter'] =
-      firebase.default.firestore.FieldValue.increment(delta);
+    obj['ajza.' + juzIndex] = increment(delta);
+    obj['totalAjzaCounter'] = increment(delta);
 
-    this.db.doc('global/' + id).update(obj);
+    updateDoc(this.globalDoc(id), obj);
   }
 
   globalKhitmaUpdateJuzFromGroup(id, isDone) {
     let obj = {};
     const delta = isDone ? 1 : -1;
-    obj['totalAjzaCounter'] =
-      firebase.default.firestore.FieldValue.increment(delta);
+    obj['totalAjzaCounter'] = increment(delta);
 
-    this.db.doc('global/' + id).update(obj);
+    updateDoc(this.globalDoc(id), obj);
   }
 
   //** PAGES GROUP ************************************************************************************************** */
@@ -432,20 +417,20 @@ export class KhitmaGroupService {
     updatedObj['members'] = members;
     updatedObj['isStarted'] = true;
 
-    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    return updateDoc(this.groupDoc(groupId), updatedObj);
   }
 
   updateGroupMembers(groupId, members) {
     let updatedObj = {};
     updatedObj['members'] = members;
 
-    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    return updateDoc(this.groupDoc(groupId), updatedObj);
   }
 
   updateGroupStartStatus(groupId, isStarted) {
     let updatedObj = {};
     updatedObj['isStarted'] = isStarted;
 
-    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    return updateDoc(this.groupDoc(groupId), updatedObj);
   }
 }
