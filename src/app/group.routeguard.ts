@@ -15,7 +15,14 @@ export class GroupJoinedGuard implements CanActivate {
         Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
         const groupId = route.params.groupId;
-        const isJoind = this.localDB.isGroupJoined(groupId);
+        const target = this.localDB.isGroupJoined(groupId) ? 'dashboard' : 'join';
+
+        // Compare the route segment itself: a group ID can contain "join" or "dashboard".
+        const currentChild = state.url.split(/[?#]/)[0].split('/').filter(Boolean)[2];
+        if (currentChild !== target) {
+            // The redirected navigation runs this guard again and loads the group once there.
+            return this.router.createUrlTree(['group', groupId, target]);
+        }
 
         this.groupsApi.setCurrentGroup(groupId).subscribe((group) => {
 
@@ -25,11 +32,6 @@ export class GroupJoinedGuard implements CanActivate {
                 return;
             }
         });
-
-        const redirecTo = isJoind ? 'dashboard' : 'join';
-        if (!state.url.includes(redirecTo)) {
-            this.router.navigate(['group', groupId, redirecTo]);
-        }
 
         return true;
 

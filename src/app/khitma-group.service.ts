@@ -216,23 +216,13 @@ export class KhitmaGroupService {
     }
   }
 
-  getGroups(groupsIds: string[], authorId?: string) {
+  getGroups(groupsIds: string[]) {
     let groups$ = [];
 
     groupsIds.forEach((groupId) => {
       groups$.push(this.getGroupDetailsOnce(groupId));
     });
 
-    if (authorId) {
-      const user = this.svcUser.currentUser;
-      if (user) {
-        user.groupIds.forEach((group) => {
-          if (!groups$.includes(group)) {
-            groups$.push(group);
-          }
-        });
-      }
-    }
     return forkJoin(groups$);
 
     // return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });

@@ -118,8 +118,62 @@ function statusMsg_SameTask(group) {
   return msg;
 }
 
+function statusMsg_Pages(group) {
+  function getStatusIcon(isDone) {
+    return isDone ? '🟢' : '🔴';
+  }
+
+  function hasPages(member) {
+    return member.pagesTask?.start != null;
+  }
+
+  const NEW_LINE = '\n';
+  const now = new Date();
+
+  let msg = group.title;
+
+  msg += NEW_LINE;
+  msg += _getDateInArabic(now);
+  msg += NEW_LINE;
+  msg += NEW_LINE;
+
+  // Reading order: members with pages by their first page, then anyone still waiting for pages.
+  const members = [
+    ...group.members.filter(hasPages).sort((a, b) => a.pagesTask.start - b.pagesTask.start),
+    ...group.members.filter((member) => !hasPages(member)),
+  ];
+
+  members.forEach((member) => {
+    msg += getStatusIcon(member.isTaskDone) + ' ' + member.name;
+
+    if (hasPages(member)) {
+      msg += ': ' + (member.pagesTask.start + 1) + '-' + (member.pagesTask.end + 1);
+    }
+
+    msg += NEW_LINE;
+  });
+
+  msg += NEW_LINE;
+
+  if (group.targetDate) {
+    msg += 'موعد تسليم الختمة: ' + group.targetDate + '.';
+    msg += NEW_LINE;
+    msg += NEW_LINE;
+  }
+
+  msg += 'رجاء تحديث حالة صفحاتكم عن طريق الرابط: ' + group.getURL();
+
+  msg += NEW_LINE;
+  msg += NEW_LINE;
+
+  msg += 'بارك الله بكم!';
+
+  return msg;
+}
+
 let _StatusMessages = {};
 _StatusMessages[KHITMA_GROUP_TYPE.SEQUENTIAL] = statusMsg_Sequential;
 _StatusMessages[KHITMA_GROUP_TYPE.SAME_TASK] = statusMsg_SameTask;
+_StatusMessages[KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION] = statusMsg_Pages;
 
 export const StatusMessageGenerators = _StatusMessages;

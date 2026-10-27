@@ -128,7 +128,7 @@ test.describe('sequential group: members', () => {
     expect(await readLocalStorage(page, 'archivedGroups')).toMatchObject({ [groupId]: { title: 'ختمة للمغادرة' } });
   });
 
-  test.fail('known bug: leaving keeps the juz you had booked instead of releasing it', async ({ page }) => {
+  test('leaving releases the juz you had booked; finished juz keep your name', async ({ page }) => {
     const groupId = newGroupId('seq-leave-release');
     await createSequentialGroup(groupId, {
       author: ADMIN,
@@ -141,7 +141,7 @@ test.describe('sequential group: members', () => {
     await page.getByRole('button', { name: 'نعم' }).click();
     await expect(page).toHaveURL(/localhost:4300\/$/);
 
-    await expect.poll(() => storedJuz(groupId, 6), { timeout: 3_000 }).toEqual({ owner: '', status: IDLE });
+    await expect.poll(() => storedJuz(groupId, 6)).toEqual({ owner: '', status: IDLE });
     expect(await storedJuz(groupId, 7)).toEqual({ owner: 'سارة', status: DONE });
   });
 });

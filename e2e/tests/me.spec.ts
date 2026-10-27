@@ -3,14 +3,14 @@ import { openApp, readLocalStorage } from '../support/app';
 import { getDoc } from '../support/firestore';
 
 test.describe('personal and global khitmahs', () => {
-  test.fail('known bug: the personal khitmah grid does not render', async ({ page }) => {
+  test('personal khitmah shows saved progress, and tapping a juz cycles booked, done, available', async ({ page }) => {
     const saved = Array.from({ length: 30 }, (_, index) => ({ index, status: index === 0 ? 2 : index === 1 ? 1 : 0 }));
     await openApp(page, '/me/personal-khitma', { storage: { personalKhitma: saved } });
     const toggles = page.locator('app-juz-grid app-juz-toggle .juz-toggle');
     const juz3 = toggles.nth(2);
     const statusOfJuz3 = async () => (await readLocalStorage(page, 'personalKhitma'))[2].status;
 
-    await expect(toggles.nth(0)).toHaveClass(/done/, { timeout: 3_000 });
+    await expect(toggles.nth(0)).toHaveClass(/done/);
     await expect(toggles.nth(1)).toHaveClass(/booked/);
     await expect(juz3).toHaveClass(/idle/);
     await juz3.click();

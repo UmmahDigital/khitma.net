@@ -17,7 +17,8 @@ test.describe('joining a group from an invite link', () => {
     await page.getByLabel('اسمك').fill('  سارة  ');
     await join.click();
 
-    await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`));
+    // Joining reloads the app once the group is saved; allow for a slow round trip.
+    await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`), { timeout: 20_000 });
     await expect(page.getByText('السلام عليكم يا سارة')).toBeVisible();
     await expect(page.getByText('أدوات مسؤول المجموعة')).toHaveCount(0);
     expect(await readLocalStorage(page, 'groups')).toMatchObject({
@@ -33,7 +34,7 @@ test.describe('joining a group from an invite link', () => {
     await page.getByLabel('اسمك').fill('سارة');
     await page.getByRole('button', { name: 'الإنضمام للختمة' }).click();
 
-    await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`));
+    await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`), { timeout: 20_000 });
     await expect
       .poll(async () => (await getDoc(`groups/${groupId}`))?.members)
       .toMatchObject({ 'أبو أحمد': { isTaskDone: false }, 'سارة': { isTaskDone: false } });
@@ -42,15 +43,17 @@ test.describe('joining a group from an invite link', () => {
   test('an unknown group link explains and returns home', async ({ page }) => {
     await openApp(page, '/group/this-group-does-not-exist');
 
-    await expect(page.getByText('لم يتم العثور على الختمة المطلوبة.').first()).toBeVisible();
+    await expect(page.getByText('لم يتم العثور على الختمة المطلوبة.')).toBeVisible();
     await expect(page).toHaveURL(/localhost:4300\/$/);
+    await expect(page.getByText('لم يتم العثور على الختمة المطلوبة.')).toHaveCount(1);
   });
 
-  test.fail('known bug: a group whose ID contains "join" never shows the join page', async ({ page }) => {
+  test('a group whose ID contains "join" still opens the join page', async ({ page }) => {
     const groupId = newGroupId('rejoin');
     await createSequentialGroup(groupId, { title: 'ختمة', author: 'أبو أحمد' });
 
     await openApp(page, `/group/${groupId}`);
-    await expect(page).toHaveURL(new RegExp(`/group/${groupId}/join$`), { timeout: 3_000 });
+    await expect(page).toHaveURL(new RegExp(`/group/${groupId}/join$`));
+    await expect(page.getByRole('button', { name: 'الإنضمام للختمة' })).toBeVisible();
   });
 });

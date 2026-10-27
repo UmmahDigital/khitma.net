@@ -72,9 +72,8 @@ export class HomeComponent implements OnInit {
         }
       });
     }
-    const authorId = user?.email;
-    if (ids.length > 0 || authorId) {
-      this.groupsApi.getGroups(ids, authorId).subscribe((groups) => {
+    if (ids.length > 0) {
+      this.groupsApi.getGroups(ids).subscribe((groups) => {
         if (!groups) {
           return;
         }

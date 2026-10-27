@@ -11,7 +11,7 @@ import { Juz, JUZ_STATUS } from '../../entities/entities';
 export class JuzGridComponent implements OnInit {
 
   @Input() ajza: Juz[];
-  @Input() myAjzaIndexes?: boolean[];
+  @Input() myAjzaIndexes: number[] = [];
   @Output() onJuzSelection = new EventEmitter<Juz>();
 
   constructor() { }
