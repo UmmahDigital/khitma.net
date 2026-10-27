@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { collection, Firestore, limit, orderBy, query } from 'firebase/firestore';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GloablNotification } from './entities/notification';
@@ -50,7 +50,7 @@ export class NotificationsService {
 
     const dialogRef = this.dialog.open(NotificationComponent, {
       data: notification,
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dontDisplayAgain => {

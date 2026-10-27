@@ -32,16 +32,20 @@ body {
                                 supported by Chrome, Edge, Opera and Firefox */
 }
 
-$custom-typography: mat.define-legacy-typography-config(
+// Markazi Text throughout, sized as before the move to MDC components. MDC uses `body-2` for base text
+// (legacy used `body-1`) and `headline-5` for h1 (legacy `headline`).
+$custom-typography: mat.define-typography-config(
   $font-family: "Markazi Text",
-  $headline: mat.define-typography-level(32px, 48px, 700),
-  $body-1: mat.define-typography-level(16px, 24px, 500),
-  $button: mat.define-typography-level(16px, 24px, 500),
-  $input: mat.define-typography-level(inherit, 1.125, 400),
+  $headline-5: mat.define-typography-level(32px, 48px, 700),
+  $body-1: mat.define-typography-level(16px, 24px, 500, $letter-spacing: normal),
+  $body-2: mat.define-typography-level(16px, 24px, 500, $letter-spacing: normal),
+  $button: mat.define-typography-level(16px, 24px, 500, $letter-spacing: normal),
 );
 
-@include mat.legacy-typography-hierarchy($custom-typography);
-@include mat.all-legacy-component-typographies($custom-typography);
+@include mat.typography-hierarchy($custom-typography);
+@include mat.all-component-typographies($custom-typography);
+
+@import "src/_material-compat";
 // @include mat-button-typography($custom-typography);
 
 // Layout helpers replacing @angular/flex-layout; they apply the same styles it used to set inline.

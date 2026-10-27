@@ -3,7 +3,7 @@ import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, Khi
 import { LocalDatabaseService } from '../../../local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 
@@ -134,7 +134,7 @@ export class GroupDashboardComponent implements OnInit {
         targetDate: this.group.targetDate,
         admins: this.group.admins,
       },
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -159,7 +159,7 @@ export class GroupDashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(this.common.translation.gDashboard?.confirm, this.common.translation.gDashboard?.advice
       ),
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {

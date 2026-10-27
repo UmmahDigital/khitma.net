@@ -1,6 +1,6 @@
 import { Breakpoints } from '@angular/cdk/layout';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from '../../../../../analytics';
@@ -101,7 +101,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         data: dialogData,
-        maxWidth: "80%"
+        maxWidth: "80vw"
       });
 
       dialogRef.afterClosed().subscribe(dialogResult => {
@@ -151,7 +151,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(this.common.translation.sequential?.dialog2,
         this.common.translation.sequential?.dialog2Q + (juzIndex + 1) + "؟"),
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -191,7 +191,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
         descreption: this.group.description,
         cycle: this.group.cycle
       },
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(selectedCycleType => {

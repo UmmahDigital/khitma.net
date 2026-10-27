@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from './service/common.service';
 
@@ -26,7 +26,7 @@ export class PwaService {
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         data: dialogData,
-        maxWidth: "80%"
+        maxWidth: "80vw"
       });
 
       dialogRef.afterClosed().subscribe(dialogResult => {

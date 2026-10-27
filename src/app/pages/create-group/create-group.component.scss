@@ -17,12 +17,10 @@ section > header {
 
     border: none;
     border: 2px solid $primary-color;
-
     .mat-button-toggle-label-content {
       line-height: 42px;
       padding-left: 16px;
     }
-
     mat-button-toggle {
       background: transparent;
       color: black;
@@ -37,7 +35,6 @@ section > header {
         margin-left: 4px;
       }
     }
-
     .mat-button-toggle-checked {
       color: white;
       background-color: $primary-color;

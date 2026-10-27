@@ -1,6 +1,6 @@
 @import "src/_variables";
 
-.members-list-edit-btn {
+.members-list-edit-btn.mat-button-toggle {
     background: white;
     border: 1px solid $admin-action-color;
     color: $admin-action-color;
@@ -9,7 +9,6 @@
     // width: 48px;
     // display: block;
     margin: 16px auto;
-
     &.mat-button-toggle-checked {
         background: $admin-action-color;
         color: white;

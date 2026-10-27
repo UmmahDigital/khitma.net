@@ -1,0 +1,137 @@
+// Keeps the look users know after the switch from legacy to MDC-based Angular Material components.
+// Material adds its component styles after this sheet, so selectors here are deliberately more specific.
+
+@import "src/_variables";
+
+// Buttons: legacy letter spacing; the app's tall buttons (.large) keep their 80px height.
+.mdc-button.mat-mdc-button-base {
+  letter-spacing: normal;
+  white-space: nowrap;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+a.large.mat-mdc-button-base,
+button.large.mat-mdc-button-base {
+  height: 80px;
+  line-height: 80px;
+  font-size: larger;
+  // A label too long for one line starts at the top, as with legacy buttons (MDC centers it).
+  align-items: flex-start;
+}
+
+// Icon buttons were 40px (MDC: 48px).
+.mat-mdc-icon-button.mat-mdc-button-base {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  --mdc-icon-button-state-layer-size: 40px;
+}
+
+// Dialogs: legacy padding, the h1 size the titles always had, actions aligned to the start.
+.mat-mdc-dialog-container {
+  --mdc-dialog-subhead-font: "Markazi Text";
+  --mdc-dialog-subhead-size: 32px;
+  --mdc-dialog-subhead-line-height: 48px;
+  --mdc-dialog-subhead-weight: 700;
+  --mdc-dialog-subhead-tracking: normal;
+  --mdc-dialog-subhead-color: rgba(0, 0, 0, 0.87);
+  --mdc-dialog-supporting-text-color: rgba(0, 0, 0, 0.87);
+  --mdc-dialog-supporting-text-tracking: normal;
+
+  .mdc-dialog__surface {
+    padding: 24px;
+  }
+
+  .mat-mdc-dialog-title {
+    padding: 0;
+    margin: 0 0 20px;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .mat-mdc-dialog-content {
+    margin: 0 -24px;
+    padding: 0 24px;
+    max-height: 65vh;
+  }
+
+  .mat-mdc-dialog-actions {
+    min-height: 52px;
+    margin-bottom: -24px;
+    padding: 8px 0;
+    justify-content: flex-start;
+  }
+}
+
+// Radio labels wrap instead of stretching the dialog.
+.mat-mdc-radio-button .mdc-form-field > label {
+  white-space: normal;
+}
+
+// Slide toggles: a plain handle, without the check mark MDC draws.
+.mat-mdc-slide-toggle .mdc-switch__icons {
+  display: none;
+}
+
+// Form fields: the legacy fill look, measured on the legacy build: 80px boxes around 40px inputs,
+// 18px lines, a darker fill and regular-weight labels.
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: rgba(0, 0, 0, 0.04);
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+
+  .mat-mdc-form-field-infix {
+    min-height: 80px;
+    padding-top: 32px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .mat-mdc-input-element.mat-mdc-form-field-input-control {
+    line-height: 18px;
+    font-weight: 400;
+    color: #000;
+  }
+
+  input.mat-mdc-input-element {
+    height: 40px;
+  }
+
+  textarea.mat-mdc-input-element {
+    padding: 2px 0;
+  }
+
+  .mdc-text-field .mdc-floating-label.mdc-floating-label {
+    font-weight: 400;
+  }
+}
+
+// Radio buttons: the legacy 20px circle without MDC's 40px touch halo, so labels keep their width.
+.mat-mdc-radio-button.mat-mdc-radio-button {
+  --mdc-radio-state-layer-size: 20px;
+
+  .mdc-radio {
+    padding: 0;
+  }
+
+  .mdc-form-field > label {
+    padding-inline-start: 8px;
+  }
+}
+
+// Cards: legacy cards padded their content; MDC leaves that to mat-card-content.
+.mat-mdc-card {
+  display: block;
+  padding: 16px;
+
+  .mat-mdc-card-content {
+    padding: 0;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

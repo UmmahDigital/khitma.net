@@ -4,7 +4,7 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { LocalDatabaseService } from '../../local-database.service';
 import { map } from 'rxjs/operators';
 import { GoogleAnalyticsService } from '../../analytics';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
@@ -108,7 +108,7 @@ export class GlobalKhitmaComponent implements OnInit {
         this.common.translation.gKhitma?.new,
         this.common.translation.gKhitma?.bless
       ),
-      maxWidth: '80%',
+      maxWidth: '80vw',
     });
 
     dialogRef.afterClosed().subscribe((dialogResult) => {

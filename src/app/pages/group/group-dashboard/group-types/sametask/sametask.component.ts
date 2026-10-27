@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from '../../../../../analytics';
@@ -112,7 +112,7 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
       data: new ConfirmDialogModel(
         this.common.translation.gPages?.confirm,
         ""),
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {

@@ -157,7 +157,7 @@ mat-toolbar {
   flex: 1 1 auto;
 }
 
-.mat-nav-list .mat-list-item {
+.mat-nav-list .mat-mdc-list-item {
   padding: 16px 0 !important;
 }
 
@@ -179,7 +179,7 @@ section > p {
   margin-right: 8px;
 }
 
-.mat-list-base {
+.mat-mdc-list-base {
   width: 100%;
   padding: 0;
 }
@@ -187,10 +187,6 @@ section > p {
 .mat-drawer-container {
   overflow: visible;
   position: unset !important;
-}
-
-.mat-radio-label-content {
-  white-space: normal !important;
 }
 
 hr {
@@ -223,12 +219,9 @@ hr {
     z-index: 10;
     border-radius: 2px;
     box-shadow: 3px 4px 5px #77d9c2;
-    .mat-list-item {
+    .mat-mdc-list-item {
       height: auto;
       padding: 0 !important;
-    }
-    .mat-list-item-content {
-      padding: 0 0.5rem !important;
     }
   }
 }

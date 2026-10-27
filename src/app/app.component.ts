@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import { CelebrationService } from './celebration.service';
 import { NotificationsService } from './notifications.service';
@@ -78,7 +78,7 @@ export class AppComponent {
 
   openMenu() {
     this.menuDialogRef = this.dialog.open(PopMenuComponent, {
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
   }
