@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 import { AlertService } from "./alert.service";
 import { KhitmaGroupService } from "./khitma-group.service";
@@ -7,7 +7,7 @@ import { LocalDatabaseService } from "./local-database.service";
 import { CommonService } from "./service/common.service";
 
 @Injectable()
-export class GroupJoinedGuard implements CanActivate {
+export class GroupJoinedGuard  {
     constructor(
         private localDB: LocalDatabaseService, private router: Router, private groupsApi: KhitmaGroupService, private alert: AlertService, private common: CommonService) { }
 
