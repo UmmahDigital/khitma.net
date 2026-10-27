@@ -11,6 +11,7 @@ export const KHITMA_CYCLE_TYPE = Object.freeze({
   AUTO_BOOK: 1,
   ALL_IDLE: 2,
   AUTO_BOOK_FOR_DONE_ONLY: 3,
+  REWIND: 4,
 });
 
 export const KHITMA_GROUP_TYPE = Object.freeze({
@@ -168,6 +169,28 @@ export class KhitmaGroup_Sequential extends KhitmaGroup {
     }
 
     return ajza;
+  }
+
+  static getPreviousCycleAjza(currentAjza: Juz[]): Juz[] {
+    let previousCycleAjza: Juz[] = [];
+
+    for (let i = 0; i < NUM_OF_AJZA; i++) {
+      const nextIndex = i == NUM_OF_AJZA - 1 ? 0 : i + 1;
+      const currentJuz = currentAjza[nextIndex];
+
+      previousCycleAjza.push(
+        new Juz({
+          index: i,
+          owner: currentJuz.owner || '',
+          status:
+            currentJuz.status == JUZ_STATUS.IDLE
+              ? JUZ_STATUS.IDLE
+              : JUZ_STATUS.BOOKED,
+        })
+      );
+    }
+
+    return previousCycleAjza;
   }
 
   static convertAjzaToObj(ajza: Juz[]) {

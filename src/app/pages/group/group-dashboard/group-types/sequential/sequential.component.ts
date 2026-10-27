@@ -188,7 +188,8 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       data: {
         title: this.group.title,
         author: this.group.author,
-        descreption: this.group.description
+        descreption: this.group.description,
+        cycle: this.group.cycle
       },
       maxWidth: "80%"
     });
@@ -199,12 +200,15 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
         return;
       }
 
-
       this.$gaService.event('group_new_khitmah');
 
-      this.group.cycle++;
-      this.groupsApi.startNewSequentialKhitmaCycle(this.group.cycle, selectedCycleType);
+      const isRewind = selectedCycleType === KHITMA_CYCLE_TYPE.REWIND;
+      const nextCycle = isRewind
+        ? Math.max(0, this.group.cycle - 1)
+        : this.group.cycle + 1;
 
+      this.group.cycle = nextCycle;
+      this.groupsApi.startNewSequentialKhitmaCycle(this.group.cycle, selectedCycleType);
 
     });
 

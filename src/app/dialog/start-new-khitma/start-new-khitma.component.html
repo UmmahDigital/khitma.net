@@ -24,6 +24,9 @@
             إتاحة جميع الأجزاء للإختيار
         </mat-radio-button>
 
+        <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.REWIND" [disabled]="group.cycle <= 0">
+            إرجاع الختمة خطوة إلى الوراء (إعطاء كل عضو الجزء السابق له)
+        </mat-radio-button>
 
     </mat-radio-group>
 

@@ -344,6 +344,14 @@ export class KhitmaGroupService {
           ajzaObj = KhitmaGroup_Sequential.getEmptyAjzaObj();
         }
         break;
+      case KHITMA_CYCLE_TYPE.REWIND:
+        {
+          let ajza = KhitmaGroup_Sequential.getPreviousCycleAjza(
+            currentSequentialKhitma.ajza
+          );
+          ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajza);
+        }
+        break;
     }
 
     this.db
