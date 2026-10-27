@@ -6,7 +6,6 @@ import {
   KHITMA_GROUP_TYPE,
   KhitmaGroup_SameTask,
 } from '../../../entities/entities';
-import { UserService } from '../../../service/user.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
 
@@ -25,8 +24,7 @@ export class GroupJoinComponent implements OnInit {
     private localDB: LocalDatabaseService,
     private $gaService: GoogleAnalyticsService,
     private router: Router,
-    private _ngZone: NgZone,
-    private svcUser: UserService
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -41,7 +39,6 @@ export class GroupJoinComponent implements OnInit {
     let username = KhitmaGroup.refineOwnerName(this.username);
 
     this.localDB.joinGroup(this.group.id, username);
-    this.svcUser.joinToGroup(this.group.id);
     if (
       this.group.type === KHITMA_GROUP_TYPE.SAME_TASK ||
       this.group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION

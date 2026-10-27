@@ -30,8 +30,6 @@ import {
 import { LocalDatabaseService } from './local-database.service';
 
 import * as firebase from 'firebase/compat/app';
-import { User } from './common/model';
-import { UserService } from './service/user.service';
 // import undefined from 'firebase/compat/firestore';
 
 @Injectable({
@@ -47,8 +45,7 @@ export class KhitmaGroupService {
 
   constructor(
     private db: AngularFirestore,
-    private localDB: LocalDatabaseService,
-    private svcUser: UserService
+    private localDB: LocalDatabaseService
   ) {}
 
   public getGroupDetailsOnce(groupId: string): Observable<KhitmaGroup> {

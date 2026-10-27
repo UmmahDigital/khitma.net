@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { openApp, readLocalStorage } from '../support/app';
+import { getDoc } from '../support/firestore';
 import { buildAjza, createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtures';
 
 // Data shapes written by previous versions of the app, as found on users' phones.
@@ -45,6 +46,20 @@ test.describe('phones with data from older versions', () => {
     await expect(page).toHaveURL(new RegExp(`/group/${current}/dashboard$`));
     await expect(page.getByRole('button', { name: 'أتممت قراءة جزء 4' })).toBeVisible();
     expect(await readLocalStorage(page, 'groups')).toMatchObject({ [current]: { username: 'سارة' } });
+  });
+
+  test('old login data prefills the creator name, and the email is not stored in the group', async ({ page }) => {
+    await openApp(page, '/new?type=recurring', {
+      storage: { login: { id: 'legacy-user', email: 'sara@example.com', fullName: 'سارة', groupIds: [] } },
+    });
+
+    await expect(page.getByLabel('اسمك (مسؤول الختمة)')).toHaveValue('سارة');
+    await page.getByLabel('عنوان الختمة').fill('ختمة جديدة');
+    await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
+
+    await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
+    const groupId = new URL(page.url()).pathname.split('/')[2];
+    expect(await getDoc(`groups/${groupId}`)).toMatchObject({ author: 'سارة', authorId: '' });
   });
 
   test('old social-login data does not hide the groups list on the home page', async ({ page }) => {
