@@ -1,5 +1,5 @@
-<section dir="ltr" fxLayout="row wrap" fxLayoutGap="16px grid">
-    <div *ngFor="let juz of ajza" fxFlex="20%" style="text-align:center">
+<section dir="ltr" class="fx-row-wrap juz-grid-row">
+    <div *ngFor="let juz of ajza" class="fx-flex-20" style="text-align:center">
         <app-juz-toggle [juz]="juz" [isMyJuz]="myAjzaIndexes.indexOf(juz.index)>=0" (click)="juzClicked(juz)">
         </app-juz-toggle>
     </div>

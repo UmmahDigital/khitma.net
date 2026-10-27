@@ -1,16 +1,5 @@
-<div
-  fxLayout="row wrap"
-  fxLayoutGap="0px grid"
-  class="center-center"
-  style="height: 100%"
->
-  <div
-    id="app-container"
-    [class.dark]="isDarkStyle"
-    fxFlex="33%"
-    fxFlex.xs="100%"
-    fxFlex.sm="100%"
-  >
+<div class="center-center fx-row-wrap" style="height: 100%">
+  <div id="app-container" [class.dark]="isDarkStyle">
     <app-celebration *ngIf="showCelebration" class="celebration-container">
     </app-celebration>
 

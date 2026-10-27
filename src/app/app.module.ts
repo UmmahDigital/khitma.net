@@ -10,7 +10,6 @@ import { MaterialModule } from './modules/material.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -157,7 +156,6 @@ const routes: Routes = [
     }),
     MaterialModule,
     FormsModule,
-    FlexLayoutModule,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production && !environment.useEmulators,

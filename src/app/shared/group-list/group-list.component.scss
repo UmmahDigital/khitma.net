@@ -5,3 +5,12 @@
     margin-top: -16px;
   }
 }
+
+// 12px gap between a group and its archive button, as @angular/flex-layout laid it out (right-to-left).
+.group-row {
+  margin: 0 0 -12px -12px;
+
+  > div {
+    padding: 0 0 12px 12px;
+  }
+}

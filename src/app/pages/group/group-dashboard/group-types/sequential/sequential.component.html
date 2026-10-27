@@ -34,9 +34,9 @@
         <div *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
             <section class="mat-elevation-z16" *ngFor="let juzIndex of myAjzaIndexes">
 
-                <section class="my-juz-actions" fxLayout="row wrap" fxLayoutGap="0px grid">
+                <section class="my-juz-actions fx-row-wrap">
 
-                    <div fxFlex="25%" class="center-center">
+                    <div class="fx-flex-25 center-center">
                         <a [routerLink]="['/quran/juz' , juzIndex + 1]" class="quran-explorer-btn">
 
                             <mat-icon>
@@ -46,13 +46,13 @@
                         </a>
                     </div>
 
-                    <div fxFlex="50%" class="center-center">
+                    <div class="fx-flex-50 center-center">
                         <button mat-raised-button color="accent" class="block large action-btn"
                             (click)="juzDone(juzIndex)"><span [translate]="'sequential.finished'">أتممت قراءة جزء</span>
                             {{juzIndex + 1}}</button>
                     </div>
 
-                    <div fxFlex="25%" class="center-center">
+                    <div class="fx-flex-25 center-center">
                         <button class="giveup-btn" mat-flat-button (click)="juzGiveup(juzIndex)"><span
                                 [translate]="'sequential.release'">تنازل عن الجزء</span></button>
                     </div>
