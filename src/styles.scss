@@ -3,7 +3,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;700&display=swap");
 
-@import "~src/_variables";
+@import "src/_variables";
 
 html,
 body {
@@ -32,7 +32,7 @@ body {
                                 supported by Chrome, Edge, Opera and Firefox */
 }
 
-$custom-typography: mat.define-typography-config(
+$custom-typography: mat.define-legacy-typography-config(
   $font-family: "Markazi Text",
   $headline: mat.define-typography-level(32px, 48px, 700),
   $body-1: mat.define-typography-level(16px, 24px, 500),
@@ -40,8 +40,8 @@ $custom-typography: mat.define-typography-config(
   $input: mat.define-typography-level(inherit, 1.125, 400),
 );
 
-@include mat.typography-hierarchy($custom-typography);
-@include mat.all-component-typographies($custom-typography);
+@include mat.legacy-typography-hierarchy($custom-typography);
+@include mat.all-legacy-component-typographies($custom-typography);
 // @include mat-button-typography($custom-typography);
 
 // Layout helpers replacing @angular/flex-layout; they apply the same styles it used to set inline.

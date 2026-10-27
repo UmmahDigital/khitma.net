@@ -4,7 +4,7 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { LocalDatabaseService } from '../../local-database.service';
 import { map } from 'rxjs/operators';
 import { GoogleAnalyticsService } from '../../analytics';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,

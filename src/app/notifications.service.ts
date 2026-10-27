@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { collection, Firestore, limit, orderBy, query } from 'firebase/firestore';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GloablNotification } from './entities/notification';

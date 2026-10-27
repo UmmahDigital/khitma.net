@@ -34,7 +34,7 @@ export class CreateGroupComponent implements OnInit {
   typeParam: string;
 
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
-  groupType = KHITMA_GROUP_TYPE.SAME_TASK;
+  groupType: string = KHITMA_GROUP_TYPE.SAME_TASK;
   isRecurring = true;
 
   constructor(

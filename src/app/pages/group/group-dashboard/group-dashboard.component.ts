@@ -3,7 +3,7 @@ import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, Khi
 import { LocalDatabaseService } from '../../../local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 

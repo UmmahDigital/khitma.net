@@ -9,17 +9,26 @@
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    // "strict": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2018", "dom"],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
-      "tslib": ["path/to/node_modules/tslib/tslib.d.ts"],
-      "@environments/*": ["./src/environments/*"],
-      "@app/*": ["./src/app/*"]
-    }
+      "tslib": [
+        "path/to/node_modules/tslib/tslib.d.ts"
+      ],
+      "@environments/*": [
+        "./src/environments/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ]
+    },
+    "useDefineForClassFields": false
   },
   "include": ["./src/assets/translate/en.ts"]
 }

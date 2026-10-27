@@ -1,4 +1,4 @@
-@import "~src/_variables";
+@import "src/_variables";
 
 @function randomNum($min, $max) {
   $rand: random();

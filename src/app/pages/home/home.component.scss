@@ -1,4 +1,4 @@
-@import "~src/_variables";
+@import "src/_variables";
 
 .home {
   font-size: larger;
@@ -27,7 +27,7 @@ a {
 
 
 #aqsa-khitma-btn{
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.25)), url('~src/assets/aqsa-btn-bg.png') !important;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.25)), url('../../../assets/aqsa-btn-bg.png') !important;
   background-position: center;
   background-size: cover!important;
   margin-bottom: 16px;

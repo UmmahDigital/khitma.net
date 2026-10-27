@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import { CelebrationService } from './celebration.service';
 import { NotificationsService } from './notifications.service';
