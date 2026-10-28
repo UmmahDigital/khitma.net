@@ -12,10 +12,10 @@ import {
 import { CommonService } from '../../service/common.service';
 
 @Component({
-  selector: 'app-global-khitma',
-  templateUrl: './global-khitma.component.html',
-  styleUrls: ['./global-khitma.component.scss'],
-  // encapsulation: ViewEncapsulation.None
+    selector: 'app-global-khitma',
+    templateUrl: './global-khitma.component.html',
+    styleUrls: ['./global-khitma.component.scss'],
+    standalone: false
 })
 export class GlobalKhitmaComponent implements OnInit {
   constructor(

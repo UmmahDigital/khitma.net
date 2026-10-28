@@ -8,11 +8,11 @@ import { Location, LocationStrategy } from '@angular/common';
 import { AlertService } from 'src/app/alert.service';
 
 @Component({
-  selector: 'app-group',
-  templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss'],
-  encapsulation: ViewEncapsulation.None
-
+    selector: 'app-group',
+    templateUrl: './group.component.html',
+    styleUrls: ['./group.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GroupComponent implements OnInit {
 

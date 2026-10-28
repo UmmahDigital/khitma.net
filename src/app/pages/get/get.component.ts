@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-get',
-  templateUrl: './get.component.html',
-  styleUrls: ['./get.component.scss']
+    selector: 'app-get',
+    templateUrl: './get.component.html',
+    styleUrls: ['./get.component.scss'],
+    standalone: false
 })
 export class GetComponent implements OnInit {
 

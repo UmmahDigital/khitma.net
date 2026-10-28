@@ -4,9 +4,10 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { LocalDatabaseService } from '../../local-database.service';
 
 @Component({
-  selector: 'app-group-list',
-  templateUrl: './group-list.component.html',
-  styleUrls: ['./group-list.component.scss']
+    selector: 'app-group-list',
+    templateUrl: './group-list.component.html',
+    styleUrls: ['./group-list.component.scss'],
+    standalone: false
 })
 export class GroupListComponent implements OnInit {
 

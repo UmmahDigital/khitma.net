@@ -2,7 +2,8 @@ import { Directive, ElementRef, Input } from '@angular/core';
 import { CommonService } from '../service/common.service';
 
 @Directive({
-  selector: '[translate]'
+    selector: '[translate]',
+    standalone: false
 })
 export class TranslateDirective {
 

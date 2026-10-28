@@ -4,9 +4,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { GET_JUZ_READ_EXTERNAL_URL } from 'src/app/entities/entities';
 
 @Component({
-  selector: 'app-quran',
-  templateUrl: './quran.component.html',
-  styleUrls: ['./quran.component.scss']
+    selector: 'app-quran',
+    templateUrl: './quran.component.html',
+    styleUrls: ['./quran.component.scss'],
+    standalone: false
 })
 export class QuranComponent implements OnInit {
 

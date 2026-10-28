@@ -58,7 +58,10 @@ export class GoogleAnalyticsService {
 }
 
 /** Sends `gaEvent` (with the optional `gaCategory`) when the element is clicked. */
-@Directive({ selector: '[gaEvent]' })
+@Directive({
+    selector: '[gaEvent]',
+    standalone: false
+})
 export class GaEventDirective {
   @Input() gaEvent: string;
   @Input() gaCategory?: string;

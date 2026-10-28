@@ -3,9 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KhitmaGroup, KHITMA_CYCLE_TYPE } from 'src/app/entities/entities';
 
 @Component({
-  selector: 'app-start-new-khitma',
-  templateUrl: './start-new-khitma.component.html',
-  styleUrls: ['./start-new-khitma.component.scss']
+    selector: 'app-start-new-khitma',
+    templateUrl: './start-new-khitma.component.html',
+    styleUrls: ['./start-new-khitma.component.scss'],
+    standalone: false
 })
 export class StartNewKhitmaComponent implements OnInit {
 

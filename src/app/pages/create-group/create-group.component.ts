@@ -17,10 +17,11 @@ import { UserService } from '../../../app/service/user.service';
 import { User } from '../../../app/common/model';
 
 @Component({
-  selector: 'app-create-group',
-  templateUrl: './create-group.component.html',
-  styleUrls: ['./create-group.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-create-group',
+    templateUrl: './create-group.component.html',
+    styleUrls: ['./create-group.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CreateGroupComponent implements OnInit {
   @Output() groupCreated = new EventEmitter<object>();

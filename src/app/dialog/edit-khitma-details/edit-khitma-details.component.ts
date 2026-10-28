@@ -3,9 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KhitmaGroup } from 'src/app/entities/entities';
 
 @Component({
-  selector: 'app-edit-khitma-details',
-  templateUrl: './edit-khitma-details.component.html',
-  styleUrls: ['./edit-khitma-details.component.scss']
+    selector: 'app-edit-khitma-details',
+    templateUrl: './edit-khitma-details.component.html',
+    styleUrls: ['./edit-khitma-details.component.scss'],
+    standalone: false
 })
 export class EditKhitmaDetailsComponent implements OnInit {
 

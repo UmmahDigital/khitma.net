@@ -15,9 +15,10 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../share
 import { CommonService } from '../../../../../service/common.service';
 
 @Component({
-  selector: 'app-group-sametask',
-  templateUrl: './sametask.component.html',
-  styleUrls: ['./sametask.component.scss']
+    selector: 'app-group-sametask',
+    templateUrl: './sametask.component.html',
+    styleUrls: ['./sametask.component.scss'],
+    standalone: false
 })
 export class Group_SameTask_Component implements OnInit, OnChanges {
 

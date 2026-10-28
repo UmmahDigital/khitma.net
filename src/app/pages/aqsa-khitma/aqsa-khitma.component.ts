@@ -5,9 +5,10 @@ import { GlobalCountersService } from 'src/app/global-counters.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 
 @Component({
-  selector: 'app-aqsa-khitma',
-  templateUrl: './aqsa-khitma.component.html',
-  styleUrls: ['./aqsa-khitma.component.scss']
+    selector: 'app-aqsa-khitma',
+    templateUrl: './aqsa-khitma.component.html',
+    styleUrls: ['./aqsa-khitma.component.scss'],
+    standalone: false
 })
 export class AqsaKhitmaComponent implements OnInit {
 

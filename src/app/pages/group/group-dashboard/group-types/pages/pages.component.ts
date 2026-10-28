@@ -11,9 +11,10 @@ import { CommonService } from '../../../../../service/common.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-group-pages',
-  templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.scss']
+    selector: 'app-group-pages',
+    templateUrl: './pages.component.html',
+    styleUrls: ['./pages.component.scss'],
+    standalone: false
 })
 export class Group_Pages_Component implements OnInit {
 

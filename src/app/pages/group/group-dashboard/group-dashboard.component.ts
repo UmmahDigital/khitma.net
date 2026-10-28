@@ -27,10 +27,11 @@ import { CommonService } from '../../../service/common.service';
 
 
 @Component({
-  selector: 'app-group-dashboard',
-  templateUrl: './group-dashboard.component.html',
-  styleUrls: ['./group-dashboard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-group-dashboard',
+    templateUrl: './group-dashboard.component.html',
+    styleUrls: ['./group-dashboard.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GroupDashboardComponent implements OnInit {
 

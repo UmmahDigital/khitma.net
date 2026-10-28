@@ -10,9 +10,10 @@ import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
 
 @Component({
-  selector: 'app-group-join',
-  templateUrl: './group-join.component.html',
-  styleUrls: ['./group-join.component.scss'],
+    selector: 'app-group-join',
+    templateUrl: './group-join.component.html',
+    styleUrls: ['./group-join.component.scss'],
+    standalone: false
 })
 export class GroupJoinComponent implements OnInit {
   group: KhitmaGroup;

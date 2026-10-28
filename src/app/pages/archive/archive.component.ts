@@ -8,9 +8,10 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confi
 import { KhitmaGroupService } from '../../khitma-group.service';
 
 @Component({
-  selector: 'app-archive',
-  templateUrl: './archive.component.html',
-  styleUrls: ['./archive.component.scss']
+    selector: 'app-archive',
+    templateUrl: './archive.component.html',
+    styleUrls: ['./archive.component.scss'],
+    standalone: false
 })
 export class ArchiveComponent implements OnInit {
 

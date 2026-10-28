@@ -4,11 +4,11 @@ import { KhitmaGroupService } from 'src/app/khitma-group.service';
 
 
 @Component({
-  selector: 'app-khitma-info',
-  templateUrl: './khitma-info.component.html',
-  styleUrls: ['./khitma-info.component.scss'],
-  encapsulation: ViewEncapsulation.None
-
+    selector: 'app-khitma-info',
+    templateUrl: './khitma-info.component.html',
+    styleUrls: ['./khitma-info.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class KhitmaInfoComponent implements OnInit {
 

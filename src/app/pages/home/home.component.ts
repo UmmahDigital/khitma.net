@@ -31,10 +31,10 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { CommonService } from '../../service/common.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  // encapsulation: ViewEncapsulation.None
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   groups: KhitmaGroup[];

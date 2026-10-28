@@ -16,9 +16,10 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../share
 import { CommonService } from '../../../../../service/common.service';
 
 @Component({
-  selector: 'app-group-sequential',
-  templateUrl: './sequential.component.html',
-  styleUrls: ['./sequential.component.scss']
+    selector: 'app-group-sequential',
+    templateUrl: './sequential.component.html',
+    styleUrls: ['./sequential.component.scss'],
+    standalone: false
 })
 export class Group_Sequential_Component implements OnInit, OnChanges {
 

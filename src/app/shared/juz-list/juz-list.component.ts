@@ -3,10 +3,11 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } fro
 import { Juz, JUZ_STATUS } from '../../entities/entities';
 
 @Component({
-  selector: 'app-juz-list',
-  templateUrl: './juz-list.component.html',
-  styleUrls: ['./juz-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-juz-list',
+    templateUrl: './juz-list.component.html',
+    styleUrls: ['./juz-list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class JuzListComponent implements OnInit {
 

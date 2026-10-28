@@ -3,9 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GloablNotification } from 'src/app/entities/notification';
 
 @Component({
-  selector: 'app-notification',
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.scss']
+    selector: 'app-notification',
+    templateUrl: './notification.component.html',
+    styleUrls: ['./notification.component.scss'],
+    standalone: false
 })
 export class NotificationComponent implements OnInit {
 

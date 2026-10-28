@@ -8,10 +8,11 @@ import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
 
 @Component({
-  selector: 'app-group-invite',
-  templateUrl: './group-invite.component.html',
-  styleUrls: ['./group-invite.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-group-invite',
+    templateUrl: './group-invite.component.html',
+    styleUrls: ['./group-invite.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GroupInviteComponent implements OnInit {
   group: KhitmaGroup;

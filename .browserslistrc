@@ -1,10 +1,12 @@
 # Browsers the build must support. This app's users often keep older phones,
-# so the floor sits well below Angular's default (latest versions only).
+# so the floor sits well below Angular's default (recent versions only).
 # Raise it only after analytics confirms those devices are gone.
+# Safari/iOS: 14.1/14.5 is the lowest the build tooling (esbuild) can target
+# since Angular 19; every iPhone that ran iOS 14 can install 14.5+.
 Chrome >= 80
 ChromeAndroid >= 80
 Edge >= 88
 Firefox >= 78
-Safari >= 13.1
-iOS >= 13.4
+Safari >= 14.1
+iOS >= 14.5
 Samsung >= 12

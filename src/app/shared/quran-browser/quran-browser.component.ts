@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-quran-browser',
-  templateUrl: './quran-browser.component.html',
-  styleUrls: ['./quran-browser.component.scss']
+    selector: 'app-quran-browser',
+    templateUrl: './quran-browser.component.html',
+    styleUrls: ['./quran-browser.component.scss'],
+    standalone: false
 })
 export class QuranBrowserComponent implements OnInit {
 

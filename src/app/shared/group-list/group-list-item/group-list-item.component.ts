@@ -3,9 +3,10 @@ import { KhitmaGroupService } from '../../../../app/khitma-group.service';
 import { GroupMember, JUZ_STATUS, KHITMA_GROUP_TYPE } from '../../../entities/entities';
 
 @Component({
-  selector: 'app-group-list-item',
-  templateUrl: './group-list-item.component.html',
-  styleUrls: ['./group-list-item.component.scss']
+    selector: 'app-group-list-item',
+    templateUrl: './group-list-item.component.html',
+    styleUrls: ['./group-list-item.component.scss'],
+    standalone: false
 })
 export class GroupListItemComponent implements OnInit {
 
