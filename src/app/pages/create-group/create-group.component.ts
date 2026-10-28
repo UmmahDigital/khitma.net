@@ -117,7 +117,7 @@ export class CreateGroupComponent implements OnInit {
       )
       .then((docRef) => {
         const groupId = docRef.id;
-        this.$gaService.event('group_created');
+        this.$gaService.send('group_created', { group_id: groupId, group_type: this.groupType });
 
         this.alert.show(this.common.translation.gCreate?.success, 5000);
 

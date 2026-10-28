@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GoogleAnalyticsService } from './analytics';
 
 @Injectable({
   providedIn: 'root',
@@ -6,13 +7,17 @@ import { Injectable } from '@angular/core';
 export class NativeApiService {
   public isAvailable = false;
 
-  constructor() {
+  constructor(private analytics: GoogleAnalyticsService) {
     if (navigator.share) {
       this.isAvailable = true;
     }
   }
 
-  share(title, text, url) {
+  /** `content` (invite, status, completion_dua…) and `groupId` describe the share in the `share` analytics event. */
+  share(title, text, url, content = 'other', groupId?: string) {
+    const method = window['Flutter'] ? 'flutter' : this.isAvailable ? 'native' : 'unavailable';
+    this.analytics.send('share', { method, content_type: content, ...(groupId ? { item_id: groupId } : {}) });
+
     if (window['Flutter']) {
       window['Flutter'].postMessage(
         JSON.stringify({

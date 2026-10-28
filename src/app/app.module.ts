@@ -72,32 +72,34 @@ import { CommonService } from './service/common.service';
 
 GroupJoinedGuard;
 
+// `data.screen` names each screen in analytics (see analytics.ts): page titles can't be used, as they carry group names.
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, data: { screen: 'home' } },
   {
     path: 'new',
     component: CreateGroupComponent,
-    children: [{ path: 'invite', component: GroupInviteComponent }],
+    data: { screen: 'create_group' },
+    children: [{ path: 'invite', component: GroupInviteComponent, data: { screen: 'group_invite' } }],
   },
-  { path: 'me/groups/archive', component: ArchiveComponent },
+  { path: 'me/groups/archive', component: ArchiveComponent, data: { screen: 'archive' } },
   // { path: 'me', component: DashboardComponent },
-  { path: 'me/groups', component: DashboardComponent },
-  { path: 'me/personal-khitma', component: PersonalKhitmaComponent },
-  { path: 'group/:groupId/invite', component: GroupInviteComponent },
+  { path: 'me/groups', component: DashboardComponent, data: { screen: 'my_groups' } },
+  { path: 'me/personal-khitma', component: PersonalKhitmaComponent, data: { screen: 'personal_khitma' } },
+  { path: 'group/:groupId/invite', component: GroupInviteComponent, data: { screen: 'group_invite' } },
   {
     path: 'group/:groupId',
     canActivate: [GroupJoinedGuard],
     children: [
-      { path: 'join', component: GroupJoinComponent },
-      { path: 'dashboard', component: GroupDashboardComponent },
+      { path: 'join', component: GroupJoinComponent, data: { screen: 'group_join' } },
+      { path: 'dashboard', component: GroupDashboardComponent, data: { screen: 'group_dashboard' } },
     ],
   },
-  { path: 'quran', component: QuranComponent },
-  { path: 'quran/juz/:juzIndex', component: QuranComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'get', component: GetComponent },
-  { path: 'ramadan', component: GlobalKhitmaComponent },
-  { path: 'aqsa', component: AqsaKhitmaComponent },
+  { path: 'quran', component: QuranComponent, data: { screen: 'quran' } },
+  { path: 'quran/juz/:juzIndex', component: QuranComponent, data: { screen: 'quran_juz' } },
+  { path: 'about', component: AboutComponent, data: { screen: 'about' } },
+  { path: 'get', component: GetComponent, data: { screen: 'get_app' } },
+  { path: 'ramadan', component: GlobalKhitmaComponent, data: { screen: 'ramadan' } },
+  { path: 'aqsa', component: AqsaKhitmaComponent, data: { screen: 'aqsa' } },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 

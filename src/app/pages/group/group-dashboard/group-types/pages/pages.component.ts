@@ -52,7 +52,12 @@ export class Group_Pages_Component implements OnInit {
 
   taskToggled(isDone: boolean) {
 
+    const completesKhitma = isDone && this.group.isStarted &&
+      this.group.members.every((member) => member.name === this.username || member.isTaskDone);
     this.groupsApi.updateMemberTask(this.group.id, this.username, isDone);
+    if (completesKhitma) {
+      this.$gaService.send('khitma_completed', { completed_by: 'member' });
+    }
 
     if (isDone) {
       this.onAchievement.emit();
@@ -72,6 +77,9 @@ export class Group_Pages_Component implements OnInit {
 
     member.isTaskDone = !member.isTaskDone;
     this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
+    if (member.isTaskDone && this.group.isStarted && this.group.members.every((m) => m.isTaskDone)) {
+      this.$gaService.send('khitma_completed', { completed_by: 'admin' });
+    }
 
 
     this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<KhitmaGroup_Pages>this.group).task);

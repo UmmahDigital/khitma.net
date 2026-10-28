@@ -62,7 +62,9 @@ export class GroupInviteComponent implements OnInit {
     this.nativeApi.share(
       this.common.translation.gInvite?.share,
       this.inviteMsg,
-      null
+      null,
+      'invite',
+      this.group.id
     );
   }
 }

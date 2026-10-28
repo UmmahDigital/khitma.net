@@ -95,7 +95,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   adminJuzUpdate(juz: Juz) {
 
     if (juz.status == JUZ_STATUS.BOOKED) {
+      const completesKhitma = this.isLastJuz(juz.index);
       this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
+      if (completesKhitma) {
+        this.$gaService.send('khitma_completed', { completed_by: 'admin' });
+      }
     }
 
     if (juz.status == JUZ_STATUS.DONE) {
@@ -120,6 +124,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
     this.$gaService.event('admin_juz_update');
 
+  }
+
+  /** Whether finishing this juz completes the khitma: every other juz is already done. */
+  private isLastJuz(juzIndex: number): boolean {
+    return this.group.ajza.every((juz) => juz.index === juzIndex || juz.status === JUZ_STATUS.DONE);
   }
 
   private _hasAjza(): boolean {
@@ -164,7 +173,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
         this.$gaService.event('juz_done');
 
+        const completesKhitma = this.isLastJuz(juzIndex);
         this.groupsApi.updateJuz(this.group.id, juzIndex, this.username, JUZ_STATUS.DONE);
+        if (completesKhitma) {
+          this.$gaService.send('khitma_completed', { completed_by: 'member' });
+        }
 
         this.myAjzaIndexes = this.myAjzaIndexes.filter(_juzIndex => _juzIndex !== juzIndex)
 
@@ -240,7 +253,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   shareKhitmaCompletedDua() {
 
     const dua = "اللهم ارحمنى بالقرآن وأجعله لى إماما ونورا وهدى ورحمة اللهم ذكرنى منه مانسيت وعلمنى منه ماجهلت وارزقني تلاوته آناء الليل وأطراف النهار واجعله لي حجة يارب العالمين . اللهم أصلح لى دينى الذى هو عصمة أمري، وأصلح لي دنياي التي فيها معاشي، وأصلح لي آخرتي التي فيها معادي، وأجعل الحياة زيادة لي في كل خير وأجعل الموت راحة لي من كل شر . اللهم أجعل خير عمري آخره وخير عملي خواتمه وخير أيامي يوم ألقاك فيه . اللهم إني أسألك عيشة هنية وميتة سوية ومردا غير مخز ولا فاضح . اللهم إنى أسألك خير المسألة وخير الدعاء وخير النجاح وخير العلم وخير العمل وخير الثواب وخير الحياة وخير الممات وثبتنى وثقل موازيني وحقق إيماني وارفع درجتي وتقبل صلاتي واغفر خطيئاتي وأسألك العلا من الجنة . اللهم إني أسألك موجبات رحمتك وعزائم مغفرتك والسلامة من كل إثم والغنيمة من كل بر والفوز بالجنة والنجاة من النار . اللهم أحسن عاقبتنا في الأمور كلها، وأجرنا من خزي الدنيا وعذاب الآخرة . اللهم اقسم لنا من خشيتك ماتحول به بيننا وبين معصيتك ومن طاعتك ماتبلغنا بها جنتك ومن اليقين ماتهون به علينا مصائب الدنيا ومتعنا بأسماعنا وأبصارنا وقوتنا ماأحييتنا واجعله الوارث منا واجعل ثأرنا على من ظلمنا وانصرنا على من عادانا ولا تجعل مصيبتنا في ديننا ولا تجعل الدنيا أكبر همنا ولا مبلغ علمنا ولا تسلط علينا من لا يرحمنا . اللهم لا تدع لنا ذنبا إلا غفرته ولا هما إلا فرجته ولا دينا إلا قضيته ولا حاجة من حوائج الدنيا والآخرة إلا قضيتها يا أرحم الراحمين. ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار وصلى الله على سيدنا ونبينا محمد وعلى آله وأصحابه الأخيار وسلم تسليما كثيرا.";
-    this.nativeApi.share((this.group.title + this.common.translation.sequential?.done), dua, null);
+    this.nativeApi.share((this.group.title + this.common.translation.sequential?.done), dua, null, 'completion_dua', this.group.id);
 
     // fetch(location.origin + '/assets/dua.png')
     //   .then(function (response) {

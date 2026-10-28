@@ -103,3 +103,30 @@ export async function analyticsEvents(page: Page): Promise<Array<[string, unknow
     ((window as any).dataLayer ?? []).filter((args: any) => args[0] === 'event').map((args: any) => [args[1], args[2]])
   );
 }
+
+/**
+ * Keeps every analytics event in sessionStorage, so events sent just before the app reloads itself (joining a group
+ * does) can still be checked. Call before openApp.
+ */
+export async function recordEventsAcrossReloads(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    const saved: unknown[][] = JSON.parse(sessionStorage.getItem('__events') || '[]');
+    const dataLayer: any[] = ((window as any).dataLayer = (window as any).dataLayer || []);
+    const push = dataLayer.push.bind(dataLayer);
+    dataLayer.push = (...calls: any[]) => {
+      for (const call of calls) {
+        const args = Array.from(call as ArrayLike<unknown>);
+        if (args[0] === 'event') {
+          saved.push(args.slice(1));
+          sessionStorage.setItem('__events', JSON.stringify(saved));
+        }
+      }
+      return push(...calls);
+    };
+  });
+}
+
+/** Events recorded by recordEventsAcrossReloads, as [name, params]. */
+export async function recordedEvents(page: Page): Promise<unknown[][]> {
+  return page.evaluate(() => JSON.parse(sessionStorage.getItem('__events') || '[]'));
+}

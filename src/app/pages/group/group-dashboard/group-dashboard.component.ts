@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ProgressCounts, progressCounts } from '../../../shared/ajza-progress/ajza-progress.component';
 import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from '../../../entities/entities';
 import { LocalDatabaseService } from '../../../local-database.service';
@@ -19,7 +19,7 @@ import { NativeShareService } from '../../../native-share.service';
 import { Router } from '@angular/router';
 import { NewTaskComponent } from '../../../dialog/new-task/new-task.component';
 import { StatusMessageGenerators } from './status-messages';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
 import { Group_Pages_Component } from './group-types/pages/pages.component';
 import { Group_Sequential_Component } from './group-types/sequential/sequential.component';
@@ -35,7 +35,7 @@ import { CommonService } from '../../../service/common.service';
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class GroupDashboardComponent implements OnInit {
+export class GroupDashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild(Group_SameTask_Component) sameTaskGroupChildComponent: Group_SameTask_Component;
   @ViewChild(Group_Pages_Component) pagesGroupChildComponent: Group_Pages_Component;
@@ -58,6 +58,8 @@ export class GroupDashboardComponent implements OnInit {
   inviteMsg = "";
   statusMsg = "";
 
+  private groupSubscription: Subscription;
+
   constructor(private groupsApi: KhitmaGroupService,
     private localDB: LocalDatabaseService,
     private dialog: MatDialog,
@@ -71,7 +73,7 @@ export class GroupDashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.groupsApi.getCurrentGroup().subscribe((group: KhitmaGroup) => {
+    this.groupSubscription = this.groupsApi.getCurrentGroup().subscribe((group: KhitmaGroup) => {
 
       this.titleService.setTitle(group.title);
 
@@ -106,6 +108,13 @@ export class GroupDashboardComponent implements OnInit {
         this.isInitiated = true;
       }
 
+      this.$gaService.setGroupContext({
+        group_id: this.group.id,
+        group_type: this.group.type,
+        role: this.isAdmin ? 'admin' : 'member',
+        cycle: this.group.cycle || 0,
+      });
+
       this.inviteMsg = this.common.translation.gDashboard?.join
         + ' "' + this.group.title + '" '
         + this.common.translation.gDashboard?.link
@@ -115,17 +124,22 @@ export class GroupDashboardComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.groupSubscription?.unsubscribe();
+    this.$gaService.setGroupContext(null);
+  }
+
   getKhitmaStatusMsg() {
     return StatusMessageGenerators[this.group.type](this.group);
   }
 
 
   shareStatusMsg() {
-    this.nativeApi.share((this.common.translation.gDashboard?.status + this.group.title), this.getKhitmaStatusMsg(), null);
+    this.nativeApi.share((this.common.translation.gDashboard?.status + this.group.title), this.getKhitmaStatusMsg(), null, 'status', this.group.id);
   }
 
   shareInviteMsg() {
-    this.nativeApi.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, null);
+    this.nativeApi.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, null, 'invite', this.group.id);
   }
 
 

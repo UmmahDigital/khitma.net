@@ -128,14 +128,11 @@
 
 
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-5LT07C165Z"></script>
+  <!-- Google Analytics: the app configures it (src/app/analytics.ts). This stub only queues calls made before that,
+       and the update screen below configures it itself, as the app never starts there. -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-QXJ6QZFWZL');
   </script>
 
   <!-- The "please update" screen in <body>. Plain CSS that old browsers understand. -->
@@ -193,7 +190,15 @@
         var logo = screen.querySelector('img[data-src]');
         logo.src = logo.getAttribute('data-src');
         screen.style.display = 'block';
-        if (window.gtag) gtag('event', 'unsupported_browser', { reason: reason });
+        if (window.gtag) {
+          gtag('js', new Date());
+          gtag('config', 'G-QXJ6QZFWZL', { page_title: 'unsupported_browser' });
+          gtag('event', 'unsupported_browser', { reason: reason });
+          var tag = document.createElement('script');
+          tag.async = true;
+          tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-QXJ6QZFWZL';
+          document.head.appendChild(tag);
+        }
       };
       window.addEventListener('load', function () {
         setTimeout(function () {
