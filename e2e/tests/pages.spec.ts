@@ -91,7 +91,7 @@ test.describe('page distribution group', () => {
     await expect.poll(async () => (await storedPages(groupId)).members['سارة'].pages).toEqual([302, 603]);
   });
 
-  test.fail('known bug: sharing the status of a page distribution group does nothing', async ({ page }) => {
+  test('the admin shares the status as a WhatsApp-ready message', async ({ page }) => {
     const groupId = newGroupId('pages-status');
     await createPagesGroup(groupId, {
       title: 'ختمة عن روح الوالد',
@@ -104,6 +104,13 @@ test.describe('page distribution group', () => {
     await page.getByText('أدوات مسؤول المجموعة').click();
     await page.getByRole('button', { name: 'مشاركة وضع الختمة' }).click();
 
-    await expect.poll(async () => (await sharedPayloads(page)).length, { timeout: 3_000 }).toBe(1);
+    await expect.poll(async () => (await sharedPayloads(page)).length).toBe(1);
+    const [shared] = await sharedPayloads(page);
+    expect(shared.title).toBe('وضع الختمة: ختمة عن روح الوالد');
+    const lines = shared.text!.split('\n');
+    expect(lines[0]).toBe('ختمة عن روح الوالد');
+    expect(lines).toContain(`🟢 ${ADMIN}: 1-302`);
+    expect(lines).toContain('🔴 سارة: 303-604');
+    expect(shared.text).toContain(`رجاء تحديث حالة صفحاتكم عن طريق الرابط: http://localhost:4300/group/${groupId}`);
   });
 });

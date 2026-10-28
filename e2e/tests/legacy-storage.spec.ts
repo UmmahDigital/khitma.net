@@ -47,7 +47,7 @@ test.describe('phones with data from older versions', () => {
     expect(await readLocalStorage(page, 'groups')).toMatchObject({ [current]: { username: 'سارة' } });
   });
 
-  test.fail('known bug: old social-login data hides the groups list on the home page', async ({ page }) => {
+  test('old social-login data does not hide the groups list on the home page', async ({ page }) => {
     const groupId = newGroupId('legacy-login');
     await createSequentialGroup(groupId, { title: 'ختمة المسجد' });
 
@@ -58,6 +58,7 @@ test.describe('phones with data from older versions', () => {
       },
     });
 
-    await expect(page.getByRole('link', { name: 'ختمة المسجد' })).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByRole('link', { name: 'ختمة المسجد', exact: true })).toBeVisible();
+    await expect(page.locator('app-group-list-item')).toHaveCount(1);
   });
 });

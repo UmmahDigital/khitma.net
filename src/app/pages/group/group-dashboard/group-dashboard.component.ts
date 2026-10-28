@@ -169,7 +169,7 @@ export class GroupDashboardComponent implements OnInit {
         this.$gaService.event('group_leave');
 
 
-        this.userWatch$.next('user-leave-group'); // update the children
+        this.userWatch$.next('leave-group'); // update the children
 
 
 

@@ -212,6 +212,17 @@ test.describe('screenshots of the current design', () => {
     await snap(page, 'pages-member');
   });
 
+  test('personal khitmah', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    const saved = Array.from({ length: 30 }, (_, index) => ({ index, status: index < 4 ? DONE : index < 6 ? BOOKED : 0 }));
+    await openApp(page, '/me/personal-khitma', {
+      storage: { personalKhitma: saved, lastRecievedNotificationId: '2' },
+      freezeTime: true,
+    });
+    await expect(page.locator('app-juz-grid app-juz-toggle .juz-toggle.done')).toHaveCount(4);
+    await snap(page, 'personal-khitmah');
+  });
+
   test('archive', async ({ page }) => {
     await page.setViewportSize(PHONE);
     await openApp(page, '/me/groups/archive', {
