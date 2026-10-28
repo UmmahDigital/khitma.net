@@ -96,22 +96,22 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "khitma:build:production"
+              "buildTarget": "khitma:build:production"
             },
             "development": {
-              "browserTarget": "khitma:build:development"
+              "buildTarget": "khitma:build:development"
             }
           },
           "options": {
-            "browserTarget": "khitma:build",
-            "ssl": true
+            "ssl": true,
+            "buildTarget": "khitma:build"
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "khitma:build"
+            "buildTarget": "khitma:build"
           }
         },
         "test": {

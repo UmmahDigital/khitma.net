@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/button-toggle';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -162,6 +163,11 @@ const routes: Routes = [
     }),
   ],
   providers: [
+    // Keep the original toggle look: no check mark on the selected option (shown by default since Material 17).
+    {
+      provide: MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS,
+      useValue: { hideSingleSelectionIndicator: true, hideMultipleSelectionIndicator: true },
+    },
     GroupJoinedGuard,
     KhitmaGroupService,
     CommonService,

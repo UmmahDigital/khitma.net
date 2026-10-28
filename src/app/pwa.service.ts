@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { filter } from 'rxjs/operators';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
@@ -19,7 +20,10 @@ export class PwaService {
     });
 
 
-    swUpdate.available.subscribe(event => {
+    // Ask once the new version has been downloaded and is ready to use.
+    swUpdate.versionUpdates
+      .pipe(filter((event): event is VersionReadyEvent => event.type === 'VERSION_READY'))
+      .subscribe(() => {
 
       const dialogData = new ConfirmDialogModel(this.common.translation.dialog?.update, this.common.translation.dialog?.updateDesc
       );
