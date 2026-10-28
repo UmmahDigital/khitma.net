@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from '../../../alert.service';
 import { KhitmaGroup } from '../../../entities/entities';
@@ -12,6 +12,7 @@ import { CommonService } from '../../../service/common.service';
     templateUrl: './group-invite.component.html',
     styleUrls: ['./group-invite.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GroupInviteComponent implements OnInit {

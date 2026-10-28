@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from '../../../entities/entities';
 import { LocalDatabaseService } from '../../../local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
@@ -31,6 +31,7 @@ import { CommonService } from '../../../service/common.service';
     templateUrl: './group-dashboard.component.html',
     styleUrls: ['./group-dashboard.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GroupDashboardComponent implements OnInit {

@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,6 +22,7 @@ import { User } from '../../../app/common/model';
     templateUrl: './create-group.component.html',
     styleUrls: ['./create-group.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CreateGroupComponent implements OnInit {

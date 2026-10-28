@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from '../../analytics';
@@ -11,6 +11,7 @@ import { KhitmaGroupService } from '../../khitma-group.service';
     selector: 'app-archive',
     templateUrl: './archive.component.html',
     styleUrls: ['./archive.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ArchiveComponent implements OnInit {

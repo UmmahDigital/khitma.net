@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KhitmaGroup, KHITMA_CYCLE_TYPE } from 'src/app/entities/entities';
 
@@ -6,6 +6,7 @@ import { KhitmaGroup, KHITMA_CYCLE_TYPE } from 'src/app/entities/entities';
     selector: 'app-start-new-khitma',
     templateUrl: './start-new-khitma.component.html',
     styleUrls: ['./start-new-khitma.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class StartNewKhitmaComponent implements OnInit {

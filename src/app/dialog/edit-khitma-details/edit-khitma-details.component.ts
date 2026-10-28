@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KhitmaGroup } from 'src/app/entities/entities';
 
@@ -6,6 +6,7 @@ import { KhitmaGroup } from 'src/app/entities/entities';
     selector: 'app-edit-khitma-details',
     templateUrl: './edit-khitma-details.component.html',
     styleUrls: ['./edit-khitma-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class EditKhitmaDetailsComponent implements OnInit {

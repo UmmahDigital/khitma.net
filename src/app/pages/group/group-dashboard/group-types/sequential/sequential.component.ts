@@ -1,5 +1,5 @@
 import { Breakpoints } from '@angular/cdk/layout';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -19,6 +19,7 @@ import { CommonService } from '../../../../../service/common.service';
     selector: 'app-group-sequential',
     templateUrl: './sequential.component.html',
     styleUrls: ['./sequential.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class Group_Sequential_Component implements OnInit, OnChanges {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { KhitmaGroupService } from '../../../../app/khitma-group.service';
 import { GroupMember, JUZ_STATUS, KHITMA_GROUP_TYPE } from '../../../entities/entities';
 
@@ -6,6 +6,7 @@ import { GroupMember, JUZ_STATUS, KHITMA_GROUP_TYPE } from '../../../entities/en
     selector: 'app-group-list-item',
     templateUrl: './group-list-item.component.html',
     styleUrls: ['./group-list-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GroupListItemComponent implements OnInit {

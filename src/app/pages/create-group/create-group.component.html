@@ -106,7 +106,7 @@
           <mat-form-field appearance="fill" class="block">
             <mat-label [translate]="'gCreate.mission'">المهمّة الأولى</mat-label>
             <input matInput [(ngModel)]="firstTask" name="firstTask" required="true" autocomplete="off"
-              [placeholder]="common.translation.gCreate?.placeholder">
+              [placeholder]="$safeNavigationMigration(common.translation.gCreate?.placeholder)">
           </mat-form-field>
         }
       </section>

@@ -14,7 +14,7 @@
 @if (group.isStarted) {
   @if (myMember?.pagesTask?.start != null) {
     <section>
-      <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)" class="task">
+      <app-todo [isDone]="$safeNavigationMigration(myMember?.isTaskDone)" (onToggled)="taskToggled($event)" class="task">
         <div content>
           <span [translate]="'gPages.page'">صفحة</span>
           <span dir="ltr">

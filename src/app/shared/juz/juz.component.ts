@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Juz, JUZ_STATUS } from '../../entities/entities';
 import { CommonService } from '../../service/common.service';
 
@@ -7,6 +7,7 @@ import { CommonService } from '../../service/common.service';
     templateUrl: './juz.component.html',
     styleUrls: ['./juz.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class JuzComponent implements OnInit {

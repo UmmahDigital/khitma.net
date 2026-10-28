@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../share
     selector: 'app-group-pages',
     templateUrl: './pages.component.html',
     styleUrls: ['./pages.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class Group_Pages_Component implements OnInit {

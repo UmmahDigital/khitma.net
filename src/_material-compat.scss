@@ -66,8 +66,9 @@ button.large.mat-mdc-button-base {
   }
 }
 
-// Radio labels wrap instead of stretching the dialog.
-.mat-mdc-radio-button .mdc-form-field > label {
+// Radio labels wrap instead of stretching the dialog. `.mdc-label` is the label text element in
+// every Material version since the MDC switch (a <label> until v21, a <span> from v22).
+.mat-mdc-radio-button .mdc-label {
   white-space: normal;
 }
 
@@ -116,7 +117,8 @@ button.large.mat-mdc-button-base {
     padding: 0;
   }
 
-  .mdc-form-field > label {
+  // Outranks Material's `[dir=rtl] .mat-internal-form-field > .mat-internal-form-field-label` (4px).
+  .mat-internal-form-field > .mdc-label {
     padding-inline-start: 8px;
   }
 }

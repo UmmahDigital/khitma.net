@@ -48,7 +48,7 @@
 
 
 @for (juz of ajza; track juz) {
-  <app-todo class="juz dark" [text]="common.translation.gKhitma?.part +' ' + (juz.index+1)"
+  <app-todo class="juz dark" [text]="$safeNavigationMigration(common.translation.gKhitma?.part) +' ' + (juz.index+1)"
     (onToggled)="submitJuz(juz.index, $event)" [isDone]="myAjzaStatuses[juz.index]"
     [class.today]="(juz.index+1) === dayInRamadan">
     <div content>

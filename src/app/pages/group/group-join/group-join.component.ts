@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from '../../../analytics';
 import {
@@ -13,6 +13,7 @@ import { LocalDatabaseService } from '../../../local-database.service';
     selector: 'app-group-join',
     templateUrl: './group-join.component.html',
     styleUrls: ['./group-join.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GroupJoinComponent implements OnInit {

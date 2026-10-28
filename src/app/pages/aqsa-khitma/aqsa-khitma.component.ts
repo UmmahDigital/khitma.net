@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CelebrationService } from 'src/app/celebration.service';
 import { NUM_OF_PAGES } from 'src/app/entities/entities';
 import { GlobalCountersService } from 'src/app/global-counters.service';
@@ -8,6 +8,7 @@ import { LocalDatabaseService } from 'src/app/local-database.service';
     selector: 'app-aqsa-khitma',
     templateUrl: './aqsa-khitma.component.html',
     styleUrls: ['./aqsa-khitma.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AqsaKhitmaComponent implements OnInit {

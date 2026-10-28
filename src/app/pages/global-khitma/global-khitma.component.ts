@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { KhitmaGroupService } from '../../khitma-group.service';
 
 import { LocalDatabaseService } from '../../local-database.service';
@@ -15,6 +15,7 @@ import { CommonService } from '../../service/common.service';
     selector: 'app-global-khitma',
     templateUrl: './global-khitma.component.html',
     styleUrls: ['./global-khitma.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class GlobalKhitmaComponent implements OnInit {

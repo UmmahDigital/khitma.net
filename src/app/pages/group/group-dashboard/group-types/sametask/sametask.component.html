@@ -2,7 +2,7 @@
 
   <!-- <header>المهمّة الحاليّة </header> -->
 
-  <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)">
+  <app-todo [isDone]="$safeNavigationMigration(myMember?.isTaskDone)" (onToggled)="taskToggled($event)">
     <div content> {{group.task}} </div>
   </app-todo>
 
@@ -15,7 +15,7 @@
 </section>
 
 
-<app-khitma-progress [current]="counts?.done" style="margin-top: 32px;" [target]="counts?.total"></app-khitma-progress>
+<app-khitma-progress [current]="$safeNavigationMigration(counts?.done)" style="margin-top: 32px;" [target]="$safeNavigationMigration(counts?.total)"></app-khitma-progress>
 
 
 @if (showGroupMembers) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { KhitmaGroup, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 import { KhitmaGroupService } from 'src/app/khitma-group.service';
 
@@ -8,6 +8,7 @@ import { KhitmaGroupService } from 'src/app/khitma-group.service';
     templateUrl: './khitma-info.component.html',
     styleUrls: ['./khitma-info.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class KhitmaInfoComponent implements OnInit {
