@@ -16,6 +16,16 @@
     </section>
   }
 
+  @if (impact.length) {
+    <div class="impact-card">
+      <p class="impact-title" [translate]="'referral.title'">أثر دعواتك 🤍</p>
+      @for (line of impact; track line) {
+        <p class="impact-line">{{ line }}</p>
+      }
+      <p class="impact-hadith">{{ impactHadith }}</p>
+    </div>
+  }
+
   @if (isShowArchive) {
     <a
       mat-button

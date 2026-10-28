@@ -51,6 +51,7 @@ test.describe('screenshots of the current design', () => {
 
   test.beforeAll(async () => {
     await setDoc('global/aqsa', { pages: { completed: 1250, granted: 1400 } });
+    await setDoc('refs/visualref', { joined: 7, read: 12, started: 1 });
     await createSequentialGroup('visual-family', {
       title: 'ختمة العائلة',
       author: ADMIN,
@@ -99,6 +100,23 @@ test.describe('screenshots of the current design', () => {
     await snap(page, 'home-new-visitor');
   });
 
+  test('home: a member whose invitations brought people', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openApp(page, '/', {
+      storage: {
+        groups: joinedGroups({ 'visual-family': 'سارة' }),
+        refCode: 'visualref',
+        refShared: '1',
+        lastRecievedNotificationId: '2',
+      },
+      freezeTime: true,
+    });
+    const card = page.locator('.impact-card');
+    await expect(card).toContainText('انضمّ عبر دعواتك 7 أشخاص');
+    await card.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+    await snap(page, 'home-invitation-impact');
+  });
+
   test('home: returning member with groups', async ({ page }) => {
     await page.setViewportSize(TALL_PHONE);
     await openApp(page, '/', {
@@ -144,7 +162,8 @@ test.describe('screenshots of the current design', () => {
 
   test('invite page after creating a group', async ({ page }) => {
     await page.setViewportSize(PHONE);
-    await openApp(page, '/group/visual-family/invite', { freezeTime: true });
+    // A fixed sharer's code: the invite link shows it (?r=visualref).
+    await openApp(page, '/group/visual-family/invite', { storage: { refCode: 'visualref' }, freezeTime: true });
     await expect(page.getByLabel('رسالة الدعوة للإنضمام (يمكنك تعديلها)')).toHaveValue(/visual-family/);
     await snap(page, 'group-invite');
   });

@@ -28,6 +28,9 @@ import {
   ConfirmDialogModel,
 } from '@app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
+import { ReferralService } from '../../referral.service';
+import { impactLines } from '../../referral';
+import { hadithLine } from '../../share-messages';
 import { CommonService } from '../../service/common.service';
 
 @Component({
@@ -47,6 +50,10 @@ export class HomeComponent implements OnInit {
   ayatCount = 0;
   hasanatCount = 0;
 
+  /** What this member's shared links brought about: people who joined, ajza they read, khitmas they started. */
+  impact: string[] = [];
+  impactHadith = '';
+
   // Dayma has Arabic and English pages; every other language gets the English one.
   readonly daymaUrl: string;
 
@@ -58,6 +65,7 @@ export class HomeComponent implements OnInit {
     private $gaService: GoogleAnalyticsService,
     private globalCounters: GlobalCountersService,
     private svcUser: UserService,
+    private referral: ReferralService,
     public common: CommonService
   ) {
     this.daymaUrl = common.currentLanguage === 'ar' ? 'https://dayma.hasanat.dev/?lang=ar' : 'https://dayma.hasanat.dev/en/';
@@ -65,6 +73,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    this.referral.myImpact().then((stats) => {
+      this.impact = impactLines(stats, this.common.translation, this.common.currentLanguage);
+      this.impactHadith = hadithLine(this.common.translation);
+    });
   }
 
   loadData() {

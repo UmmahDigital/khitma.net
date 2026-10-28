@@ -21,6 +21,11 @@ export function newGroupId(label: string): string {
   return `${label}-${Date.now().toString(36)}-${groupCounter}`;
 }
 
+/** A sharer's reference code (?r=) unique to this test run, so counts don't add up across browser projects. */
+export function newRefCode(): string {
+  return 't' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6).padEnd(4, '0');
+}
+
 /** The 30 ajza of a group; `assigned` maps 1-based juz numbers to their owner and status. */
 export function buildAjza(assigned: Record<number, JuzSpec> = {}): Juz[] {
   return Array.from({ length: 30 }, (_, index) => {

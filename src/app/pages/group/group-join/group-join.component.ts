@@ -9,6 +9,7 @@ import {
 } from '../../../entities/entities';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
+import { ReferralService } from '../../../referral.service';
 
 @Component({
     selector: 'app-group-join',
@@ -26,6 +27,7 @@ export class GroupJoinComponent implements OnInit {
     private groupsApi: KhitmaGroupService,
     private localDB: LocalDatabaseService,
     private $gaService: GoogleAnalyticsService,
+    private referral: ReferralService,
     private router: Router,
     private _ngZone: NgZone
   ) {}
@@ -75,15 +77,17 @@ export class GroupJoinComponent implements OnInit {
     let username = KhitmaGroup.refineOwnerName(this.username);
 
     this.localDB.joinGroup(this.group.id, username);
+    // Joining through a shared link counts for whoever shared it; the reload waits until that's saved.
+    const credited = this.referral.credit('joined', this.group.id);
     if (
       this.group.type === KHITMA_GROUP_TYPE.SAME_TASK ||
       this.group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION
     ) {
-      this.groupsApi.addGroupMember(this.group.id, username).then(() => {
+      Promise.all([this.groupsApi.addGroupMember(this.group.id, username), credited]).then(() => {
         window.location.reload();
       });
     } else {
-      window.location.reload();
+      credited.then(() => window.location.reload());
     }
 
     // this.router.navigate(['/group', this.group.id, 'dashboard']);

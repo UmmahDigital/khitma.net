@@ -247,6 +247,12 @@
     "done": "Mark as read",
     "release": "Free it for another reader"
   },
+  "referral": {
+    "title": "What your invitations brought 🤍",
+    "joined": "Joined through your invitations: {n}",
+    "read": "Juz they read: {n}",
+    "started": "New khitmas they started: {n}"
+  },
   "dialog": {
     "yes": "Yes",
     "no": "No",

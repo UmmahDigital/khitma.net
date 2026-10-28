@@ -247,6 +247,12 @@
     "done": "Marquer comme lu",
     "release": "Le libérer pour un autre lecteur"
   },
+  "referral": {
+    "title": "Ce que vos invitations ont apporté 🤍",
+    "joined": "Personnes venues par vos invitations : {n}",
+    "read": "Juz qu’elles ont lus : {n}",
+    "started": "Nouvelles khitmas qu’elles ont lancées : {n}"
+  },
   "dialog": {
     "yes": "Oui",
     "no": "Non",

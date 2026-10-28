@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from '../../../alert.service';
 import { KhitmaGroup } from '../../../entities/entities';
 import { SharingService } from '../../../sharing.service';
+import { ReferralService } from '../../../referral.service';
 import { inviteMessage } from '../../../share-messages';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
@@ -25,6 +26,7 @@ export class GroupInviteComponent implements OnInit {
     private groupsApi: KhitmaGroupService,
     private alert: AlertService,
     private sharing: SharingService,
+    private referral: ReferralService,
     public common: CommonService
   ) {}
 
@@ -37,7 +39,7 @@ export class GroupInviteComponent implements OnInit {
         .subscribe((group: KhitmaGroup) => {
           this.group = group;
 
-          this.inviteLink = this.groupsApi.getGroupURL(this.group.id);
+          this.inviteLink = this.referral.groupUrl(this.group.id);
 
           this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.inviteLink);
         });

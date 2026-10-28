@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GoogleAnalyticsService } from './analytics';
 import { NativeApiService } from './native-api.service';
 import { CommonService } from './service/common.service';
+import { ReferralService } from './referral.service';
 
 /** What was shared, as the `content_type` of the `share` analytics event. */
 export type ShareContent = 'invite' | 'status' | 'free_juz' | 'completion_dua';
@@ -19,7 +20,8 @@ export class SharingService {
     private clipboard: Clipboard,
     private snackBar: MatSnackBar,
     private analytics: GoogleAnalyticsService,
-    private common: CommonService
+    private common: CommonService,
+    private referral: ReferralService
   ) {}
 
   /** Opens WhatsApp with the message ready to send; inside the store app, its share bridge. */
@@ -59,6 +61,7 @@ export class SharingService {
   }
 
   private track(method: string, content: ShareContent, groupId?: string): void {
+    this.referral.noteShared();
     this.analytics.send('share', { method, content_type: content, ...(groupId ? { item_id: groupId } : {}) });
   }
 }

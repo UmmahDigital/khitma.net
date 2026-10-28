@@ -25,7 +25,7 @@ function _getDateInArabic(date: Date) {
   );
 }
 
-function statusMsg_Sequential(group) {
+function statusMsg_Sequential(group, url: string = group.getURL()) {
   function getJuzIcon(juz) {
     const ICONS = ['🔴', '🟡', '🟢'];
 
@@ -77,7 +77,7 @@ function statusMsg_Sequential(group) {
     msg += NEW_LINE;
   }
 
-  msg += 'رجاء تحديث حالة جزئكم عن طريق الرابط: ' + group.getURL();
+  msg += 'رجاء تحديث حالة جزئكم عن طريق الرابط: ' + url;
 
   msg += NEW_LINE;
   msg += NEW_LINE;
@@ -87,7 +87,7 @@ function statusMsg_Sequential(group) {
   return msg;
 }
 
-function statusMsg_SameTask(group) {
+function statusMsg_SameTask(group, url: string = group.getURL()) {
   function getStatusIcon(isDone) {
     return isDone ? '🟢' : '🔴';
   }
@@ -119,7 +119,7 @@ function statusMsg_SameTask(group) {
     msg += NEW_LINE;
   }
 
-  msg += 'رجاء تحديث حالة مهمّتكم عن طريق الرابط: ' + group.getURL();
+  msg += 'رجاء تحديث حالة مهمّتكم عن طريق الرابط: ' + url;
 
   msg += NEW_LINE;
   msg += NEW_LINE;
@@ -129,7 +129,7 @@ function statusMsg_SameTask(group) {
   return msg;
 }
 
-function statusMsg_Pages(group) {
+function statusMsg_Pages(group, url: string = group.getURL()) {
   function getStatusIcon(isDone) {
     return isDone ? '🟢' : '🔴';
   }
@@ -172,7 +172,7 @@ function statusMsg_Pages(group) {
     msg += NEW_LINE;
   }
 
-  msg += 'رجاء تحديث حالة صفحاتكم عن طريق الرابط: ' + group.getURL();
+  msg += 'رجاء تحديث حالة صفحاتكم عن طريق الرابط: ' + url;
 
   msg += NEW_LINE;
   msg += NEW_LINE;

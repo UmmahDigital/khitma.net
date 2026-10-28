@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { landedFromSharedLink } from './referral';
 
 
 // Google Analytics (gtag.js) calls, without a third-party wrapper.
@@ -121,6 +122,10 @@ export function screenName(route: ActivatedRouteSnapshot | null): string {
   return screen;
 }
 
+export function withSharedLinkCampaign(url: string): string {
+  return url + (url.includes('?') ? '&' : '?') + 'utm_source=member_share&utm_medium=referral';
+}
+
 function whenPageLoaded(document: Document, run: () => void): void {
   const later = () => setTimeout(run, 0);
   if (document.readyState === 'complete') {
@@ -163,8 +168,16 @@ function initAnalytics(measurementId: string, document: Document, router: Router
     // The automatic page view would carry the tab title; page views are sent per screen below instead.
     send('config', measurementId, { send_page_view: false });
 
+    let firstPage = true;
     router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd)).subscribe((event) => {
-      analytics.pageView(screenName(router.routerState.snapshot.root), document.location.origin + event.urlAfterRedirects);
+      const url = document.location.origin + event.urlAfterRedirects;
+      // A visit from a member's shared link: the session is attributed to sharing, though the link carries only ?r=.
+      const fromSharedLink = firstPage && landedFromSharedLink;
+      analytics.pageView(screenName(router.routerState.snapshot.root), fromSharedLink ? withSharedLinkCampaign(url) : url);
+      if (fromSharedLink) {
+        analytics.send('referral_open');
+      }
+      firstPage = false;
     });
 
     // gtag.js waits until the page has loaded, so it never competes with the app's own files for the network.

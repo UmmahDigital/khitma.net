@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from '../../local-database.service';
 import { GoogleAnalyticsService } from '../../analytics';
+import { ReferralService } from '../../referral.service';
 import { KHITMA_GROUP_TYPE } from '../../entities/entities';
 import { switchMap } from 'rxjs/operators';
 import { CommonService } from '../../service/common.service';
@@ -55,7 +56,8 @@ export class CreateGroupComponent implements OnInit {
     private localDB: LocalDatabaseService,
     private route: ActivatedRoute,
     public common: CommonService,
-    private svcUser: UserService
+    private svcUser: UserService,
+    private referral: ReferralService
   ) {}
 
   ngOnInit(): void {
@@ -138,6 +140,8 @@ export class CreateGroupComponent implements OnInit {
         });
 
         this.alert.show(this.common.translation.gCreate?.success, 5000);
+        // Someone who came through a member's link and now starts a khitma of their own: the best outcome of sharing.
+        this.referral.credit('started');
 
         this.localDB.joinGroup(groupId, this.author);
 

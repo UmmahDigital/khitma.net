@@ -79,6 +79,9 @@
         <button mat-flat-button class="whatsapp-btn" (click)="shareFreeAjza()">
           <mat-icon>share</mat-icon> <span [translate]="'sharing.whatsapp'">إرسال عبر واتساب</span>
         </button>
+        @if (impactLine) {
+          <p class="help-finish-impact">🤍 {{ impactLine }}</p>
+        }
       </div>
     } @else if (isAdmin && readingAjza.length > 0) {
       <div class="help-finish">

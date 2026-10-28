@@ -7,15 +7,17 @@ import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtur
 const { BOOKED, DONE } = JUZ_STATUS;
 const ADMIN = 'أبو أحمد';
 const HADITH = '«مَنْ دَلَّ عَلَى خَيْرٍ فَلَهُ مِثْلُ أَجْرِ فَاعِلِهِ» (رواه مسلم)';
+// The sharer's reference, carried by every link they share (see referrals.spec.ts).
+const REF = 'e2eshare';
 
 async function openDashboard(page: Page, groupId: string, username: string, shareSheet = true) {
-  await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: username }) }, shareSheet });
+  await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: username }), refCode: REF }, shareSheet });
   await expect(page.getByText(`السلام عليكم يا ${username}`)).toBeVisible();
 }
 
 test.describe('sharing', () => {
   test('a new group is sent on WhatsApp in one tap, with a clean invite', async ({ page }) => {
-    await openApp(page, '/new?type=recurring');
+    await openApp(page, '/new?type=recurring', { storage: { refCode: REF } });
     await page.getByLabel('عنوان الختمة').fill('ختمة الجمعة');
     await page.getByLabel('اسمك (مسؤول الختمة)').fill('أبو محمد');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
@@ -27,7 +29,7 @@ test.describe('sharing', () => {
 
     const [url] = await openedUrls(page);
     expect(whatsappText(url)).toBe(
-      ['انضمّوا إلى ختمة «ختمة الجمعة»، واختاروا جزءًا لقراءته 📖', `http://localhost:4300/group/${groupId}`, '', HADITH].join('\n')
+      ['انضمّوا إلى ختمة «ختمة الجمعة»، واختاروا جزءًا لقراءته 📖', `http://localhost:4300/group/${groupId}?r=${REF}`, '', HADITH].join('\n')
     );
     expect(await analyticsEvents(page)).toContainEqual(['share', { method: 'whatsapp', content_type: 'invite', item_id: groupId }]);
   });
@@ -64,7 +66,7 @@ test.describe('sharing', () => {
         'ساعدونا في إتمام ختمة «ختمة عن روح الوالد» 🤍',
         'بقي 3 أجزاء بلا قارئ: 4، 9، 30',
         'اختاروا جزءًا من الرابط:',
-        `http://localhost:4300/group/${groupId}`,
+        `http://localhost:4300/group/${groupId}?r=${REF}`,
         '',
         HADITH,
       ].join('\n')

@@ -12,6 +12,8 @@ import { KhitmaGroupService } from '../../../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../../../local-database.service';
 import { NativeShareService } from '../../../../../native-share.service';
 import { SharingService } from '../../../../../sharing.service';
+import { ReferralService } from '../../../../../referral.service';
+import { impactLines } from '../../../../../referral';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
@@ -59,6 +61,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     private titleService: Title,
     private alert: AlertService,
     private sharing: SharingService,
+    private referral: ReferralService,
     private nativeShare: NativeShareService,
     private router: Router, public common: CommonService) {
   }
@@ -67,6 +70,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.showNames = this.isAdmin;
+
+    // Next to the invite button: what this member's earlier invitations brought about.
+    this.referral.myImpact().then((stats) => {
+      this.impactLine = impactLines(stats, this.common.translation, this.common.currentLanguage)[0] ?? null;
+    });
 
     this.userWatch$.subscribe(action => {
 
@@ -192,12 +200,12 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   }
 
   shareFreeAjza() {
-    const message = helpFinishMessage(this.common.translation, this.common.currentLanguage, this.group.title, this.group.getURL(), this.freeAjza, this.deadlineLine);
+    const message = helpFinishMessage(this.common.translation, this.common.currentLanguage, this.group.title, this.referral.groupUrl(this.group.id), this.freeAjza, this.deadlineLine);
     this.sharing.whatsapp(message, 'free_juz', this.group.id);
   }
 
   remindReaders() {
-    this.sharing.whatsapp(StatusMessageGenerators[this.group.type](this.group), 'status', this.group.id);
+    this.sharing.whatsapp(StatusMessageGenerators[this.group.type](this.group, this.referral.groupUrl(this.group.id)), 'status', this.group.id);
   }
 
   /** The first free juz after the one just finished (wrapping from 30 to 1), while the offer is open. */
@@ -260,6 +268,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     });
   }
 
+  /** "انضمّ عبر دعواتك 7 أشخاص، وقرؤوا 12 جزءًا." once this member's invitations brought someone. */
+  impactLine: string | null = null;
+
   /** Members who start a khitma of their own are how khitma.net grows; only 1.4% did so far. */
   startOwnClicked(source: string) {
     this.$gaService.send('start_own_khitma_click', { source });
@@ -316,6 +327,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       if (dialogResult) {
 
         this.$gaService.event('juz_done');
+        this.referral.credit('read', this.group.id);
 
         const completesKhitma = this.isLastJuz(juzIndex);
         this.groupsApi.updateJuz(this.group.id, juzIndex, this.username, JUZ_STATUS.DONE);

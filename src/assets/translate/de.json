@@ -247,6 +247,12 @@
     "done": "Als gelesen markieren",
     "release": "Für jemand anderen freigeben"
   },
+  "referral": {
+    "title": "Was deine Einladungen bewirkt haben 🤍",
+    "joined": "Über deine Einladungen beigetreten: {n}",
+    "read": "Von ihnen gelesene Juz: {n}",
+    "started": "Von ihnen begonnene Khitmas: {n}"
+  },
   "dialog": {
     "yes": "ja",
     "no": "Nein",

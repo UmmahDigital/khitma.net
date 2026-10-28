@@ -13,6 +13,7 @@ import { GoogleAnalyticsService } from '../../../analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from '../../../alert.service';
 import { SharingService } from '../../../sharing.service';
+import { ReferralService } from '../../../referral.service';
 import { ajzaCount, fill, inviteMessage } from '../../../share-messages';
 import { staleBookings } from '../../../booking-age';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
@@ -69,6 +70,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private alert: AlertService,
     private sharing: SharingService,
+    private referral: ReferralService,
     private router: Router,
     private celebrationService: CelebrationService, public common: CommonService) {
   }
@@ -117,7 +119,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
         cycle: this.group.cycle || 0,
       });
 
-      this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.group.getURL());
+      this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.referral.groupUrl(this.group.id));
 
     });
 
@@ -139,7 +141,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
   }
 
   getKhitmaStatusMsg() {
-    return StatusMessageGenerators[this.group.type](this.group);
+    return StatusMessageGenerators[this.group.type](this.group, this.referral.groupUrl(this.group.id));
   }
 
 

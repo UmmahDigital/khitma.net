@@ -126,3 +126,30 @@ mat-card{
   margin-bottom: 16px;
   border-radius: $surface-radius;
 }
+
+// What this member's invitations brought about, with the hadith on guiding others to good.
+.impact-card {
+  max-width: 420px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #e3f1ee;
+  text-align: center;
+
+  p {
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+
+  .impact-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c6151;
+  }
+
+  .impact-hadith {
+    margin: 10px 0 0;
+    font-size: 17px;
+    color: #4d5b57;
+    white-space: pre-line;
+  }
+}
