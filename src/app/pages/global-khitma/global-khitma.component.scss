@@ -1,3 +1,5 @@
+@use "sass:math";
+@use "sass:string";
 ::ng-deep {
     #app-container.dark {
         // background-color: #011c2f;
@@ -23,11 +25,11 @@
 }
 
 @function multiple-box-shadow($n) {
-    $value: "#{random(2000)}px #{random(500)}px #FFF";
+    $value: "#{math.random(2000)}px #{math.random(500)}px #FFF";
     @for $i from 2 through $n {
-        $value: "#{$value} , #{random(500)}px #{random(500)}px #FFF";
+        $value: "#{$value} , #{math.random(500)}px #{math.random(500)}px #FFF";
     }
-    @return unquote($value);
+    @return string.unquote($value);
 }
 
 $shadows-small: multiple-box-shadow(400);

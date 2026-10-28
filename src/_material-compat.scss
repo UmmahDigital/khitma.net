@@ -1,7 +1,7 @@
 // Keeps the look users know after the switch from legacy to MDC-based Angular Material components.
 // Material adds its component styles after this sheet, so selectors here are deliberately more specific.
 
-@import "src/_variables";
+@use "src/variables" as *;
 
 // Buttons: legacy letter spacing; the app's tall buttons (.large) keep their 80px height.
 .mdc-button.mat-mdc-button-base {

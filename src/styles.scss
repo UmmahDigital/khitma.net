@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
+@use "sass:meta";
+@use "src/variables" as *;
 
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;700&display=swap");
 
-@import "src/_variables";
 
 html,
 body {
@@ -45,7 +46,7 @@ $custom-typography: mat.m2-define-typography-config(
 @include mat.typography-hierarchy($custom-typography);
 @include mat.all-component-typographies($custom-typography);
 
-@import "src/_material-compat";
+@include meta.load-css("src/material-compat");
 // @include mat-button-typography($custom-typography);
 
 // Layout helpers replacing @angular/flex-layout; they apply the same styles it used to set inline.

@@ -1,4 +1,4 @@
-@import "src/_variables";
+@use "src/variables" as *;
 
 .juz-toggle {
   $size: 36px;
