@@ -26,6 +26,7 @@
     "inviteMessage": "Macht mit bei der Khitma „{title}“ und wählt einen Juz zum Lesen 📖",
     "hadithMeaning": "„Wer zu etwas Gutem hinführt, erhält einen Lohn wie derjenige, der es tut.“ (Muslim)",
     "freeLeft": "{count} ohne Leser",
+    "freeLeftFew": "Fast geschafft: {count} ohne Leser",
     "freeAsk": "Lade jemanden ein, sie zu lesen, damit die Khitma vollendet wird.",
     "helpMessage": "Helft uns, die Khitma „{title}“ zu vollenden 🤍\n{count} ohne Leser: {list}\nWählt einen Juz über den Link:",
     "allBooked": "Alle Juz sind vergeben; {count} werden noch gelesen",
@@ -112,6 +113,10 @@
     "responsible": "Für Gruppenadministrator:"
   },
   "sequential": {
+    "nextTitle": "Möge Allah dich belohnen 🤍 {count} ohne Leser",
+    "nextAsk": "Liest du auch Juz {juz}?",
+    "nextTake": "Juz {juz} lesen",
+    "nextLater": "Später",
     "start": "Starten Sie eine neue Sammlung der Gruppe",
     "doaa": "Teilen Duaa al-Khafma",
     "finished": "Füllen Sie einen Portion aus",

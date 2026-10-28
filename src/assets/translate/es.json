@@ -26,6 +26,7 @@
     "inviteMessage": "Únete a la khitma «{title}» y elige un juz para leer 📖",
     "hadithMeaning": "«Quien guía hacia un bien tiene una recompensa como la de quien lo realiza.» (Muslim)",
     "freeLeft": "{count} sin lector",
+    "freeLeftFew": "Casi terminada: {count} sin lector",
     "freeAsk": "Invita a alguien a leerlos para completar la khitma.",
     "helpMessage": "Ayúdanos a completar la khitma «{title}» 🤍\n{count} sin lector: {list}\nElige un juz desde el enlace:",
     "allBooked": "Todos los juz están reservados; {count} en lectura",
@@ -112,6 +113,10 @@
     "responsible": "Para el administrador del grupo:"
   },
   "sequential": {
+    "nextTitle": "Que Allah te recompense 🤍 {count} sin lector",
+    "nextAsk": "¿Lees también el juz {juz}?",
+    "nextTake": "Leer el juz {juz}",
+    "nextLater": "Más tarde",
     "start": "Inicia una nueva colección del grupo.",
     "doaa": "Compartir Duaa al-Khafma",
     "finished": "Completa una porción de lectura",

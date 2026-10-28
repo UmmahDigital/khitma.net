@@ -43,6 +43,8 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   myAjzaIndexes: number[];
   showNames = false;
+  /** Set when this member finishes a juz: the next free juz after it is offered, until taken or dismissed. */
+  private offerAfter: number = null;
   /** The juz the member just finished, so its circle can mark the moment. */
   celebrateJuzIndex: number = null;
 
@@ -140,7 +142,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   }
 
   get freeAjzaText(): string {
-    const template = this.common.translation.sharing?.freeLeft || 'بقي {count} بلا قارئ';
+    // Close to the end, say so: the last few ajza are the ones that most often never get read.
+    const few = this.freeAjza.length <= 5 && this.group.ajza.filter((juz) => juz.status !== JUZ_STATUS.DONE).length <= 5;
+    const template = few
+      ? this.common.translation.sharing?.freeLeftFew || 'اقتربت الختمة: بقي {count} بلا قارئ'
+      : this.common.translation.sharing?.freeLeft || 'بقي {count} بلا قارئ';
     return fill(template, { count: ajzaCount(this.freeAjza.length, this.common.currentLanguage) });
   }
 
@@ -156,6 +162,43 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   remindReaders() {
     this.sharing.whatsapp(StatusMessageGenerators[this.group.type](this.group), 'status', this.group.id);
+  }
+
+  /** The first free juz after the one just finished (wrapping from 30 to 1), while the offer is open. */
+  get offeredJuz(): number | null {
+    if (this.offerAfter === null || this.group.isDone()) {
+      return null;
+    }
+    for (let step = 1; step < NUM_OF_AJZA; step++) {
+      const index = (this.offerAfter + step) % NUM_OF_AJZA;
+      if (this.group.ajza[index]?.status === JUZ_STATUS.IDLE) {
+        return index;
+      }
+    }
+    return null;
+  }
+
+  get offerTitle(): string {
+    const template = this.common.translation.sequential?.nextTitle || 'جزاكم الله خيرًا 🤍 بقي {count} بلا قارئ';
+    return fill(template, { count: ajzaCount(this.freeAjza.length, this.common.currentLanguage) });
+  }
+
+  offerText(key: string, fallback: string): string {
+    return fill(this.common.translation.sequential?.[key] || fallback, { juz: this.offeredJuz + 1 });
+  }
+
+  acceptNextJuz() {
+    const juz = this.group.ajza[this.offeredJuz];
+    this.offerAfter = null;
+    if (juz?.status === JUZ_STATUS.IDLE) {
+      this.$gaService.send('next_juz_offer', { action: 'accepted' });
+      this.juzSelected(juz);
+    }
+  }
+
+  dismissNextJuz() {
+    this.$gaService.send('next_juz_offer', { action: 'dismissed' });
+    this.offerAfter = null;
   }
 
   /** Whether finishing this juz completes the khitma: every other juz is already done. */
@@ -215,6 +258,12 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
         this.markFinished(juzIndex);
         this.onAchievement.emit();
+
+        // The moment someone finishes is when they're most willing to read more: offer the next free juz.
+        this.offerAfter = juzIndex;
+        if (this.offeredJuz !== null) {
+          this.$gaService.send('next_juz_offer', { action: 'shown' });
+        }
       }
 
     });

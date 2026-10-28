@@ -17,6 +17,16 @@
       </section>
     }
     <div class="block user-msg" style="margin:32px auto; text-align: center;">
+    @if (offeredJuz !== null) {
+      <div class="next-juz-offer">
+        <p class="next-juz-title">{{ offerTitle }}</p>
+        <p>{{ offerText('nextAsk', 'هل تقرأ الجزء {juz} أيضًا؟') }}</p>
+        <div class="next-juz-actions">
+          <button mat-flat-button class="action-btn" (click)="acceptNextJuz()">{{ offerText('nextTake', 'اقرأ الجزء {juz}') }}</button>
+          <button mat-button (click)="dismissNextJuz()">{{ offerText('nextLater', 'لاحقًا') }}</button>
+        </div>
+      </div>
+    }
       <!-- <span *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
       جزؤك الحالي:
       <strong *ngFor="let juzIndex of myAjzaIndexes"> {{juzIndex + 1}} </strong>

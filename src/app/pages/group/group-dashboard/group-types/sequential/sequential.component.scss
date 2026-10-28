@@ -199,3 +199,32 @@
     margin-bottom: 10px;
   }
 }
+
+// "Read another juz?": offered right after finishing one.
+.next-juz-offer {
+  margin: 0 auto 20px;
+  padding: 14px 16px;
+  max-width: 420px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+
+  p {
+    margin: 0 0 6px;
+    line-height: 1.35;
+  }
+
+  .next-juz-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1c6151;
+  }
+
+  .next-juz-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}

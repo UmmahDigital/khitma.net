@@ -26,6 +26,7 @@
     "inviteMessage": "Join the khitma “{title}” and pick a juz to read 📖",
     "hadithMeaning": "“Whoever guides someone to good has a reward like the one who does it.” (Muslim)",
     "freeLeft": "{count} left with no reader",
+    "freeLeftFew": "Almost there: {count} still have no reader",
     "freeAsk": "Invite someone to read them so the khitma is completed.",
     "helpMessage": "Help us complete the khitma “{title}” 🤍\n{count} still have no reader: {list}\nPick a juz from the link:",
     "allBooked": "Every juz is taken; {count} still being read",
@@ -112,6 +113,10 @@
     "responsible": "For group administrator:"
   },
   "sequential": {
+    "nextTitle": "May Allah reward you 🤍 {count} still have no reader",
+    "nextAsk": "Will you read juz {juz} too?",
+    "nextTake": "Read juz {juz}",
+    "nextLater": "Later",
     "start": "Start a new collection of the group",
     "doaa": "Share Duaa Al-Khafma",
     "finished": "Complete a portion read",
