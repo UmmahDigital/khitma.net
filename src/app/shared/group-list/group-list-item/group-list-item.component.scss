@@ -1,25 +1,21 @@
+@use "src/variables" as *;
+
 .group-list-item {
   margin: 8px auto;
-  padding: 16px;
+  padding: 16px 20px 18px;
   background-color: white;
+  border-radius: $surface-radius;
+  box-shadow: $surface-shadow;
 
-  .progress {
-    display: flex;
-    margin-top: 16px;
+  .group-title {
+    display: block;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
 
-    div {
-      height: 10px;
-    }
-
-    div.done {
-      background-color: #d0e6a5;
-    }
-    div.booked {
-      background-color: #ffdd94;
-    }
-    div.idle {
-      background-color: #fa897b;
-    }
+  app-ajza-progress {
+    margin-top: 12px;
   }
 }
 

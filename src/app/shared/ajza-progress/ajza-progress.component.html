@@ -1,0 +1,11 @@
+<div class="ajza-progress" dir="ltr" [attr.aria-hidden]="showCount ? null : 'true'">
+  <div class="bar" [attr.role]="showCount ? 'progressbar' : null" [attr.aria-valuemin]="showCount ? 0 : null"
+    [attr.aria-valuemax]="showCount ? total : null" [attr.aria-valuenow]="showCount ? (counts?.done ?? 0) : null">
+    <div class="done" [style.flex-grow]="counts?.done ?? 0"></div>
+    <div class="booked" [style.flex-grow]="counts?.booked ?? 0"></div>
+    <div class="idle" [style.flex-grow]="counts?.idle ?? 0"></div>
+  </div>
+  @if (showCount && total) {
+    <span class="count" aria-hidden="true">{{ counts.done }}/{{ total }}</span>
+  }
+</div>

@@ -59,6 +59,16 @@ mat-toolbar {
 .action-btn {
   background: $action-color !important;
   color: white !important;
+  --mat-button-protected-container-shape: #{$surface-radius};
+  --mat-button-protected-container-elevation-shadow: #{$surface-shadow};
+  --mat-button-protected-hover-container-elevation-shadow: #{$surface-shadow-raised};
+}
+
+// Primary actions in dialogs ("نعم") use the app's green, not the prebuilt theme's indigo.
+.app-btn-primary.mat-mdc-raised-button {
+  --mat-button-protected-container-color: #{$action-color};
+  --mat-button-protected-label-text-color: white;
+  --mat-button-protected-container-shape: 10px;
 }
 
 button.large,

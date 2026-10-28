@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { ProgressCounts, progressCounts } from '../../../shared/ajza-progress/ajza-progress.component';
 import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from '../../../entities/entities';
 import { LocalDatabaseService } from '../../../local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
@@ -44,6 +45,7 @@ export class GroupDashboardComponent implements OnInit {
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
 
   group;// : KhitmaGroup_Sequential | KhitmaGroup_SameTask;
+  progress: ProgressCounts | null = null;
 
 
   username: string;
@@ -96,6 +98,7 @@ export class GroupDashboardComponent implements OnInit {
       }
 
       this.group.type = this.group.type || KHITMA_GROUP_TYPE.SEQUENTIAL; // compitability
+      this.progress = progressCounts(this.group);
 
       if (!this.isInitiated) {
         this.username = this.localDB.getUsername(this.group.id);

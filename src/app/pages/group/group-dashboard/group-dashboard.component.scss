@@ -35,6 +35,13 @@
   }
 }
 
+// How far the current khitmah is, under the group title: the same bar as on the home page.
+.header-progress {
+  width: 72%;
+  margin: 4px auto 6px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .space {
   height: 48px;
 }
@@ -65,6 +72,9 @@
 }
 
 .user-msg {
+  font-size: 22px;
+  line-height: 1.4;
+
   span {
     display: block;
     margin: 8px auto;
