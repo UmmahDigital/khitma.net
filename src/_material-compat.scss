@@ -157,3 +157,10 @@ button.large.mat-mdc-button-base {
 .cdk-overlay-dark-backdrop {
   background: rgba(0, 0, 0, 0.32);
 }
+
+// Selected button toggles: the app's green with white text, as before MDC. Material's selected-state
+// rule outranks the app's `.mat-button-toggle-checked`, so the colors go through its tokens.
+html {
+  --mat-button-toggle-selected-state-background-color: #{$primary-color};
+  --mat-button-toggle-selected-state-text-color: white;
+}

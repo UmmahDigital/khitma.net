@@ -10,6 +10,8 @@ mat-button-toggle-group{
     width: 100%;
     display: flex;
     font-size: 125%;
+    // MDC toggles size their labels from a token instead of inheriting the group's 125%.
+    --mat-button-toggle-label-text-size: 1em;
     mat-button-toggle{
         flex:1
     }

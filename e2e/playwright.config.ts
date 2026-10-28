@@ -16,7 +16,9 @@ export default defineConfig({
   timeout: 45_000,
   expect: {
     timeout: 10_000,
-    toHaveScreenshot: { maxDiffPixelRatio: 0.01, animations: 'disabled', caret: 'hide' },
+    // 0.1% of the page: rendering noise stays far below it, while a single wrong-colored control does not
+    // (a 1% allowance once hid a gray selected toggle and a broken card layout).
+    toHaveScreenshot: { maxDiffPixelRatio: 0.001, animations: 'disabled', caret: 'hide' },
   },
   use: {
     baseURL: 'http://localhost:4300',
