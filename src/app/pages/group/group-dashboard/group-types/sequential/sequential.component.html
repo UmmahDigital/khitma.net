@@ -1,124 +1,82 @@
-<div *ngIf="group">
-
-    <section class="khitma-done" *ngIf="group.isDone() > 0">
-
+@if (group) {
+  <div>
+    @if (group.isDone() > 0) {
+      <section class="khitma-done">
         <app-khitma-done-celebration></app-khitma-done-celebration>
-
-
-        <button *ngIf="isAdmin" (click)="startNewKhitmah()" mat-raised-button color="accent"
+        @if (isAdmin) {
+          <button (click)="startNewKhitmah()" mat-raised-button color="accent"
             class="block large action-btn admin-action-btn" [translate]="'sequential.start'">بدء
             ختمة
-            جديدة للمجموعة</button>
-
+          جديدة للمجموعة</button>
+        }
         <button style="margin-top: 16px;" mat-raised-button class="block" (click)="shareKhitmaCompletedDua()"
-            [translate]="'sequential.doaa'">
-            مشاركة
-            دعاء
-            الختمة</button>
-
-    </section>
-
-
+          [translate]="'sequential.doaa'">
+          مشاركة
+          دعاء
+        الختمة</button>
+      </section>
+    }
     <div class="block user-msg" style="margin:32px auto; text-align: center;">
-
-        <!-- <span *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
-
-            جزؤك الحالي:
-
-
-            <strong *ngFor="let juzIndex of myAjzaIndexes"> {{juzIndex + 1}} </strong>
-
-            .</span> -->
-
-
-        <div *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
-            <section class="mat-elevation-z16" *ngFor="let juzIndex of myAjzaIndexes">
-
-                <section class="my-juz-actions fx-row-wrap">
-
-                    <div class="fx-flex-25 center-center">
-                        <a [routerLink]="['/quran/juz' , juzIndex + 1]" class="quran-explorer-btn">
-
-                            <mat-icon>
-                                menu_book</mat-icon>
-
-                            <span>{{juzIndex + 1}}</span>
-                        </a>
-                    </div>
-
-                    <div class="fx-flex-50 center-center">
-                        <button mat-raised-button color="accent" class="block large action-btn"
-                            (click)="juzDone(juzIndex)"><span [translate]="'sequential.finished'">أتممت قراءة جزء</span>
-                            {{juzIndex + 1}}</button>
-                    </div>
-
-                    <div class="fx-flex-25 center-center">
-                        <button class="giveup-btn" mat-flat-button (click)="juzGiveup(juzIndex)"><span
-                                [translate]="'sequential.release'">تنازل عن الجزء</span></button>
-                    </div>
-
-                </section>
-
-
-                <!-- <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div> -->
-
-
+      <!-- <span *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
+      جزؤك الحالي:
+      <strong *ngFor="let juzIndex of myAjzaIndexes"> {{juzIndex + 1}} </strong>
+    .</span> -->
+    @if (myAjzaIndexes.length > 0) {
+      <div>
+        @for (juzIndex of myAjzaIndexes; track juzIndex) {
+          <section class="mat-elevation-z16">
+            <section class="my-juz-actions fx-row-wrap">
+              <div class="fx-flex-25 center-center">
+                <a [routerLink]="['/quran/juz' , juzIndex + 1]" class="quran-explorer-btn">
+                  <mat-icon>
+                  menu_book</mat-icon>
+                  <span>{{juzIndex + 1}}</span>
+                </a>
+              </div>
+              <div class="fx-flex-50 center-center">
+                <button mat-raised-button color="accent" class="block large action-btn"
+                  (click)="juzDone(juzIndex)"><span [translate]="'sequential.finished'">أتممت قراءة جزء</span>
+                {{juzIndex + 1}}</button>
+              </div>
+              <div class="fx-flex-25 center-center">
+                <button class="giveup-btn" mat-flat-button (click)="juzGiveup(juzIndex)"><span
+                [translate]="'sequential.release'">تنازل عن الجزء</span></button>
+              </div>
             </section>
-
-
-            <div class="space"></div>
-
-        </div>
-
-
-        <ng-template #noCurrentJuz>
-            <span *ngIf="this.group.hasIdleAjza(); else noIdleAjza" [translate]="'sequential.select'"> يمكنك اختيار أي
-                من الأجزاء التي باللون الأحمر.
-            </span>
-            <ng-template #noIdleAjza>
-                <span class="large" [translate]="'sequential.all'"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
-            </ng-template>
-        </ng-template>
-
-
-    </div>
-
-
-    <section class="juz-grid-section">
-        <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes"
-            (onJuzSelection)="juzSelected($event)">
-        </app-juz-grid>
-    </section>
-
-    <div class="space" style="margin-bottom: -16px;"></div>
-
-
-    <div class="space"></div>
-
-
-
-
-    <!-- <section class="action-panel mat-elevation-z16"> -->
-
-
-
-
-    <div class="center-center names-toggle-container">
-        <mat-slide-toggle [(ngModel)]="showNames"><span [translate]="'sequential.toggle'">إظهار قائمة الأسماء</span>
-        </mat-slide-toggle>
-    </div>
-
-    <div class="space"></div>
-
-
-
-    <section class="juz-list-section" *ngIf="showNames">
-
-        <app-juz-list [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes" [allowEdit]="isAdmin"
-            (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
-        </app-juz-list>
-
-    </section>
-
-
+            <!-- <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div> -->
+          </section>
+        }
+        <div class="space"></div>
+      </div>
+    } @else {
+      @if (this.group.hasIdleAjza()) {
+        <span [translate]="'sequential.select'"> يمكنك اختيار أي
+          من الأجزاء التي باللون الأحمر.
+        </span>
+      } @else {
+        <span class="large" [translate]="'sequential.all'"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+      }
+    }
+  </div>
+  <section class="juz-grid-section">
+    <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes"
+      (onJuzSelection)="juzSelected($event)">
+    </app-juz-grid>
+  </section>
+  <div class="space" style="margin-bottom: -16px;"></div>
+  <div class="space"></div>
+  <!-- <section class="action-panel mat-elevation-z16"> -->
+  <div class="center-center names-toggle-container">
+    <mat-slide-toggle [(ngModel)]="showNames"><span [translate]="'sequential.toggle'">إظهار قائمة الأسماء</span>
+  </mat-slide-toggle>
 </div>
+<div class="space"></div>
+@if (showNames) {
+  <section class="juz-list-section">
+    <app-juz-list [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes" [allowEdit]="isAdmin"
+      (onJuzSelection)="juzSelected($event)" (onEdited)="juzOwnerEdited($event)">
+    </app-juz-list>
+  </section>
+}
+</div>
+}

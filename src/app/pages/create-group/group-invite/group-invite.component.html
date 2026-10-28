@@ -1,39 +1,23 @@
-<div *ngIf="group" class="group-invite">
-
+@if (group) {
+  <div class="group-invite">
     <app-khitma-info [group]="group" [showLink]="flase" [isExpanded]="false"></app-khitma-info>
-
-
     <p [translate]="'gInvite.done'">
-        تمّ إنشاء مجموعة الختمة بنجاح. يمكنك الآن مشاركة رسالة الدعوة مع معارفك وأصدقائك، أو الانتقال إلى صفحة المجموعة
-        ومشاركة الرسالة من هناك.
+      تمّ إنشاء مجموعة الختمة بنجاح. يمكنك الآن مشاركة رسالة الدعوة مع معارفك وأصدقائك، أو الانتقال إلى صفحة المجموعة
+      ومشاركة الرسالة من هناك.
     </p>
-
-
     <mat-form-field appearance="fill" class="block">
-        <mat-label [translate]="'gInvite.message'">رسالة الدعوة للإنضمام (يمكنك تعديلها)</mat-label>
-        <textarea matInput rows="4" [(ngModel)]="inviteMsg" name="invite-msg"></textarea>
+      <mat-label [translate]="'gInvite.message'">رسالة الدعوة للإنضمام (يمكنك تعديلها)</mat-label>
+      <textarea matInput rows="4" [(ngModel)]="inviteMsg" name="invite-msg"></textarea>
     </mat-form-field>
-
     <!-- <p class="invite-link">{{inviteLink}}</p> -->
-
-    <!-- 
+    <!--
     <button class=" copy-msg-btn large" mat-raised-button [cdkCopyToClipboard]="inviteMsg" (click)="msgCopied()">
-
-        <mat-icon>share</mat-icon> مشاركة
-
+      <mat-icon>share</mat-icon> مشاركة
     </button> -->
-
-
     <button class=" copy-msg-btn large" mat-raised-button (click)="share()">
-
-        <mat-icon>share</mat-icon> <span [translate]="'share'">مشاركة</span>
-
+      <mat-icon>share</mat-icon> <span [translate]="'share'">مشاركة</span>
     </button>
-
-
-
     <a mat-raised-button color="accent" class="block  large action-btn" [routerLink]="['/group',group.id]"><span
-            [translate]="'gInvite.go'">الانتقال لصفحة مجموعة الختمة</span></a>
-
-
-</div>
+    [translate]="'gInvite.go'">الانتقال لصفحة مجموعة الختمة</span></a>
+  </div>
+}

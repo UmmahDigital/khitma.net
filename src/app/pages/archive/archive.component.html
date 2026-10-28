@@ -1,35 +1,26 @@
-<div *ngIf=" !archivedGroups  || archivedGroups.length == 0 " [translate]="'archive.no'"> لا توجد لديك مجموعات في
-    الأرشيف</div>
+@if ( !archivedGroups  || archivedGroups.length == 0 ) {
+  <div [translate]="'archive.no'"> لا توجد لديك مجموعات في
+  الأرشيف</div>
+}
 
-<div *ngIf="archivedGroups.length > 0" class="group-archive-list">
-
-    <section *ngFor="let group of archivedGroups">
-
+@if (archivedGroups.length > 0) {
+  <div class="group-archive-list">
+    @for (group of archivedGroups; track group) {
+      <section>
         <a [routerLink]="['/group',group.id]">
-
-            <mat-card appearance="outlined">
-                {{group.title}}
-            </mat-card>
-
+          <mat-card appearance="outlined">
+            {{group.title}}
+          </mat-card>
         </a>
-
-        <!-- 
+        <!--
         <div fxFlex="90%">
-
-            
-
-
         </div>
-
         <div fxFlex="10%" class="center-center">
-            <mat-icon (click)="removeGroup(group)">remove_circle</mat-icon>
+          <mat-icon (click)="removeGroup(group)">remove_circle</mat-icon>
         </div> -->
-
-
-    </section>
-
+      </section>
+    }
     <button mat-button class="block" style="margin-top:20px;" (click)="clearArchive()"
-        [translate]="'archive.clean'">تنظيف الأرشيف</button>
-
-
-</div>
+    [translate]="'archive.clean'">تنظيف الأرشيف</button>
+  </div>
+}

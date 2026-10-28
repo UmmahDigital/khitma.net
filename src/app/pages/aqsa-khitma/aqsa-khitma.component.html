@@ -1,78 +1,56 @@
 <div style="margin: -32px -32px 32px -32px;">
-    <img src="assets/aqsa-bg.jpeg" />
+  <img src="assets/aqsa-bg.jpeg" />
 </div>
 
 
-<section *ngIf="counters" class="big-number">
-
+@if (counters) {
+  <section class="big-number">
     <label class="main-counter number">{{counters.completed | number}}</label>
     <span [translate]="'aqsa.pagesDone'">صفحة تمّت تلاوتها في ختمة المسجد الأقصى المبارك</span>
-</section>
+  </section>
+}
 
 
-<section *ngIf="!myPages; else hasPages">
-
+@if (!myPages) {
+  <section>
     <h2 [translate]="'aqsa.howMuch'">كم صفحة تريد\ين تلاوتها؟</h2>
     <!-- <span>رجاء اختيار عدد الصفحات التي تريد\ين تلاوتها من أجل المسجد الأقصى المبارك</span> -->
-
-
     <mat-button-toggle-group name="numOfPages" aria-label="Num of pages" #numOfPagesToggleGroup="matButtonToggleGroup"
-        value="10">
-        <mat-button-toggle value="1">1</mat-button-toggle>
-        <mat-button-toggle value="5">5</mat-button-toggle>
-        <mat-button-toggle value="10">10</mat-button-toggle>
-        <mat-button-toggle value="20">20</mat-button-toggle>
+      value="10">
+      <mat-button-toggle value="1">1</mat-button-toggle>
+      <mat-button-toggle value="5">5</mat-button-toggle>
+      <mat-button-toggle value="10">10</mat-button-toggle>
+      <mat-button-toggle value="20">20</mat-button-toggle>
     </mat-button-toggle-group>
-
-
-
     <button mat-raised-button class="action-btn block large" (click)="giveMePages(numOfPagesToggleGroup.value)">
-
-        <span [translate]="'aqsa.want'">أريد تلاوة</span> {{numOfPagesToggleGroup.value}} <span
-            [translate]="'aqsa.num'">صحفات</span>
-
-    </button>
-
-
+      <span [translate]="'aqsa.want'">أريد تلاوة</span> {{numOfPagesToggleGroup.value}} <span
+    [translate]="'aqsa.num'">صحفات</span>
+  </button>
 </section>
+} @else {
+  <mat-card appearance="outlined">
+    <div class="big-number">
+      <span [translate]="'aqsa.currentPages'">صفحاتك الحاليّة</span>
+      <label class="main-counter number" dir="ltr">{{myPages.from}} - {{myPages.to}}</label>
+    </div>
+    <button mat-raised-button class="action-btn block large" (click)="doneReadingMyPages()"
+      [translate]="'aqsa.finished'">
+      أتممت تلاوة صفحاتي
+    </button>
+  </mat-card>
+}
 
 
-<ng-template #hasPages>
-
-    <mat-card appearance="outlined">
-
-        <div class="big-number">
-            <span [translate]="'aqsa.currentPages'">صفحاتك الحاليّة</span>
-            <label class="main-counter number" dir="ltr">{{myPages.from}} - {{myPages.to}}</label>
-
-
-        </div>
-
-
-
-
-        <button mat-raised-button class="action-btn block large" (click)="doneReadingMyPages()"
-            [translate]="'aqsa.finished'">
-
-            أتممت تلاوة صفحاتي
-
-        </button>
-
-
-
-    </mat-card>
-
-</ng-template>
 
 
 
 <hr />
 
 <p [translate]="'aqsa.description'">
-    بداية تطوير منصّة ختمة.نت كانت من المسجد الأقصى المبارك، حيث كتبت أولى أسطرها البرمجيّة فيه. واليوم يستمر
-    تطوير
-    المنصّة من أكناف القدس وبيت المقدس. وهنا نضع بين أيديكم ختمة جماعيّة عالميّة للمسجد الأقصى المبارك،
-    داعين
-    المولى عزّ وجلّ أن يرفع عنه الظلم وعن جميع أراضي المسلمين.
+  بداية تطوير منصّة ختمة.نت كانت من المسجد الأقصى المبارك، حيث كتبت أولى أسطرها البرمجيّة فيه. واليوم يستمر
+  تطوير
+  المنصّة من أكناف القدس وبيت المقدس. وهنا نضع بين أيديكم ختمة جماعيّة عالميّة للمسجد الأقصى المبارك،
+  داعين
+  المولى عزّ وجلّ أن يرفع عنه الظلم وعن جميع أراضي المسلمين.
 
 </p>

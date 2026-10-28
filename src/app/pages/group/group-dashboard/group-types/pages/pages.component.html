@@ -1,84 +1,72 @@
-<section *ngIf="group.isStarted && myMember?.pagesTask?.start == null">
+@if (group.isStarted && myMember?.pagesTask?.start == null) {
+  <section>
     <div class="user-msg">
-
-        <label [translate]="'gPages.header'"> تمّ توزيع الصفحات في هذه الختمة.
-            يمكنك التوجّه لمسؤول\ة المجموعة وطلب توزيع الصفحات من جديد. يمكنك أيضا قراءة أيّ عدد من الصفحات بدون
-            تسجيلها، فكلّ تلاوة لك مسجّلة في صحيفة أعمالك الصالحة ولك الأجر عليها إن شاء الله :)
-        </label>
-
+      <label [translate]="'gPages.header'"> تمّ توزيع الصفحات في هذه الختمة.
+        يمكنك التوجّه لمسؤول\ة المجموعة وطلب توزيع الصفحات من جديد. يمكنك أيضا قراءة أيّ عدد من الصفحات بدون
+        تسجيلها، فكلّ تلاوة لك مسجّلة في صحيفة أعمالك الصالحة ولك الأجر عليها إن شاء الله :)
+      </label>
     </div>
-</section>
+  </section>
+}
 
 
 
-<ng-container *ngIf="group.isStarted; else notStarted ">
-
-    <section *ngIf="myMember?.pagesTask?.start != null">
-
-        <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)" class="task">
-            <div content>
-
-                <span [translate]="'gPages.page'">صفحة</span>
-                <span dir="ltr">
-                    <span class="page-num">{{myMember.pagesTask.start +1 | number:'3.0'}}</span>
-                    -
-                    <span class="page-num">{{myMember.pagesTask.end +1 | number:'3.0'}}</span>
-                </span>
-            </div>
-        </app-todo>
-
-        <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
-
-    </section>
-
-
-    <app-khitma-pages-progress [members]="group.members"></app-khitma-pages-progress>
-
-</ng-container>
-
-<ng-template #notStarted>
-
-    <div class="user-msg">
-
-        <label [translate]="'gPages.pending'"> بانتظار مسؤول المجموعة لتوزيع الصفحات</label>
-
-        <!-- <mat-spinner></mat-spinner> -->
-
-        <app-loading></app-loading>
-
-    </div>
-
-</ng-template>
-
-
-
-
-
-<section *ngIf="showGroupMembers">
-
-    <header><span [translate]="'gPages.members'">أعضاء المجموعة</span>
-        ({{group.members.length}})
-    </header>
-
-    <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
-
-        <div class="tip">
-            <strong [translate]="'gPages.responsible'">لمسؤول المجموعة:</strong>
-            <span [translate]="'gPages.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
-                ويمكنك تعديل الأعضاء عن طريق الضغط
-                على كبسة التعديل أدناه.</span>
-
+@if (group.isStarted) {
+  @if (myMember?.pagesTask?.start != null) {
+    <section>
+      <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)" class="task">
+        <div content>
+          <span [translate]="'gPages.page'">صفحة</span>
+          <span dir="ltr">
+            <span class="page-num">{{myMember.pagesTask.start +1 | number:'3.0'}}</span>
+            -
+            <span class="page-num">{{myMember.pagesTask.end +1 | number:'3.0'}}</span>
+          </span>
         </div>
+      </app-todo>
+      @if (this.group.targetDate) {
+        <span class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
+      }
+    </section>
+  }
+  <app-khitma-pages-progress [members]="group.members"></app-khitma-pages-progress>
+} @else {
+  <div class="user-msg">
+    <label [translate]="'gPages.pending'"> بانتظار مسؤول المجموعة لتوزيع الصفحات</label>
+    <!-- <mat-spinner></mat-spinner> -->
+    <app-loading></app-loading>
+  </div>
+}
 
-        <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
-            (click)="isMembersListEditMode = !isMembersListEditMode">
-            <mat-icon>edit</mat-icon>
+
+
+
+
+
+@if (showGroupMembers) {
+  <section>
+    <header><span [translate]="'gPages.members'">أعضاء المجموعة</span>
+    ({{group.members.length}})
+  </header>
+  @if (isAdmin) {
+    <div class="center-center" style="flex-direction: column;">
+      <div class="tip">
+        <strong [translate]="'gPages.responsible'">لمسؤول المجموعة:</strong>
+        <span [translate]="'gPages.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
+          ويمكنك تعديل الأعضاء عن طريق الضغط
+        على كبسة التعديل أدناه.</span>
+      </div>
+      @if (isAdmin) {
+        <mat-button-toggle class="members-list-edit-btn"
+          (click)="isMembersListEditMode = !isMembersListEditMode">
+          <mat-icon>edit</mat-icon>
         </mat-button-toggle>
+      }
     </div>
-
-    <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
-        (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
-        (onMemberAdd)="addGroupMember($event)">
-    </app-group-members>
-
+  }
+  <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
+    (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
+    (onMemberAdd)="addGroupMember($event)">
+  </app-group-members>
 </section>
+}

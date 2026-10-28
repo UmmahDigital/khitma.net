@@ -1,15 +1,17 @@
 <section dir="ltr" class="fx-row-wrap juz-grid-row">
-    <div *ngFor="let juz of ajza" class="fx-flex-20" style="text-align:center">
-        <app-juz-toggle [juz]="juz" [isMyJuz]="myAjzaIndexes.indexOf(juz.index)>=0" (click)="juzClicked(juz)">
-        </app-juz-toggle>
+  @for (juz of ajza; track juz) {
+    <div class="fx-flex-20" style="text-align:center">
+      <app-juz-toggle [juz]="juz" [isMyJuz]="myAjzaIndexes.indexOf(juz.index)>=0" (click)="juzClicked(juz)">
+      </app-juz-toggle>
     </div>
+  }
 </section>
 
-<!-- 
+<!--
 <div class="ideas-list" >
-    <div *ngFor="let idea of filteredItems" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%"
-        style="text-align:center">
-        <app-idea [idea]="idea" [index]="i"></app-idea>
-    </div>
+  <div *ngFor="let idea of filteredItems" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%"
+    style="text-align:center">
+    <app-idea [idea]="idea" [index]="i"></app-idea>
+  </div>
 </div>
- -->
+-->

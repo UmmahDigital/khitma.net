@@ -1,7 +1,9 @@
 <div class="center-center fx-row-wrap" style="height: 100%">
   <div id="app-container" [class.dark]="isDarkStyle">
-    <app-celebration *ngIf="showCelebration" class="celebration-container">
-    </app-celebration>
+    @if (showCelebration) {
+      <app-celebration class="celebration-container">
+      </app-celebration>
+    }
 
     <mat-toolbar color="primary">
       <button mat-icon-button aria-label="menu">
@@ -16,64 +18,64 @@
       <span class="spacer"></span>
 
       <!-- <mat-icon
-          class="lang-toggle"
-          aria-hidden="false"
-          aria-label="Language"
-          (click)="showLang = !showLang"
-          >language
-        </mat-icon> -->
+      class="lang-toggle"
+      aria-hidden="false"
+      aria-label="Language"
+      (click)="showLang = !showLang"
+      >language
+    </mat-icon> -->
 
-      <mat-icon
-        aria-label="Language"
-        [matMenuTriggerFor]="langMenu"
-        style="margin-inline-start: 8px"
-        >language
-      </mat-icon>
-      <mat-menu #langMenu="matMenu" [class.dark]="isDarkStyle">
+    <mat-icon
+      aria-label="Language"
+      [matMenuTriggerFor]="langMenu"
+      style="margin-inline-start: 8px"
+      >language
+    </mat-icon>
+    <mat-menu #langMenu="matMenu" [class.dark]="isDarkStyle">
+      @for (lang of common.languages; track lang) {
         <button
           mat-menu-item
-          *ngFor="let lang of common.languages"
           (click)="changeLanguage(lang.value)"
-        >
+          >
           <!-- <mat-icon></mat-icon> -->
-
           {{ lang.text }}
         </button>
-      </mat-menu>
+      }
+    </mat-menu>
 
-      <!-- <mat-nav-list *ngIf="showLang" class="lang-list">
-          <mat-list-item *ngFor="let lang of common.languages">
-            <a href="javascript:;" (click)="changeLanguage(lang.value)">{{ lang.text }}</a>
-          </mat-list-item>
-        </mat-nav-list> -->
+    <!-- <mat-nav-list *ngIf="showLang" class="lang-list">
+    <mat-list-item *ngFor="let lang of common.languages">
+      <a href="javascript:;" (click)="changeLanguage(lang.value)">{{ lang.text }}</a>
+    </mat-list-item>
+  </mat-nav-list> -->
 
-      <!-- <mat-form-field appearance="fill" class="lang-dropdown">
-        <mat-icon aria-hidden="false" aria-label="Language">language</mat-icon>
-        <mat-select [(value)]="common.currentLanguage">
-          <mat-option value="ar">العربية</mat-option>
-          <mat-option value="en">English</mat-option>
-        </mat-select>
-      </mat-form-field> -->
+  <!-- <mat-form-field appearance="fill" class="lang-dropdown">
+  <mat-icon aria-hidden="false" aria-label="Language">language</mat-icon>
+  <mat-select [(value)]="common.currentLanguage">
+    <mat-option value="ar">العربية</mat-option>
+    <mat-option value="en">English</mat-option>
+  </mat-select>
+</mat-form-field> -->
 
-      <mat-icon
-        matBadge="1"
-        matBadgePosition="before"
-        matBadgeSize="medium"
-        matBadgeColor="accent"
-        (click)="showNotification()"
-        [matBadgeHidden]="!unreadNotification"
-        gaEvent="show_notification_clicked"
-        gaCategory="notifications"
-        >notifications
-      </mat-icon>
+<mat-icon
+  matBadge="1"
+  matBadgePosition="before"
+  matBadgeSize="medium"
+  matBadgeColor="accent"
+  (click)="showNotification()"
+  [matBadgeHidden]="!unreadNotification"
+  gaEvent="show_notification_clicked"
+  gaCategory="notifications"
+  >notifications
+</mat-icon>
 
-      <a routerLink="about">
-        <mat-icon class="help-btn">help_outline</mat-icon>
-      </a>
-    </mat-toolbar>
+<a routerLink="about">
+  <mat-icon class="help-btn">help_outline</mat-icon>
+</a>
+</mat-toolbar>
 
-    <div id="app-content">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
+<div id="app-content">
+  <router-outlet></router-outlet>
+</div>
+</div>
 </div>

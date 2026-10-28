@@ -1,30 +1,22 @@
-<section *ngIf="groups && groups.length > 0">
-
+@if (groups && groups.length > 0) {
+  <section>
     <header class="center-center">
-
-        <header [translate]="'me.groups'">مجموعاتي الحاليّة</header>
-
-        <span class="spacer"></span>
-
-        <mat-icon style="color:gray" (click)="showSettings=!showSettings">settings</mat-icon>
-
+      <header [translate]="'me.groups'">مجموعاتي الحاليّة</header>
+      <span class="spacer"></span>
+      <mat-icon style="color:gray" (click)="showSettings=!showSettings">settings</mat-icon>
     </header>
-
-    <section *ngFor="let group of groups" class="fx-row-wrap group-row">
-
-
+    @for (group of groups; track group) {
+      <section class="fx-row-wrap group-row">
         <div [ngClass]="showSettings ? 'fx-flex-90' : 'fx-flex-100'">
-            <app-group-list-item [group]="group">
-            </app-group-list-item>
-
+          <app-group-list-item [group]="group">
+          </app-group-list-item>
         </div>
-
-        <div *ngIf="showSettings" class="fx-flex-10 center-center">
+        @if (showSettings) {
+          <div class="fx-flex-10 center-center">
             <mat-icon (click)="action(group)">archive</mat-icon>
-        </div>
-
-
-    </section>
-
-
-</section>
+          </div>
+        }
+      </section>
+    }
+  </section>
+}

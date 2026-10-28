@@ -3,73 +3,69 @@
 <div class="container">
 
 
-    <section>
-        <header>
-            <span [translate]="'gKhitma.header'">ختمة المسجد الأقصى الرمضانيّة</span>
+  <section>
+    <header>
+      <span [translate]="'gKhitma.header'">ختمة المسجد الأقصى الرمضانيّة</span>
 
-            <br />
-            <!-- <small> (ختمة عالميّة)</small> -->
-        </header>
-
-        <!-- <p>
-
-            (شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ
-            وَالْفُرْقَانِ) - البقرة ١٨٥
-        </p> -->
-
-
-    </section>
-
-
-
-    <app-moon [days]="dayInRamadan"></app-moon>
-
-
-    <!-- <section *ngIf="dayInRamadan>0; else ramadanNotStartedYet"> -->
-    <header id="ramadan-day">
-
-        {{dayInRamadan}} <span [translate]="'gKhitma.ramadan'">رمضان</span>
+      <br />
+      <!-- <small> (ختمة عالميّة)</small> -->
     </header>
 
+    <!-- <p>
 
-    <section id="done-ajza-counter">
-        <label class="number">{{totalAjzaCounter}}</label>
-        <span class="text" [translate]="'gKhitma.world'"> أجزاء تمّت تلاوتها عالميّا</span>
-    </section>
-
-    <!-- <app-khitma-progress [current]="5" [target]="10"></app-khitma-progress> -->
+    (شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ
+    وَالْفُرْقَانِ) - البقرة ١٨٥
+  </p> -->
 
 
-    <p [translate]="'gKhitma.worldDesc'">
-
-        في ما يلي ختمتك الشخصيّة لشهر رمضان المبارك. عندما تقوم بإتمام أحد الأجزاء فإنّ ذلك يضاف مباشرة لعدّاد الأجزاء
-        في الختمة العالميّة. في ميزان حسناتكم إن شاء الله
-    </p>
+</section>
 
 
-    <app-todo *ngFor="let juz of ajza;" class="juz dark" [text]="common.translation.gKhitma?.part +' ' + (juz.index+1)"
-        (onToggled)="submitJuz(juz.index, $event)" [isDone]="myAjzaStatuses[juz.index]"
-        [class.today]="(juz.index+1) === dayInRamadan">
 
-        <div content>
+<app-moon [days]="dayInRamadan"></app-moon>
 
 
-            <span [translate]="'gKhitma.part'">جزء</span> {{juz.index+1}}
+<!-- <section *ngIf="dayInRamadan>0; else ramadanNotStartedYet"> -->
+<header id="ramadan-day">
+
+  {{dayInRamadan}} <span [translate]="'gKhitma.ramadan'">رمضان</span>
+</header>
 
 
-        </div>
+<section id="done-ajza-counter">
+  <label class="number">{{totalAjzaCounter}}</label>
+  <span class="text" [translate]="'gKhitma.world'"> أجزاء تمّت تلاوتها عالميّا</span>
+</section>
 
-    </app-todo>
-
-
-    <button id="reset-khitma-btn" mat-stroked-button (click)="resetKhitma()">
-        <span [translate]="'gKhitma.done'">هل أتممت الختمة؟</span>
-    </button>
+<!-- <app-khitma-progress [current]="5" [target]="10"></app-khitma-progress> -->
 
 
-    <ng-template #ramadanNotStartedYet>
-        <label [translate]="'gKhitma.day'">نبدأ ختمتنا مع أوّل أيّام رمضان إن شاء الله</label>
-    </ng-template>
+<p [translate]="'gKhitma.worldDesc'">
+
+  في ما يلي ختمتك الشخصيّة لشهر رمضان المبارك. عندما تقوم بإتمام أحد الأجزاء فإنّ ذلك يضاف مباشرة لعدّاد الأجزاء
+  في الختمة العالميّة. في ميزان حسناتكم إن شاء الله
+</p>
+
+
+@for (juz of ajza; track juz) {
+  <app-todo class="juz dark" [text]="common.translation.gKhitma?.part +' ' + (juz.index+1)"
+    (onToggled)="submitJuz(juz.index, $event)" [isDone]="myAjzaStatuses[juz.index]"
+    [class.today]="(juz.index+1) === dayInRamadan">
+    <div content>
+      <span [translate]="'gKhitma.part'">جزء</span> {{juz.index+1}}
+    </div>
+  </app-todo>
+}
+
+
+<button id="reset-khitma-btn" mat-stroked-button (click)="resetKhitma()">
+  <span [translate]="'gKhitma.done'">هل أتممت الختمة؟</span>
+</button>
+
+
+<ng-template #ramadanNotStartedYet>
+  <label [translate]="'gKhitma.day'">نبدأ ختمتنا مع أوّل أيّام رمضان إن شاء الله</label>
+</ng-template>
 
 
 
