@@ -44,8 +44,9 @@
   <link href="assets/khitma-logo.png" rel="apple-touch-startup-image">
   <link rel="manifest" href="manifest.webmanifest">
 
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- The app reads its groups from Firestore: open the connection while the app's code downloads. -->
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 
   <!-- Link previews (WhatsApp, Telegram, Facebook, X). Image URLs must be absolute. -->
   <meta property="og:type" content="website">
