@@ -8,8 +8,9 @@ import {
   Input,
   ModuleWithProviders,
   NgModule,
+  DOCUMENT
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+
 
 // Google Analytics (gtag.js) calls, matching what ngx-google-analytics sent, without a third-party wrapper.
 

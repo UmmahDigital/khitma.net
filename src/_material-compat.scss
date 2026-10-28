@@ -25,19 +25,19 @@ button.large.mat-mdc-button-base {
   width: 40px;
   height: 40px;
   padding: 8px;
-  --mdc-icon-button-state-layer-size: 40px;
+  --mat-icon-button-state-layer-size: 40px;
 }
 
 // Dialogs: legacy padding, the h1 size the titles always had, actions aligned to the start.
 .mat-mdc-dialog-container {
-  --mdc-dialog-subhead-font: "Markazi Text";
-  --mdc-dialog-subhead-size: 32px;
-  --mdc-dialog-subhead-line-height: 48px;
-  --mdc-dialog-subhead-weight: 700;
-  --mdc-dialog-subhead-tracking: normal;
-  --mdc-dialog-subhead-color: rgba(0, 0, 0, 0.87);
-  --mdc-dialog-supporting-text-color: rgba(0, 0, 0, 0.87);
-  --mdc-dialog-supporting-text-tracking: normal;
+  --mat-dialog-subhead-font: "Markazi Text";
+  --mat-dialog-subhead-size: 32px;
+  --mat-dialog-subhead-line-height: 48px;
+  --mat-dialog-subhead-weight: 700;
+  --mat-dialog-subhead-tracking: normal;
+  --mat-dialog-subhead-color: rgba(0, 0, 0, 0.87);
+  --mat-dialog-supporting-text-color: rgba(0, 0, 0, 0.87);
+  --mat-dialog-supporting-text-tracking: normal;
 
   .mdc-dialog__surface {
     padding: 24px;
@@ -79,7 +79,7 @@ button.large.mat-mdc-button-base {
 // Form fields: the legacy fill look, measured on the legacy build: 80px boxes around 40px inputs,
 // 18px lines, a darker fill and regular-weight labels.
 .mat-mdc-form-field {
-  --mdc-filled-text-field-container-color: rgba(0, 0, 0, 0.04);
+  --mat-form-field-filled-container-color: rgba(0, 0, 0, 0.04);
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
 
@@ -110,7 +110,7 @@ button.large.mat-mdc-button-base {
 
 // Radio buttons: the legacy 20px circle without MDC's 40px touch halo, so labels keep their width.
 .mat-mdc-radio-button.mat-mdc-radio-button {
-  --mdc-radio-state-layer-size: 20px;
+  --mat-radio-state-layer-size: 20px;
 
   .mdc-radio {
     padding: 0;
