@@ -13,7 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestoreModule,
+  USE_EMULATOR as USE_FIRESTORE_EMULATOR,
+} from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 import {
@@ -183,7 +186,7 @@ const routes: Routes = [
     AngularFireStorageModule, // storage,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
+      enabled: environment.production && !environment.useEmulators,
     }),
     SocialLoginModule,
   ],
@@ -191,6 +194,10 @@ const routes: Routes = [
     GroupJoinedGuard,
     KhitmaGroupService,
     CommonService,
+    {
+      provide: USE_FIRESTORE_EMULATOR,
+      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
