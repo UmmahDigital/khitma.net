@@ -1,0 +1,99 @@
+// The refreshed look, on top of Angular Material: the app's green wherever Material's prebuilt
+// indigo/pink theme would show, pill-shaped buttons, rounder dialogs, menus and fields, and softer
+// surfaces. Layout, sizes and flows stay as they were (material-compat, loaded before this file).
+@use "src/variables" as *;
+
+html {
+  --mat-button-filled-container-shape: 999px;
+  --mat-button-protected-container-shape: 999px;
+  --mat-button-outlined-container-shape: 999px;
+  --mat-button-tonal-container-shape: 999px;
+  --mat-button-text-container-shape: 999px;
+  --mat-button-text-label-text-color: #{$primary-color};
+
+  --mat-dialog-container-shape: 28px;
+  // Short confirmations get a comfortable width instead of hugging their two-word title.
+  --mat-dialog-container-min-width: min(280px, calc(100vw - 32px));
+
+  --mat-menu-container-shape: 16px;
+  --mat-menu-item-label-text-size: 18px;
+  --mat-menu-item-icon-color: #{$primary-color};
+
+  --mat-form-field-filled-container-shape: 12px;
+  --mat-form-field-filled-focus-active-indicator-color: #{$primary-color};
+  --mat-form-field-filled-focus-label-text-color: #{$primary-color};
+  --mat-form-field-filled-caret-color: #{$primary-color};
+
+  --mat-snack-bar-container-shape: 12px;
+  --mat-snack-bar-container-color: #{$snack-color};
+  --mat-snack-bar-supporting-text-color: white;
+  --mat-snack-bar-button-color: #{$primary-tonal};
+
+  --mat-button-toggle-shape: 999px;
+
+  --mat-card-outlined-container-shape: #{$surface-radius};
+  --mat-card-elevated-container-shape: #{$surface-radius};
+}
+
+// The prebuilt theme colors these per palette class, so the green has to be set on the same classes.
+.mat-mdc-radio-button.mat-accent,
+.mat-mdc-radio-button.mat-primary {
+  --mat-radio-selected-icon-color: #{$primary-color};
+  --mat-radio-selected-focus-icon-color: #{$primary-color};
+  --mat-radio-selected-hover-icon-color: #{$primary-color};
+  --mat-radio-selected-pressed-icon-color: #{$primary-color};
+  --mat-radio-checked-ripple-color: #{$primary-color};
+}
+
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-raised-button.mat-accent,
+.mat-mdc-unelevated-button.mat-primary,
+.mat-mdc-unelevated-button.mat-accent {
+  --mat-button-protected-container-color: #{$action-color};
+  --mat-button-protected-label-text-color: white;
+  --mat-button-filled-container-color: #{$action-color};
+  --mat-button-filled-label-text-color: white;
+}
+
+// Big buttons: 64px pills. Long labels wrap inside the pill instead of spilling below it.
+.mat-mdc-button-base.large.large {
+  height: auto;
+  min-height: 64px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 1.3;
+  white-space: normal;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+// Dialogs: actions spaced apart, and room at the bottom now that the corners are round.
+.mat-mdc-dialog-container .mat-mdc-dialog-actions {
+  padding-bottom: 8px;
+
+  > .mat-mdc-button-base + .mat-mdc-button-base {
+    margin-inline-start: 8px;
+  }
+
+  // The answers ("نعم", "لا", "موافق") are big enough to read and tap comfortably.
+  .mat-mdc-button-base:not(.large) {
+    height: 44px;
+    min-width: 88px;
+    font-size: 18px;
+  }
+}
+
+// Menus: roomier items, a soft shadow.
+.mat-mdc-menu-panel.mat-mdc-menu-panel {
+  box-shadow: $surface-shadow-raised;
+}
+
+.mat-mdc-menu-item {
+  min-height: 52px;
+}
+
+// The group header keeps its familiar dark green, with softly rounded bottom corners.
+.dashboard-header {
+  border-radius: 0 0 24px 24px;
+}

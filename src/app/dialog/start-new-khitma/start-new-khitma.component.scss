@@ -8,12 +8,18 @@
     margin: 15px 0;
 }
 
+// Each option is a tile; the chosen one turns soft green.
 .radio-button {
     margin: 5px;
     padding: 16px 16px;
-    background: #fafafa;
+    background: #f3f5f4;
+    border: 1px solid transparent;
+    border-radius: 16px;
+}
 
-
+.radio-button.mat-mdc-radio-checked {
+    background: $primary-tonal;
+    border-color: rgba(7, 94, 84, 0.25);
 }
 
 

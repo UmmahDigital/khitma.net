@@ -47,6 +47,7 @@ $custom-typography: mat.m2-define-typography-config(
 @include mat.all-component-typographies($custom-typography);
 
 @include meta.load-css("src/material-compat");
+@include meta.load-css("src/theme");
 
 hr {
   border: none;

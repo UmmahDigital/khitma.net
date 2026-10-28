@@ -59,7 +59,6 @@ mat-toolbar {
 .action-btn {
   background: $action-color !important;
   color: white !important;
-  --mat-button-protected-container-shape: #{$surface-radius};
   --mat-button-protected-container-elevation-shadow: #{$surface-shadow};
   --mat-button-protected-hover-container-elevation-shadow: #{$surface-shadow-raised};
 }
@@ -68,7 +67,6 @@ mat-toolbar {
 .app-btn-primary.mat-mdc-raised-button {
   --mat-button-protected-container-color: #{$action-color};
   --mat-button-protected-label-text-color: white;
-  --mat-button-protected-container-shape: 10px;
 }
 
 button.large,
@@ -178,10 +176,10 @@ section > p {
 }
 
 .tip {
-  background: color.adjust($admin-color, $lightness: 50%);
+  background: $admin-tonal;
   color: $admin-color;
   padding: 16px;
-  border-radius: 4px;
+  border-radius: $surface-radius;
   display: block;
 }
 
