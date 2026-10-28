@@ -15,6 +15,7 @@ import { SharingService } from '../../../../../sharing.service';
 import { ReferralService } from '../../../../../referral.service';
 import { impactLines } from '../../../../../referral';
 import { memorialDua } from '../../../../../purpose';
+import { repeatText } from '../../../../../schedule';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
@@ -267,6 +268,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       this.$gaService.send('stale_bookings_released', { count: stale.length });
       this.alert.show(fill(t.released || 'أُتيح {count} من جديد', { count }), 4000);
     });
+  }
+
+  /** For khitmas that repeat by themselves: when the next round starts. */
+  get repeatLine(): string | null {
+    return repeatText(<any>this.group, this.common.translation, this.common.currentLanguage);
   }
 
   /** For a memorial khitma, the supplication for the deceased that its completion is for. */

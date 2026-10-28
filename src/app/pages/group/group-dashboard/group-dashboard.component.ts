@@ -16,6 +16,8 @@ import { SharingService } from '../../../sharing.service';
 import { ReferralService } from '../../../referral.service';
 import { ajzaCount, fill, inviteMessage } from '../../../share-messages';
 import { staleBookings } from '../../../booking-age';
+import { isRoundDue, RoundSchedule } from '../../../schedule';
+import { ScheduleComponent } from '../../../dialog/schedule/schedule.component';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
 import { NativeShareService } from '../../../native-share.service';
@@ -122,8 +124,48 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
 
       this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.referral.groupUrl(this.group.id));
 
+      this.startDueRound();
     });
 
+  }
+
+  /** The round this page already tried to start, so it tries once per round. */
+  private dueRoundTried: number | null = null;
+
+  /** A repeating khitma whose next round is due: whoever opens it first starts it (once; see startScheduledRound). */
+  private startDueRound() {
+    const group = this.group;
+    const cycle = group.cycle || 0;
+    if (group.type !== KHITMA_GROUP_TYPE.SEQUENTIAL || this.dueRoundTried === cycle || !isRoundDue(<any>group, Date.now())) {
+      return;
+    }
+    this.dueRoundTried = cycle;
+    this.groupsApi
+      .startScheduledRound(group.id)
+      .then((started) => {
+        if (started) {
+          this.$gaService.send('round_started', { trigger: 'schedule', every: group.schedule.every });
+        }
+      })
+      .catch(() => {});
+  }
+
+  openSchedule() {
+    this.dialog
+      .open<ScheduleComponent, RoundSchedule | null, RoundSchedule | null>(ScheduleComponent, {
+        data: (this.group.schedule as RoundSchedule) ?? null,
+        maxWidth: '90vw',
+        width: '380px',
+      })
+      .afterClosed()
+      .subscribe((schedule) => {
+        if (schedule === undefined) {
+          return;
+        }
+        this.groupsApi.setSchedule(this.group.id, schedule);
+        this.$gaService.send('schedule_set', { every: schedule?.every ?? 'off' });
+        this.alert.show(this.common.translation.schedule?.saved || 'تمّ حفظ التكرار', 3000);
+      });
   }
 
   /** Booked a week or more ago and still not done: the admin can free them for others. */

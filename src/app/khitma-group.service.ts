@@ -20,11 +20,14 @@ import {
   Firestore,
   getDoc,
   increment,
+  runTransaction,
   serverTimestamp,
   setDoc,
+  Timestamp,
   updateDoc,
 } from 'firebase/firestore';
 import { FIRESTORE, watchDoc } from './firestore';
+import { isRoundDue, nextRoundAt, RoundSchedule } from './schedule';
 import { LocalDatabaseService } from './local-database.service';
 
 @Injectable({
@@ -234,127 +237,45 @@ export class KhitmaGroupService {
   }
 
   startNewSequentialKhitmaCycle(newCycle, newCycleType) {
-    function _generateNextCycleAjza(oldCycleAjza: Juz[]): Juz[] {
-      let newCycleAjza: Juz[] = [];
-
-      for (let i = 0; i < NUM_OF_AJZA; i++) {
-        let prevIndex = i == 0 ? NUM_OF_AJZA - 1 : i - 1;
-
-        newCycleAjza.push(
-          new Juz({
-            index: i,
-            owner: oldCycleAjza[prevIndex].owner || '',
-            status:
-              oldCycleAjza[prevIndex].status == JUZ_STATUS.IDLE
-                ? JUZ_STATUS.IDLE
-                : JUZ_STATUS.BOOKED,
-          })
-        );
-      }
-
-      return newCycleAjza;
-    }
-
-    function _generateNextCycleAjzaForDoneOnly(oldCycleAjza: Juz[]): Juz[] {
-      let newCycleAjza: Juz[] = [];
-
-      for (let i = 0; i < NUM_OF_AJZA; i++) {
-        let prevIndex = i == 0 ? NUM_OF_AJZA - 1 : i - 1;
-
-        if (oldCycleAjza[prevIndex].status != JUZ_STATUS.DONE) {
-          newCycleAjza.push(
-            new Juz({
-              index: i,
-              owner: '',
-              status: JUZ_STATUS.IDLE,
-            })
-          );
-        } else {
-          newCycleAjza.push(
-            new Juz({
-              index: i,
-              owner: oldCycleAjza[prevIndex].owner,
-              status: JUZ_STATUS.BOOKED,
-            })
-          );
-        }
-      }
-
-      return newCycleAjza;
-    }
-
-    // function _keepOnlyLastJuz(newCycleAjza: Juz[]): Juz[] { // for example if someone read juz 25-30 in the last cycle. next time she should read 1 (without 26-30).
-
-    //   for (let i = NUM_OF_AJZA - 1; i > 0; i--) { // special case for juz 1, as 1 comes after 30
-    //     if (newCycleAjza[i].owner == newCycleAjza[0].owner) {
-    //       newCycleAjza[i] = {
-    //         index: newCycleAjza[i].index,
-    //         owner: null,
-    //         status: JUZ_STATUS.IDLE
-    //       };
-    //     }
-    //   }
-
-    //   for (let i = NUM_OF_AJZA - 1; i > 0; i--) {
-    //     if (newCycleAjza[i].owner != "") {
-    //       for (let j = 1; j < i; j++) {
-    //         if (newCycleAjza[j].owner == newCycleAjza[i].owner) {
-    //           newCycleAjza[j] = {
-    //             index: newCycleAjza[j].index,
-    //             owner: null,
-    //             status: JUZ_STATUS.IDLE
-    //           };
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   return newCycleAjza;
-
-    // }
-
-    let currentSequentialKhitma = <KhitmaGroup_Sequential>this._currentGroupObj;
-
-    let ajzaObj = {};
-
-    switch (newCycleType) {
-      case KHITMA_CYCLE_TYPE.AUTO_BOOK:
-        {
-          let ajza = _generateNextCycleAjza(currentSequentialKhitma.ajza);
-          // let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
-          ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajza);
-        }
-        break;
-      case KHITMA_CYCLE_TYPE.AUTO_BOOK_FOR_DONE_ONLY:
-        {
-          let ajza = _generateNextCycleAjzaForDoneOnly(
-            currentSequentialKhitma.ajza
-          );
-          // let ajzaWithoutDuplicates = _keepOnlyLastJuz(ajza);
-          ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajza);
-        }
-        break;
-      case KHITMA_CYCLE_TYPE.ALL_IDLE:
-        {
-          ajzaObj = KhitmaGroup_Sequential.getEmptyAjzaObj();
-        }
-        break;
-      case KHITMA_CYCLE_TYPE.REWIND:
-        {
-          let ajza = KhitmaGroup_Sequential.getPreviousCycleAjza(
-            currentSequentialKhitma.ajza
-          );
-          ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajza);
-        }
-        break;
-    }
-
-    // Every juz of the new round starts now (bookings made for members included).
-    for (const key of Object.keys(ajzaObj)) {
-      ajzaObj[key] = { ...ajzaObj[key], updatedAt: serverTimestamp() };
-    }
-
+    const currentSequentialKhitma = <KhitmaGroup_Sequential>this._currentGroupObj;
+    const ajzaObj = newRoundAjzaObj(nextRoundAjza(currentSequentialKhitma.ajza, newCycleType));
     updateDoc(this.groupDoc(this._currentGroupObj.id), { cycle: newCycle, ajza: ajzaObj, roundStartedAt: serverTimestamp() });
+  }
+
+  /** Repeats the khitma on a rhythm (see schedule.ts), or stops repeating it (null). */
+  setSchedule(groupId: string, schedule: RoundSchedule | null) {
+    const next = schedule ? nextRoundAt(schedule, new Date()) : null;
+    return updateDoc(this.groupDoc(groupId), {
+      schedule: schedule ?? deleteField(),
+      nextRoundAt: next ? Timestamp.fromDate(next) : deleteField(),
+    });
+  }
+
+  /**
+   * Starts the next round of a repeating khitma if it's due, in a transaction: when several members open the group
+   * at once, only one of them starts it. Resolves to whether this call started it.
+   */
+  startScheduledRound(groupId: string): Promise<boolean> {
+    const ref = this.groupDoc(groupId);
+    return runTransaction(this.db, async (transaction) => {
+      const data: any = (await transaction.get(ref)).data();
+      if (!data) {
+        return false;
+      }
+      const ajza: Juz[] = Array.isArray(data.ajza) ? data.ajza : KhitmaGroup_Sequential.convertAjzaToArray(data.ajza);
+      const now = new Date();
+      if (ajza.length !== NUM_OF_AJZA || !isRoundDue({ ...data, ajza }, now.getTime())) {
+        return false;
+      }
+      const next = nextRoundAt(data.schedule, now);
+      transaction.update(ref, {
+        cycle: (data.cycle || 0) + 1,
+        ajza: newRoundAjzaObj(nextRoundAjza(ajza, data.schedule.cycleType)),
+        roundStartedAt: serverTimestamp(),
+        nextRoundAt: next ? Timestamp.fromDate(next) : deleteField(),
+      });
+      return true;
+    });
   }
 
   // ******** SAMETASK KHITMA
@@ -460,4 +381,36 @@ export class KhitmaGroupService {
 
     return updateDoc(this.groupDoc(groupId), updatedObj);
   }
+}
+
+/** The ajza of a new round, from the last one's (KHITMA_CYCLE_TYPE). */
+export function nextRoundAjza(ajza: Juz[], cycleType: number): Juz[] {
+  // Everyone moves to the juz after theirs (after 30 comes 1).
+  const shifted = (keep: (juz: Juz) => boolean) =>
+    Array.from({ length: NUM_OF_AJZA }, (_, i) => {
+      const previous = ajza[i == 0 ? NUM_OF_AJZA - 1 : i - 1];
+      return keep(previous)
+        ? new Juz({ index: i, owner: previous.owner || '', status: JUZ_STATUS.BOOKED })
+        : new Juz({ index: i, owner: '', status: JUZ_STATUS.IDLE });
+    });
+
+  switch (cycleType) {
+    case KHITMA_CYCLE_TYPE.AUTO_BOOK:
+      return shifted((juz) => juz.status != JUZ_STATUS.IDLE);
+    case KHITMA_CYCLE_TYPE.AUTO_BOOK_FOR_DONE_ONLY:
+      return shifted((juz) => juz.status == JUZ_STATUS.DONE);
+    case KHITMA_CYCLE_TYPE.REWIND:
+      return KhitmaGroup_Sequential.getPreviousCycleAjza(ajza);
+    default:
+      return KhitmaGroup_Sequential.getEmptyAjzaArray();
+  }
+}
+
+/** As stored: a map by index, every juz of the new round starting now (bookings made for members included). */
+function newRoundAjzaObj(ajza: Juz[]) {
+  const ajzaObj = KhitmaGroup_Sequential.convertAjzaToObj(ajza);
+  for (const key of Object.keys(ajzaObj)) {
+    ajzaObj[key] = { ...ajzaObj[key], updatedAt: serverTimestamp() };
+  }
+  return ajzaObj;
 }

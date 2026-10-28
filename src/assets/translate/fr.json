@@ -274,6 +274,21 @@
     "moreOptions": "Plus d’options",
     "duaTitle": "Invocation pour le défunt"
   },
+  "schedule": {
+    "button": "Répéter automatiquement",
+    "title": "Répéter la khitma automatiquement",
+    "hint": "Chaque nouvelle khitma commence d’elle-même à l’heure, sans que vous ayez à la lancer.",
+    "week": "Chaque semaine, le :",
+    "day": "Chaque jour",
+    "month": "Le 1er de chaque mois",
+    "completion": "Après chaque khitma terminée",
+    "off": "Ne pas répéter (je lance chaque khitma moi-même)",
+    "newRound": "À chaque nouvelle khitma :",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "nextAt": "La prochaine khitma commence automatiquement {when}",
+    "nextAfterCompletion": "La prochaine khitma commence automatiquement une fois celle-ci terminée"
+  },
   "dialog": {
     "yes": "Oui",
     "no": "Non",

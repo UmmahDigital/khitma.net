@@ -248,6 +248,17 @@ test.describe('screenshots of the current design', () => {
     await expect(page.locator('mat-dialog-container')).toHaveScreenshot('sequential-new-khitmah-dialog.png');
   });
 
+  test('sequential group: repeating the khitma automatically', async ({ page }) => {
+    await page.setViewportSize(TALL_PHONE);
+    await openAsMember(page, 'visual-family', ADMIN);
+    await page.getByText('أدوات مسؤول المجموعة').click();
+    await page.getByRole('button', { name: 'تكرار الختمة تلقائيًا' }).click();
+    await expect(page.getByRole('button', { name: 'حفظ' })).toBeVisible();
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await settle(page);
+    await expect(page.locator('mat-dialog-container')).toHaveScreenshot('sequential-schedule-dialog.png');
+  });
+
   test('sequential group: completed khitmah', async ({ page }) => {
     await page.setViewportSize(PHONE);
     await openAsMember(page, 'visual-complete', ADMIN);

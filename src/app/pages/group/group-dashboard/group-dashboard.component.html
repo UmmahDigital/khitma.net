@@ -91,6 +91,10 @@
             <mat-icon>refresh</mat-icon>
             <span [translate]="'gDashboard.new'">ختمة جديدة للمجموعة</span>
           </button>
+          <button mat-flat-button (click)="openSchedule(); adminPanelOpen = false">
+            <mat-icon>loop</mat-icon>
+            <span [translate]="'schedule.button'">تكرار الختمة تلقائيًا</span>
+          </button>
         }
         <button
           mat-flat-button

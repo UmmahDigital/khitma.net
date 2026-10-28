@@ -274,6 +274,21 @@
     "moreOptions": "Weitere Optionen",
     "duaTitle": "Bittgebet für den Verstorbenen"
   },
+  "schedule": {
+    "button": "Automatisch wiederholen",
+    "title": "Khitma automatisch wiederholen",
+    "hint": "Jede neue Khitma beginnt pünktlich von selbst, ohne dass du sie starten musst.",
+    "week": "Jede Woche, am:",
+    "day": "Jeden Tag",
+    "month": "Am 1. jedes Monats",
+    "completion": "Nach jeder vollendeten Khitma",
+    "off": "Nicht wiederholen (ich starte jede Khitma selbst)",
+    "newRound": "Bei jeder neuen Khitma:",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "nextAt": "Die nächste Khitma beginnt automatisch am {when}",
+    "nextAfterCompletion": "Die nächste Khitma beginnt automatisch, sobald diese vollendet ist"
+  },
   "dialog": {
     "yes": "ja",
     "no": "Nein",

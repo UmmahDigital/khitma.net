@@ -75,6 +75,9 @@ export class KhitmaGroup {
   purpose?: string;
   /** For memorial and healing khitmas: رحمه/رحمها, شفاه/شفاها. */
   honoreeGender?: 'male' | 'female';
+  /** Khitmas that repeat by themselves (see schedule.ts), and when the next round starts. */
+  schedule?: { every: 'day' | 'week' | 'month' | 'completion'; weekday?: number; cycleType: number } | null;
+  nextRoundAt?: { toMillis(): number; toDate(): Date } | null;
 
   public constructor(init?: Partial<KhitmaGroup>) {
     Object.assign(this, init);

@@ -274,6 +274,21 @@
     "moreOptions": "More options",
     "duaTitle": "Supplication for the deceased"
   },
+  "schedule": {
+    "button": "Repeat automatically",
+    "title": "Repeat the khitma automatically",
+    "hint": "Each new khitma starts by itself on time, without you having to start it.",
+    "week": "Every week, on:",
+    "day": "Every day",
+    "month": "On the 1st of every month",
+    "completion": "After each khitma is complete",
+    "off": "Don’t repeat (I start each khitma myself)",
+    "newRound": "In each new khitma:",
+    "save": "Save",
+    "saved": "Saved",
+    "nextAt": "The next khitma starts automatically on {when}",
+    "nextAfterCompletion": "The next khitma starts automatically once this one is complete"
+  },
   "dialog": {
     "yes": "Yes",
     "no": "No",

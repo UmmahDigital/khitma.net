@@ -274,6 +274,21 @@
     "moreOptions": "Más opciones",
     "duaTitle": "Súplica por el difunto"
   },
+  "schedule": {
+    "button": "Repetir automáticamente",
+    "title": "Repetir la khitma automáticamente",
+    "hint": "Cada nueva khitma empieza sola a su hora, sin que tengas que iniciarla.",
+    "week": "Cada semana, el:",
+    "day": "Cada día",
+    "month": "El día 1 de cada mes",
+    "completion": "Al completarse cada khitma",
+    "off": "No repetir (yo inicio cada khitma)",
+    "newRound": "En cada nueva khitma:",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "nextAt": "La próxima khitma empieza automáticamente el {when}",
+    "nextAfterCompletion": "La próxima khitma empieza automáticamente al completarse esta"
+  },
   "dialog": {
     "yes": "sí",
     "no": "No",

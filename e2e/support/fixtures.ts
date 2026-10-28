@@ -59,6 +59,10 @@ export interface SequentialGroupOptions {
   /** What the khitma is for (memorial, healing…), and رحمه/رحمها for memorial ones. */
   purpose?: string;
   honoreeGender?: 'male' | 'female';
+  /** A khitma that repeats by itself, when its next round starts, and when past rounds were completed. */
+  schedule?: { every: string; weekday?: number; cycleType: number };
+  nextRoundAt?: Date;
+  completedRounds?: Record<string, Date>;
 }
 
 export async function createSequentialGroup(id: string, options: SequentialGroupOptions = {}): Promise<void> {
@@ -79,6 +83,9 @@ export async function createSequentialGroup(id: string, options: SequentialGroup
   if (options.targetAt !== undefined) doc.targetAt = options.targetAt;
   if (options.purpose !== undefined) doc.purpose = options.purpose;
   if (options.honoreeGender !== undefined) doc.honoreeGender = options.honoreeGender;
+  if (options.schedule !== undefined) doc.schedule = options.schedule;
+  if (options.nextRoundAt !== undefined) doc.nextRoundAt = options.nextRoundAt;
+  if (options.completedRounds !== undefined) doc.completedRounds = options.completedRounds;
   await setDoc(`groups/${id}`, doc);
 }
 

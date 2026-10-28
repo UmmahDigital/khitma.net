@@ -61,6 +61,7 @@ import { TodoComponent } from './shared/todo/todo.component';
 import { GroupMembersComponent } from './shared/group-members/group-members.component';
 import { NewTaskComponent } from './dialog/new-task/new-task.component';
 import { JuzActionsComponent } from './dialog/juz-actions/juz-actions.component';
+import { ScheduleComponent } from './dialog/schedule/schedule.component';
 import { Group_Pages_Component } from './pages/group/group-dashboard/group-types/pages/pages.component';
 import { Group_SameTask_Component } from './pages/group/group-dashboard/group-types/sametask/sametask.component';
 import { Group_Sequential_Component } from './pages/group/group-dashboard/group-types/sequential/sequential.component';
@@ -141,6 +142,7 @@ const routes: Routes = [
         GroupMembersComponent,
         NewTaskComponent,
         JuzActionsComponent,
+        ScheduleComponent,
         Group_Sequential_Component,
         Group_SameTask_Component,
         Group_Pages_Component,
