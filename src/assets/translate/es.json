@@ -253,6 +253,27 @@
     "read": "Juz que leyeron: {n}",
     "started": "Nuevas khitmas que iniciaron: {n}"
   },
+  "purpose": {
+    "question": "¿Con qué intención es esta khitma?",
+    "memorial": "Por alguien que falleció",
+    "healing": "Por la curación de un enfermo",
+    "ramadan": "Ramadán",
+    "intention": "Una intención especial",
+    "other": "Otra",
+    "memorialName": "Su nombre",
+    "healingName": "Su nombre",
+    "memorialMale": "Un hombre",
+    "memorialFemale": "Una mujer",
+    "healingMale": "Un hombre",
+    "healingFemale": "Una mujer",
+    "memorialMaleTitle": "Khitma por {name}, que Allah tenga misericordia de él",
+    "memorialFemaleTitle": "Khitma por {name}, que Allah tenga misericordia de ella",
+    "healingMaleTitle": "Khitma por la curación de {name}",
+    "healingFemaleTitle": "Khitma por la curación de {name}",
+    "ramadanTitle": "Khitma de Ramadán",
+    "moreOptions": "Más opciones",
+    "duaTitle": "Súplica por el difunto"
+  },
   "dialog": {
     "yes": "sí",
     "no": "No",

@@ -117,6 +117,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
         group_type: this.group.type,
         role: this.isAdmin ? 'admin' : 'member',
         cycle: this.group.cycle || 0,
+        ...(this.group.purpose ? { group_purpose: this.group.purpose } : {}),
       });
 
       this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.referral.groupUrl(this.group.id));

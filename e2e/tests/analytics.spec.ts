@@ -131,7 +131,7 @@ test.describe('analytics', () => {
     ]);
   });
 
-  test('creating a group records its type', async ({ page }) => {
+  test('creating a group records its type and purpose', async ({ page }) => {
     await openApp(page, '/new?type=recurring');
     await page.getByLabel('عنوان الختمة').fill('ختمة الجمعة');
     await page.getByLabel('اسمك (مسؤول الختمة)').fill('أبو محمد');
@@ -139,7 +139,7 @@ test.describe('analytics', () => {
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
 
     const groupId = new URL(page.url()).pathname.split('/')[2];
-    await expect.poll(() => events(page)).toContainEqual(['event', 'group_created', { group_id: groupId, group_type: 'SEQUENTIAL', deadline: 'none' }]);
+    await expect.poll(() => events(page)).toContainEqual(['event', 'group_created', { group_id: groupId, group_type: 'SEQUENTIAL', deadline: 'none', purpose: 'regular' }]);
   });
 
   test('joining a group records its type, even though the app reloads right after', async ({ page }) => {

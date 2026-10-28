@@ -52,6 +52,13 @@ test.describe('screenshots of the current design', () => {
   test.beforeAll(async () => {
     await setDoc('global/aqsa', { pages: { completed: 1250, granted: 1400 } });
     await setDoc('refs/visualref', { joined: 7, read: 12, started: 1 });
+    await createSequentialGroup('visual-memorial-done', {
+      title: 'ختمة عن روح فاطمة رحمها الله',
+      author: ADMIN,
+      purpose: 'memorial',
+      honoreeGender: 'female',
+      assigned: Object.fromEntries(Array.from({ length: 30 }, (_, i) => [i + 1, { owner: `عضو ${i + 1}`, status: DONE }])),
+    });
     await createSequentialGroup('visual-family', {
       title: 'ختمة العائلة',
       author: ADMIN,
@@ -160,6 +167,18 @@ test.describe('screenshots of the current design', () => {
     });
   }
 
+  test('create group: a memorial khitma', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openApp(page, '/new?type=onetime', { freezeTime: true });
+    await page.getByRole('button', { name: 'عن روح متوفّى' }).click();
+    await page.getByLabel('اسم المتوفّى').fill('فاطمة');
+    await page.getByRole('button', { name: 'رحمها الله' }).click();
+    await expect(page.getByLabel('عنوان الختمة')).toHaveValue('ختمة عن روح فاطمة رحمها الله');
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await page.getByRole('heading', { name: 'ما الغرض من الختمة؟' }).evaluate((heading) => heading.scrollIntoView({ block: 'start' }));
+    await snap(page, 'create-memorial');
+  });
+
   test('invite page after creating a group', async ({ page }) => {
     await page.setViewportSize(PHONE);
     // A fixed sharer's code: the invite link shows it (?r=visualref).
@@ -234,6 +253,14 @@ test.describe('screenshots of the current design', () => {
     await openAsMember(page, 'visual-complete', ADMIN);
     await expect(page.getByRole('button', { name: 'بدء ختمة جديدة للمجموعة' })).toBeVisible();
     await snap(page, 'sequential-complete');
+  });
+
+  test('sequential group: completed memorial khitma', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openAsMember(page, 'visual-memorial-done', 'عضو 3');
+    await expect(page.locator('.memorial-dua-text')).toBeVisible();
+    await page.locator('.memorial-dua').evaluate((card) => card.scrollIntoView({ block: 'center' }));
+    await snap(page, 'sequential-memorial-complete');
   });
 
   test('same-task group: member', async ({ page }) => {

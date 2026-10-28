@@ -29,7 +29,7 @@ test.describe('sharing', () => {
 
     const [url] = await openedUrls(page);
     expect(whatsappText(url)).toBe(
-      ['انضمّوا إلى ختمة «ختمة الجمعة»، واختاروا جزءًا لقراءته 📖', `http://localhost:4300/group/${groupId}?r=${REF}`, '', HADITH].join('\n')
+      ['انضمّوا إلى ختمة الجمعة، واختاروا جزءًا لقراءته 📖', `http://localhost:4300/group/${groupId}?r=${REF}`, '', HADITH].join('\n')
     );
     expect(await analyticsEvents(page)).toContainEqual(['share', { method: 'whatsapp', content_type: 'invite', item_id: groupId }]);
   });
@@ -63,7 +63,7 @@ test.describe('sharing', () => {
 
     expect(whatsappText((await openedUrls(page))[0])).toBe(
       [
-        'ساعدونا في إتمام ختمة «ختمة عن روح الوالد» 🤍',
+        'ساعدونا في إتمام ختمة عن روح الوالد 🤍',
         'بقي 3 أجزاء بلا قارئ: 4، 9، 30',
         'اختاروا جزءًا من الرابط:',
         `http://localhost:4300/group/${groupId}?r=${REF}`,

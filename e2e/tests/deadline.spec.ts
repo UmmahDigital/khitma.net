@@ -63,9 +63,8 @@ test.describe('deadline', () => {
     await page.getByRole('radio', { name: 'ختمة دوريّة' }).click();
     await expect(question).toHaveCount(0);
 
-    await page.getByLabel('عنوان الختمة').fill('ورد الكهف');
+    await page.getByLabel('عنوان الختمة').fill('ختمة الجمعة');
     await page.getByLabel('اسمك (مسؤول الختمة)').fill('أبو محمد');
-    await page.getByLabel('المهمّة الأولى').fill('سورة الكهف');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
     const group = await getDoc(`groups/${new URL(page.url()).pathname.split('/')[2]}`);

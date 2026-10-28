@@ -42,6 +42,8 @@ export interface GroupContext {
   group_type: string;
   role: 'admin' | 'member';
   cycle: number;
+  /** What the khitma is for, on groups created since purposes exist. */
+  group_purpose?: string;
 }
 
 @Injectable({ providedIn: 'root' })

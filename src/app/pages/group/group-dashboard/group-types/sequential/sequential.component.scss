@@ -251,3 +251,28 @@
     line-height: 1.4;
   }
 }
+
+// A memorial khitma ends with the supplication for the deceased.
+.memorial-dua {
+  margin: 8px auto 20px;
+  padding: 14px 16px;
+  max-width: 420px;
+  border-radius: 16px;
+  background: #e3f1ee;
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+
+  .memorial-dua-title {
+    font-size: 18px;
+    color: #1c6151;
+    margin-bottom: 8px;
+  }
+
+  .memorial-dua-text {
+    font-size: 24px;
+    line-height: 1.7;
+  }
+}

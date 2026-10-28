@@ -71,6 +71,10 @@ export class KhitmaGroup {
   roundStartedAt?: { toMillis(): number } | null;
   /** When each round (by cycle number) had its last juz done. */
   completedRounds?: Record<string, { toMillis(): number }>;
+  /** What the khitma is for (see purpose.ts), chosen when it was created; older groups don't have it. */
+  purpose?: string;
+  /** For memorial and healing khitmas: رحمه/رحمها, شفاه/شفاها. */
+  honoreeGender?: 'male' | 'female';
 
   public constructor(init?: Partial<KhitmaGroup>) {
     Object.assign(this, init);

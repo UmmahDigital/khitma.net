@@ -1,4 +1,5 @@
 import { Juz, JUZ_STATUS } from './entities/entities';
+import { khitmaName } from './purpose';
 
 // Texts for sharing a khitma. Arabic is the source; the other languages come from the translation files.
 
@@ -36,8 +37,8 @@ export function hadithLine(translation: any): string {
 
 /** "Join the khitma «…» and pick a juz", the link, then the hadith. */
 export function inviteMessage(translation: any, title: string, url: string): string {
-  const template = translation?.sharing?.inviteMessage || 'انضمّوا إلى ختمة «{title}»، واختاروا جزءًا لقراءته 📖';
-  return [fill(template, { title }), url, '', hadithLine(translation)].join('\n');
+  const template = translation?.sharing?.inviteMessage || 'انضمّوا إلى {khitma}، واختاروا جزءًا لقراءته 📖';
+  return [fill(template, { title, khitma: khitmaName(title) }), url, '', hadithLine(translation)].join('\n');
 }
 
 /** For a khitma with free ajza: what's left, which ones, the link to pick one, and the deadline if there is one. */
@@ -45,9 +46,9 @@ export function helpFinishMessage(
   translation: any, lang: string, title: string, url: string, free: number[], deadline?: string | null
 ): string {
   const template =
-    translation?.sharing?.helpMessage || 'ساعدونا في إتمام ختمة «{title}» 🤍\nبقي {count} بلا قارئ: {list}\nاختاروا جزءًا من الرابط:';
+    translation?.sharing?.helpMessage || 'ساعدونا في إتمام {khitma} 🤍\nبقي {count} بلا قارئ: {list}\nاختاروا جزءًا من الرابط:';
   const list = free.join(lang === 'ar' ? '، ' : ', ');
-  const lines = [fill(template, { title, count: ajzaCount(free.length, lang), list }), url];
+  const lines = [fill(template, { title, khitma: khitmaName(title), count: ajzaCount(free.length, lang), list }), url];
   if (deadline) {
     lines.push('⏳ ' + deadline);
   }

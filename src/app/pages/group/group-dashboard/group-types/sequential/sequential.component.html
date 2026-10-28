@@ -3,6 +3,12 @@
     @if (group.isDone() > 0) {
       <section class="khitma-done">
         <app-khitma-done-celebration></app-khitma-done-celebration>
+        @if (memorialDuaText) {
+          <div class="memorial-dua">
+            <p class="memorial-dua-title" [translate]="'purpose.duaTitle'">دعاء للمتوفّى</p>
+            <p class="memorial-dua-text" lang="ar" dir="rtl">{{ memorialDuaText }}</p>
+          </div>
+        }
         @if (isAdmin) {
           <button (click)="startNewKhitmah()" mat-raised-button color="accent"
             class="block large action-btn admin-action-btn" [translate]="'sequential.start'">بدء

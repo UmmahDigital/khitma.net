@@ -49,12 +49,12 @@
     "copied": "تمّ نسخ الرسالة",
     "inviteTitle": "ادعُ أهلك وأصدقاءك",
     "inviteText": "كلّ من يفتح الرابط يكتب اسمه ويختار جزءًا ليقرأه.",
-    "inviteMessage": "انضمّوا إلى ختمة «{title}»، واختاروا جزءًا لقراءته 📖",
+    "inviteMessage": "انضمّوا إلى {khitma}، واختاروا جزءًا لقراءته 📖",
     "hadithMeaning": "",
     "freeLeft": "بقي {count} بلا قارئ",
     "freeLeftFew": "اقتربت الختمة: بقي {count} بلا قارئ",
     "freeAsk": "ادعُ من يقرؤها لتتمّ الختمة.",
-    "helpMessage": "ساعدونا في إتمام ختمة «{title}» 🤍\nبقي {count} بلا قارئ: {list}\nاختاروا جزءًا من الرابط:",
+    "helpMessage": "ساعدونا في إتمام {khitma} 🤍\nبقي {count} بلا قارئ: {list}\nاختاروا جزءًا من الرابط:",
     "allBooked": "كلّ الأجزاء محجوزة، و{count} قيد القراءة",
     "remind": "ذكّر القرّاء عبر واتساب"
   },
@@ -248,6 +248,27 @@
   },
   "referral": {
     "title": "أثر دعواتك 🤍"
+  },
+  "purpose": {
+    "question": "ما الغرض من الختمة؟",
+    "memorial": "عن روح متوفّى",
+    "healing": "لشفاء مريض",
+    "ramadan": "في رمضان",
+    "intention": "بنيّة خاصّة",
+    "other": "غير ذلك",
+    "memorialName": "اسم المتوفّى",
+    "healingName": "اسم المريض",
+    "memorialMale": "رحمه الله",
+    "memorialFemale": "رحمها الله",
+    "healingMale": "شفاه الله",
+    "healingFemale": "شفاها الله",
+    "memorialMaleTitle": "ختمة عن روح {name} رحمه الله",
+    "memorialFemaleTitle": "ختمة عن روح {name} رحمها الله",
+    "healingMaleTitle": "ختمة لشفاء {name} شفاه الله",
+    "healingFemaleTitle": "ختمة لشفاء {name} شفاها الله",
+    "ramadanTitle": "ختمة رمضان",
+    "moreOptions": "خيارات أخرى",
+    "duaTitle": "دعاء للمتوفّى"
   },
   "dialog": {
     "yes": "نعم",

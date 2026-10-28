@@ -18,7 +18,7 @@ describe('share messages', () => {
 
   it('invites with the link and the hadith, in Arabic when nothing is translated', () => {
     expect(inviteMessage({}, 'ختمة الجمعة', 'https://khitma.net/group/x')).toBe(
-      'انضمّوا إلى ختمة «ختمة الجمعة»، واختاروا جزءًا لقراءته 📖\nhttps://khitma.net/group/x\n\n' + SHARE_HADITH
+      'انضمّوا إلى ختمة الجمعة، واختاروا جزءًا لقراءته 📖\nhttps://khitma.net/group/x\n\n' + SHARE_HADITH
     );
   });
 

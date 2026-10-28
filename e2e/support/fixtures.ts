@@ -56,6 +56,9 @@ export interface SequentialGroupOptions {
   assigned?: Record<number, JuzSpec>;
   /** `map` is today's format; `array` and `untyped` are older documents still in production. */
   format?: 'map' | 'array' | 'untyped';
+  /** What the khitma is for (memorial, healing…), and رحمه/رحمها for memorial ones. */
+  purpose?: string;
+  honoreeGender?: 'male' | 'female';
 }
 
 export async function createSequentialGroup(id: string, options: SequentialGroupOptions = {}): Promise<void> {
@@ -74,6 +77,8 @@ export async function createSequentialGroup(id: string, options: SequentialGroup
   if (options.admins !== undefined) doc.admins = options.admins;
   if (options.targetDate !== undefined) doc.targetDate = options.targetDate;
   if (options.targetAt !== undefined) doc.targetAt = options.targetAt;
+  if (options.purpose !== undefined) doc.purpose = options.purpose;
+  if (options.honoreeGender !== undefined) doc.honoreeGender = options.honoreeGender;
   await setDoc(`groups/${id}`, doc);
 }
 

@@ -79,7 +79,11 @@ export class KhitmaGroupService {
     return this._currentGroupObj.id;
   }
 
-  public createGroup(title, description, author, groupType?, firstTask?, deadline?: { targetAt: string; targetDate: string } | null) {
+  public createGroup(
+    title, description, author, groupType?, firstTask?,
+    deadline?: { targetAt: string; targetDate: string } | null,
+    purpose?: { purpose: string; honoreeGender?: 'male' | 'female' } | null
+  ) {
     return this.createGroupForUser(
       title,
       description,
@@ -87,7 +91,8 @@ export class KhitmaGroupService {
       null,
       groupType,
       firstTask,
-      deadline
+      deadline,
+      purpose
     );
   }
 
@@ -98,7 +103,8 @@ export class KhitmaGroupService {
     authorId?,
     groupType?,
     firstTask?,
-    deadline?: { targetAt: string; targetDate: string } | null
+    deadline?: { targetAt: string; targetDate: string } | null,
+    purpose?: { purpose: string; honoreeGender?: 'male' | 'female' } | null
   ) {
     author = author.trim();
 
@@ -111,6 +117,8 @@ export class KhitmaGroupService {
       authorId: authorId || '',
       createdAt: serverTimestamp(),
       ...(deadline ? { targetAt: deadline.targetAt, targetDate: deadline.targetDate } : {}),
+      ...(purpose?.purpose ? { purpose: purpose.purpose } : {}),
+      ...(purpose?.honoreeGender ? { honoreeGender: purpose.honoreeGender } : {}),
     };
 
     switch (groupType) {
