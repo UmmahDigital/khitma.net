@@ -44,7 +44,7 @@ test.describe('creating a group', () => {
   test('recurring same-task group stores the first task and the admin as a member', async ({ page }) => {
     await openApp(page, '/new?type=recurring');
     await fillGroupDetails(page, 'ورد الكهف', 'أم علي');
-    await page.getByRole('button', { name: 'نفس المهمّة' }).click();
+    await page.getByRole('radio', { name: 'نفس المهمّة' }).click();
     await page.getByLabel('المهمّة الأولى').fill('سورة الكهف');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
 
@@ -64,7 +64,7 @@ test.describe('creating a group', () => {
     await expect(page).toHaveURL(/\/new\?type=onetime$/);
 
     await fillGroupDetails(page, 'ختمة عن روح جدّي', 'خالد');
-    await page.getByRole('button', { name: 'توزيع صفحات' }).click();
+    await page.getByRole('radio', { name: 'توزيع صفحات' }).click();
     await page.getByRole('button', { name: 'إنشاء الختمة الجماعيّة' }).click();
 
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);

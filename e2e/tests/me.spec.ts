@@ -36,7 +36,7 @@ test.describe('personal and global khitmahs', () => {
     const before = (await getDoc('global/aqsa'))!.pages;
     await openApp(page, '/aqsa');
 
-    await page.getByRole('button', { name: '5', exact: true }).click();
+    await page.getByRole('radio', { name: '5', exact: true }).click();
     await page.getByRole('button', { name: 'أريد تلاوة 5 صحفات' }).click();
 
     const from = (before.granted % 604) + 1;
