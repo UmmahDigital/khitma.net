@@ -37,6 +37,8 @@
               "src/.well-known/assetlinks.json",
               "src/apple-app-site-association",
               "src/robots.txt",
+              "src/sitemap.xml",
+              "src/llms.txt",
               "src/firebase-messaging-sw.js"
             ],
             "styles": [

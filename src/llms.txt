@@ -1,0 +1,28 @@
+# Khitma.net (ختمة.نت)
+
+> A free web app for reading the whole Quran together. Someone creates a group khitma and shares its link, usually in a WhatsApp group. Each participant opens the link, writes their name, picks one of the 30 juz (ajza) to read, and marks it done when finished; everyone sees the progress until the khitma is complete. No account and nothing to install. Arabic by default, also in English, French, Spanish and German.
+
+Khitma.net has been used for tens of thousands of group khitmas since 2021, mostly by families and friends in the Arab world and in Muslim communities abroad.
+
+## What people use it for
+
+- A khitma for someone who passed away (ختمة عن روح ...): the family shares the link and completes the Quran together, often within a week.
+- A recurring khitma for a group (daily, weekly or monthly): the admin starts the next round with one button, and each member can automatically get the next juz.
+- A khitma during Ramadan, for healing (شفاء), or for a shared intention (نيّة).
+
+## How it works
+
+1. Create a khitma at https://khitma.net/new: one-time or recurring, with a title and the organiser's name.
+2. Share the invite link. Participants join with their name only.
+3. Each participant books a juz, reads it, and taps "أتممت قراءة جزء" (I finished reading juz …).
+4. The organiser can share a WhatsApp-ready status message, mark juz done on behalf of others, edit who has each juz, and start a new khitma.
+
+Other group types: "same task" (everyone reads the same portion, e.g. one juz a day) and "page distribution" (the 604 pages are split evenly between members).
+
+## Links
+
+- [Home](https://khitma.net/): start here.
+- [Create a khitma](https://khitma.net/new)
+- [How to use it (Arabic)](https://khitma.net/about)
+- [Read the Quran by juz](https://khitma.net/quran)
+- [The global Al-Aqsa khitma](https://khitma.net/aqsa)

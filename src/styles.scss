@@ -9,6 +9,8 @@
 html,
 body {
   height: 100%;
+  // Pinch-zoom is allowed; this only stops iOS from zooming on a quick double tap (e.g. on the juz grid).
+  touch-action: manipulation;
   margin: 0;
   // font-family: "Scheherazade", serif !important;
   // font-size: 100% !important;

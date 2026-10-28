@@ -69,7 +69,7 @@
   >notifications
 </mat-icon>
 
-<a routerLink="about">
+<a routerLink="about" [attr.aria-label]="common.translation.about?.title || 'شرح الاستخدام'">
   <mat-icon class="help-btn">help_outline</mat-icon>
 </a>
 </mat-toolbar>

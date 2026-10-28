@@ -6,6 +6,7 @@ import { CelebrationService } from './celebration.service';
 import { NotificationsService } from './notifications.service';
 import { PwaService } from './pwa.service';
 import { CommonService } from './service/common.service';
+import { SeoService } from './seo.service';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 
 
@@ -32,7 +33,7 @@ export class AppComponent {
   constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router,
     private notificationsService: NotificationsService,
     private celebrationService: CelebrationService, public common: CommonService,
-    iconRegistry: MatIconRegistry) {
+    iconRegistry: MatIconRegistry, private seo: SeoService) {
 
     // Outlined icons, loaded in index.html: the same names as Material Icons, in the lighter line style.
     iconRegistry.setDefaultFontSetClass('material-icons-outlined', 'mat-ligature-font');
@@ -50,6 +51,7 @@ export class AppComponent {
       }
       else if (event instanceof NavigationEnd) {
         this.isDarkStyle = event.url === "/ramadan";
+        this.seo.update(event.urlAfterRedirects);
 
         // window.scroll(0, 0);
 
