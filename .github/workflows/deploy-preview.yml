@@ -10,12 +10,13 @@ jobs:
   build_and_preview:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      # Add any build steps here. For example:
-      - run: npm i --legacy-peer-deps && npm run build:prod
-        env:
-          # Angular 12's webpack build uses MD4 hashing, which Node 17+ (OpenSSL 3) rejects without this flag.
-          NODE_OPTIONS: --openssl-legacy-provider
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # Angular 22 needs Node ^22.22.3 or ^24.15.
+          node-version: 24
+          cache: npm
+      - run: npm ci && npm run build:prod
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
