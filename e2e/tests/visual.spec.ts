@@ -121,6 +121,8 @@ test.describe('screenshots of the current design', () => {
     });
     const card = page.locator('.impact-card');
     await expect(card).toContainText('انضمّ عبر دعواتك 7 أشخاص');
+    // The counter below the card loads separately; wait for it, or the screenshot depends on timing.
+    await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
     await card.evaluate((element) => element.scrollIntoView({ block: 'center' }));
     await snap(page, 'home-invitation-impact');
   });

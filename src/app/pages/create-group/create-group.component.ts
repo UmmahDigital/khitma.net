@@ -82,6 +82,10 @@ export class CreateGroupComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.typeParam = params['type'];
       this.source = params['from'] || null;
+      if (ONE_TIME_PURPOSES.includes(params['purpose'])) {
+        this.purpose = params['purpose'];
+        this.updateTitle();
+      }
 
       if (!this.typeParam) {
         return;

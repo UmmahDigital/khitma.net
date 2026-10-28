@@ -39,6 +39,7 @@
               "src/robots.txt",
               "src/sitemap.xml",
               "src/llms.txt",
+              { "glob": "**/*", "input": "src/guide", "output": "guide" },
               "src/firebase-messaging-sw.js"
             ],
             "styles": [
