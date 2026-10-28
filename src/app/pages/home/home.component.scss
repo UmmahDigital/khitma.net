@@ -3,7 +3,8 @@
 .home {
   font-size: 20px;
   line-height: normal;
-  text-align: justify;
+  // Right-aligned rather than justified: without kashida, justifying Arabic only stretches the spaces.
+  text-align: start;
 
   .logo {
     display: block;
