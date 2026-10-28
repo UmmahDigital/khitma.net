@@ -174,6 +174,8 @@
     "day6": "sábado"
   },
   "gJoin": {
+    "isThisYou": "¿Ya te uniste? Elige tu nombre para recuperar tu juz:",
+    "inApp": "Para guardar tu khitma en este teléfono, abre este enlace en tu navegador (Safari o Chrome) desde el menú de la aplicación.",
     "name": "tu nombre",
     "join": "Unión"
   },
