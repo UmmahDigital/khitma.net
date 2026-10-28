@@ -162,7 +162,8 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
           dialogResult.title,
           dialogResult.description,
           dialogResult.targetDate,
-          dialogResult.admins
+          dialogResult.admins,
+          (dialogResult.targetDate || '') !== (this.group.targetDate || '')
         );
 
       }

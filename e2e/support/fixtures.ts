@@ -39,6 +39,8 @@ export interface SequentialGroupOptions {
   cycle?: number;
   admins?: string;
   targetDate?: string;
+  /** YYYY-MM-DD, as picked when the group was created. */
+  targetAt?: string;
   assigned?: Record<number, JuzSpec>;
   /** `map` is today's format; `array` and `untyped` are older documents still in production. */
   format?: 'map' | 'array' | 'untyped';
@@ -59,6 +61,7 @@ export async function createSequentialGroup(id: string, options: SequentialGroup
   }
   if (options.admins !== undefined) doc.admins = options.admins;
   if (options.targetDate !== undefined) doc.targetDate = options.targetDate;
+  if (options.targetAt !== undefined) doc.targetAt = options.targetAt;
   await setDoc(`groups/${id}`, doc);
 }
 

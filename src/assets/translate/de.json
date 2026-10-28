@@ -15,6 +15,20 @@
   "privacy": "Datenschutzabkommen.",
   "terms": "Nutzungsbedingungen",
   "share": "Teilen",
+  "deadline": {
+    "question": "Bis wann soll die Khitma vollendet sein?",
+    "in3days": "3 Tage",
+    "inWeek": "Eine Woche",
+    "byFriday": "Freitag",
+    "none": "Kein Datum",
+    "pick": "oder anderes Datum wählen",
+    "date": "Abschlussdatum",
+    "label": "Vollenden bis",
+    "today": "heute",
+    "tomorrow": "morgen",
+    "passed": "das Datum ist vorbei",
+    "inDays": "in {n} Tagen"
+  },
   "sharing": {
     "whatsapp": "Über WhatsApp senden",
     "whatsappShort": "WhatsApp",

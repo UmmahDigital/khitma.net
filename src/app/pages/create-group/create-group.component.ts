@@ -6,6 +6,7 @@ import {
   ViewEncapsulation,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { DeadlineChoice, deadlineDate, deadlineText, isoDate } from '../../deadline';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
@@ -35,6 +36,10 @@ export class CreateGroupComponent implements OnInit {
   firstTask: string;
 
   typeParam: string;
+
+  deadlineChoice: DeadlineChoice = 'none';
+  deadlinePicked: string = null;
+  readonly today = isoDate(new Date());
 
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
   groupType: string = KHITMA_GROUP_TYPE.SAME_TASK;
@@ -107,17 +112,20 @@ export class CreateGroupComponent implements OnInit {
     //   this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
     // }
 
+    const targetAt = deadlineDate(this.deadlineChoice, this.deadlinePicked);
+
     this.groupsApi
       .createGroup(
         this.title,
         this.description,
         this.author,
         this.groupType,
-        this.firstTask
+        this.firstTask,
+        targetAt ? { targetAt, targetDate: deadlineText(targetAt) } : null
       )
       .then((docRef) => {
         const groupId = docRef.id;
-        this.$gaService.send('group_created', { group_id: groupId, group_type: this.groupType });
+        this.$gaService.send('group_created', { group_id: groupId, group_type: this.groupType, deadline: this.deadlineChoice });
 
         this.alert.show(this.common.translation.gCreate?.success, 5000);
 

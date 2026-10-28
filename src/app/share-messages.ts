@@ -40,10 +40,16 @@ export function inviteMessage(translation: any, title: string, url: string): str
   return [fill(template, { title }), url, '', hadithLine(translation)].join('\n');
 }
 
-/** For a khitma with free ajza: what's left, which ones, and the link to pick one. */
-export function helpFinishMessage(translation: any, lang: string, title: string, url: string, free: number[]): string {
+/** For a khitma with free ajza: what's left, which ones, the link to pick one, and the deadline if there is one. */
+export function helpFinishMessage(
+  translation: any, lang: string, title: string, url: string, free: number[], deadline?: string | null
+): string {
   const template =
     translation?.sharing?.helpMessage || 'ساعدونا في إتمام ختمة «{title}» 🤍\nبقي {count} بلا قارئ: {list}\nاختاروا جزءًا من الرابط:';
   const list = free.join(lang === 'ar' ? '، ' : ', ');
-  return [fill(template, { title, count: ajzaCount(free.length, lang), list }), url, '', hadithLine(translation)].join('\n');
+  const lines = [fill(template, { title, count: ajzaCount(free.length, lang), list }), url];
+  if (deadline) {
+    lines.push('⏳ ' + deadline);
+  }
+  return [...lines, '', hadithLine(translation)].join('\n');
 }

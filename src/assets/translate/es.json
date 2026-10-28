@@ -15,6 +15,20 @@
   "privacy": "Acuerdo de privacidad",
   "terms": "Términos de Uso",
   "share": "para compartir",
+  "deadline": {
+    "question": "¿Cuándo queréis completar la khitma?",
+    "in3days": "3 días",
+    "inWeek": "Una semana",
+    "byFriday": "Viernes",
+    "none": "Sin fecha",
+    "pick": "o elige otra fecha",
+    "date": "Fecha de finalización",
+    "label": "Completar antes del",
+    "today": "hoy",
+    "tomorrow": "mañana",
+    "passed": "la fecha ya pasó",
+    "inDays": "en {n} días"
+  },
   "sharing": {
     "whatsapp": "Enviar por WhatsApp",
     "whatsappShort": "WhatsApp",

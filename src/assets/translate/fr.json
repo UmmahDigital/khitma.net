@@ -15,6 +15,20 @@
   "privacy": "Accord de confidentialité",
   "terms": "Conditions d'utilisation",
   "share": "partager",
+  "deadline": {
+    "question": "Quand voulez-vous terminer la khitma ?",
+    "in3days": "3 jours",
+    "inWeek": "Une semaine",
+    "byFriday": "Vendredi",
+    "none": "Sans date",
+    "pick": "ou choisir une autre date",
+    "date": "Date de fin",
+    "label": "À terminer le",
+    "today": "aujourd’hui",
+    "tomorrow": "demain",
+    "passed": "la date est passée",
+    "inDays": "dans {n} jours"
+  },
   "sharing": {
     "whatsapp": "Envoyer sur WhatsApp",
     "whatsappShort": "WhatsApp",

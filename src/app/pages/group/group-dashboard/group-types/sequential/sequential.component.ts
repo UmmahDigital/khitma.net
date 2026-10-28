@@ -14,6 +14,7 @@ import { NativeShareService } from '../../../../../native-share.service';
 import { SharingService } from '../../../../../sharing.service';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { StatusMessageGenerators } from '../../status-messages';
+import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../../../../service/common.service';
 
@@ -155,8 +156,22 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     return fill(template, { count: ajzaCount(this.readingAjza.length, this.common.currentLanguage) });
   }
 
+  /** "موعد إتمام الختمة: الجمعة 6/3/2026 — بعد 5 أيام", or the date the admin typed (groups before picking existed). */
+  get deadlineLine(): string | null {
+    if (this.group.isDone()) {
+      return null;
+    }
+    const label = this.common.translation.deadline?.label || 'موعد إتمام الختمة';
+    const lang = this.common.currentLanguage;
+    if (this.group.targetAt) {
+      const days = countdownText(daysUntil(this.group.targetAt), this.common.translation, lang);
+      return `${label}: ${localDeadlineText(this.group.targetAt, lang)} — ${days}`;
+    }
+    return this.group.targetDate ? `${label}: ${this.group.targetDate}` : null;
+  }
+
   shareFreeAjza() {
-    const message = helpFinishMessage(this.common.translation, this.common.currentLanguage, this.group.title, this.group.getURL(), this.freeAjza);
+    const message = helpFinishMessage(this.common.translation, this.common.currentLanguage, this.group.title, this.group.getURL(), this.freeAjza, this.deadlineLine);
     this.sharing.whatsapp(message, 'free_juz', this.group.id);
   }
 

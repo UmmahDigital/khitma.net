@@ -63,6 +63,28 @@
       <textarea rows="4" matInput [(ngModel)]="description" name="description"></textarea>
     </mat-form-field>
 
+    <div class="deadline-choice">
+      <h2 [translate]="'deadline.question'">متى تريدون إتمام الختمة؟</h2>
+      <div class="center-center multi-choice">
+        <mat-button-toggle-group [(ngModel)]="deadlineChoice" name="deadline">
+          <mat-button-toggle value="3days"><span [translate]="'deadline.in3days'">3 أيام</span></mat-button-toggle>
+          <mat-button-toggle value="week"><span [translate]="'deadline.inWeek'">أسبوع</span></mat-button-toggle>
+          <mat-button-toggle value="friday"><span [translate]="'deadline.byFriday'">الجمعة</span></mat-button-toggle>
+          <mat-button-toggle value="none"><span [translate]="'deadline.none'">بدون موعد</span></mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      @if (deadlineChoice === 'date') {
+        <mat-form-field appearance="fill" class="block">
+          <mat-label [translate]="'deadline.date'">تاريخ إتمام الختمة</mat-label>
+          <input matInput type="date" [(ngModel)]="deadlinePicked" name="deadline-date" [min]="today">
+        </mat-form-field>
+      } @else {
+        <button type="button" mat-button class="pick-date-btn" (click)="deadlineChoice = 'date'">
+          <span [translate]="'deadline.pick'">أو اختر تاريخًا آخر</span>
+        </button>
+      }
+    </div>
+
 
 
     @if (isRecurring) {

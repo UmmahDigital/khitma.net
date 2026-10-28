@@ -60,6 +60,9 @@
       }
     }
   </div>
+  @if (deadlineLine) {
+    <p class="deadline-line">⏳ {{ deadlineLine }}</p>
+  }
   @if (!group.isDone()) {
     @if (freeAjza.length > 0) {
       <div class="help-finish">

@@ -139,7 +139,7 @@ test.describe('analytics', () => {
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
 
     const groupId = new URL(page.url()).pathname.split('/')[2];
-    await expect.poll(() => events(page)).toContainEqual(['event', 'group_created', { group_id: groupId, group_type: 'SEQUENTIAL' }]);
+    await expect.poll(() => events(page)).toContainEqual(['event', 'group_created', { group_id: groupId, group_type: 'SEQUENTIAL', deadline: 'none' }]);
   });
 
   test('joining a group records its type, even though the app reloads right after', async ({ page }) => {

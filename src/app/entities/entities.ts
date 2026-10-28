@@ -61,6 +61,8 @@ export class KhitmaGroup {
   creationDate?: Date;
   cycle?: number;
   targetDate?: string;
+  /** The deadline as YYYY-MM-DD, when it was picked from the choices (targetDate is its readable text). */
+  targetAt?: string;
   admins?: string;
   type?: string;
   authorId?: string;

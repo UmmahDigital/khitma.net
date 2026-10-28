@@ -79,14 +79,15 @@ export class KhitmaGroupService {
     return this._currentGroupObj.id;
   }
 
-  public createGroup(title, description, author, groupType?, firstTask?) {
+  public createGroup(title, description, author, groupType?, firstTask?, deadline?: { targetAt: string; targetDate: string } | null) {
     return this.createGroupForUser(
       title,
       description,
       author,
       null,
       groupType,
-      firstTask
+      firstTask,
+      deadline
     );
   }
 
@@ -96,7 +97,8 @@ export class KhitmaGroupService {
     author,
     authorId?,
     groupType?,
-    firstTask?
+    firstTask?,
+    deadline?: { targetAt: string; targetDate: string } | null
   ) {
     author = author.trim();
 
@@ -108,6 +110,7 @@ export class KhitmaGroupService {
       cycle: 0,
       authorId: authorId || '',
       createdAt: serverTimestamp(),
+      ...(deadline ? { targetAt: deadline.targetAt, targetDate: deadline.targetDate } : {}),
     };
 
     switch (groupType) {
@@ -147,12 +150,14 @@ export class KhitmaGroupService {
     return group && group.title ? true : false;
   }
 
-  public updateGroupInfo(groupId, title, description, targetDate, admins) {
+  /** `targetDateChanged`: the admin typed a new date, so the date picked at creation (targetAt) no longer applies. */
+  public updateGroupInfo(groupId, title, description, targetDate, admins, targetDateChanged = false) {
     updateDoc(this.groupDoc(groupId), {
       title: title,
       description: description || '',
       targetDate: targetDate || '',
       admins: admins || '',
+      ...(targetDateChanged ? { targetAt: deleteField() } : {}),
     });
   }
 
