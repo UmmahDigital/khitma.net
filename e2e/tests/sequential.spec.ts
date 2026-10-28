@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test';
-import { joinedGroups, openApp, readLocalStorage, sharedPayloads } from '../support/app';
+import { chooseMenuItem, joinedGroups, openApp, readLocalStorage, sharedPayloads } from '../support/app';
 import { getDoc } from '../support/firestore';
 import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtures';
 
@@ -85,6 +85,7 @@ test.describe('sequential group: members', () => {
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
     await expect(page.getByText('تأكيد إتمام الجزء')).toBeVisible();
     await page.getByRole('button', { name: 'لا' }).click();
+    await expect(page.getByRole('dialog')).toHaveCount(0);
     expect(await storedJuz(groupId, 5)).toEqual({ owner: 'سارة', status: BOOKED });
 
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
@@ -119,8 +120,7 @@ test.describe('sequential group: members', () => {
     await createSequentialGroup(groupId, { title: 'ختمة للمغادرة', author: ADMIN });
 
     await openDashboard(page, groupId, 'سارة');
-    await page.locator('.group-options-menu-button').click();
-    await page.getByRole('menuitem', { name: 'ترك المجموعة' }).click();
+    await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
     await page.getByRole('button', { name: 'نعم' }).click();
 
     await expect(page).toHaveURL(/localhost:4300\/$/);
@@ -136,8 +136,7 @@ test.describe('sequential group: members', () => {
     });
 
     await openDashboard(page, groupId, 'سارة');
-    await page.locator('.group-options-menu-button').click();
-    await page.getByRole('menuitem', { name: 'ترك المجموعة' }).click();
+    await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
     await page.getByRole('button', { name: 'نعم' }).click();
     await expect(page).toHaveURL(/localhost:4300\/$/);
 

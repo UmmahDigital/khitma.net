@@ -1,4 +1,4 @@
-import { Page, test } from '@playwright/test';
+import { expect, Locator, Page, test } from '@playwright/test';
 import { simulateOldestSupportedBrowser } from './legacy-browser';
 
 /** Fixed clock for screenshots and dated share messages. */
@@ -69,4 +69,17 @@ export async function sharedPayloads(page: Page): Promise<Array<{ title?: string
 export async function readLocalStorage(page: Page, key: string): Promise<any> {
   const raw = await page.evaluate((k) => localStorage.getItem(k), key);
   return raw === null ? null : JSON.parse(raw);
+}
+
+/**
+ * Opens a Material menu and taps one of its items. While the menu animates open (~120ms) Material
+ * turns off pointer events on it, so a tap that soon is lost; people never tap that fast, tests do.
+ */
+export async function chooseMenuItem(page: Page, trigger: Locator, item: string): Promise<void> {
+  await trigger.click();
+  const menu = page.getByRole('menu');
+  await expect
+    .poll(() => menu.evaluate((panel) => panel.getAnimations().every((a) => a.playState === 'finished')))
+    .toBe(true);
+  await menu.getByRole('menuitem', { name: item }).click();
 }
