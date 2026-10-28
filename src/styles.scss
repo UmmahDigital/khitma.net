@@ -43,3 +43,23 @@ $custom-typography: mat.define-typography-config(
 @include mat.typography-hierarchy($custom-typography);
 @include mat.all-component-typographies($custom-typography);
 // @include mat-button-typography($custom-typography);
+
+// Layout helpers replacing @angular/flex-layout; they apply the same styles it used to set inline.
+.fx-row-wrap {
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+[class*="fx-flex-"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+@each $percent in 10, 20, 25, 50, 80, 90, 100 {
+  .fx-flex-#{$percent} {
+    flex: 1 1 $percent * 1%;
+    max-width: $percent * 1%;
+  }
+}

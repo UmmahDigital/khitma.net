@@ -1,13 +1,13 @@
 <div class="juz list-item noselect" [ngClass]="cssClasses">
 
 
-    <div *ngIf="!isEditMode; else editmode" fxLayout="row wrap" fxLayoutGap="0px grid" (click)="juzClicked()">
+    <div *ngIf="!isEditMode; else editmode" class="fx-row-wrap" (click)="juzClicked()">
 
-        <div fxFlex="20%" class="center-center">
+        <div class="fx-flex-20 center-center">
             <span class="index">{{juz.index+1}}</span>
         </div>
 
-        <div fxFlex="80%">
+        <div class="fx-flex-80">
             <span class="owner"> {{juz.owner || msg }}</span>
         </div>
 
@@ -15,18 +15,18 @@
 
     <ng-template #editmode>
 
-        <div *ngIf="isEditMode" fxLayout="row wrap" fxLayoutGap="0px grid">
+        <div *ngIf="isEditMode" class="fx-row-wrap">
 
 
-            <div fxFlex="20%" class="center-center">
+            <div class="fx-flex-20 center-center">
                 <span class="index" (click)="juzClicked()">{{juz.index+1}}</span>
             </div>
 
-            <div fxFlex="80%">
+            <div class="fx-flex-80">
 
-                <div fxLayout="row wrap" fxLayoutGap="0px grid">
+                <div class="fx-row-wrap">
 
-                    <div fxFlex="80%">
+                    <div class="fx-flex-80">
                         <mat-form-field class="block">
                             <!-- <mat-label>صاحب الجزء:</mat-label> -->
                             <input matInput type="text" [(ngModel)]="updatedOwner" autocomplete="off">
@@ -37,7 +37,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div *ngIf="updatedOwner !=  juz.owner" fxFlex="20%" class="center-center"
+                    <div *ngIf="updatedOwner !=  juz.owner" class="fx-flex-20 center-center"
                         (click)="updateOwner(updatedOwner)">
                         <mat-icon>save</mat-icon>
 

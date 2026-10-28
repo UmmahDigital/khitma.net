@@ -142,6 +142,15 @@ mat-toolbar {
   position: relative;
   height: 100%;
   background: #fafafa;
+  flex: 1 1 33%;
+  max-width: 33%;
+  box-sizing: border-box;
+  padding: 0;
+
+  @media (max-width: 959.98px) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
 .spacer {

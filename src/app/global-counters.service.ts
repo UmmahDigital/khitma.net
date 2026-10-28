@@ -45,7 +45,7 @@ export class GlobalCountersService {
   }
 
   aqsaKhitmaCounters() {
-    return this.groupsApi.getGlobalKhitma('aqsa').valueChanges();
+    return this.groupsApi.watchGlobalKhitma('aqsa');
   }
 
   aqsaKhitmaPagesDone(pages) {

@@ -10,23 +10,8 @@ import { MaterialModule } from './modules/material.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AngularFireModule } from '@angular/fire/compat';
-import {
-  AngularFirestoreModule,
-  USE_EMULATOR as USE_FIRESTORE_EMULATOR,
-} from '@angular/fire/compat/firestore';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-} from 'angularx-social-login';
-import {
-  GoogleLoginProvider,
-  FacebookLoginProvider,
-} from 'angularx-social-login';
 
 import { HomeComponent } from './pages/home/home.component';
 import { CreateGroupComponent } from './pages/create-group/create-group.component';
@@ -52,7 +37,6 @@ import { CelebrationComponent } from './shared/celebration/celebration.component
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
-import { TestComponent } from './test/test.component';
 import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
 import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
 import { DashboardComponent } from './pages/me/dashboard/dashboard.component';
@@ -83,9 +67,6 @@ import { NotificationComponent } from './shared/notification/notification.compon
 import { AqsaKhitmaComponent } from './pages/aqsa-khitma/aqsa-khitma.component';
 import { TranslateDirective } from './directives/translate.directive';
 import { CommonService } from './service/common.service';
-import { ProfileComponent } from './user/profile/profile.component';
-import { RegisterComponent } from './user/register/register.component';
-import { LoginComponent } from './common/login/login.component';
 
 GroupJoinedGuard;
 
@@ -109,7 +90,6 @@ const routes: Routes = [
       { path: 'dashboard', component: GroupDashboardComponent },
     ],
   },
-  { path: 'test', component: TestComponent },
   { path: 'quran', component: QuranComponent },
   { path: 'quran/juz/:juzIndex', component: QuranComponent },
   { path: 'about', component: AboutComponent },
@@ -138,7 +118,6 @@ const routes: Routes = [
     ConfirmDialogComponent,
     CelebrationComponent,
     ArchiveComponent,
-    TestComponent,
     KhitmaDoneCelebrationComponent,
     QuranBrowserComponent,
     DashboardComponent,
@@ -164,9 +143,6 @@ const routes: Routes = [
     NotificationComponent,
     AqsaKhitmaComponent,
     TranslateDirective,
-    ProfileComponent,
-    RegisterComponent,
-    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -180,42 +156,15 @@ const routes: Routes = [
     }),
     MaterialModule,
     FormsModule,
-    FlexLayoutModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule, // firestore
-    AngularFireStorageModule, // storage,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production && !environment.useEmulators,
     }),
-    SocialLoginModule,
   ],
   providers: [
     GroupJoinedGuard,
     KhitmaGroupService,
     CommonService,
-    {
-      provide: USE_FIRESTORE_EMULATOR,
-      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '220375398314-mnqgol2uls5dkt92et2dom61utorjfhe.apps.googleusercontent.com'
-            ),
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('632795004523692'),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
   ],
   bootstrap: [AppComponent],
 })

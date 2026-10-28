@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { KhitmaGroupService } from '../../khitma-group.service';
 
-import * as firebase from 'firebase/compat/app';
-// import undefined from 'firebase/compat/firestore';
 import { LocalDatabaseService } from '../../local-database.service';
 import { map } from 'rxjs/operators';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
@@ -60,10 +58,8 @@ export class GlobalKhitmaComponent implements OnInit {
     }
 
     this.groupsApi
-      .getGlobalKhitma('ramadan2021')
-      .get()
-      .subscribe((res: any) => {
-        let data = res.data();
+      .getGlobalKhitmaOnce('ramadan2021')
+      .subscribe((data: any) => {
 
         let ramadanStartDate = new Date(data.startDate);
 

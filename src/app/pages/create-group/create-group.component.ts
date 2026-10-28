@@ -105,17 +105,15 @@ export class CreateGroupComponent implements OnInit {
     // }
 
     this.groupsApi
-      .createGroupForUser(
+      .createGroup(
         this.title,
         this.description,
         this.author,
-        this.user?.email,
         this.groupType,
         this.firstTask
       )
       .then((docRef) => {
         const groupId = docRef.id;
-        this.svcUser.joinToGroup(groupId);
         this.$gaService.event('group_created');
 
         this.alert.show(this.common.translation.gCreate?.success, 5000);

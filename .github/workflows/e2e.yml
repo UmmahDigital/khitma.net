@@ -1,4 +1,4 @@
-name: End-to-end tests
+name: Tests
 
 on:
   pull_request:
@@ -19,6 +19,9 @@ jobs:
           distribution: temurin
           java-version: 21
       - run: npm i --legacy-peer-deps
+      - run: npm run test:ci
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run e2e:build
         env:
           # Angular 12's webpack build uses MD4 hashing, which Node 17+ (OpenSSL 3) rejects without this flag.

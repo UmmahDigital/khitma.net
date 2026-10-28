@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
     ids = ids.slice(Math.max(ids.length - 10, 0)); // firebase IN array limit of 10
     const user = this.svcUser.currentUser;
     if (user) {
-      user.groupIds.forEach((id) => {
+      (user.groupIds ?? []).forEach((id) => {
         if (!ids.includes(id)) {
           ids.push(id);
         }
