@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import { CelebrationService } from './celebration.service';
@@ -9,11 +9,12 @@ import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
-
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AppComponent {
 
@@ -78,7 +79,7 @@ export class AppComponent {
 
   openMenu() {
     this.menuDialogRef = this.dialog.open(PopMenuComponent, {
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
   }

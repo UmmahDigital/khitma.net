@@ -1,6 +1,6 @@
-@import "~src/_variables";
+@use "src/variables" as *;
 
-.members-list-edit-btn {
+.members-list-edit-btn.mat-button-toggle {
     background: white;
     border: 1px solid $admin-action-color;
     color: $admin-action-color;
@@ -9,7 +9,6 @@
     // width: 48px;
     // display: block;
     margin: 16px auto;
-
     &.mat-button-toggle-checked {
         background: $admin-action-color;
         color: white;
@@ -52,8 +51,8 @@
     margin-top: 16px;
 }
 
-.mat-progress-spinner circle,
-.mat-spinner circle {
+.mat-mdc-progress-spinner circle,
+.mat-mdc-progress-spinner circle {
     stroke: gray !important;
 }
 

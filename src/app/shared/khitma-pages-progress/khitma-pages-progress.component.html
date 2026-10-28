@@ -1,14 +1,20 @@
-<table id='status-table' *ngIf="pagesStatusesMatrix" dir="ltr" cellspacing="0" cellpadding="0">
+@if (pagesStatusesMatrix) {
+  <table id='status-table' dir="ltr" cellspacing="0" cellpadding="0">
     <tbody>
-        <tr *ngFor="let row of pagesStatusesMatrix; let i = index">
-            <td *ngFor="let isDone of row" [class.done]="isDone" [class.disabled]="isDone === null">
+      @for (row of pagesStatusesMatrix; track row; let i = $index) {
+        <tr>
+          @for (isDone of row; track isDone) {
+            <td [class.done]="isDone" [class.disabled]="isDone === null">
             </td>
+          }
         </tr>
+      }
     </tbody>
-</table>
+  </table>
+}
 
 
-<!-- 
+<!--
 
 <input [(ngModel)]="from" placeholder="from" type="number" autocomplete="false" />
 <input [(ngModel)]="to" placeholder="to" type="number" autocomplete="false" />

@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Juz, JUZ_STATUS } from 'src/app/entities/entities';
 
 @Component({
-  selector: 'app-juz-toggle',
-  templateUrl: './juz-toggle.component.html',
-  styleUrls: ['./juz-toggle.component.scss'],
-  encapsulation: ViewEncapsulation.None
-
+    selector: 'app-juz-toggle',
+    templateUrl: './juz-toggle.component.html',
+    styleUrls: ['./juz-toggle.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class JuzToggleComponent implements OnInit {
 

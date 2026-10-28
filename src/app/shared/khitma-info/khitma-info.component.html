@@ -1,71 +1,57 @@
-<section *ngIf="group" class="khitma-info">
-
-
+@if (group) {
+  <section class="khitma-info">
     <header class="title center-center" (click)="isExpanded = !isExpanded;">
-
-
-        <label>
-            {{group.title}}
-
-
-            <span class="khitma-cycle" *ngIf="group.cycle > 0">
-
-
-                (
-                <span *ngIf="group.type === KHITMA_GROUP_TYPE.SAME_TASK" [translate]="'khitma.task'">
-
-                    مهمّة
-                </span>
-
-                <span *ngIf="group.type != KHITMA_GROUP_TYPE.SAME_TASK" [translate]="'khitma.khitma'">
-
-                    ختمة
-                </span>
-
-                {{group.cycle + 1}})
-
-
-            </span>
-
-
-        </label>
-
-
-        <mat-icon>
-            {{isExpanded? "expand_less" : "expand_more"}}
-
-        </mat-icon>
+      <label>
+        {{group.title}}
+        @if (group.cycle > 0) {
+          <span class="khitma-cycle">
+            (
+            @if (group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
+              <span [translate]="'khitma.task'">
+                مهمّة
+              </span>
+            }
+            @if (group.type != KHITMA_GROUP_TYPE.SAME_TASK) {
+              <span [translate]="'khitma.khitma'">
+                ختمة
+              </span>
+            }
+            {{group.cycle + 1}})
+          </span>
+        }
+      </label>
+      <mat-icon>
+        {{isExpanded? "expand_less" : "expand_more"}}
+      </mat-icon>
     </header>
-
-
-    <div *ngIf="isExpanded">
+    @if (isExpanded) {
+      <div>
         <label class="author"><span [translate]="'khitma.creator'">مُنشئ المجموعة:</span> {{group.author}} </label>
-
         <p class="description">
-            {{group.description}}
+          {{group.description}}
         </p>
-
-        <label *ngIf="showLink">{{groupLink}}</label>
-
-    </div>
-
-
-</section>
-
-
+        @if (showLink) {
+          <label>{{groupLink}}</label>
+        }
+      </div>
+    }
+  </section>
+}
 
 
 
-<!-- 
+
+
+<!--
 <mat-card *ngIf="group" class="khitma-info">
-    <mat-card-title class="title">{{group.title}}</mat-card-title>
+  <mat-card-title class="title">{{group.title}}</mat-card-title>
 
-    <mat-card-subtitle class="subtitle"> مُنشئ الختمة: {{group.author}} </mat-card-subtitle>
+  <mat-card-subtitle class="subtitle"> مُنشئ الختمة: {{group.author}} </mat-card-subtitle>
 
-    <mat-card-content class="description">
-        {{group.description}}
-    </mat-card-content>
+  <mat-card-content class="description">
+    {{group.description}}
+  </mat-card-content>
 
-    <span *ngIf="showLink">{{groupLink}}</span>
+  <span *ngIf="showLink">{{groupLink}}</span>
 
 </mat-card> -->

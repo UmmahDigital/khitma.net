@@ -1,8 +1,9 @@
-@import "~src/_variables";
+@use "sass:math";
+@use "src/variables" as *;
 
 @function randomNum($min, $max) {
-  $rand: random();
-  $randomNum: $min + floor($rand * (($max - $min) + 1));
+  $rand: math.random();
+  $randomNum: $min + math.floor($rand * (($max - $min) + 1));
 
   @return $randomNum;
 }

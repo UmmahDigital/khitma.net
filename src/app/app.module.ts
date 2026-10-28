@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/button-toggle';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,7 +35,7 @@ import { GroupListItemComponent } from './shared/group-list/group-list-item/grou
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { CelebrationComponent } from './shared/celebration/celebration.component';
 
-import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+import { AnalyticsModule } from './analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
 import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
@@ -99,73 +100,72 @@ const routes: Routes = [
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    CreateGroupComponent,
-    JuzToggleComponent,
-    GroupComponent,
-    JuzListComponent,
-    GroupInviteComponent,
-    GroupJoinComponent,
-    KhitmaInfoComponent,
-    GroupDashboardComponent,
-    JuzComponent,
-    JuzGridComponent,
-    GroupListComponent,
-    GroupListItemComponent,
-    ConfirmDialogComponent,
-    CelebrationComponent,
-    ArchiveComponent,
-    KhitmaDoneCelebrationComponent,
-    QuranBrowserComponent,
-    DashboardComponent,
-    AboutComponent,
-    EditKhitmaDetailsComponent,
-    StartNewKhitmaComponent,
-    QuranComponent,
-    GetComponent,
-    PersonalKhitmaComponent,
-    PopMenuComponent,
-    KhitmaProgressComponent,
-    GlobalKhitmaComponent,
-    MoonComponent,
-    GlassButtonComponent,
-    TodoComponent,
-    GroupMembersComponent,
-    NewTaskComponent,
-    Group_Sequential_Component,
-    Group_SameTask_Component,
-    Group_Pages_Component,
-    KhitmaPagesProgressComponent,
-    LoadingComponent,
-    NotificationComponent,
-    AqsaKhitmaComponent,
-    TranslateDirective,
-  ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    HttpClientModule,
-    ClipboardModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(routes, {
-      paramsInheritanceStrategy: 'always',
-      scrollPositionRestoration: 'enabled',
-    }),
-    MaterialModule,
-    FormsModule,
-    NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production && !environment.useEmulators,
-    }),
-  ],
-  providers: [
-    GroupJoinedGuard,
-    KhitmaGroupService,
-    CommonService,
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        CreateGroupComponent,
+        JuzToggleComponent,
+        GroupComponent,
+        JuzListComponent,
+        GroupInviteComponent,
+        GroupJoinComponent,
+        KhitmaInfoComponent,
+        GroupDashboardComponent,
+        JuzComponent,
+        JuzGridComponent,
+        GroupListComponent,
+        GroupListItemComponent,
+        ConfirmDialogComponent,
+        CelebrationComponent,
+        ArchiveComponent,
+        KhitmaDoneCelebrationComponent,
+        QuranBrowserComponent,
+        DashboardComponent,
+        AboutComponent,
+        EditKhitmaDetailsComponent,
+        StartNewKhitmaComponent,
+        QuranComponent,
+        GetComponent,
+        PersonalKhitmaComponent,
+        PopMenuComponent,
+        KhitmaProgressComponent,
+        GlobalKhitmaComponent,
+        MoonComponent,
+        GlassButtonComponent,
+        TodoComponent,
+        GroupMembersComponent,
+        NewTaskComponent,
+        Group_Sequential_Component,
+        Group_SameTask_Component,
+        Group_Pages_Component,
+        KhitmaPagesProgressComponent,
+        LoadingComponent,
+        NotificationComponent,
+        AqsaKhitmaComponent,
+        TranslateDirective,
+    ],
+    bootstrap: [AppComponent], imports: [CommonModule,
+        BrowserModule,
+        ClipboardModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(routes, {
+            paramsInheritanceStrategy: 'always',
+            scrollPositionRestoration: 'enabled',
+        }),
+        MaterialModule,
+        FormsModule,
+        AnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production && !environment.useEmulators,
+        })], providers: [
+        // Keep the original toggle look: no check mark on the selected option (shown by default since Material 17).
+        {
+            provide: MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS,
+            useValue: { hideSingleSelectionIndicator: true, hideMultipleSelectionIndicator: true },
+        },
+        GroupJoinedGuard,
+        KhitmaGroupService,
+        CommonService,
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
+    ] })
 export class AppModule {}

@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { GroupMember } from 'src/app/entities/entities';
 
 @Component({
-  selector: 'app-group-members',
-  templateUrl: './group-members.component.html',
-  styleUrls: ['./group-members.component.scss']
+    selector: 'app-group-members',
+    templateUrl: './group-members.component.html',
+    styleUrls: ['./group-members.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GroupMembersComponent implements OnInit {
 

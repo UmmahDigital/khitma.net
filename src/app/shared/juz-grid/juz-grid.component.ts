@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 import { Juz, JUZ_STATUS } from '../../entities/entities';
 
 @Component({
-  selector: 'app-juz-grid',
-  templateUrl: './juz-grid.component.html',
-  styleUrls: ['./juz-grid.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-juz-grid',
+    templateUrl: './juz-grid.component.html',
+    styleUrls: ['./juz-grid.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class JuzGridComponent implements OnInit {
 

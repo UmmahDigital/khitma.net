@@ -1,9 +1,9 @@
 import { Breakpoints } from '@angular/cdk/layout';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../../../../analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from '../../../../../alert.service';
 import { StartNewKhitmaComponent } from '../../../../../dialog/start-new-khitma/start-new-khitma.component';
@@ -16,9 +16,11 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../share
 import { CommonService } from '../../../../../service/common.service';
 
 @Component({
-  selector: 'app-group-sequential',
-  templateUrl: './sequential.component.html',
-  styleUrls: ['./sequential.component.scss']
+    selector: 'app-group-sequential',
+    templateUrl: './sequential.component.html',
+    styleUrls: ['./sequential.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class Group_Sequential_Component implements OnInit, OnChanges {
 
@@ -101,7 +103,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         data: dialogData,
-        maxWidth: "80%"
+        maxWidth: "80vw"
       });
 
       dialogRef.afterClosed().subscribe(dialogResult => {
@@ -151,7 +153,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(this.common.translation.sequential?.dialog2,
         this.common.translation.sequential?.dialog2Q + (juzIndex + 1) + "؟"),
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -191,7 +193,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
         descreption: this.group.description,
         cycle: this.group.cycle
       },
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(selectedCycleType => {

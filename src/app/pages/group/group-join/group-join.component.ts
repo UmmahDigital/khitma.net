@@ -1,6 +1,6 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../../analytics';
 import {
   KhitmaGroup,
   KHITMA_GROUP_TYPE,
@@ -10,9 +10,11 @@ import { KhitmaGroupService } from '../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
 
 @Component({
-  selector: 'app-group-join',
-  templateUrl: './group-join.component.html',
-  styleUrls: ['./group-join.component.scss'],
+    selector: 'app-group-join',
+    templateUrl: './group-join.component.html',
+    styleUrls: ['./group-join.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GroupJoinComponent implements OnInit {
   group: KhitmaGroup;

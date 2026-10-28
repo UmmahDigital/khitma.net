@@ -1,3 +1,4 @@
+@use "sass:color";
 $primary-color: #075E54;
 $action-color: #128C7E; //saturate(lighten($primary-color, 10%), 20%);
 $background-color: #fafafa; //saturate(lighten($primary-color,75%),20%);
@@ -12,4 +13,4 @@ $status-done-color: darkgreen;
 $status-done-bg-color: #d0e6a5;
 
 $admin-color: #54325b; //#693c72;
-$admin-action-color: saturate(lighten($admin-color, 20%), 0%);
+$admin-action-color: color.adjust($admin-color, $lightness: 20%);

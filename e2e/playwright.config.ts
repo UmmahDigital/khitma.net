@@ -32,6 +32,13 @@ export default defineConfig({
   projects: [
     { name: 'setup', testMatch: /global\.setup\.ts/ },
     { name: 'mobile-chromium', dependencies: ['setup'], testIgnore: /global\.setup\.ts/ },
+    {
+      // The behavior tests again, with Chromium made to act like iOS 14.5 and Chromium 79 (see support/legacy-browser.ts).
+      name: 'oldest-supported-browser',
+      dependencies: ['setup'],
+      testIgnore: [/global\.setup\.ts/, /visual\.spec\.ts/, /real-old-browser\.spec\.ts/],
+      metadata: { oldestSupportedBrowser: true },
+    },
   ],
   webServer: [
     {

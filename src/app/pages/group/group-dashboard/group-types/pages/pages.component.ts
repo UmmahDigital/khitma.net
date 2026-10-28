@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../../../../analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from '../../../../../alert.service';
 import { GroupMember, KhitmaGroup_Pages, NUM_OF_PAGES } from '../../../../../entities/entities';
@@ -11,9 +11,11 @@ import { CommonService } from '../../../../../service/common.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-group-pages',
-  templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.scss']
+    selector: 'app-group-pages',
+    templateUrl: './pages.component.html',
+    styleUrls: ['./pages.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class Group_Pages_Component implements OnInit {
 
@@ -84,7 +86,7 @@ export class Group_Pages_Component implements OnInit {
       data: new ConfirmDialogModel(
         this.common.translation.gPages?.confirm,
         ""),
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {

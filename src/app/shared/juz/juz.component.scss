@@ -1,4 +1,4 @@
-@import "~src/_variables";
+@use "src/variables" as *;
 
 :host {
   display: block;
@@ -73,4 +73,22 @@
 
 .owner {
   line-height: 35px;
+}
+
+// Names list (admin edit mode): the compact, underline-only fields of the legacy design.
+.juz.list-item .mat-mdc-form-field {
+  --mat-form-field-filled-container-color: transparent;
+
+  .mdc-text-field--filled {
+    padding: 0;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 0;
+    padding-top: 20px !important;
+    padding-bottom: 7px !important;
+  }
+
+  // Legacy fields reserved 20px under the underline.
+  margin-bottom: 20px;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from '../../../entities/entities';
 import { LocalDatabaseService } from '../../../local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
@@ -8,7 +8,7 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/conf
 
 
 import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../../analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from '../../../alert.service';
 import { NativeApiService } from '../../../native-api.service';
@@ -27,10 +27,12 @@ import { CommonService } from '../../../service/common.service';
 
 
 @Component({
-  selector: 'app-group-dashboard',
-  templateUrl: './group-dashboard.component.html',
-  styleUrls: ['./group-dashboard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-group-dashboard',
+    templateUrl: './group-dashboard.component.html',
+    styleUrls: ['./group-dashboard.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GroupDashboardComponent implements OnInit {
 
@@ -134,7 +136,7 @@ export class GroupDashboardComponent implements OnInit {
         targetDate: this.group.targetDate,
         admins: this.group.admins,
       },
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -159,7 +161,7 @@ export class GroupDashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(this.common.translation.gDashboard?.confirm, this.common.translation.gDashboard?.advice
       ),
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {

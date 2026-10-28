@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -8,11 +8,12 @@ import { Location, LocationStrategy } from '@angular/common';
 import { AlertService } from 'src/app/alert.service';
 
 @Component({
-  selector: 'app-group',
-  templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss'],
-  encapsulation: ViewEncapsulation.None
-
+    selector: 'app-group',
+    templateUrl: './group.component.html',
+    styleUrls: ['./group.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GroupComponent implements OnInit {
 

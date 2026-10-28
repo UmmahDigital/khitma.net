@@ -50,7 +50,7 @@ export class NotificationsService {
 
     const dialogRef = this.dialog.open(NotificationComponent, {
       data: notification,
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dontDisplayAgain => {

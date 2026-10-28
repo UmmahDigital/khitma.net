@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../analytics';
 // import {
 //   KhitmaGroup,
 //   KhitmaGroup_Sequential,
@@ -31,10 +31,11 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { CommonService } from '../../service/common.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  // encapsulation: ViewEncapsulation.None
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   groups: KhitmaGroup[];
@@ -116,7 +117,7 @@ export class HomeComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: dialogData,
-      maxWidth: '80%',
+      maxWidth: '80vw',
     });
 
     dialogRef.afterClosed().subscribe((confirmed) => {

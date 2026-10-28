@@ -1,4 +1,5 @@
-@import "~src/_variables";
+@use "sass:color";
+@use "src/variables" as *;
 
 :host {
   padding-bottom: 80px;
@@ -38,12 +39,16 @@
   height: 48px;
 }
 
-.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: lighten($primary-color, 20%);
-}
-
-.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: $primary-color;
+// The names-list toggle uses the app's green instead of the theme's pink.
+.mat-mdc-slide-toggle.mat-accent {
+  --mat-slide-toggle-selected-handle-color: #{$primary-color};
+  --mat-slide-toggle-selected-hover-handle-color: #{$primary-color};
+  --mat-slide-toggle-selected-focus-handle-color: #{$primary-color};
+  --mat-slide-toggle-selected-pressed-handle-color: #{$primary-color};
+  --mat-slide-toggle-selected-track-color: #{color.adjust($primary-color, $lightness: 20%)};
+  --mat-slide-toggle-selected-hover-track-color: #{color.adjust($primary-color, $lightness: 20%)};
+  --mat-slide-toggle-selected-focus-track-color: #{color.adjust($primary-color, $lightness: 20%)};
+  --mat-slide-toggle-selected-pressed-track-color: #{color.adjust($primary-color, $lightness: 20%)};
 }
 
 .admin-actions {
@@ -122,6 +127,14 @@ mat-panel-title {
     font-size: larger;
     text-align: right;
     line-height: 64px;
+  }
+
+  button.mat-mdc-button-base {
+    display: flex;
+    justify-content: flex-start;
+    height: 64px;
+    --mat-button-filled-container-color: #{$admin-action-color};
+    --mat-button-filled-label-text-color: white;
   }
 }
 

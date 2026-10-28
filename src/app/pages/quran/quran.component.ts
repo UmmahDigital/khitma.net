@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { GET_JUZ_READ_EXTERNAL_URL } from 'src/app/entities/entities';
 
 @Component({
-  selector: 'app-quran',
-  templateUrl: './quran.component.html',
-  styleUrls: ['./quran.component.scss']
+    selector: 'app-quran',
+    templateUrl: './quran.component.html',
+    styleUrls: ['./quran.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class QuranComponent implements OnInit {
 

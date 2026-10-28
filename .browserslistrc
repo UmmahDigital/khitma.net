@@ -1,17 +1,22 @@
-# This file is used by the build system to adjust CSS and JS output to support the specified browsers below.
-# For additional information regarding the format and rule options, please see:
-# https://github.com/browserslist/browserslist#queries
-
-# For the full list of supported browsers by the Angular framework, please see:
-# https://angular.io/guide/browser-support
-
-# You can see what browsers were selected by your queries by running:
-#   npx browserslist
-
-last 1 Chrome version
-last 1 Firefox version
-last 2 Edge major versions
-last 2 Safari major versions
-last 2 iOS major versions
-Firefox ESR
-not IE 11 # Angular supports IE 11 only as an opt-in. To opt-in, remove the 'not' prefix on this line.
+# Browsers the build must support. This app's users often keep older phones,
+# so the floor sits well below Angular's default (recent versions only).
+# Raise it only after analytics confirms those devices are gone.
+# Safari/iOS: 14.1/14.5 is the lowest the build tooling (esbuild) can target
+# since Angular 19; every iPhone that ran iOS 14 can install 14.5+.
+# Builds warn that these browsers are outside Angular 22's official support;
+# that is expected. esbuild still lowers the syntax for them, while missing
+# APIs are polyfilled in src/legacy-polyfills.ts and missing CSS features get
+# fallbacks in src/_material-compat.scss. The `oldest-supported-browser` e2e
+# project checks the app in a Chromium that behaves like iOS 14.5.
+# Android: Angular hands only the Chrome, Edge, Firefox, Safari and iOS lines
+# to esbuild and ignores ChromeAndroid and Samsung, so Android browsers are
+# covered by the Chrome line: Samsung Internet 12 runs Chromium 79, hence 79.
+# (With 80, `??` stayed in the bundle and Samsung Internet 12 showed a blank
+# page.) Check changes here in a real old Chromium; see README.
+Chrome >= 79
+ChromeAndroid >= 79
+Edge >= 88
+Firefox >= 78
+Safari >= 14.1
+iOS >= 14.5
+Samsung >= 12

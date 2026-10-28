@@ -1,62 +1,59 @@
 <section>
 
-    <!-- <header>المهمّة الحاليّة </header> -->
+  <!-- <header>المهمّة الحاليّة </header> -->
 
-    <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)">
-        <div content> {{group.task}} </div>
-    </app-todo>
+  <app-todo [isDone]="$safeNavigationMigration(myMember?.isTaskDone)" (onToggled)="taskToggled($event)">
+    <div content> {{group.task}} </div>
+  </app-todo>
 
-    <span *ngIf="this.group.targetDate" class="task-target-date"><span [translate]="'sametask.date'">موعد
-            التسليم:</span> {{this.group.targetDate}}.</span>
+  @if (this.group.targetDate) {
+    <span class="task-target-date"><span [translate]="'sametask.date'">موعد
+    التسليم:</span> {{this.group.targetDate}}.</span>
+  }
 
 
 </section>
 
 
-<app-khitma-progress [current]="counts?.done" style="margin-top: 32px;" [target]="counts?.total"></app-khitma-progress>
+<app-khitma-progress [current]="$safeNavigationMigration(counts?.done)" style="margin-top: 32px;" [target]="$safeNavigationMigration(counts?.total)"></app-khitma-progress>
 
 
-<section *ngIf="showGroupMembers">
-
-
+@if (showGroupMembers) {
+  <section>
     <header><span [translate]="'sametask.members'">أعضاء المجموعة</span>
-        ({{group.members.length}})
-    </header>
-
-    <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
-
-        <div class="tip">
-            <strong [translate]="'sametask.responsible'">لمسؤول المجموعة:</strong>
-            <span [translate]="'sametask.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
-                ويمكنك تعديل الأعضاء عن طريق الضغط
-                على كبسة التعديل أدناه.</span>
-
-        </div>
-
-        <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
-            (click)="isMembersListEditMode = !isMembersListEditMode">
-            <mat-icon>edit</mat-icon>
+    ({{group.members.length}})
+  </header>
+  @if (isAdmin) {
+    <div class="center-center" style="flex-direction: column;">
+      <div class="tip">
+        <strong [translate]="'sametask.responsible'">لمسؤول المجموعة:</strong>
+        <span [translate]="'sametask.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
+          ويمكنك تعديل الأعضاء عن طريق الضغط
+        على كبسة التعديل أدناه.</span>
+      </div>
+      @if (isAdmin) {
+        <mat-button-toggle class="members-list-edit-btn"
+          (click)="isMembersListEditMode = !isMembersListEditMode">
+          <mat-icon>edit</mat-icon>
         </mat-button-toggle>
+      }
     </div>
-
-
-
-
-
-    <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
-        (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
-        (onMemberAdd)="addGroupMember($event)">
-    </app-group-members>
-
-
+  }
+  <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
+    (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
+    (onMemberAdd)="addGroupMember($event)">
+  </app-group-members>
 </section>
+}
 
 
 <div class="spacer"></div>
 
 
-<section class="center-center big-counter" *ngIf="group.cycle > 0">
+@if (group.cycle > 0) {
+  <section class="center-center big-counter">
     <label class="number">{{totalDoneTasks}}</label>
     <span class="text" [translate]="'sametask.bless'">أعمال طيّبة قمتم بها في هذه المجموعة منذ تأسيسها. في ميزان حسناتكم
-        إن شاء الله!</span>
-</section>
+    إن شاء الله!</span>
+  </section>
+}

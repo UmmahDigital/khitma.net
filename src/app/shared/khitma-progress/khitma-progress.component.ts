@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-khitma-progress',
-  templateUrl: './khitma-progress.component.html',
-  styleUrls: ['./khitma-progress.component.scss']
+    selector: 'app-khitma-progress',
+    templateUrl: './khitma-progress.component.html',
+    styleUrls: ['./khitma-progress.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class KhitmaProgressComponent implements OnInit {
 

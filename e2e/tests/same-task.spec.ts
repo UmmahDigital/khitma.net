@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test';
-import { joinedGroups, openApp, sharedPayloads } from '../support/app';
+import { chooseMenuItem, joinedGroups, openApp, sharedPayloads } from '../support/app';
 import { getDoc } from '../support/firestore';
 import { createSameTaskGroup, newGroupId } from '../support/fixtures';
 
@@ -91,8 +91,7 @@ test.describe('same-task group', () => {
     await createSameTaskGroup(groupId, { author: ADMIN, members: { [ADMIN]: false, 'سارة': false } });
 
     await openDashboard(page, groupId, 'سارة');
-    await page.locator('.group-options-menu-button').click();
-    await page.getByRole('menuitem', { name: 'ترك المجموعة' }).click();
+    await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
     await page.getByRole('button', { name: 'نعم' }).click();
 
     await expect(page).toHaveURL(/localhost:4300\/$/);

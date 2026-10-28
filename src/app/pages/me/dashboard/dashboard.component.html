@@ -1,6 +1,6 @@
 <!-- <section>
-    <header>ختمتي الشخصيّة</header>
-    <app-personal-khitma></app-personal-khitma>
+<header>ختمتي الشخصيّة</header>
+<app-personal-khitma></app-personal-khitma>
 
 
 </section>
@@ -10,21 +10,20 @@
 <section>
 
 
-    <div *ngIf="groups; else noGroups">
-
-
-
-        <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
-
-
+  @if (groups) {
+    <div>
+      <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
     </div>
+  } @else {
+    <span [translate]="'me.no'"></span>
+  }
 
 
-    <ng-template #noGroups><span [translate]="'me.no'"></span>
-    </ng-template>
 
 
-    <a *ngIf="isShowArchive" mat-button class="block" routerLink="/me/groups/archive"><span
-            [translate]="'me.archive'">أرشيف الختمات</span></a>
+  @if (isShowArchive) {
+    <a mat-button class="block" routerLink="/me/groups/archive"><span
+    [translate]="'me.archive'">أرشيف الختمات</span></a>
+  }
 
 </section>

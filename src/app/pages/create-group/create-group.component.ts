@@ -4,12 +4,13 @@ import {
   Output,
   EventEmitter,
   ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from '../../local-database.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../analytics';
 import { KHITMA_GROUP_TYPE } from '../../entities/entities';
 import { switchMap } from 'rxjs/operators';
 import { CommonService } from '../../service/common.service';
@@ -17,10 +18,12 @@ import { UserService } from '../../../app/service/user.service';
 import { User } from '../../../app/common/model';
 
 @Component({
-  selector: 'app-create-group',
-  templateUrl: './create-group.component.html',
-  styleUrls: ['./create-group.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-create-group',
+    templateUrl: './create-group.component.html',
+    styleUrls: ['./create-group.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CreateGroupComponent implements OnInit {
   @Output() groupCreated = new EventEmitter<object>();
@@ -34,7 +37,7 @@ export class CreateGroupComponent implements OnInit {
   typeParam: string;
 
   readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
-  groupType = KHITMA_GROUP_TYPE.SAME_TASK;
+  groupType: string = KHITMA_GROUP_TYPE.SAME_TASK;
   isRecurring = true;
 
   constructor(

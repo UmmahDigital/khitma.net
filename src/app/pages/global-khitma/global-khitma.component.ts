@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { KhitmaGroupService } from '../../khitma-group.service';
 
 import { LocalDatabaseService } from '../../local-database.service';
 import { map } from 'rxjs/operators';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../analytics';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmDialogComponent,
@@ -12,10 +12,11 @@ import {
 import { CommonService } from '../../service/common.service';
 
 @Component({
-  selector: 'app-global-khitma',
-  templateUrl: './global-khitma.component.html',
-  styleUrls: ['./global-khitma.component.scss'],
-  // encapsulation: ViewEncapsulation.None
+    selector: 'app-global-khitma',
+    templateUrl: './global-khitma.component.html',
+    styleUrls: ['./global-khitma.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class GlobalKhitmaComponent implements OnInit {
   constructor(
@@ -108,7 +109,7 @@ export class GlobalKhitmaComponent implements OnInit {
         this.common.translation.gKhitma?.new,
         this.common.translation.gKhitma?.bless
       ),
-      maxWidth: '80%',
+      maxWidth: '80vw',
     });
 
     dialogRef.afterClosed().subscribe((dialogResult) => {

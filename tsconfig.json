@@ -2,24 +2,31 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
+    "strict": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    // "strict": true,
+    "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2018", "dom"],
     "paths": {
-      "tslib": ["path/to/node_modules/tslib/tslib.d.ts"],
-      "@environments/*": ["./src/environments/*"],
-      "@app/*": ["./src/app/*"]
-    }
+      "src/*": [
+        "./src/*"
+      ],
+      "@environments/*": [
+        "./src/environments/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ]
+    },
+    "useDefineForClassFields": false
   },
-  "include": ["./src/assets/translate/en.ts"]
+  "include": [
+    "./src/assets/translate/en.ts"
+  ]
 }

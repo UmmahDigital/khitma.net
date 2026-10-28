@@ -138,10 +138,72 @@
     gtag('config', 'G-QXJ6QZFWZL');
   </script>
 
-
+  <!-- The "please update" screen in <body>. Plain CSS that old browsers understand. -->
+  <style>
+    #unsupported-browser { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10000; overflow-y: auto;
+      background: #fafafa; color: #212121; font-family: "Markazi Text", Tahoma, Arial, sans-serif; text-align: right; }
+    #unsupported-browser .ub-bar { background: #075e54; color: #fff; font-size: 24px; font-weight: 700; line-height: 32px; padding: 12px 20px; }
+    #unsupported-browser .ub-content { max-width: 480px; margin: 0 auto; padding: 20px 24px 40px; }
+    #unsupported-browser .ub-logo { display: block; width: 96px; height: 96px; margin: 8px auto 16px; }
+    #unsupported-browser h1 { margin: 0 0 12px; color: #075e54; font-size: 32px; line-height: 1.3; font-weight: 700; text-align: center; }
+    #unsupported-browser p, #unsupported-browser li { margin: 0 0 10px; font-size: 22px; line-height: 1.5; }
+    #unsupported-browser ul { margin: 0 0 16px; padding: 0 28px 0 0; list-style: disc; }
+    #unsupported-browser .ub-note { padding: 12px 16px; border-radius: 8px; background: #e3f1ee; color: #075e54; font-weight: 700; }
+    #unsupported-browser .ub-en { margin-top: 28px; color: #666; font-family: Arial, sans-serif; font-size: 14px; text-align: left; }
+  </style>
 </head>
 
 <body class="mat-typography">
+  <div id="unsupported-browser" style="display: none" dir="rtl" lang="ar">
+    <div class="ub-bar">ختمة.نت</div>
+    <div class="ub-content">
+      <img class="ub-logo" data-src="assets/khitma-logo.png" alt="">
+      <h1>يحتاج المتصفّح إلى تحديث</h1>
+      <p>لا يعمل ختمة.نت على هذا الإصدار القديم من المتصفّح. لمتابعة ختمتك:</p>
+      <ul>
+        <li data-platform="ios">حدّث نظام الهاتف: الإعدادات ← عام ← تحديث البرنامج.</li>
+        <li data-platform="android">حدّث متصفّح Chrome أو Samsung Internet من متجر Google Play.</li>
+        <li data-platform="other">حدّث المتصفّح، أو استخدم متصفّح Chrome.</li>
+        <li>أو افتح الرابط من هاتف آخر.</li>
+      </ul>
+      <p class="ub-note">التحديث لا يؤثّر على مجموعاتك أو أجزائك.</p>
+      <p class="ub-en" dir="ltr" lang="en">This browser is too old for khitma.net. Please update your phone or browser, or open the link on another device.</p>
+    </div>
+  </div>
+  <script>
+    // Phones too old for the app get the screen above instead of a blank page: browsers without
+    // ES modules (the nomodule script below), and browsers where the app's own scripts threw
+    // (e.g. a SyntaxError on code they cannot parse) before anything rendered. ES5 only.
+    (function () {
+      var appScriptFailed = false;
+      window.addEventListener('error', function (event) {
+        // Third-party scripts (analytics) only ever report "Script error.".
+        if (event.message && event.message !== 'Script error.') appScriptFailed = true;
+      });
+      window.khitmaShowUnsupported = function (reason) {
+        var screen = document.getElementById('unsupported-browser');
+        if (!screen || screen.style.display === 'block') return;
+        var ua = navigator.userAgent;
+        var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        var platform = ios ? 'ios' : /Android/.test(ua) ? 'android' : 'other';
+        var steps = screen.querySelectorAll('[data-platform]');
+        for (var i = 0; i < steps.length; i++) {
+          if (steps[i].getAttribute('data-platform') !== platform) steps[i].parentNode.removeChild(steps[i]);
+        }
+        var logo = screen.querySelector('img[data-src]');
+        logo.src = logo.getAttribute('data-src');
+        screen.style.display = 'block';
+        if (window.gtag) gtag('event', 'unsupported_browser', { reason: reason });
+      };
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          var root = document.querySelector('app-root');
+          if (appScriptFailed && root && !root.children.length) window.khitmaShowUnsupported('script_error');
+        }, 3000);
+      });
+    })();
+  </script>
+  <script nomodule>window.khitmaShowUnsupported('no_modules');</script>
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>

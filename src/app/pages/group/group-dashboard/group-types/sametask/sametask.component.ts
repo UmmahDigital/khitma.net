@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from '../../../../../analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from '../../../../../alert.service';
 import { NewTaskComponent } from '../../../../../dialog/new-task/new-task.component';
@@ -15,9 +15,11 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../share
 import { CommonService } from '../../../../../service/common.service';
 
 @Component({
-  selector: 'app-group-sametask',
-  templateUrl: './sametask.component.html',
-  styleUrls: ['./sametask.component.scss']
+    selector: 'app-group-sametask',
+    templateUrl: './sametask.component.html',
+    styleUrls: ['./sametask.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class Group_SameTask_Component implements OnInit, OnChanges {
 
@@ -112,7 +114,7 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
       data: new ConfirmDialogModel(
         this.common.translation.gPages?.confirm,
         ""),
-      maxWidth: "80%"
+      maxWidth: "80vw"
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {

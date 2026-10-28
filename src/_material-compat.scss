@@ -1,0 +1,159 @@
+// Keeps the look users know after the switch from legacy to MDC-based Angular Material components.
+// Material adds its component styles after this sheet, so selectors here are deliberately more specific.
+
+@use "src/variables" as *;
+
+// Buttons: legacy letter spacing; the app's tall buttons (.large) keep their 80px height.
+.mdc-button.mat-mdc-button-base {
+  letter-spacing: normal;
+  white-space: nowrap;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+a.large.mat-mdc-button-base,
+button.large.mat-mdc-button-base {
+  height: 80px;
+  line-height: 80px;
+  font-size: larger;
+  // A label too long for one line starts at the top, as with legacy buttons (MDC centers it).
+  align-items: flex-start;
+}
+
+// Icon buttons were 40px (MDC: 48px).
+.mat-mdc-icon-button.mat-mdc-button-base {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  --mat-icon-button-state-layer-size: 40px;
+}
+
+// Dialogs: legacy padding, the h1 size the titles always had, actions aligned to the start.
+.mat-mdc-dialog-container {
+  --mat-dialog-subhead-font: "Markazi Text";
+  --mat-dialog-subhead-size: 32px;
+  --mat-dialog-subhead-line-height: 48px;
+  --mat-dialog-subhead-weight: 700;
+  --mat-dialog-subhead-tracking: normal;
+  --mat-dialog-subhead-color: rgba(0, 0, 0, 0.87);
+  --mat-dialog-supporting-text-color: rgba(0, 0, 0, 0.87);
+  --mat-dialog-supporting-text-tracking: normal;
+
+  .mdc-dialog__surface {
+    padding: 24px;
+  }
+
+  .mat-mdc-dialog-title {
+    padding: 0;
+    margin: 0 0 20px;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .mat-mdc-dialog-content {
+    margin: 0 -24px;
+    padding: 0 24px;
+    max-height: 65vh;
+  }
+
+  .mat-mdc-dialog-actions {
+    min-height: 52px;
+    margin-bottom: -24px;
+    padding: 8px 0;
+    justify-content: flex-start;
+  }
+}
+
+// Radio labels wrap instead of stretching the dialog. `.mdc-label` is the label text element in
+// every Material version since the MDC switch (a <label> until v21, a <span> from v22).
+.mat-mdc-radio-button .mdc-label {
+  white-space: normal;
+}
+
+// Slide toggles: a plain handle, without the check mark MDC draws.
+.mat-mdc-slide-toggle .mdc-switch__icons {
+  display: none;
+}
+
+// Form fields: the legacy fill look, measured on the legacy build: 80px boxes around 40px inputs,
+// 18px lines, a darker fill and regular-weight labels.
+.mat-mdc-form-field {
+  --mat-form-field-filled-container-color: rgba(0, 0, 0, 0.04);
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+
+  .mat-mdc-form-field-infix {
+    min-height: 80px;
+    padding-top: 32px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .mat-mdc-input-element.mat-mdc-form-field-input-control {
+    line-height: 18px;
+    font-weight: 400;
+    color: #000;
+  }
+
+  input.mat-mdc-input-element {
+    height: 40px;
+  }
+
+  textarea.mat-mdc-input-element {
+    padding: 2px 0;
+  }
+
+  .mdc-text-field .mdc-floating-label.mdc-floating-label {
+    font-weight: 400;
+  }
+}
+
+// Radio buttons: the legacy 20px circle without MDC's 40px touch halo, so labels keep their width.
+.mat-mdc-radio-button.mat-mdc-radio-button {
+  --mat-radio-state-layer-size: 20px;
+
+  .mdc-radio {
+    padding: 0;
+  }
+
+  // Outranks Material's `[dir=rtl] .mat-internal-form-field > .mat-internal-form-field-label` (4px).
+  .mat-internal-form-field > .mdc-label {
+    padding-inline-start: 8px;
+  }
+}
+
+// Cards: legacy cards padded their content; MDC leaves that to mat-card-content.
+.mat-mdc-card {
+  display: block;
+  padding: 16px;
+
+  .mat-mdc-card-content {
+    padding: 0;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Overlays (dialogs, menus): CDK 22 keeps their z-index and the dark backdrop inside
+// `@layer cdk-overlay`, which iOS before 15.4 ignores, so dialogs would open beneath the app's
+// own z-indexed elements, without a backdrop. The same rules outside the layer; newer browsers
+// end up with identical values.
+.cdk-overlay-container,
+.cdk-global-overlay-wrapper,
+.cdk-overlay-pane,
+.cdk-overlay-connected-position-bounding-box {
+  z-index: 1000;
+}
+
+.cdk-overlay-backdrop {
+  z-index: 1000;
+  transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.32);
+}

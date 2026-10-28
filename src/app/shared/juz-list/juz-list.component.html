@@ -1,15 +1,18 @@
 <section>
 
-    <span *ngIf="allowEdit" class="center-center tip">
-        <strong [translate]="'juz.responsible'">لمسؤول المجموعة:</strong>
-        <span [translate]="'juz.intro'">يمكنك تعديل الأسماء بالضغط عليها وكتابة اسم
-            عضو حالي آخر أو اسم عضو جديد ثمّ الضغط على كبسة الحفظ التي تظهر بعد التغيير.</span>
-
+  @if (allowEdit) {
+    <span class="center-center tip">
+      <strong [translate]="'juz.responsible'">لمسؤول المجموعة:</strong>
+      <span [translate]="'juz.intro'">يمكنك تعديل الأسماء بالضغط عليها وكتابة اسم
+      عضو حالي آخر أو اسم عضو جديد ثمّ الضغط على كبسة الحفظ التي تظهر بعد التغيير.</span>
     </span>
+  }
 
 
-    <app-juz *ngFor="let juz of ajza" [juz]="juz" [isEditMode]="allowEdit"
-        [isMyJuz]="myAjzaIndexes.indexOf(juz.index) >=0" (onJuzSelection)="juzClicked($event)"
-        (onEdited)="juzEdited($event)">
+  @for (juz of ajza; track juz) {
+    <app-juz [juz]="juz" [isEditMode]="allowEdit"
+      [isMyJuz]="myAjzaIndexes.indexOf(juz.index) >=0" (onJuzSelection)="juzClicked($event)"
+      (onEdited)="juzEdited($event)">
     </app-juz>
+  }
 </section>

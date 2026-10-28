@@ -1,12 +1,14 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { GroupMember_Pages } from 'src/app/entities/entities';
 
 
 
 @Component({
-  selector: 'app-khitma-pages-progress',
-  templateUrl: './khitma-pages-progress.component.html',
-  styleUrls: ['./khitma-pages-progress.component.scss']
+    selector: 'app-khitma-pages-progress',
+    templateUrl: './khitma-pages-progress.component.html',
+    styleUrls: ['./khitma-pages-progress.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class KhitmaPagesProgressComponent implements OnInit, OnChanges {
 
