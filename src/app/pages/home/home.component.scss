@@ -40,8 +40,37 @@ footer{
   color: gray;
 }
 
-#awrad-btn{
-  background-color: #844f4f !important;
+// Friendly app: Dayma's icon, name and tagline, and a button in Dayma's own green.
+.friendly-app .app-intro {
+  display: flex;
+  align-items: center;
+  margin: 4px 0 12px;
+
+  img {
+    flex: 0 0 56px;
+    border-radius: 14px;
+    margin-inline-end: 14px;
+  }
+
+  strong,
+  span {
+    display: block;
+  }
+
+  strong {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  span {
+    color: $text-muted;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+}
+
+#dayma-btn {
+  background-color: #0f5b45 !important;
 }
 
  h2{
@@ -55,6 +84,11 @@ font-weight: bold;
   >*{
     margin-bottom: 8px;
     display: block;
+  }
+
+  // The buttons in this section stay flex: as blocks, their labels sat at the top instead of the middle.
+  > .mat-mdc-button-base {
+    display: flex;
   }
 
   .main-counter{

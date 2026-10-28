@@ -150,25 +150,33 @@
 
       <hr /> -->
 
-      <mat-card appearance="outlined">
+      <mat-card appearance="outlined" class="friendly-app">
         <h2 [translate]="'home.apps'">تطبيقات صديقة</h2>
-        <p [translate]="'home.appsDesc'">
-          أوراد هي منصّة تقنيّة تتيح تنفيذ الأوراد الإسلاميّة بشكل جماعي، وذلك عن
-          طريق إنشاء مجموعات للأوراد المشتركة (لأصدقائك أو عائلتك مثلا) ثمّ مشاركة
-          الأوراد ومتابعة تنفيذها من قبل أعضاء المجموعة بشكل سلس ومتاح لجميع أعضاء
-          المجموعة.
+        <div class="app-intro">
+          <img src="assets/dayma-icon.png" alt="" width="56" height="56" />
+          <div>
+            <strong [translate]="'home.daymaName'">دايمة</strong>
+            <span [translate]="'home.daymaTagline'">من نيّةٍ طيّبة، إلى عملٍ يدوم.</span>
+          </div>
+        </div>
+        <p [translate]="'home.daymaDesc'">
+          تطبيق يعينك على المداومة على العمل الصالح، فإنّ «أحبّ الأعمال أدومها إلى
+          الله وإن قلّ» (رواه البخاري). ابدأ بخطوة صغيرة تُطيقها، كصفحة من القرآن كلّ
+          يوم، واربطها بوقت ثابت كبعد الصلاة، وسجّلها بلمسة واحدة، وشارك أهلك في حلقة
+          خاصّة إن شئت.
         </p>
 
         <a
-          gaEvent="awrad_btn_clicked"
+          gaEvent="dayma_btn_clicked"
           gaCategory="home_page_buttons"
           mat-raised-button
           color="accent"
           class="block large action-btn"
           target="_blank"
-          href="https://awrad.app"
-          id="awrad-btn"
-          ><span [translate]="'home.awrad'">منصّة أوراد - الإصدار التجريبي</span></a
+          rel="noopener"
+          [href]="daymaUrl"
+          id="dayma-btn"
+          ><span [translate]="'home.dayma'">تعرّف على دايمة</span></a
           >
         </mat-card>
 

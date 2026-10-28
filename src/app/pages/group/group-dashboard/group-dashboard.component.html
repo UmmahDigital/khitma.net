@@ -1,4 +1,4 @@
-<header class="dashboard-header" style="position: relative">
+<header class="dashboard-header" [class.has-admin-tools]="isAdmin" style="position: relative">
   @if (!isAdmin) {
     <button
       mat-icon-button

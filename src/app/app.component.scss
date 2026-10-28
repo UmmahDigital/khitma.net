@@ -127,6 +127,10 @@ mat-toolbar {
   left: 0;
   right: 0;
   height: $toolbar-height;
+  // Material makes the toolbar 64px tall on screens wider than 600px. The content starts at
+  // $toolbar-height, so a taller toolbar let scrolled content show over its bottom edge.
+  --mat-toolbar-standard-height: #{$toolbar-height};
+  --mat-toolbar-mobile-height: #{$toolbar-height};
 }
 
 #app-content {

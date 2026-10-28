@@ -306,6 +306,22 @@ test.describe('sequential group: admin', () => {
     await expect(page.getByText('أدوات مسؤول المجموعة')).toBeVisible();
   });
 
+  test('the admin tools close off the header, and the names list keeps one compact row per juz', async ({ page }) => {
+    const groupId = newGroupId('seq-admin-layout');
+    await createSequentialGroup(groupId, { author: ADMIN, assigned: { 1: { owner: 'خالد', status: BOOKED }, 2: { owner: 'سارة', status: DONE } } });
+
+    await openDashboard(page, groupId, ADMIN);
+    // The rounded corners belong to the bottom of the purple admin tools, not to the header above them.
+    await expect(page.locator('.dashboard-header')).toHaveCSS('border-bottom-left-radius', '0px');
+    await expect(page.locator('.admin-tools .mat-expansion-panel')).toHaveCSS('border-bottom-left-radius', '24px');
+
+    const rows = page.locator('app-juz-list app-juz');
+    await expect(rows).toHaveCount(30);
+    const tops = await rows.evaluateAll((els) => els.slice(0, 3).map((el) => el.getBoundingClientRect().top));
+    expect(tops[1] - tops[0]).toBeLessThanOrEqual(56);
+    expect(tops[2] - tops[1]).toBeLessThanOrEqual(56);
+  });
+
   test('renames who has a juz from the names list', async ({ page }) => {
     const groupId = newGroupId('seq-rename');
     await createSequentialGroup(groupId, { author: ADMIN });
