@@ -7,6 +7,7 @@ import { ReferralService } from '../../../referral.service';
 import { inviteMessage } from '../../../share-messages';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
+import { SharedModule } from '../../../modules/shared.module';
 
 @Component({
     selector: 'app-group-invite',
@@ -14,7 +15,8 @@ import { CommonService } from '../../../service/common.service';
     styleUrls: ['./group-invite.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class GroupInviteComponent implements OnInit {
   group: KhitmaGroup;

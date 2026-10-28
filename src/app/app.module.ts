@@ -1,93 +1,61 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
-import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/button-toggle';
-
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './modules/material.module';
-
 import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
-
-
-
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { AnalyticsModule } from './analytics';
+import { AppComponent } from './app.component';
+import { GroupJoinedGuard } from './group.routeguard';
+import { KhitmaGroupService } from './khitma-group.service';
+import { SharedModule } from './modules/shared.module';
 import { HomeComponent } from './pages/home/home.component';
-import { CreateGroupComponent } from './pages/create-group/create-group.component';
-import { GroupInviteComponent } from './pages/create-group/group-invite/group-invite.component';
-
 import { GroupComponent } from './pages/group/group.component';
 import { GroupDashboardComponent } from './pages/group/group-dashboard/group-dashboard.component';
 import { GroupJoinComponent } from './pages/group/group-join/group-join.component';
-
-import { JuzToggleComponent } from './shared/juz-toggle/juz-toggle.component';
-import { JuzListComponent } from './shared/juz-list/juz-list.component';
-
-import { environment } from '../environments/environment';
-import { KhitmaInfoComponent } from './shared/khitma-info/khitma-info.component';
-import { JuzComponent } from './shared/juz/juz.component';
-import { JuzGridComponent } from './shared/juz-grid/juz-grid.component';
-import { GroupListComponent } from './shared/group-list/group-list.component';
-import { GroupListItemComponent } from './shared/group-list/group-list-item/group-list-item.component';
-
-import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
-import { CelebrationComponent } from './shared/celebration/celebration.component';
-
-import { AnalyticsModule } from './analytics';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { ArchiveComponent } from './pages/archive/archive.component';
-import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
-import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
-import { AjzaProgressComponent } from './shared/ajza-progress/ajza-progress.component';
-import { DashboardComponent } from './pages/me/dashboard/dashboard.component';
-import { AboutComponent } from './pages/about/about.component';
-import { EditKhitmaDetailsComponent } from './dialog/edit-khitma-details/edit-khitma-details.component';
-import { StartNewKhitmaComponent } from './dialog/start-new-khitma/start-new-khitma.component';
-
-import { GroupJoinedGuard } from './group.routeguard';
-import { KhitmaGroupService } from './khitma-group.service';
-import { QuranComponent } from './pages/quran/quran.component';
-import { GetComponent } from './pages/get/get.component';
-import { PersonalKhitmaComponent } from './pages/me/personal-khitma/personal-khitma.component';
-import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
-import { KhitmaProgressComponent } from './shared/khitma-progress/khitma-progress.component';
-import { CommonModule } from '@angular/common';
-import { GlobalKhitmaComponent } from './pages/global-khitma/global-khitma.component';
-import { MoonComponent } from './shared/moon/moon.component';
-import { GlassButtonComponent } from './shared/glass-button/glass-button.component';
-import { TodoComponent } from './shared/todo/todo.component';
-import { GroupMembersComponent } from './shared/group-members/group-members.component';
-import { NewTaskComponent } from './dialog/new-task/new-task.component';
-import { JuzActionsComponent } from './dialog/juz-actions/juz-actions.component';
-import { ScheduleComponent } from './dialog/schedule/schedule.component';
 import { Group_Pages_Component } from './pages/group/group-dashboard/group-types/pages/pages.component';
 import { Group_SameTask_Component } from './pages/group/group-dashboard/group-types/sametask/sametask.component';
 import { Group_Sequential_Component } from './pages/group/group-dashboard/group-types/sequential/sequential.component';
-import { KhitmaPagesProgressComponent } from './shared/khitma-pages-progress/khitma-pages-progress.component';
-import { LoadingComponent } from './shared/loading/loading.component';
-import { NotificationComponent } from './shared/notification/notification.component';
-import { AqsaKhitmaComponent } from './pages/aqsa-khitma/aqsa-khitma.component';
-import { TranslateDirective } from './directives/translate.directive';
 import { CommonService } from './service/common.service';
 
-GroupJoinedGuard;
-
 // `data.screen` names each screen in analytics (see analytics.ts): page titles can't be used, as they carry group names.
+// Most visitors arrive on a group link, so the home and group pages are in the first download; the other pages load
+// when first opened.
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { screen: 'home' } },
   {
     path: 'new',
-    component: CreateGroupComponent,
+    loadComponent: () => import('./pages/create-group/create-group.component').then((m) => m.CreateGroupComponent),
     data: { screen: 'create_group' },
-    children: [{ path: 'invite', component: GroupInviteComponent, data: { screen: 'group_invite' } }],
+    children: [
+      {
+        path: 'invite',
+        loadComponent: () => import('./pages/create-group/group-invite/group-invite.component').then((m) => m.GroupInviteComponent),
+        data: { screen: 'group_invite' },
+      },
+    ],
   },
-  { path: 'me/groups/archive', component: ArchiveComponent, data: { screen: 'archive' } },
-  // { path: 'me', component: DashboardComponent },
-  { path: 'me/groups', component: DashboardComponent, data: { screen: 'my_groups' } },
-  { path: 'me/personal-khitma', component: PersonalKhitmaComponent, data: { screen: 'personal_khitma' } },
-  { path: 'group/:groupId/invite', component: GroupInviteComponent, data: { screen: 'group_invite' } },
+  {
+    path: 'me/groups/archive',
+    loadComponent: () => import('./pages/archive/archive.component').then((m) => m.ArchiveComponent),
+    data: { screen: 'archive' },
+  },
+  {
+    path: 'me/groups',
+    loadComponent: () => import('./pages/me/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+    data: { screen: 'my_groups' },
+  },
+  {
+    path: 'me/personal-khitma',
+    loadComponent: () => import('./pages/me/personal-khitma/personal-khitma.component').then((m) => m.PersonalKhitmaComponent),
+    data: { screen: 'personal_khitma' },
+  },
+  {
+    path: 'group/:groupId/invite',
+    loadComponent: () => import('./pages/create-group/group-invite/group-invite.component').then((m) => m.GroupInviteComponent),
+    data: { screen: 'group_invite' },
+  },
   {
     path: 'group/:groupId',
     canActivate: [GroupJoinedGuard],
@@ -96,84 +64,61 @@ const routes: Routes = [
       { path: 'dashboard', component: GroupDashboardComponent, data: { screen: 'group_dashboard' } },
     ],
   },
-  { path: 'quran', component: QuranComponent, data: { screen: 'quran' } },
-  { path: 'quran/juz/:juzIndex', component: QuranComponent, data: { screen: 'quran_juz' } },
-  { path: 'about', component: AboutComponent, data: { screen: 'about' } },
-  { path: 'get', component: GetComponent, data: { screen: 'get_app' } },
-  { path: 'ramadan', component: GlobalKhitmaComponent, data: { screen: 'ramadan' } },
-  { path: 'aqsa', component: AqsaKhitmaComponent, data: { screen: 'aqsa' } },
+  { path: 'quran', loadComponent: () => import('./pages/quran/quran.component').then((m) => m.QuranComponent), data: { screen: 'quran' } },
+  {
+    path: 'quran/juz/:juzIndex',
+    loadComponent: () => import('./pages/quran/quran.component').then((m) => m.QuranComponent),
+    data: { screen: 'quran_juz' },
+  },
+  { path: 'about', loadComponent: () => import('./pages/about/about.component').then((m) => m.AboutComponent), data: { screen: 'about' } },
+  { path: 'get', loadComponent: () => import('./pages/get/get.component').then((m) => m.GetComponent), data: { screen: 'get_app' } },
+  {
+    path: 'ramadan',
+    loadComponent: () => import('./pages/global-khitma/global-khitma.component').then((m) => m.GlobalKhitmaComponent),
+    data: { screen: 'ramadan' },
+  },
+  {
+    path: 'aqsa',
+    loadComponent: () => import('./pages/aqsa-khitma/aqsa-khitma.component').then((m) => m.AqsaKhitmaComponent),
+    data: { screen: 'aqsa' },
+  },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
-@NgModule({ declarations: [
-        AppComponent,
-        HomeComponent,
-        CreateGroupComponent,
-        JuzToggleComponent,
-        GroupComponent,
-        JuzListComponent,
-        GroupInviteComponent,
-        GroupJoinComponent,
-        KhitmaInfoComponent,
-        GroupDashboardComponent,
-        JuzComponent,
-        JuzGridComponent,
-        GroupListComponent,
-        GroupListItemComponent,
-        ConfirmDialogComponent,
-        CelebrationComponent,
-        ArchiveComponent,
-        KhitmaDoneCelebrationComponent,
-        QuranBrowserComponent,
-        AjzaProgressComponent,
-        DashboardComponent,
-        AboutComponent,
-        EditKhitmaDetailsComponent,
-        StartNewKhitmaComponent,
-        QuranComponent,
-        GetComponent,
-        PersonalKhitmaComponent,
-        PopMenuComponent,
-        KhitmaProgressComponent,
-        GlobalKhitmaComponent,
-        MoonComponent,
-        GlassButtonComponent,
-        TodoComponent,
-        GroupMembersComponent,
-        NewTaskComponent,
-        JuzActionsComponent,
-        ScheduleComponent,
-        Group_Sequential_Component,
-        Group_SameTask_Component,
-        Group_Pages_Component,
-        KhitmaPagesProgressComponent,
-        LoadingComponent,
-        NotificationComponent,
-        AqsaKhitmaComponent,
-        TranslateDirective,
-    ],
-    bootstrap: [AppComponent], imports: [CommonModule,
-        BrowserModule,
-        ClipboardModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(routes, {
-            paramsInheritanceStrategy: 'always',
-            scrollPositionRestoration: 'enabled',
-        }),
-        MaterialModule,
-        FormsModule,
-        AnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production && !environment.useEmulators,
-        })], providers: [
-        // Keep the original toggle look: no check mark on the selected option (shown by default since Material 17).
-        {
-            provide: MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS,
-            useValue: { hideSingleSelectionIndicator: true, hideMultipleSelectionIndicator: true },
-        },
-        GroupJoinedGuard,
-        KhitmaGroupService,
-        CommonService,
-        provideHttpClient(withXhr(), withInterceptorsFromDi()),
-    ] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    GroupComponent,
+    GroupJoinComponent,
+    GroupDashboardComponent,
+    Group_Sequential_Component,
+    Group_SameTask_Component,
+    Group_Pages_Component,
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    SharedModule,
+    RouterModule.forRoot(routes, {
+      paramsInheritanceStrategy: 'always',
+      scrollPositionRestoration: 'enabled',
+    }),
+    AnalyticsModule.forRoot(environment.firebaseConfig.measurementId),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production && !environment.useEmulators,
+    }),
+  ],
+  providers: [
+    // Keep the original toggle look: no check mark on the selected option (shown by default since Material 17).
+    {
+      provide: MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS,
+      useValue: { hideSingleSelectionIndicator: true, hideMultipleSelectionIndicator: true },
+    },
+    GroupJoinedGuard,
+    KhitmaGroupService,
+    CommonService,
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+  ],
+})
 export class AppModule {}

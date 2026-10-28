@@ -19,6 +19,7 @@ import { switchMap } from 'rxjs/operators';
 import { CommonService } from '../../service/common.service';
 import { UserService } from '../../../app/service/user.service';
 import { User } from '../../../app/common/model';
+import { SharedModule } from '../../modules/shared.module';
 
 @Component({
     selector: 'app-create-group',
@@ -26,7 +27,8 @@ import { User } from '../../../app/common/model';
     styleUrls: ['./create-group.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class CreateGroupComponent implements OnInit {
   @Output() groupCreated = new EventEmitter<object>();

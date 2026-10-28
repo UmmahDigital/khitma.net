@@ -10,13 +10,15 @@ import {
   ConfirmDialogModel,
 } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../service/common.service';
+import { SharedModule } from '../../modules/shared.module';
 
 @Component({
     selector: 'app-global-khitma',
     templateUrl: './global-khitma.component.html',
     styleUrls: ['./global-khitma.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class GlobalKhitmaComponent implements OnInit {
   constructor(

@@ -6,13 +6,15 @@ import { KhitmaGroup } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
+import { SharedModule } from '../../modules/shared.module';
 
 @Component({
     selector: 'app-archive',
     templateUrl: './archive.component.html',
     styleUrls: ['./archive.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class ArchiveComponent implements OnInit {
 

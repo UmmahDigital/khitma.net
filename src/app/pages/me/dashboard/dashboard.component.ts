@@ -7,13 +7,15 @@ import { LocalDatabaseService } from '../../../local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
+import { SharedModule } from '../../../modules/shared.module';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class DashboardComponent implements OnInit {
 
