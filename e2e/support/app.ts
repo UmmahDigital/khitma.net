@@ -1,13 +1,17 @@
 import { expect, Locator, Page, test } from '@playwright/test';
 import { simulateOldestSupportedBrowser } from './legacy-browser';
 
-/** Fixed clock for screenshots and dated share messages. */
+/** Fixed clock for screenshots and dated share messages: a Sunday, and the 12th of Ramadan 1447. */
 export const FIXED_NOW = new Date('2026-03-01T09:00:00Z');
+/** A fixed clock outside the Ramadan season (a Friday in Sha'ban's first half), for the home page's usual look. */
+export const OUTSIDE_RAMADAN = new Date('2026-01-23T09:00:00Z');
 
 export interface OpenOptions {
   /** localStorage entries; non-string values are JSON-encoded like the app does. */
   storage?: Record<string, unknown>;
   freezeTime?: boolean;
+  /** A fixed clock at another moment than FIXED_NOW (which falls in Ramadan 1447). */
+  now?: Date;
   /** false: a browser without a share sheet (desktop Firefox, some in-app browsers). */
   shareSheet?: boolean;
 }
@@ -27,8 +31,8 @@ export async function openApp(page: Page, path: string, options: OpenOptions = {
   await page.route(/googletagmanager\.com|google-analytics\.com|analytics\.google\.com|quranflash\.com|youtube\.com|youtube-nocookie\.com|ytimg\.com/, (route) =>
     route.abort()
   );
-  if (options.freezeTime) {
-    await page.clock.setFixedTime(FIXED_NOW);
+  if (options.freezeTime || options.now) {
+    await page.clock.setFixedTime(options.now ?? FIXED_NOW);
   }
   const storage = Object.fromEntries(
     Object.entries(options.storage ?? {}).map(([key, value]) => [

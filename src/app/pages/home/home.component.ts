@@ -31,6 +31,7 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 import { ReferralService } from '../../referral.service';
 import { impactLines } from '../../referral';
 import { hadithLine } from '../../share-messages';
+import { isRamadanSeason } from '../../ramadan';
 import { CommonService } from '../../service/common.service';
 
 @Component({
@@ -49,6 +50,9 @@ export class HomeComponent implements OnInit {
 
   ayatCount = 0;
   hasanatCount = 0;
+
+  /** From the middle of Sha'ban to the end of Ramadan, the home page offers the two Ramadan khitmas first. */
+  readonly ramadanSeason = isRamadanSeason(new Date());
 
   /** What this member's shared links brought about: people who joined, ajza they read, khitmas they started. */
   impact: string[] = [];

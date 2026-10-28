@@ -301,6 +301,19 @@
     "completeCaption": "La khitma « {title} » est terminée, par la grâce d’Allah 🤍\nLancez une khitma pour vos proches :",
     "saved": "Image enregistrée et texte copié : publiez-la dans votre statut"
   },
+  "ramadan": {
+    "homeTitle": "Khitmas du Ramadan",
+    "homeText": "Réunissez votre famille et vos amis pour terminer le Coran pendant le Ramadan.",
+    "oneKhitma": "Une khitma pendant le Ramadan",
+    "daily": "Une khitma complète chaque jour",
+    "dailyTitle": "Khitma quotidienne du Ramadan",
+    "dailyNote": "Une nouvelle khitma commence d’elle-même chaque jour, et chaque membre reçoit le juz suivant le sien, parcourant le Coran jour après jour.",
+    "afterTitle": "Après le Ramadan : continuer avec une khitma hebdomadaire ?",
+    "afterText": "Une nouvelle khitma commence d’elle-même chaque vendredi, et chaque membre reçoit le juz suivant le sien.",
+    "afterYes": "Oui, chaque vendredi",
+    "afterLater": "Plus tard",
+    "afterDone": "La khitma continuera chaque vendredi, in sha Allah"
+  },
   "dialog": {
     "yes": "Oui",
     "no": "Non",

@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test';
-import { joinedGroups, OLD_ANDROID_UA, openApp, openInTooOldBrowser, sharedImage } from '../support/app';
+import { joinedGroups, OLD_ANDROID_UA, openApp, openInTooOldBrowser, OUTSIDE_RAMADAN, sharedImage } from '../support/app';
 import { setDoc } from '../support/firestore';
 import { createPagesGroup, createSameTaskGroup, createSequentialGroup, JUZ_STATUS } from '../support/fixtures';
 
@@ -52,6 +52,7 @@ test.describe('screenshots of the current design', () => {
   test.beforeAll(async () => {
     await setDoc('global/aqsa', { pages: { completed: 1250, granted: 1400 } });
     await setDoc('refs/visualref', { joined: 7, read: 12, started: 1 });
+    await createSequentialGroup('visual-ramadan', { title: 'ختمة رمضان', author: ADMIN, purpose: 'ramadan', assigned: FAMILY_AJZA });
     await createSequentialGroup('visual-card', { title: 'ختمة عن روح جدّنا رحمه الله', author: ADMIN, assigned: FAMILY_AJZA });
     await createSequentialGroup('visual-memorial-done', {
       title: 'ختمة عن روح فاطمة رحمها الله',
@@ -103,7 +104,7 @@ test.describe('screenshots of the current design', () => {
 
   test('home: new visitor', async ({ page }) => {
     await page.setViewportSize(TALL_PHONE);
-    await openApp(page, '/', { freezeTime: true });
+    await openApp(page, '/', { now: OUTSIDE_RAMADAN });
     await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
     await snap(page, 'home-new-visitor');
   });
@@ -117,7 +118,7 @@ test.describe('screenshots of the current design', () => {
         refShared: '1',
         lastRecievedNotificationId: '2',
       },
-      freezeTime: true,
+      now: OUTSIDE_RAMADAN,
     });
     const card = page.locator('.impact-card');
     await expect(card).toContainText('انضمّ عبر دعواتك 7 أشخاص');
@@ -125,6 +126,14 @@ test.describe('screenshots of the current design', () => {
     await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
     await card.evaluate((element) => element.scrollIntoView({ block: 'center' }));
     await snap(page, 'home-invitation-impact');
+  });
+
+  test('home: during Ramadan', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, freezeTime: true });
+    await expect(page.locator('.ramadan-card')).toBeVisible();
+    await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+    await snap(page, 'home-ramadan');
   });
 
   test('home: returning member with groups', async ({ page }) => {
@@ -135,7 +144,7 @@ test.describe('screenshots of the current design', () => {
         archivedGroups: { 'visual-old': { id: 'visual-old', title: 'ختمة قديمة', joinTimestamp: 1, archivedTimeStamp: 2 } },
         lastRecievedNotificationId: '2',
       },
-      freezeTime: true,
+      now: OUTSIDE_RAMADAN,
     });
     await expect(page.getByRole('link', { name: 'ورد الجمعة' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'ختمة العائلة' })).toBeVisible();
@@ -145,14 +154,14 @@ test.describe('screenshots of the current design', () => {
 
   test('home: desktop layout', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
-    await openApp(page, '/', { freezeTime: true });
+    await openApp(page, '/', { now: OUTSIDE_RAMADAN });
     await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
     await snap(page, 'home-desktop');
   });
 
   test('home: English', async ({ page }) => {
     await page.setViewportSize(PHONE);
-    await openApp(page, '/', { storage: { lng: 'en' }, freezeTime: true });
+    await openApp(page, '/', { storage: { lng: 'en' }, now: OUTSIDE_RAMADAN });
     await expect(page.getByRole('link', { name: 'Create a periodical set' })).toBeVisible();
     await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
     await snap(page, 'home-english');
@@ -295,6 +304,18 @@ test.describe('screenshots of the current design', () => {
     expect((await sharedImage(page)).bytes).toMatchSnapshot('status-card-complete.png');
   });
 
+  test('sequential group: after Ramadan, the admin is asked about a weekly khitma', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    // The 20th of Ramadan 1447.
+    await openApp(page, '/group/visual-ramadan', {
+      storage: { groups: joinedGroups({ 'visual-ramadan': ADMIN }), lastRecievedNotificationId: '2' },
+      now: new Date('2026-03-09T09:00:00Z'),
+    });
+    await expect(page.locator('.after-ramadan')).toBeVisible();
+    await page.locator('.after-ramadan').evaluate((card) => card.scrollIntoView({ block: 'center' }));
+    await snap(page, 'sequential-after-ramadan');
+  });
+
   test('same-task group: member', async ({ page }) => {
     await page.setViewportSize(TALL_PHONE);
     await openAsMember(page, 'visual-daily', 'سارة');
@@ -368,7 +389,7 @@ test.describe('screenshots of the current design', () => {
 
   test('popup: main menu', async ({ page }) => {
     await page.setViewportSize(PHONE);
-    await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, freezeTime: true });
+    await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, now: OUTSIDE_RAMADAN });
     await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
     await page.getByRole('button', { name: 'menu' }).click();
     await expect(page.getByRole('link', { name: 'عن البرنامج' })).toBeVisible();

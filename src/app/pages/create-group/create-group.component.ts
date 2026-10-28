@@ -8,6 +8,9 @@ import {
 } from '@angular/core';
 import { DeadlineChoice, deadlineDate, deadlineText, isoDate } from '../../deadline';
 import { HonoreeGender, namesSomeone, ONE_TIME_PURPOSES, Purpose, purposeLabel, purposeTitle } from '../../purpose';
+import { isRamadanSeason, ramadanLastDay } from '../../ramadan';
+import { RoundSchedule } from '../../schedule';
+import { KHITMA_CYCLE_TYPE } from '../../entities/entities';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
@@ -61,6 +64,11 @@ export class CreateGroupComponent implements OnInit {
   /** The last title the form wrote; once the creator types their own, the form leaves it alone. */
   private generatedTitle = '';
 
+  /** "ramadan-daily": a khitma that starts again every day of Ramadan, everyone moving to the next juz. */
+  template: 'ramadan-daily' | null = null;
+  /** The deadline the form suggested for a Ramadan khitma (the last day of Ramadan), until the creator picks another. */
+  private suggestedDeadline: string | null = null;
+
   constructor(
     private $gaService: GoogleAnalyticsService,
     private groupsApi: KhitmaGroupService,
@@ -82,9 +90,11 @@ export class CreateGroupComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.typeParam = params['type'];
       this.source = params['from'] || null;
+      this.template = params['template'] === 'ramadan-daily' ? 'ramadan-daily' : null;
       if (ONE_TIME_PURPOSES.includes(params['purpose'])) {
         this.purpose = params['purpose'];
         this.updateTitle();
+        this.suggestRamadanDeadline();
       }
 
       if (!this.typeParam) {
@@ -128,6 +138,10 @@ export class CreateGroupComponent implements OnInit {
           }
         }
       }
+
+      if (this.template && !this.title) {
+        this.title = this.common.translation.ramadan?.dailyTitle || 'ختمة رمضان اليومية';
+      }
     });
   }
 
@@ -161,6 +175,26 @@ export class CreateGroupComponent implements OnInit {
   choosePurpose(purpose: Purpose) {
     this.purpose = this.purpose === purpose ? null : purpose;
     this.updateTitle();
+    this.suggestRamadanDeadline();
+  }
+
+  /** A khitma for Ramadan, made during the season, is suggested to finish by the last day of Ramadan. */
+  private suggestRamadanDeadline() {
+    const untouched = this.deadlineChoice === 'none' || (this.deadlineChoice === 'date' && this.deadlinePicked === this.suggestedDeadline);
+    if (!untouched) {
+      return;
+    }
+    const today = new Date();
+    const last = this.purpose === 'ramadan' && isRamadanSeason(today) ? ramadanLastDay(today) : null;
+    if (last) {
+      this.suggestedDeadline = isoDate(last);
+      this.deadlineChoice = 'date';
+      this.deadlinePicked = this.suggestedDeadline;
+    } else if (this.suggestedDeadline) {
+      this.suggestedDeadline = null;
+      this.deadlineChoice = 'none';
+      this.deadlinePicked = null;
+    }
   }
 
   chooseGender(gender: HonoreeGender) {
@@ -185,7 +219,8 @@ export class CreateGroupComponent implements OnInit {
     // Only one-time khitmas have a deadline, even if one was picked before switching the form to recurring.
     const deadlineChoice: DeadlineChoice = this.isRecurring ? 'none' : this.deadlineChoice;
     const targetAt = deadlineDate(deadlineChoice, this.deadlinePicked);
-    const purpose = this.isRecurring ? 'regular' : this.purpose;
+    const purpose = this.template ? 'ramadan' : this.isRecurring ? 'regular' : this.purpose;
+    const schedule: RoundSchedule | null = this.template ? { every: 'day', cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK } : null;
     const honoreeGender = !this.isRecurring && namesSomeone(this.purpose) ? this.honoreeGender : undefined;
 
     this.groupsApi
@@ -196,7 +231,8 @@ export class CreateGroupComponent implements OnInit {
         this.groupType,
         this.firstTask,
         targetAt ? { targetAt, targetDate: deadlineText(targetAt) } : null,
-        purpose ? { purpose, honoreeGender } : null
+        purpose ? { purpose, honoreeGender } : null,
+        schedule
       )
       .then((docRef) => {
         const groupId = docRef.id;
@@ -205,6 +241,7 @@ export class CreateGroupComponent implements OnInit {
           group_type: this.groupType,
           deadline: deadlineChoice,
           purpose: purpose ?? 'unset',
+          ...(this.template ? { template: 'ramadan_daily' } : {}),
           ...(this.source ? { source: this.source } : {}),
         });
 

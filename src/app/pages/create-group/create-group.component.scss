@@ -90,3 +90,12 @@ section > header {
   align-self: center;
   margin-bottom: 16px !important;
 }
+
+// The Ramadan daily template says what will happen every day.
+.template-note {
+  align-self: stretch;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: #e3f1ee;
+  color: #1c6151;
+}

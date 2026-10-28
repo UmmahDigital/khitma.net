@@ -3,6 +3,17 @@
 
   <img class="logo" src="assets/khitma-logo.png" width="1024" height="1024" alt="ختمة.نت" />
 
+  @if (ramadanSeason) {
+    <div class="ramadan-card">
+      <p class="ramadan-title" [translate]="'ramadan.homeTitle'">ختمات رمضان</p>
+      <p class="ramadan-text" [translate]="'ramadan.homeText'">اجمعوا أهلكم وأصدقاءكم على ختم القرآن في رمضان.</p>
+      <a mat-raised-button class="block action-btn" routerLink="/new"
+        [queryParams]="{ type: 'onetime', purpose: 'ramadan', from: 'home_ramadan' }"><span [translate]="'ramadan.oneKhitma'">ختمة واحدة خلال رمضان</span></a>
+      <a mat-stroked-button class="block" routerLink="/new"
+        [queryParams]="{ type: 'recurring', template: 'ramadan-daily', from: 'home_ramadan' }"><span [translate]="'ramadan.daily'">ختمة كاملة كل يوم</span></a>
+    </div>
+  }
+
   <!-- <hr /> -->
   <!-- <app-login (onLogin)="onLogin($event)"></app-login> -->
 

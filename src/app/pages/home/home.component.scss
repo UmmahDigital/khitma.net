@@ -153,3 +153,32 @@ mat-card{
     white-space: pre-line;
   }
 }
+
+// Mid-Sha'ban to the end of Ramadan: the two Ramadan khitmas, first.
+.ramadan-card {
+  max-width: 420px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #0d3b36;
+  color: #fff;
+  text-align: center;
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  .ramadan-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f5d77a;
+  }
+
+  a {
+    margin: 12px 0 0 !important;
+  }
+
+  a.mat-mdc-outlined-button {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+}

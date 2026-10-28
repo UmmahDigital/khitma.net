@@ -69,6 +69,10 @@
       </div>
     }
 
+    @if (template === 'ramadan-daily') {
+      <p class="template-note" [translate]="'ramadan.dailyNote'">تبدأ ختمة جديدة كل يوم تلقائيًا، ويُحجز لكل عضو الجزء الذي يلي جزءه، فيتنقّل بين الأجزاء يومًا بعد يوم.</p>
+    }
+
     <h2 [translate]="'gCreate.details'">تفاصيل الختمة</h2>
 
     <mat-form-field appearance="fill" class="block">

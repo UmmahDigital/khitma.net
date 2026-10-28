@@ -301,6 +301,19 @@
     "completeCaption": "Die Khitma „{title}“ ist vollendet, durch Allahs Gnade 🤍\nStartet eine Khitma für eure Liebsten:",
     "saved": "Bild gespeichert und Text kopiert: teile es in deinem Status"
   },
+  "ramadan": {
+    "homeTitle": "Ramadan-Khitmas",
+    "homeText": "Bringt Familie und Freunde zusammen, um im Ramadan den Koran zu vollenden.",
+    "oneKhitma": "Eine Khitma im Ramadan",
+    "daily": "Jeden Tag eine vollständige Khitma",
+    "dailyTitle": "Tägliche Ramadan-Khitma",
+    "dailyNote": "Jeden Tag beginnt von selbst eine neue Khitma, und jedes Mitglied bekommt den Juz nach seinem und geht so Tag für Tag durch den Koran.",
+    "afterTitle": "Nach dem Ramadan: mit einer wöchentlichen Khitma weitermachen?",
+    "afterText": "Jeden Freitag beginnt von selbst eine neue Khitma, und jedes Mitglied bekommt den Juz nach seinem.",
+    "afterYes": "Ja, jeden Freitag",
+    "afterLater": "Später",
+    "afterDone": "Die Khitma geht jeden Freitag weiter, in sha Allah"
+  },
   "dialog": {
     "yes": "ja",
     "no": "Nein",

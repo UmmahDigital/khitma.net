@@ -301,6 +301,19 @@
     "completeCaption": "The khitma “{title}” is complete, by Allah’s grace 🤍\nStart a group khitma for your loved ones:",
     "saved": "Image saved and caption copied: post it to your status"
   },
+  "ramadan": {
+    "homeTitle": "Ramadan khitmas",
+    "homeText": "Bring your family and friends together to complete the Quran in Ramadan.",
+    "oneKhitma": "One khitma during Ramadan",
+    "daily": "A complete khitma every day",
+    "dailyTitle": "Daily Ramadan khitma",
+    "dailyNote": "A new khitma starts by itself every day, and each member gets the juz after theirs, moving through the Quran day by day.",
+    "afterTitle": "After Ramadan: keep going with a weekly khitma?",
+    "afterText": "A new khitma starts by itself every Friday, and each member gets the juz after theirs.",
+    "afterYes": "Yes, every Friday",
+    "afterLater": "Later",
+    "afterDone": "The khitma will continue every Friday, in sha Allah"
+  },
   "dialog": {
     "yes": "Yes",
     "no": "No",

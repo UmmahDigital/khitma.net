@@ -301,6 +301,19 @@
     "completeCaption": "La khitma «{title}» se completó, por la gracia de Allah 🤍\nInicia una khitma para tus seres queridos:",
     "saved": "Imagen guardada y texto copiado: publícala en tu estado"
   },
+  "ramadan": {
+    "homeTitle": "Khitmas de Ramadán",
+    "homeText": "Reúne a tu familia y amigos para completar el Corán en Ramadán.",
+    "oneKhitma": "Una khitma durante Ramadán",
+    "daily": "Una khitma completa cada día",
+    "dailyTitle": "Khitma diaria de Ramadán",
+    "dailyNote": "Una nueva khitma empieza sola cada día, y cada miembro recibe el juz siguiente al suyo, recorriendo el Corán día a día.",
+    "afterTitle": "Después de Ramadán: ¿seguir con una khitma semanal?",
+    "afterText": "Una nueva khitma empieza sola cada viernes, y cada miembro recibe el juz siguiente al suyo.",
+    "afterYes": "Sí, cada viernes",
+    "afterLater": "Más tarde",
+    "afterDone": "La khitma continuará cada viernes, in sha Allah"
+  },
   "dialog": {
     "yes": "sí",
     "no": "No",

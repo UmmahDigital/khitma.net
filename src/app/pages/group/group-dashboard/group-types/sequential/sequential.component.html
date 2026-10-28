@@ -79,6 +79,16 @@
       }
     }
   </div>
+  @if (afterRamadanPrompt) {
+    <div class="help-finish after-ramadan">
+      <p class="help-finish-title" [translate]="'ramadan.afterTitle'">بعد رمضان: هل تستمرّ المجموعة بختمة أسبوعية؟</p>
+      <p class="help-finish-text" [translate]="'ramadan.afterText'">تبدأ ختمة جديدة كل جمعة تلقائيًا، ويُحجز لكل عضو الجزء الذي يلي جزءه.</p>
+      <div class="next-juz-actions">
+        <button mat-flat-button class="action-btn" (click)="continueWeeklyAfterRamadan()"><span [translate]="'ramadan.afterYes'">نعم، كل جمعة</span></button>
+        <button mat-button (click)="answerAfterRamadan('later')"><span [translate]="'ramadan.afterLater'">لاحقًا</span></button>
+      </div>
+    </div>
+  }
   @if (deadlineLine) {
     <p class="deadline-line">⏳ {{ deadlineLine }}</p>
   }

@@ -17,6 +17,7 @@ import { impactLines } from '../../../../../referral';
 import { khitmaName, memorialDua } from '../../../../../purpose';
 import { renderShareCard } from '../../../../../share-card';
 import { repeatText } from '../../../../../schedule';
+import { firstFridayAfterRamadan, hijri, isAfterRamadanPromptTime } from '../../../../../ramadan';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
@@ -317,6 +318,42 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       // No image (a very old browser): the caption alone, on WhatsApp.
       () => this.sharing.whatsapp(caption, content, this.group.id)
     );
+  }
+
+  /** Set when the admin answers the after-Ramadan question on this phone. */
+  private afterRamadanAnswered = false;
+
+  private get afterRamadanKey(): string {
+    return `afterRamadan:${this.group.id}:${hijri(new Date())?.year}`;
+  }
+
+  /**
+   * Ramadan khitmas are the year's busiest; once Ramadan ends most groups stop. From the 20th of Ramadan (from Eid
+   * for daily ones), their admin is asked whether the group continues with a weekly khitma.
+   */
+  get afterRamadanPrompt(): boolean {
+    const schedule = this.group?.schedule;
+    return (
+      this.isAdmin &&
+      this.group.purpose === 'ramadan' &&
+      schedule?.every !== 'week' &&
+      !this.afterRamadanAnswered &&
+      isAfterRamadanPromptTime(new Date(), schedule?.every === 'day') &&
+      !localStorage.getItem(this.afterRamadanKey)
+    );
+  }
+
+  continueWeeklyAfterRamadan() {
+    this.answerAfterRamadan('yes');
+    const schedule = { every: 'week' as const, weekday: 5, cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK };
+    this.groupsApi.setSchedule(this.group.id, schedule, firstFridayAfterRamadan(new Date()));
+    this.alert.show(this.common.translation.ramadan?.afterDone || 'ستستمرّ الختمة كل جمعة بإذن الله', 4000);
+  }
+
+  answerAfterRamadan(action: 'yes' | 'later') {
+    this.afterRamadanAnswered = true;
+    localStorage.setItem(this.afterRamadanKey, action);
+    this.$gaService.send('after_ramadan_weekly', { action });
   }
 
   /** For khitmas that repeat by themselves: when the next round starts. */

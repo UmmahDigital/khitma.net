@@ -85,7 +85,8 @@ export class KhitmaGroupService {
   public createGroup(
     title, description, author, groupType?, firstTask?,
     deadline?: { targetAt: string; targetDate: string } | null,
-    purpose?: { purpose: string; honoreeGender?: 'male' | 'female' } | null
+    purpose?: { purpose: string; honoreeGender?: 'male' | 'female' } | null,
+    schedule?: RoundSchedule | null
   ) {
     return this.createGroupForUser(
       title,
@@ -95,7 +96,8 @@ export class KhitmaGroupService {
       groupType,
       firstTask,
       deadline,
-      purpose
+      purpose,
+      schedule
     );
   }
 
@@ -107,9 +109,11 @@ export class KhitmaGroupService {
     groupType?,
     firstTask?,
     deadline?: { targetAt: string; targetDate: string } | null,
-    purpose?: { purpose: string; honoreeGender?: 'male' | 'female' } | null
+    purpose?: { purpose: string; honoreeGender?: 'male' | 'female' } | null,
+    schedule?: RoundSchedule | null
   ) {
     author = author.trim();
+    const firstRound = schedule ? nextRoundAt(schedule, new Date()) : null;
 
     let newGroupObj = {
       title: title,
@@ -122,6 +126,7 @@ export class KhitmaGroupService {
       ...(deadline ? { targetAt: deadline.targetAt, targetDate: deadline.targetDate } : {}),
       ...(purpose?.purpose ? { purpose: purpose.purpose } : {}),
       ...(purpose?.honoreeGender ? { honoreeGender: purpose.honoreeGender } : {}),
+      ...(schedule ? { schedule, ...(firstRound ? { nextRoundAt: Timestamp.fromDate(firstRound) } : {}) } : {}),
     };
 
     switch (groupType) {
@@ -242,9 +247,9 @@ export class KhitmaGroupService {
     updateDoc(this.groupDoc(this._currentGroupObj.id), { cycle: newCycle, ajza: ajzaObj, roundStartedAt: serverTimestamp() });
   }
 
-  /** Repeats the khitma on a rhythm (see schedule.ts), or stops repeating it (null). */
-  setSchedule(groupId: string, schedule: RoundSchedule | null) {
-    const next = schedule ? nextRoundAt(schedule, new Date()) : null;
+  /** Repeats the khitma on a rhythm (see schedule.ts), or stops repeating it (null); `startAt` sets the first round. */
+  setSchedule(groupId: string, schedule: RoundSchedule | null, startAt?: Date) {
+    const next = schedule ? startAt ?? nextRoundAt(schedule, new Date()) : null;
     return updateDoc(this.groupDoc(groupId), {
       schedule: schedule ?? deleteField(),
       nextRoundAt: next ? Timestamp.fromDate(next) : deleteField(),
