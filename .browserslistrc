@@ -8,8 +8,13 @@
 # APIs are polyfilled in src/legacy-polyfills.ts and missing CSS features get
 # fallbacks in src/_material-compat.scss. The `oldest-supported-browser` e2e
 # project checks the app in a Chromium that behaves like iOS 14.5.
-Chrome >= 80
-ChromeAndroid >= 80
+# Android: Angular hands only the Chrome, Edge, Firefox, Safari and iOS lines
+# to esbuild and ignores ChromeAndroid and Samsung, so Android browsers are
+# covered by the Chrome line: Samsung Internet 12 runs Chromium 79, hence 79.
+# (With 80, `??` stayed in the bundle and Samsung Internet 12 showed a blank
+# page.) Check changes here in a real old Chromium; see README.
+Chrome >= 79
+ChromeAndroid >= 79
 Edge >= 88
 Firefox >= 78
 Safari >= 14.1

@@ -26,9 +26,16 @@ The end-to-end tests use [Playwright](https://playwright.dev) against a local Fi
 1. `npm run e2e:build` builds the app for the emulator into `dist/khitma-e2e`.
 2. `npm run e2e` starts the emulator and a static server, then runs two projects:
    - `mobile-chromium`: every behavior test plus screenshot comparisons of the current design;
-   - `oldest-supported-browser`: the behavior tests again, with Chromium made to act like the oldest phones in `.browserslistrc` (iOS 14.5).
+   - `oldest-supported-browser`: the behavior tests again, with Chromium made to act like the oldest phones in `.browserslistrc` (iOS 14.5, and Chromium 79 for Samsung Internet 12 and old Android WebViews).
 
 Screenshot baselines exist for macOS only (`e2e/tests/__screenshots__/darwin`), so CI skips them. After an intended design change, review the diffs and run `npm run e2e:update-screenshots`.
+
+### Checking a real old browser
+
+The simulated old browser cannot catch JavaScript syntax that old engines fail to parse (the Chromium in Playwright understands everything). Before changing `.browserslistrc` or upgrading Angular, also run the main flows in a real Chromium 79, the engine of Samsung Internet 12:
+
+1. Download and unzip `https://storage.googleapis.com/chromium-browser-snapshots/Mac/706915/chrome-mac.zip` (Linux: `Linux_x64/706915/chrome-linux.zip`).
+2. Run `OLD_CHROMIUM=/path/to/chrome-mac/Chromium.app/Contents/MacOS/Chromium OLD_CHROMIUM_X64=1 npm run e2e -- --project=mobile-chromium real-old-browser`. `OLD_CHROMIUM_X64=1` runs this Intel-only build through Rosetta on Apple Silicon; leave it out elsewhere. Screenshots of each screen are saved under `e2e/.results`.
 
 ## Further help
 

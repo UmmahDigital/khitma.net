@@ -1,11 +1,12 @@
 import { Page } from '@playwright/test';
 
 /**
- * Makes Chromium run the app like the oldest phones in .browserslistrc (Safari/iOS 14.5).
+ * Makes Chromium run the app like the oldest phones in .browserslistrc: iOS 14.5, and Chromium 79
+ * (Samsung Internet 12, old Android WebViews).
  *
  * esbuild already lowers JavaScript syntax for those targets, but it does not polyfill APIs or
  * rewrite CSS, so this covers what it leaves behind:
- * - JavaScript APIs that shipped after Safari 14.1 are removed before the app boots;
+ * - JavaScript APIs that shipped after Safari 14.1 or Chromium 79 are removed before the app boots;
  * - CSS those browsers drop is renamed so Chromium drops it the same way: whole `@layer` blocks,
  *   rules whose selector uses `:has()` or `:focus-visible`, and `color-mix()` values (custom
  *   properties holding one become invalid where they are used, as in an old browser).
@@ -14,6 +15,12 @@ export async function simulateOldestSupportedBrowser(page: Page): Promise<void> 
   await page.addInitScript(() => {
     const remove = (owner: any, names: string[]) => names.forEach((name) => delete owner[name]);
     remove(globalThis, ['structuredClone', 'BroadcastChannel', 'requestIdleCallback', 'cancelIdleCallback']);
+    // Newer than Chromium 79 only: Safari 14.1 already has these.
+    remove(globalThis, ['AggregateError', 'WeakRef', 'FinalizationRegistry']);
+    remove(Intl, ['Segmenter', 'DisplayNames']);
+    remove(Promise, ['any']);
+    remove(String.prototype, ['replaceAll']);
+    [Element, Document, DocumentFragment].forEach((type) => remove(type.prototype, ['replaceChildren']));
     remove(Object, ['hasOwn', 'groupBy']);
     remove(Map, ['groupBy']);
     remove(Promise, ['withResolvers']);
