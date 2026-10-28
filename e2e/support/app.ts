@@ -83,3 +83,23 @@ export async function chooseMenuItem(page: Page, trigger: Locator, item: string)
     .toBe(true);
   await menu.getByRole('menuitem', { name: item }).click();
 }
+
+/** Phone user agents for checking the update screen's per-platform advice. */
+export const OLD_ANDROID_UA =
+  'Mozilla/5.0 (Linux; Android 6.0.1; SM-J510F) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/11.1 Chrome/75.0.3770.143 Mobile Safari/537.36';
+export const OLD_IPHONE_UA =
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 12_5_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Mobile/15E148 Safari/604.1';
+
+/** Loads the app like a browser too old to parse its code: the main bundle throws a SyntaxError. */
+export async function openInTooOldBrowser(page: Page): Promise<void> {
+  await page.route(/googletagmanager\.com|google-analytics\.com|analytics\.google\.com/, (route) => route.abort());
+  await page.route(/\/main-\w+\.js$/, (route) => route.fulfill({ contentType: 'text/javascript', body: 'let unparsable = ;' }));
+  await page.goto('/');
+}
+
+/** Analytics events queued through gtag(), as [name, params]. */
+export async function analyticsEvents(page: Page): Promise<Array<[string, unknown]>> {
+  return page.evaluate(() =>
+    ((window as any).dataLayer ?? []).filter((args: any) => args[0] === 'event').map((args: any) => [args[1], args[2]])
+  );
+}

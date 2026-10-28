@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test';
-import { joinedGroups, openApp } from '../support/app';
+import { joinedGroups, OLD_ANDROID_UA, openApp, openInTooOldBrowser } from '../support/app';
 import { setDoc } from '../support/firestore';
 import { createPagesGroup, createSameTaskGroup, createSequentialGroup, JUZ_STATUS } from '../support/fixtures';
 
@@ -252,5 +252,19 @@ test.describe('screenshots of the current design', () => {
     await expect(page.getByRole('button', { name: 'أريد تلاوة 10 صحفات' })).toBeVisible();
     await expect(page.locator('app-aqsa-khitma .main-counter').first()).toHaveText(/1,?250/);
     await snap(page, 'aqsa');
+  });
+});
+
+test.describe('screenshot of the update screen', () => {
+  test.skip(!!process.env.CI, 'Screenshot baselines are recorded locally on macOS.');
+  test.use({ userAgent: OLD_ANDROID_UA });
+
+  test('phone too old for the app (Android)', async ({ page }) => {
+    await openInTooOldBrowser(page);
+    await expect(page.locator('#unsupported-browser h1')).toBeVisible({ timeout: 10_000 });
+    await page.evaluate(() => document.fonts.load('700 32px "Markazi Text"'));
+    await expect.poll(() => page.evaluate(() => document.fonts.check('22px "Markazi Text"'))).toBe(true);
+    await expect.poll(() => page.locator('#unsupported-browser img').evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+    await expect(page).toHaveScreenshot('unsupported-browser-android.png');
   });
 });
