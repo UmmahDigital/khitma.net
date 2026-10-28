@@ -137,3 +137,23 @@ button.large.mat-mdc-button-base {
     }
   }
 }
+
+// Overlays (dialogs, menus): CDK 22 keeps their z-index and the dark backdrop inside
+// `@layer cdk-overlay`, which iOS before 15.4 ignores, so dialogs would open beneath the app's
+// own z-indexed elements, without a backdrop. The same rules outside the layer; newer browsers
+// end up with identical values.
+.cdk-overlay-container,
+.cdk-global-overlay-wrapper,
+.cdk-overlay-pane,
+.cdk-overlay-connected-position-bounding-box {
+  z-index: 1000;
+}
+
+.cdk-overlay-backdrop {
+  z-index: 1000;
+  transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.32);
+}

@@ -1,4 +1,5 @@
-import { Page } from '@playwright/test';
+import { Page, test } from '@playwright/test';
+import { simulateOldestSupportedBrowser } from './legacy-browser';
 
 /** Fixed clock for screenshots and dated share messages. */
 export const FIXED_NOW = new Date('2026-03-01T09:00:00Z');
@@ -13,9 +14,13 @@ export interface OpenOptions {
  * Opens the app with test hooks installed before it boots:
  * - analytics and external embeds (Quran reader, YouTube) are blocked,
  * - localStorage is seeded once per tab (reloads keep the app's own changes),
- * - navigator.share is captured in window.__shares.
+ * - navigator.share is captured in window.__shares,
+ * - in the `oldest-supported-browser` project, Chromium is made to behave like the oldest phones we support.
  */
 export async function openApp(page: Page, path: string, options: OpenOptions = {}): Promise<void> {
+  if (test.info().project.metadata?.oldestSupportedBrowser) {
+    await simulateOldestSupportedBrowser(page);
+  }
   await page.route(/googletagmanager\.com|google-analytics\.com|analytics\.google\.com|quranflash\.com|youtube\.com|youtube-nocookie\.com|ytimg\.com/, (route) =>
     route.abort()
   );

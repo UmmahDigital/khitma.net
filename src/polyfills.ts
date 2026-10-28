@@ -45,6 +45,7 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
+import './legacy-polyfills';  // Must run before anything else.
 import 'zone.js';  // Included with Angular CLI.
 
 
