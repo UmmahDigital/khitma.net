@@ -10,8 +10,10 @@ import { StartNewKhitmaComponent } from '../../../../../dialog/start-new-khitma/
 import { GET_JUZ_READ_EXTERNAL_URL, Juz, JUZ_STATUS, KhitmaGroup, KhitmaGroup_Sequential, KHITMA_CYCLE_TYPE, NUM_OF_AJZA } from '../../../../../entities/entities';
 import { KhitmaGroupService } from '../../../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../../../local-database.service';
-import { NativeApiService } from '../../../../../native-api.service';
 import { NativeShareService } from '../../../../../native-share.service';
+import { SharingService } from '../../../../../sharing.service';
+import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
+import { StatusMessageGenerators } from '../../status-messages';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../../../../service/common.service';
 
@@ -51,7 +53,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     private $gaService: GoogleAnalyticsService,
     private titleService: Title,
     private alert: AlertService,
-    private nativeApi: NativeApiService,
+    private sharing: SharingService,
     private nativeShare: NativeShareService,
     private router: Router, public common: CommonService) {
   }
@@ -124,6 +126,36 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
     this.$gaService.event('admin_juz_update');
 
+  }
+
+  // "Help finish": while ajza have no reader, everyone can invite people for exactly those; once every juz is
+  // taken, the admin can remind whoever is still reading. Most khitmas that stall have free ajza left.
+
+  get freeAjza(): number[] {
+    return freeAjza(this.group.ajza);
+  }
+
+  get readingAjza(): number[] {
+    return readingAjza(this.group.ajza);
+  }
+
+  get freeAjzaText(): string {
+    const template = this.common.translation.sharing?.freeLeft || 'بقي {count} بلا قارئ';
+    return fill(template, { count: ajzaCount(this.freeAjza.length, this.common.currentLanguage) });
+  }
+
+  get allBookedText(): string {
+    const template = this.common.translation.sharing?.allBooked || 'كلّ الأجزاء محجوزة، و{count} قيد القراءة';
+    return fill(template, { count: ajzaCount(this.readingAjza.length, this.common.currentLanguage) });
+  }
+
+  shareFreeAjza() {
+    const message = helpFinishMessage(this.common.translation, this.common.currentLanguage, this.group.title, this.group.getURL(), this.freeAjza);
+    this.sharing.whatsapp(message, 'free_juz', this.group.id);
+  }
+
+  remindReaders() {
+    this.sharing.whatsapp(StatusMessageGenerators[this.group.type](this.group), 'status', this.group.id);
   }
 
   /** Whether finishing this juz completes the khitma: every other juz is already done. */
@@ -253,7 +285,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   shareKhitmaCompletedDua() {
 
     const dua = "اللهم ارحمنى بالقرآن وأجعله لى إماما ونورا وهدى ورحمة اللهم ذكرنى منه مانسيت وعلمنى منه ماجهلت وارزقني تلاوته آناء الليل وأطراف النهار واجعله لي حجة يارب العالمين . اللهم أصلح لى دينى الذى هو عصمة أمري، وأصلح لي دنياي التي فيها معاشي، وأصلح لي آخرتي التي فيها معادي، وأجعل الحياة زيادة لي في كل خير وأجعل الموت راحة لي من كل شر . اللهم أجعل خير عمري آخره وخير عملي خواتمه وخير أيامي يوم ألقاك فيه . اللهم إني أسألك عيشة هنية وميتة سوية ومردا غير مخز ولا فاضح . اللهم إنى أسألك خير المسألة وخير الدعاء وخير النجاح وخير العلم وخير العمل وخير الثواب وخير الحياة وخير الممات وثبتنى وثقل موازيني وحقق إيماني وارفع درجتي وتقبل صلاتي واغفر خطيئاتي وأسألك العلا من الجنة . اللهم إني أسألك موجبات رحمتك وعزائم مغفرتك والسلامة من كل إثم والغنيمة من كل بر والفوز بالجنة والنجاة من النار . اللهم أحسن عاقبتنا في الأمور كلها، وأجرنا من خزي الدنيا وعذاب الآخرة . اللهم اقسم لنا من خشيتك ماتحول به بيننا وبين معصيتك ومن طاعتك ماتبلغنا بها جنتك ومن اليقين ماتهون به علينا مصائب الدنيا ومتعنا بأسماعنا وأبصارنا وقوتنا ماأحييتنا واجعله الوارث منا واجعل ثأرنا على من ظلمنا وانصرنا على من عادانا ولا تجعل مصيبتنا في ديننا ولا تجعل الدنيا أكبر همنا ولا مبلغ علمنا ولا تسلط علينا من لا يرحمنا . اللهم لا تدع لنا ذنبا إلا غفرته ولا هما إلا فرجته ولا دينا إلا قضيته ولا حاجة من حوائج الدنيا والآخرة إلا قضيتها يا أرحم الراحمين. ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار وصلى الله على سيدنا ونبينا محمد وعلى آله وأصحابه الأخيار وسلم تسليما كثيرا.";
-    this.nativeApi.share((this.group.title + this.common.translation.sequential?.done), dua, null, 'completion_dua', this.group.id);
+    this.sharing.share((this.group.title + this.common.translation.sequential?.done), dua, 'completion_dua', this.group.id);
 
     // fetch(location.origin + '/assets/dua.png')
     //   .then(function (response) {

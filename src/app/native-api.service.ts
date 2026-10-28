@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
-import { GoogleAnalyticsService } from './analytics';
 
+/** The phone's share sheet, or the store app's share bridge. Use SharingService, which adds fallbacks and analytics. */
 @Injectable({
   providedIn: 'root',
 })
 export class NativeApiService {
   public isAvailable = false;
 
-  constructor(private analytics: GoogleAnalyticsService) {
+  constructor() {
     if (navigator.share) {
       this.isAvailable = true;
     }
   }
 
-  /** `content` (invite, status, completion_dua…) and `groupId` describe the share in the `share` analytics event. */
-  share(title, text, url, content = 'other', groupId?: string) {
-    const method = window['Flutter'] ? 'flutter' : this.isAvailable ? 'native' : 'unavailable';
-    this.analytics.send('share', { method, content_type: content, ...(groupId ? { item_id: groupId } : {}) });
+  /** Inside the store app (a web view), sharing goes through its Flutter bridge. */
+  get hasBridge(): boolean {
+    return !!window['Flutter'];
+  }
 
+  share(title, text, url) {
     if (window['Flutter']) {
       window['Flutter'].postMessage(
         JSON.stringify({

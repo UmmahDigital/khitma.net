@@ -1,4 +1,4 @@
-import { KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
+import { JUZ_STATUS, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 
 function _getDateInArabic(date: Date) {
   // var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
@@ -40,6 +40,17 @@ function statusMsg_Sequential(group) {
   msg += NEW_LINE;
   msg += _getDateInArabic(now);
   msg += NEW_LINE;
+  msg += NEW_LINE;
+
+  // What the khitma still needs comes first: the free ajza are what the group can act on.
+  const count = (status) => group.ajza.filter((juz) => juz.status === status).length;
+  const free = group.ajza.filter((juz) => juz.status === JUZ_STATUS.IDLE).map((juz) => juz.index + 1);
+  msg += '🟢 تمّ ' + count(JUZ_STATUS.DONE) + ' · 🟡 قيد القراءة ' + count(JUZ_STATUS.BOOKED) + ' · 🔴 متاح ' + free.length;
+  msg += NEW_LINE;
+  if (free.length) {
+    msg += 'الأجزاء المتاحة: ' + free.join('، ');
+    msg += NEW_LINE;
+  }
   msg += NEW_LINE;
 
   group.ajza.forEach((juz) => {

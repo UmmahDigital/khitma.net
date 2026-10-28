@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from '../../../alert.service';
 import { KhitmaGroup } from '../../../entities/entities';
-import { NativeApiService } from '../../../native-api.service';
-import { NativeShareService } from '../../../native-share.service';
+import { SharingService } from '../../../sharing.service';
+import { inviteMessage } from '../../../share-messages';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
 
@@ -24,8 +24,7 @@ export class GroupInviteComponent implements OnInit {
     private route: ActivatedRoute,
     private groupsApi: KhitmaGroupService,
     private alert: AlertService,
-    private nativeShare: NativeShareService,
-    private nativeApi: NativeApiService,
+    private sharing: SharingService,
     public common: CommonService
   ) {}
 
@@ -40,31 +39,20 @@ export class GroupInviteComponent implements OnInit {
 
           this.inviteLink = this.groupsApi.getGroupURL(this.group.id);
 
-          this.inviteMsg =
-            this.common.translation.gInvite?.join +
-            ' "' +
-            this.group.title +
-            '" ' +
-            this.common.translation.gInvite?.link +
-            '" ' +
-            this.inviteLink +
-            '\n' +
-            this.common.translation.gInvite?.bless;
+          this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.inviteLink);
         });
     });
   }
 
-  msgCopied() {
-    this.alert.show(this.common.translation.gInvite?.alert, 5000);
+  sendOnWhatsApp() {
+    this.sharing.whatsapp(this.inviteMsg, 'invite', this.group.id);
   }
 
   share() {
-    this.nativeApi.share(
-      this.common.translation.gInvite?.share,
-      this.inviteMsg,
-      null,
-      'invite',
-      this.group.id
-    );
+    this.sharing.share(this.common.translation.gInvite?.share, this.inviteMsg, 'invite', this.group.id);
+  }
+
+  copy() {
+    this.sharing.copy(this.inviteMsg, 'invite', this.group.id);
   }
 }

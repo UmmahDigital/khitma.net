@@ -12,7 +12,8 @@ import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay'
 import { GoogleAnalyticsService } from '../../../analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from '../../../alert.service';
-import { NativeApiService } from '../../../native-api.service';
+import { SharingService } from '../../../sharing.service';
+import { inviteMessage } from '../../../share-messages';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
 import { NativeShareService } from '../../../native-share.service';
@@ -66,7 +67,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
     private $gaService: GoogleAnalyticsService,
     private titleService: Title,
     private alert: AlertService,
-    private nativeApi: NativeApiService,
+    private sharing: SharingService,
     private router: Router,
     private celebrationService: CelebrationService, public common: CommonService) {
   }
@@ -115,10 +116,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
         cycle: this.group.cycle || 0,
       });
 
-      this.inviteMsg = this.common.translation.gDashboard?.join
-        + ' "' + this.group.title + '" '
-        + this.common.translation.gDashboard?.link
-        + this.group.getURL();
+      this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.group.getURL());
 
     });
 
@@ -135,11 +133,11 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
 
 
   shareStatusMsg() {
-    this.nativeApi.share((this.common.translation.gDashboard?.status + this.group.title), this.getKhitmaStatusMsg(), null, 'status', this.group.id);
+    this.sharing.share((this.common.translation.gDashboard?.status + this.group.title), this.getKhitmaStatusMsg(), 'status', this.group.id);
   }
 
   shareInviteMsg() {
-    this.nativeApi.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, null, 'invite', this.group.id);
+    this.sharing.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, 'invite', this.group.id);
   }
 
 

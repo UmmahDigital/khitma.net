@@ -8,13 +8,16 @@ export interface OpenOptions {
   /** localStorage entries; non-string values are JSON-encoded like the app does. */
   storage?: Record<string, unknown>;
   freezeTime?: boolean;
+  /** false: a browser without a share sheet (desktop Firefox, some in-app browsers). */
+  shareSheet?: boolean;
 }
 
 /**
  * Opens the app with test hooks installed before it boots:
  * - analytics and external embeds (Quran reader, YouTube) are blocked,
  * - localStorage is seeded once per tab (reloads keep the app's own changes),
- * - navigator.share is captured in window.__shares,
+ * - navigator.share is captured in window.__shares (or absent, with shareSheet: false),
+ * - window.open (WhatsApp links) is captured in window.__opened, and copied text in window.__copied,
  * - in the `oldest-supported-browser` project, Chromium is made to behave like the oldest phones we support.
  */
 export async function openApp(page: Page, path: string, options: OpenOptions = {}): Promise<void> {
@@ -33,7 +36,7 @@ export async function openApp(page: Page, path: string, options: OpenOptions = {
       typeof value === 'string' ? value : JSON.stringify(value),
     ])
   );
-  await page.addInitScript((seed: Record<string, string>) => {
+  await page.addInitScript(({ seed, shareSheet }: { seed: Record<string, string>; shareSheet: boolean }) => {
     if (!sessionStorage.getItem('__e2eSeeded')) {
       for (const [key, value] of Object.entries(seed)) {
         localStorage.setItem(key, value);
@@ -43,12 +46,25 @@ export async function openApp(page: Page, path: string, options: OpenOptions = {
     (window as any).__shares = [];
     Object.defineProperty(navigator, 'share', {
       configurable: true,
-      value: (data: unknown) => {
-        (window as any).__shares.push(data);
-        return Promise.resolve();
-      },
+      value: shareSheet
+        ? (data: unknown) => {
+            (window as any).__shares.push(data);
+            return Promise.resolve();
+          }
+        : undefined,
     });
-  }, storage);
+    (window as any).__opened = [];
+    window.open = ((url?: string | URL) => {
+      (window as any).__opened.push(String(url));
+      return null;
+    }) as typeof window.open;
+    (window as any).__copied = [];
+    document.addEventListener('copy', () => {
+      const el = document.activeElement as HTMLTextAreaElement | null;
+      const text = el && 'value' in el ? el.value.substring(el.selectionStart, el.selectionEnd) : String(getSelection());
+      (window as any).__copied.push(text);
+    });
+  }, { seed: storage, shareSheet: options.shareSheet ?? true });
   await page.goto(path);
 }
 
@@ -129,4 +145,20 @@ export async function recordEventsAcrossReloads(page: Page): Promise<void> {
 /** Events recorded by recordEventsAcrossReloads, as [name, params]. */
 export async function recordedEvents(page: Page): Promise<unknown[][]> {
   return page.evaluate(() => JSON.parse(sessionStorage.getItem('__events') || '[]'));
+}
+
+/** Pages the app opened in a new tab (WhatsApp links). */
+export async function openedUrls(page: Page): Promise<string[]> {
+  return page.evaluate(() => (window as any).__opened);
+}
+
+/** The text of a wa.me link the app opened. */
+export function whatsappText(url: string): string {
+  expect(url).toMatch(/^https:\/\/wa\.me\/\?text=/);
+  return new URL(url).searchParams.get('text')!;
+}
+
+/** Text the app copied to the clipboard. */
+export async function copiedTexts(page: Page): Promise<string[]> {
+  return page.evaluate(() => (window as any).__copied);
 }

@@ -173,3 +173,29 @@
         font-weight: 700;
     }
 }
+
+// "Help finish": what the khitma still needs, and one tap to ask for it on WhatsApp.
+.help-finish {
+  margin: 0 auto 36px;
+  padding: 12px 16px 14px;
+  max-width: 420px;
+  border-radius: 16px;
+  background: #e3f1ee;
+  text-align: center;
+
+  p {
+    margin: 0 0 6px;
+    line-height: 1.35;
+  }
+
+  .help-finish-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c6151;
+  }
+
+  .help-finish-text {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+}

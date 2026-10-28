@@ -103,3 +103,9 @@ hr {
     max-width: $percent * 1%;
   }
 }
+
+// Sending on WhatsApp: the main sharing action (most members arrive from a WhatsApp link).
+.whatsapp-btn.mat-mdc-unelevated-button:not([disabled]) {
+  background-color: #1c6151;
+  color: #fff;
+}

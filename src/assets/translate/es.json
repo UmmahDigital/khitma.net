@@ -15,6 +15,22 @@
   "privacy": "Acuerdo de privacidad",
   "terms": "Términos de Uso",
   "share": "para compartir",
+  "sharing": {
+    "whatsapp": "Enviar por WhatsApp",
+    "whatsappShort": "WhatsApp",
+    "other": "Compartir de otra forma",
+    "copy": "Copiar el mensaje",
+    "copied": "Mensaje copiado",
+    "inviteTitle": "Invita a tu familia y amigos",
+    "inviteText": "Cada persona que abre el enlace escribe su nombre y elige un juz para leer.",
+    "inviteMessage": "Únete a la khitma «{title}» y elige un juz para leer 📖",
+    "hadithMeaning": "«Quien guía hacia un bien tiene una recompensa como la de quien lo realiza.» (Muslim)",
+    "freeLeft": "{count} sin lector",
+    "freeAsk": "Invita a alguien a leerlos para completar la khitma.",
+    "helpMessage": "Ayúdanos a completar la khitma «{title}» 🤍\n{count} sin lector: {list}\nElige un juz desde el enlace:",
+    "allBooked": "Todos los juz están reservados; {count} en lectura",
+    "remind": "Recordar a los lectores por WhatsApp"
+  },
   "aqsa": {
     "currentPages": "Páginas actuales",
     "finished": "Recuerdo mis páginas",
@@ -35,7 +51,7 @@
     "link": "A través del enlace",
     "bless": ". Salud.",
     "alert": "El mensaje fue copiado, ahora puede compartir con sus conocimientos y amigos.",
-    "share": "Invitación a unirse al grupo de conspiadores.",
+    "share": "Invitación a unirse a la khitma",
     "go": "Transición a la página SET"
   },
   "gCreate": {

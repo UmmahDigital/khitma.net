@@ -8,38 +8,30 @@
   }
 }
 
-.invite-link {
-  background: lightgray;
-  padding: 20px;
-  text-align: left;
-  word-break: break-all;
-}
-
 .group-invite > * {
   text-align: center !important;
-
-  margin: 20px auto !important;
-  //   background-color: red;
+  margin: 16px auto !important;
 }
 
-.copy-msg-btn {
-  // border-radius: 10px !important;
-  display: block;
-  width: 50%;
-  margin-top: -68px!important;
-  height: 48px!important;
-  padding: 0;
-  line-height: 48px!important;
+.invite-intro {
+  h2 {
+    margin: 0 0 4px;
+    font-size: 28px;
+  }
+
+  p {
+    margin: 0;
+  }
 }
 
-mat-form-field{
-
+textarea {
+  font-size: larger !important;
+  padding-top: 16px !important;
 }
 
-textarea{
-  font-size: larger!important;
-  padding-top: 16px!important;
-  padding-bottom: 48px!important;
-
-  
+.invite-more {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
 }

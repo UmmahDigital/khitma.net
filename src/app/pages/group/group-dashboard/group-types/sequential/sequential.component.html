@@ -50,6 +50,24 @@
       }
     }
   </div>
+  @if (!group.isDone()) {
+    @if (freeAjza.length > 0) {
+      <div class="help-finish">
+        <p class="help-finish-title">{{ freeAjzaText }}</p>
+        <p class="help-finish-text" [translate]="'sharing.freeAsk'">ادعُ من يقرؤها لتتمّ الختمة.</p>
+        <button mat-flat-button class="whatsapp-btn" (click)="shareFreeAjza()">
+          <mat-icon>share</mat-icon> <span [translate]="'sharing.whatsapp'">إرسال عبر واتساب</span>
+        </button>
+      </div>
+    } @else if (isAdmin && readingAjza.length > 0) {
+      <div class="help-finish">
+        <p class="help-finish-title">{{ allBookedText }}</p>
+        <button mat-flat-button class="whatsapp-btn" (click)="remindReaders()">
+          <mat-icon>share</mat-icon> <span [translate]="'sharing.remind'">ذكّر القرّاء عبر واتساب</span>
+        </button>
+      </div>
+    }
+  }
   <section class="juz-grid-section">
     <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes"
       [celebrateJuzIndex]="celebrateJuzIndex" (onJuzSelection)="juzSelected($event)">

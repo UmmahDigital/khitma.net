@@ -15,6 +15,22 @@
   "privacy": "Privacy Agreement",
   "terms": "Terms of use",
   "share": "Share",
+  "sharing": {
+    "whatsapp": "Send on WhatsApp",
+    "whatsappShort": "WhatsApp",
+    "other": "Share another way",
+    "copy": "Copy message",
+    "copied": "Message copied",
+    "inviteTitle": "Invite family and friends",
+    "inviteText": "Everyone who opens the link writes their name and picks a juz to read.",
+    "inviteMessage": "Join the khitma “{title}” and pick a juz to read 📖",
+    "hadithMeaning": "“Whoever guides someone to good has a reward like the one who does it.” (Muslim)",
+    "freeLeft": "{count} left with no reader",
+    "freeAsk": "Invite someone to read them so the khitma is completed.",
+    "helpMessage": "Help us complete the khitma “{title}” 🤍\n{count} still have no reader: {list}\nPick a juz from the link:",
+    "allBooked": "Every juz is taken; {count} still being read",
+    "remind": "Remind readers on WhatsApp"
+  },
   "aqsa": {
     "currentPages": "Current pages",
     "finished": "I recited my pages",
