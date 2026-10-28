@@ -3,6 +3,11 @@
 # Raise it only after analytics confirms those devices are gone.
 # Safari/iOS: 14.1/14.5 is the lowest the build tooling (esbuild) can target
 # since Angular 19; every iPhone that ran iOS 14 can install 14.5+.
+# Builds warn that these browsers are outside Angular 22's official support;
+# that is expected. esbuild still lowers the syntax for them, while missing
+# APIs are polyfilled in src/legacy-polyfills.ts and missing CSS features get
+# fallbacks in src/_material-compat.scss. The `oldest-supported-browser` e2e
+# project checks the app in a Chromium that behaves like iOS 14.5.
 Chrome >= 80
 ChromeAndroid >= 80
 Edge >= 88
