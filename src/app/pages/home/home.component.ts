@@ -47,6 +47,9 @@ export class HomeComponent implements OnInit {
   ayatCount = 0;
   hasanatCount = 0;
 
+  // Dayma has Arabic and English pages; every other language gets the English one.
+  readonly daymaUrl: string;
+
   constructor(
     private router: Router,
     private groupsApi: KhitmaGroupService,
@@ -56,7 +59,9 @@ export class HomeComponent implements OnInit {
     private globalCounters: GlobalCountersService,
     private svcUser: UserService,
     public common: CommonService
-  ) {}
+  ) {
+    this.daymaUrl = common.currentLanguage === 'ar' ? 'https://dayma.hasanat.dev/?lang=ar' : 'https://dayma.hasanat.dev/en/';
+  }
 
   ngOnInit(): void {
     this.loadData();

@@ -58,4 +58,40 @@ test.describe('home', () => {
     await expect(page.getByRole('link', { name: 'Create a periodical set' })).toBeVisible();
     await expect(page.locator('body')).toHaveClass(/ltr/);
   });
+
+  test('recommends Dayma in the reader\'s language, in a new tab', async ({ page, browser }) => {
+    await openApp(page, '/');
+    const arabic = page.getByRole('link', { name: 'تعرّف على دايمة' });
+    await expect(arabic).toHaveAttribute('href', 'https://dayma.hasanat.dev/?lang=ar');
+    await expect(arabic).toHaveAttribute('target', '_blank');
+    await expect(page.getByText('أوراد')).toHaveCount(0);
+
+    const english = await (await browser.newContext()).newPage();
+    await openApp(english, '/', { storage: { lng: 'en' } });
+    await expect(english.getByRole('link', { name: 'Discover Dayma' })).toHaveAttribute('href', 'https://dayma.hasanat.dev/en/');
+  });
+
+  test('the big buttons keep their labels in the middle', async ({ page }) => {
+    await openApp(page, '/');
+    await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+
+    const offsets = await page.locator('a.large').evaluateAll((buttons) =>
+      buttons.map((button) => {
+        const box = button.getBoundingClientRect();
+        const label = button.querySelector('.mdc-button__label')!.getBoundingClientRect();
+        return Math.abs(label.top + label.height / 2 - (box.top + box.height / 2));
+      })
+    );
+    expect(offsets.length).toBeGreaterThanOrEqual(4);
+    for (const offset of offsets) expect(offset).toBeLessThanOrEqual(1.5);
+  });
+
+  test('on wide screens, the toolbar ends where the page content starts', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await openApp(page, '/');
+
+    const toolbarBottom = await page.locator('mat-toolbar').evaluate((el) => el.getBoundingClientRect().bottom);
+    const contentTop = await page.locator('#app-content').evaluate((el) => el.getBoundingClientRect().top);
+    expect(toolbarBottom).toBe(contentTop);
+  });
 });
