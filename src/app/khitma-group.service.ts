@@ -20,6 +20,7 @@ import {
   Firestore,
   getDoc,
   increment,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
@@ -106,6 +107,7 @@ export class KhitmaGroupService {
       type: groupType,
       cycle: 0,
       authorId: authorId || '',
+      createdAt: serverTimestamp(),
     };
 
     switch (groupType) {
@@ -179,14 +181,21 @@ export class KhitmaGroupService {
       currentSequentialKhitma.ajza[juzIndex].owner = '';
     }
 
+    // When the last juz is done, the round is recorded as completed, in the same write.
+    const completedRound = juzStatus == JUZ_STATUS.DONE &&
+      currentSequentialKhitma.ajza.every((juz) => juz.status == JUZ_STATUS.DONE)
+      ? { ['completedRounds.' + (currentSequentialKhitma.cycle || 0)]: serverTimestamp() }
+      : {};
+
     if (this._isV2Api) {
       let updatedObj = {};
-      updatedObj['ajza.' + juzIndex] = currentSequentialKhitma.ajza[juzIndex];
+      // updatedAt: when this juz last changed, e.g. how long a booking has been waiting.
+      updatedObj['ajza.' + juzIndex] = { ...currentSequentialKhitma.ajza[juzIndex], updatedAt: serverTimestamp() };
 
-      updateDoc(this.groupDoc(groupId), updatedObj);
+      updateDoc(this.groupDoc(groupId), { ...updatedObj, ...completedRound });
     } else {
       // LEGACY CODE
-      updateDoc(this.groupDoc(groupId), { ajza: currentSequentialKhitma.ajza });
+      updateDoc(this.groupDoc(groupId), { ajza: currentSequentialKhitma.ajza, ...completedRound });
     }
 
     // update also in the pesonal khitma
@@ -327,7 +336,12 @@ export class KhitmaGroupService {
         break;
     }
 
-    updateDoc(this.groupDoc(this._currentGroupObj.id), { cycle: newCycle, ajza: ajzaObj });
+    // Every juz of the new round starts now (bookings made for members included).
+    for (const key of Object.keys(ajzaObj)) {
+      ajzaObj[key] = { ...ajzaObj[key], updatedAt: serverTimestamp() };
+    }
+
+    updateDoc(this.groupDoc(this._currentGroupObj.id), { cycle: newCycle, ajza: ajzaObj, roundStartedAt: serverTimestamp() });
   }
 
   // ******** SAMETASK KHITMA

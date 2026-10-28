@@ -37,6 +37,12 @@ The simulated old browser cannot catch JavaScript syntax that old engines fail t
 1. Download and unzip `https://storage.googleapis.com/chromium-browser-snapshots/Mac/706915/chrome-mac.zip` (Linux: `Linux_x64/706915/chrome-linux.zip`).
 2. Run `OLD_CHROMIUM=/path/to/chrome-mac/Chromium.app/Contents/MacOS/Chromium OLD_CHROMIUM_X64=1 npm run e2e -- --project=mobile-chromium real-old-browser`. `OLD_CHROMIUM_X64=1` runs this Intel-only build through Rosetta on Apple Silicon; leave it out elsewhere. Screenshots of each screen are saved under `e2e/.results`.
 
+## Tools
+
+- `node tools/metrics/weekly-report.mjs`: the weekly numbers (groups created, first-khitma completion, groups with no juz booked, repeat rate, active recurring groups), read-only from Firestore. It needs a `gcloud` login that can read the project, and prints counts only, never names or titles.
+- `node tools/icons/update-icon-font.mjs`: rebuilds the small icon font after an icon is added to a template (`e2e/tests/icons.spec.ts` checks it).
+- `node tools/og-images/render.mjs`: renders the link-preview images in `src/assets/og/` from the HTML templates in `tools/og-images/`.
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
