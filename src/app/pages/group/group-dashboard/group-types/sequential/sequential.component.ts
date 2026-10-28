@@ -45,7 +45,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   myAjzaIndexes: number[];
   showNames = false;
   /** Set when this member finishes a juz: the next free juz after it is offered, until taken or dismissed. */
-  private offerAfter: number = null;
+  offerAfter: number = null;
   /** The juz the member just finished, so its circle can mark the moment. */
   celebrateJuzIndex: number = null;
 
@@ -209,6 +209,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       this.$gaService.send('next_juz_offer', { action: 'accepted' });
       this.juzSelected(juz);
     }
+  }
+
+  /** Members who start a khitma of their own are how khitma.net grows; only 1.4% did so far. */
+  startOwnClicked(source: string) {
+    this.$gaService.send('start_own_khitma_click', { source });
   }
 
   dismissNextJuz() {

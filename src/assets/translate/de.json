@@ -15,6 +15,20 @@
   "privacy": "Datenschutzabkommen.",
   "terms": "Nutzungsbedingungen",
   "share": "Teilen",
+  "newKhitma": {
+    "title": "Eine neue Khitma für die Gruppe",
+    "label": "Wähle, wie die neue Khitma beginnt",
+    "autoBook": "Jedem Mitglied automatisch seinen nächsten Juz geben",
+    "autoBookDone": "Den nächsten Juz nur Mitgliedern geben, die ihren beendet haben",
+    "allIdle": "Alle Juz zur Auswahl freigeben",
+    "rewind": "Einen Schritt zurück (jedem seinen vorherigen Juz geben)",
+    "cancel": "Abbrechen",
+    "ok": "OK"
+  },
+  "completion": {
+    "startOwn": "Möchtest du eine gemeinsame Khitma für einen geliebten Menschen beginnen?",
+    "startOwnButton": "Neue Khitma beginnen"
+  },
   "deadline": {
     "question": "Bis wann soll die Khitma vollendet sein?",
     "in3days": "3 Tage",
@@ -127,6 +141,7 @@
     "responsible": "Für Gruppenadministrator:"
   },
   "sequential": {
+    "thanks": "Möge Allah dich belohnen 🤍",
     "nextTitle": "Möge Allah dich belohnen 🤍 {count} ohne Leser",
     "nextAsk": "Liest du auch Juz {juz}?",
     "nextTake": "Juz {juz} lesen",

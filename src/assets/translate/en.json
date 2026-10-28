@@ -15,6 +15,20 @@
   "privacy": "Privacy Agreement",
   "terms": "Terms of use",
   "share": "Share",
+  "newKhitma": {
+    "title": "A new khitma for the group",
+    "label": "Choose how the new khitma starts",
+    "autoBook": "Give every member their next juz automatically",
+    "autoBookDone": "Give the next juz only to members who finished theirs",
+    "allIdle": "Make every juz available to choose",
+    "rewind": "Go back one step (give every member their previous juz)",
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
+  "completion": {
+    "startOwn": "Would you like to start a group khitma for someone you love?",
+    "startOwnButton": "Start a new khitma"
+  },
   "deadline": {
     "question": "When would you like to complete the khitma?",
     "in3days": "3 days",
@@ -127,6 +141,7 @@
     "responsible": "For group administrator:"
   },
   "sequential": {
+    "thanks": "May Allah reward you 🤍",
     "nextTitle": "May Allah reward you 🤍 {count} still have no reader",
     "nextAsk": "Will you read juz {juz} too?",
     "nextTake": "Read juz {juz}",

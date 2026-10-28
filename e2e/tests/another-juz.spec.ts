@@ -57,7 +57,7 @@ test.describe('reading another juz', () => {
     await expect(page.locator('.next-juz-offer')).toContainText('هل تقرأ الجزء 4 أيضًا؟');
   });
 
-  test('nothing is offered when no juz is free', async ({ page }) => {
+  test('no juz is offered when none is free; the member is invited to start their own instead', async ({ page }) => {
     const groupId = newGroupId('next-juz-none');
     const assigned = Object.fromEntries(Array.from({ length: 30 }, (_, i) => [i + 1, { owner: 'خالد', status: BOOKED }]));
     assigned[5] = { owner: 'سارة', status: BOOKED };
@@ -65,7 +65,8 @@ test.describe('reading another juz', () => {
 
     await finishJuz(page, groupId, 5);
     await expect.poll(() => storedJuz(groupId, 5)).toEqual({ owner: 'سارة', status: DONE });
-    await expect(page.locator('.next-juz-offer')).toHaveCount(0);
+    await expect(page.locator('.next-juz-offer')).toContainText('هل تودّ أن تبدأ ختمة جماعيّة لمن تحب؟');
+    await expect(page.getByText(/هل تقرأ الجزء \d+ أيضًا؟/)).toHaveCount(0);
   });
 
   test('"later" closes the offer without booking anything', async ({ page }) => {

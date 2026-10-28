@@ -36,6 +36,8 @@ export class CreateGroupComponent implements OnInit {
   firstTask: string;
 
   typeParam: string;
+  /** Where the visitor came from (e.g. "completion": a finished khitma's invitation), for analytics. */
+  source: string = null;
 
   deadlineChoice: DeadlineChoice = 'none';
   deadlinePicked: string = null;
@@ -64,6 +66,7 @@ export class CreateGroupComponent implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       this.typeParam = params['type'];
+      this.source = params['from'] || null;
 
       if (!this.typeParam) {
         return;
@@ -127,7 +130,12 @@ export class CreateGroupComponent implements OnInit {
       )
       .then((docRef) => {
         const groupId = docRef.id;
-        this.$gaService.send('group_created', { group_id: groupId, group_type: this.groupType, deadline: deadlineChoice });
+        this.$gaService.send('group_created', {
+          group_id: groupId,
+          group_type: this.groupType,
+          deadline: deadlineChoice,
+          ...(this.source ? { source: this.source } : {}),
+        });
 
         this.alert.show(this.common.translation.gCreate?.success, 5000);
 
