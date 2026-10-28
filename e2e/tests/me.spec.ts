@@ -37,6 +37,11 @@ test.describe('personal and global khitmahs', () => {
     await openApp(page, '/aqsa');
 
     await page.getByRole('radio', { name: '5', exact: true }).click();
+    // The chosen amount stands out in the app's green (Material's own selected color is a pale gray).
+    const chosen = page.locator('.mat-button-toggle-checked');
+    await expect(chosen).toHaveText('5');
+    await expect(chosen).toHaveCSS('background-color', 'rgb(7, 94, 84)');
+    await expect(chosen.locator('button')).toHaveCSS('color', 'rgb(255, 255, 255)');
     await page.getByRole('button', { name: 'أريد تلاوة 5 صحفات' }).click();
 
     const from = (before.granted % 604) + 1;

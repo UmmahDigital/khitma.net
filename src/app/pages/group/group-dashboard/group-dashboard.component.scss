@@ -49,6 +49,13 @@
   --mat-slide-toggle-selected-hover-track-color: #{color.adjust($primary-color, $lightness: 20%)};
   --mat-slide-toggle-selected-focus-track-color: #{color.adjust($primary-color, $lightness: 20%)};
   --mat-slide-toggle-selected-pressed-track-color: #{color.adjust($primary-color, $lightness: 20%)};
+  // The touch and focus halo, which otherwise takes the theme's pink.
+  --mat-slide-toggle-selected-focus-state-layer-color: #{$primary-color};
+  --mat-slide-toggle-selected-hover-state-layer-color: #{$primary-color};
+  --mat-slide-toggle-selected-pressed-state-layer-color: #{$primary-color};
+  --mat-slide-toggle-unselected-focus-state-layer-color: #{$primary-color};
+  --mat-slide-toggle-unselected-hover-state-layer-color: #{$primary-color};
+  --mat-slide-toggle-unselected-pressed-state-layer-color: #{$primary-color};
 }
 
 .admin-actions {

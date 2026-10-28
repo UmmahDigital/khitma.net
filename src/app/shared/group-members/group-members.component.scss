@@ -20,6 +20,9 @@
 
 .member-panel {
     width: 100%;
+    // A plain block, as the legacy card was: the page range and the name share one line (MDC cards
+    // stack their children in a column).
+    display: block;
 }
 
 .member-admin-actions {
