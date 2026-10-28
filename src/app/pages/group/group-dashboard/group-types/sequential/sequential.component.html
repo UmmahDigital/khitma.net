@@ -20,6 +20,9 @@
           مشاركة
           دعاء
         الختمة</button>
+        <button mat-stroked-button class="block status-card-btn" (pointerdown)="prepareCard('complete')" (click)="shareCard('complete')">
+          <mat-icon>image</mat-icon> <span [translate]="'shareCard.button'">شارك في حالة واتساب</span>
+        </button>
         <ng-container *ngTemplateOutlet="startOwn; context: { source: 'completion' }"></ng-container>
       </section>
     }
@@ -28,6 +31,7 @@
       <!-- Just finished, and nothing left to take here: the best moment to start a khitma of their own. -->
       <div class="next-juz-offer">
         <p class="next-juz-title" [translate]="'sequential.thanks'">جزاكم الله خيرًا 🤍</p>
+        <ng-container *ngTemplateOutlet="statusCard"></ng-container>
         <ng-container *ngTemplateOutlet="startOwn; context: { source: 'juz_done' }"></ng-container>
       </div>
     }
@@ -39,6 +43,7 @@
           <button mat-flat-button class="action-btn" (click)="acceptNextJuz()">{{ offerText('nextTake', 'اقرأ الجزء {juz}') }}</button>
           <button mat-button (click)="dismissNextJuz()">{{ offerText('nextLater', 'لاحقًا') }}</button>
         </div>
+        <ng-container *ngTemplateOutlet="statusCard"></ng-container>
       </div>
     }
       <!-- <span *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
@@ -123,6 +128,12 @@
 }
 </div>
 }
+<ng-template #statusCard>
+  <button mat-button class="status-card-btn" (pointerdown)="prepareCard('juz')" (click)="shareCard('juz')">
+    <mat-icon>image</mat-icon> <span [translate]="'shareCard.button'">شارك في حالة واتساب</span>
+  </button>
+</ng-template>
+
 <ng-template #startOwn let-source="source">
   <div class="start-own">
     <p class="start-own-title" [translate]="'completion.startOwn'">هل تودّ أن تبدأ ختمة جماعيّة لمن تحب؟</p>

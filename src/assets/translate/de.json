@@ -289,6 +289,17 @@
     "nextAt": "Die nächste Khitma beginnt automatisch am {when}",
     "nextAfterCompletion": "Die nächste Khitma beginnt automatisch, sobald diese vollendet ist"
   },
+  "shareCard": {
+    "button": "Im WhatsApp-Status teilen",
+    "juzHeadline": "Ich habe Juz {juz} gelesen",
+    "completeHeadline": "Die Khitma ist vollendet, durch Allahs Gnade",
+    "progress": "{done} von 30 Juz gelesen",
+    "juzInvitation": "Wählt einen Juz und teilt den Lohn",
+    "completeInvitation": "Startet eine Khitma für eure Liebsten",
+    "juzCaption": "Ich habe Juz {juz} der Khitma „{title}“ gelesen 🤍\nWählt einen Juz und teilt den Lohn:",
+    "completeCaption": "Die Khitma „{title}“ ist vollendet, durch Allahs Gnade 🤍\nStartet eine Khitma für eure Liebsten:",
+    "saved": "Bild gespeichert und Text kopiert: teile es in deinem Status"
+  },
   "dialog": {
     "yes": "ja",
     "no": "Nein",

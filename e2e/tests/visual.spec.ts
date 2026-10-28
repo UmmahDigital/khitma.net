@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test';
-import { joinedGroups, OLD_ANDROID_UA, openApp, openInTooOldBrowser } from '../support/app';
+import { joinedGroups, OLD_ANDROID_UA, openApp, openInTooOldBrowser, sharedImage } from '../support/app';
 import { setDoc } from '../support/firestore';
 import { createPagesGroup, createSameTaskGroup, createSequentialGroup, JUZ_STATUS } from '../support/fixtures';
 
@@ -52,6 +52,7 @@ test.describe('screenshots of the current design', () => {
   test.beforeAll(async () => {
     await setDoc('global/aqsa', { pages: { completed: 1250, granted: 1400 } });
     await setDoc('refs/visualref', { joined: 7, read: 12, started: 1 });
+    await createSequentialGroup('visual-card', { title: 'ختمة عن روح جدّنا رحمه الله', author: ADMIN, assigned: FAMILY_AJZA });
     await createSequentialGroup('visual-memorial-done', {
       title: 'ختمة عن روح فاطمة رحمها الله',
       author: ADMIN,
@@ -272,6 +273,24 @@ test.describe('screenshots of the current design', () => {
     await expect(page.locator('.memorial-dua-text')).toBeVisible();
     await page.locator('.memorial-dua').evaluate((card) => card.scrollIntoView({ block: 'center' }));
     await snap(page, 'sequential-memorial-complete');
+  });
+
+  test('WhatsApp Status image: a juz just finished', async ({ page }) => {
+    await openAsMember(page, 'visual-card', 'سارة');
+    await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
+    await page.getByRole('button', { name: 'نعم' }).click();
+    await settle(page);
+    await page.locator('.next-juz-offer').getByRole('button', { name: 'شارك في حالة واتساب' }).click();
+    await expect.poll(() => page.evaluate(() => (window as any).__sharedFiles.length)).toBe(1);
+    expect((await sharedImage(page)).bytes).toMatchSnapshot('status-card-juz.png');
+  });
+
+  test('WhatsApp Status image: a completed khitma', async ({ page }) => {
+    await openAsMember(page, 'visual-complete', ADMIN);
+    await settle(page);
+    await page.locator('.khitma-done').getByRole('button', { name: 'شارك في حالة واتساب' }).click();
+    await expect.poll(() => page.evaluate(() => (window as any).__sharedFiles.length)).toBe(1);
+    expect((await sharedImage(page)).bytes).toMatchSnapshot('status-card-complete.png');
   });
 
   test('same-task group: member', async ({ page }) => {

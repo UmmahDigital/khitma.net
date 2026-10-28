@@ -44,15 +44,22 @@ export async function openApp(page: Page, path: string, options: OpenOptions = {
       sessionStorage.setItem('__e2eSeeded', '1');
     }
     (window as any).__shares = [];
+    (window as any).__sharedFiles = [];
     Object.defineProperty(navigator, 'share', {
       configurable: true,
       value: shareSheet
-        ? (data: unknown) => {
-            (window as any).__shares.push(data);
+        ? (data: any) => {
+            const files: File[] = Array.from(data?.files ?? []);
+            (window as any).__sharedFiles.push(...files);
+            (window as any).__shares.push(
+              files.length ? { ...data, files: files.map((file) => ({ name: file.name, type: file.type, size: file.size })) } : data
+            );
             return Promise.resolve();
           }
         : undefined,
     });
+    // A share sheet that takes files, like phones since iOS 15 and Android.
+    Object.defineProperty(navigator, 'canShare', { configurable: true, value: shareSheet ? () => true : undefined });
     (window as any).__opened = [];
     window.open = ((url?: string | URL) => {
       (window as any).__opened.push(String(url));
@@ -78,7 +85,21 @@ export function joinedGroups(entries: Record<string, string>): Record<string, un
   );
 }
 
-export async function sharedPayloads(page: Page): Promise<Array<{ title?: string; text?: string; url?: string }>> {
+/** A file the app shared (the last one by default), as PNG/JPEG bytes and its pixel size. */
+export async function sharedImage(page: Page, index = -1): Promise<{ bytes: Buffer; width: number; height: number }> {
+  const { base64, width, height } = await page.evaluate(async (at) => {
+    const files: File[] = (window as any).__sharedFiles;
+    const file = files[at < 0 ? files.length + at : at];
+    const bitmap = await createImageBitmap(file);
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    let binary = '';
+    bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
+    return { base64: btoa(binary), width: bitmap.width, height: bitmap.height };
+  }, index);
+  return { bytes: Buffer.from(base64, 'base64'), width, height };
+}
+
+export async function sharedPayloads(page: Page): Promise<Array<{ title?: string; text?: string; url?: string; files?: Array<{ name: string; type: string; size: number }> }>> {
   return page.evaluate(() => (window as any).__shares);
 }
 

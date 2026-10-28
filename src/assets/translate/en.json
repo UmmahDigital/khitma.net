@@ -289,6 +289,17 @@
     "nextAt": "The next khitma starts automatically on {when}",
     "nextAfterCompletion": "The next khitma starts automatically once this one is complete"
   },
+  "shareCard": {
+    "button": "Share to WhatsApp Status",
+    "juzHeadline": "I finished reading juz {juz}",
+    "completeHeadline": "The khitma is complete, by Allah’s grace",
+    "progress": "{done} of 30 juz read",
+    "juzInvitation": "Pick a juz and share the reward",
+    "completeInvitation": "Start a group khitma for your loved ones",
+    "juzCaption": "I finished reading juz {juz} of the khitma “{title}” 🤍\nPick a juz and share the reward:",
+    "completeCaption": "The khitma “{title}” is complete, by Allah’s grace 🤍\nStart a group khitma for your loved ones:",
+    "saved": "Image saved and caption copied: post it to your status"
+  },
   "dialog": {
     "yes": "Yes",
     "no": "No",

@@ -14,7 +14,8 @@ import { NativeShareService } from '../../../../../native-share.service';
 import { SharingService } from '../../../../../sharing.service';
 import { ReferralService } from '../../../../../referral.service';
 import { impactLines } from '../../../../../referral';
-import { memorialDua } from '../../../../../purpose';
+import { khitmaName, memorialDua } from '../../../../../purpose';
+import { renderShareCard } from '../../../../../share-card';
 import { repeatText } from '../../../../../schedule';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { StatusMessageGenerators } from '../../status-messages';
@@ -268,6 +269,54 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       this.$gaService.send('stale_bookings_released', { count: stale.length });
       this.alert.show(fill(t.released || 'أُتيح {count} من جديد', { count }), 4000);
     });
+  }
+
+  /** The WhatsApp Status image for the moment on screen, drawn when its button is first touched. */
+  private card: { key: string; image: Promise<Blob> } | null = null;
+
+  /**
+   * Draws the image for a juz just finished ("juz") or the completed khitma. Started on touch, so it's ready by the
+   * click: Safari only lets a page share during a tap.
+   */
+  prepareCard(kind: 'juz' | 'complete'): Promise<Blob> {
+    const finished = kind === 'juz' ? this.offerAfter : null;
+    const key = `${kind}-${this.group.cycle || 0}-${finished}`;
+    if (this.card?.key === key) {
+      return this.card.image;
+    }
+    const t = this.common.translation.shareCard ?? {};
+    // The juz just finished may not be in the group's data yet.
+    const statuses = this.group.ajza.map((juz, index) => (index === finished ? JUZ_STATUS.DONE : juz.status));
+    const done = statuses.filter((status) => status === JUZ_STATUS.DONE).length;
+    const image = renderShareCard({
+      headline: kind === 'juz'
+        ? fill(t.juzHeadline || 'أتممتُ قراءة الجزء {juz}', { juz: finished + 1 })
+        : t.completeHeadline || 'تمّت الختمة بفضل الله',
+      title: this.group.title,
+      statuses,
+      highlight: finished,
+      progress: fill(t.progress || 'تمّت قراءة {done} من 30 جزءًا', { done }),
+      invitation: kind === 'juz' ? t.juzInvitation || 'اختاروا جزءًا وشاركونا الأجر' : t.completeInvitation || 'ابدؤوا ختمة جماعيّة لمن تحبّون',
+      rtl: this.common.currentLanguage === 'ar',
+    });
+    image.catch(() => {});
+    this.card = { key, image };
+    return image;
+  }
+
+  /** Shares the image with a caption that carries the link: the group's after a juz, the home page after a khitma. */
+  shareCard(kind: 'juz' | 'complete') {
+    const t = this.common.translation.shareCard ?? {};
+    const names = { juz: (this.offerAfter ?? 0) + 1, title: this.group.title, khitma: khitmaName(this.group.title) };
+    const caption = kind === 'juz'
+      ? fill(t.juzCaption || 'أتممتُ قراءة الجزء {juz} من {khitma} 🤍\nاختاروا جزءًا وشاركونا الأجر:', names) + '\n' + this.referral.groupUrl(this.group.id)
+      : fill(t.completeCaption || 'تمّت {khitma} بفضل الله 🤍\nابدؤوا ختمة جماعيّة لمن تحبّون:', names) + '\n' + this.referral.homeUrl();
+    const content = kind === 'juz' ? 'card_juz' : 'card_complete';
+    this.prepareCard(kind).then(
+      (image) => this.sharing.shareImage(image, `khitma-${kind}.png`, caption, content, this.group.id),
+      // No image (a very old browser): the caption alone, on WhatsApp.
+      () => this.sharing.whatsapp(caption, content, this.group.id)
+    );
   }
 
   /** For khitmas that repeat by themselves: when the next round starts. */

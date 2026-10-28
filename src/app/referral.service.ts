@@ -43,6 +43,11 @@ export class ReferralService {
     return withRef(location.origin + '/group/' + groupId, this.myCode);
   }
 
+  /** The home page, carrying this phone's reference: for inviting people to start khitmas of their own. */
+  homeUrl(): string {
+    return withRef(location.origin + '/', this.myCode);
+  }
+
   /** Called on every share: from now on, this phone looks up what its invitations brought about. */
   noteShared(): void {
     localStorage.setItem(REF_SHARED_KEY, '1');

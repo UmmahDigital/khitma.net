@@ -7,7 +7,7 @@ import { CommonService } from './service/common.service';
 import { ReferralService } from './referral.service';
 
 /** What was shared, as the `content_type` of the `share` analytics event. */
-export type ShareContent = 'invite' | 'status' | 'free_juz' | 'completion_dua';
+export type ShareContent = 'invite' | 'status' | 'free_juz' | 'completion_dua' | 'card_juz' | 'card_complete';
 
 /**
  * Every way a khitma gets shared. Most members arrive from a WhatsApp link, so WhatsApp comes first; nothing here
@@ -44,6 +44,37 @@ export class SharingService {
       return;
     }
     this.copy(message, content, groupId, true);
+  }
+
+  /**
+   * An image for WhatsApp Status, with its caption: through the share sheet where it takes files (iOS 15+, Android).
+   * Elsewhere the image is downloaded and the caption copied; the store app's bridge shares text only, so it gets the
+   * caption. Call it within the tap: Safari shares only during one.
+   */
+  shareImage(image: Blob, fileName: string, caption: string, content: ShareContent, groupId?: string): void {
+    if (this.nativeApi.hasBridge) {
+      this.track('flutter', content, groupId);
+      this.nativeApi.share('', caption, null);
+      return;
+    }
+    const file = new File([image], fileName, { type: image.type || 'image/png' });
+    const data = { files: [file], text: caption };
+    if (typeof navigator.canShare === 'function' && navigator.canShare(data)) {
+      this.track('native_file', content, groupId);
+      navigator.share(data).catch(() => {});
+      return;
+    }
+    const url = URL.createObjectURL(image);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    this.clipboard.copy(caption);
+    this.track('download', content, groupId);
+    this.snackBar.open(this.common.translation.shareCard?.saved || 'تمّ حفظ الصورة ونسخ النص، انشرها في حالتك', '', { duration: 6000 });
   }
 
   copy(message: string, content: ShareContent, groupId?: string, offerWhatsApp = false): void {

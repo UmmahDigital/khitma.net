@@ -276,3 +276,12 @@
     line-height: 1.7;
   }
 }
+
+// "Share to WhatsApp Status": an image of the moment, made on the phone.
+.status-card-btn {
+  margin-top: 12px !important;
+
+  mat-icon {
+    margin-inline-end: 4px;
+  }
+}

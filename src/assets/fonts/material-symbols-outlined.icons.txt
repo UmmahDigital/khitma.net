@@ -9,6 +9,7 @@ group_add
 groups
 help_outline
 home
+image
 language
 layers
 linear_scale
