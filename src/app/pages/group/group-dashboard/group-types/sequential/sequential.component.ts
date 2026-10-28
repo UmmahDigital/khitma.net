@@ -41,6 +41,8 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   myAjzaIndexes: number[];
   showNames = false;
+  /** The juz the member just finished, so its circle can mark the moment. */
+  celebrateJuzIndex: number = null;
 
 
   constructor(private groupsApi: KhitmaGroupService,
@@ -166,6 +168,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
         this.myAjzaIndexes = this.myAjzaIndexes.filter(_juzIndex => _juzIndex !== juzIndex)
 
+        this.markFinished(juzIndex);
         this.onAchievement.emit();
       }
 
@@ -173,6 +176,19 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   }
 
+
+  private markFinished(juzIndex: number) {
+    this.celebrateJuzIndex = juzIndex;
+    setTimeout(() => {
+      if (this.celebrateJuzIndex === juzIndex) {
+        this.celebrateJuzIndex = null;
+      }
+    }, 6000);
+    // A light tick on Android phones; iPhones ignore it.
+    if (typeof navigator.vibrate === 'function') {
+      navigator.vibrate(15);
+    }
+  }
 
   juzGiveup(juzIndex) {
 

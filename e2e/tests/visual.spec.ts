@@ -26,7 +26,7 @@ async function settle(page: Page) {
   });
   await expect
     .poll(() =>
-      page.evaluate(() => document.fonts.check('24px "Material Icons"') && document.fonts.check('16px "Markazi Text"'))
+      page.evaluate(() => document.fonts.check('24px "Material Icons Outlined"') && document.fonts.check('16px "Markazi Text"'))
     )
     .toBe(true);
 }
@@ -252,6 +252,34 @@ test.describe('screenshots of the current design', () => {
     await expect(page.getByRole('button', { name: 'أريد تلاوة 10 صحفات' })).toBeVisible();
     await expect(page.locator('app-aqsa-khitma .main-counter').first()).toHaveText(/1,?250/);
     await snap(page, 'aqsa');
+  });
+
+  test('popup: main menu', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, freezeTime: true });
+    await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+    await page.getByRole('button', { name: 'menu' }).click();
+    await expect(page.getByRole('link', { name: 'عن البرنامج' })).toBeVisible();
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await snap(page, 'popup-main-menu');
+  });
+
+  test('popup: group menu', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openAsMember(page, 'visual-family', 'سارة');
+    await page.locator('.group-options-menu-button').click();
+    await expect(page.getByRole('menuitem', { name: 'ترك المجموعة' })).toBeVisible();
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await snap(page, 'popup-group-menu');
+  });
+
+  test('popup: confirm finishing a juz', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openAsMember(page, 'visual-family', 'سارة');
+    await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
+    await expect(page.getByRole('button', { name: 'نعم' })).toBeVisible();
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await snap(page, 'popup-confirm-juz');
   });
 });
 

@@ -6,7 +6,8 @@
     max-width: 15em;
     margin: auto;
     padding: 0.5em 1em;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: $surface-shadow-raised;
 }
 .todo {
     display: block;
@@ -129,6 +130,27 @@
 .todo__state:checked ~ .todo__icon .todo__circle {
     -webkit-animation-name: explode;
     animation-name: explode;
+}
+
+// On light pages the box and check are drawn in the app's greens, which stand out on white. The
+// dark Ramadan page keeps the original mint and cyan (the stop-color attributes in the template).
+:host(:not(.dark)) {
+    .tone-light {
+        stop-color: #1fa67a;
+    }
+
+    .tone-deep {
+        stop-color: $action-color;
+    }
+
+    .todo__icon,
+    .todo__circle {
+        stroke: #1fa67a;
+    }
+
+    .todo__state:checked ~ .todo__text {
+        color: $text-muted;
+    }
 }
 
 :host.dark {

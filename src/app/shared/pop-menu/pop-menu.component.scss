@@ -1,25 +1,38 @@
 @use "src/variables" as *;
 
-a {
-    margin-bottom: 8px;
-    text-align: start;
+.side-menu {
+    display: block;
+    min-width: 240px;
+}
+
+// One row per destination: icon then label, the current page on a soft green pill.
+.menu-row {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    padding: 0 16px;
+    margin-bottom: 4px;
+    border-radius: 999px;
+    color: #1d2b29;
+    font-size: 21px;
+    text-decoration: none;
 
     mat-icon {
-        margin-inline-end: 8px;
-        display: inline-block;
-        direction: inherit;
+        color: $primary-color;
+    }
+
+    // The gap goes on the label: icon fonts force their own left-to-right direction.
+    span {
+        margin-inline-start: 14px;
+    }
+
+    &:hover {
+        background: rgba(7, 94, 84, 0.06);
     }
 }
 
-a.active-link {
-    background: $primary-color;
-    color: white;
-}
-
-a:focus {
-    // background: white !important;
-}
-
-app-quran {
-    display: none;
+.menu-row.active-link {
+    background: $primary-tonal;
+    color: $primary-color;
+    font-weight: 700;
 }

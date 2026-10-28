@@ -16,8 +16,7 @@
     <section>
       <app-todo [isDone]="$safeNavigationMigration(myMember?.isTaskDone)" (onToggled)="taskToggled($event)" class="task">
         <div content>
-          <span [translate]="'gPages.page'">صفحة</span>
-          <span dir="ltr">
+          <span [translate]="'gPages.page'">صفحة</span>&ngsp;<span dir="ltr">
             <span class="page-num">{{myMember.pagesTask.start +1 | number:'3.0'}}</span>
             -
             <span class="page-num">{{myMember.pagesTask.end +1 | number:'3.0'}}</span>

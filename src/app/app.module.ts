@@ -40,6 +40,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
 import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
 import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
+import { AjzaProgressComponent } from './shared/ajza-progress/ajza-progress.component';
 import { DashboardComponent } from './pages/me/dashboard/dashboard.component';
 import { AboutComponent } from './pages/about/about.component';
 import { EditKhitmaDetailsComponent } from './dialog/edit-khitma-details/edit-khitma-details.component';
@@ -120,6 +121,7 @@ const routes: Routes = [
         ArchiveComponent,
         KhitmaDoneCelebrationComponent,
         QuranBrowserComponent,
+        AjzaProgressComponent,
         DashboardComponent,
         AboutComponent,
         EditKhitmaDetailsComponent,

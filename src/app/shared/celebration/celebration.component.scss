@@ -25,7 +25,38 @@
 
   label {
     font-weight: bold;
-    zoom: 2;
+    font-size: 30px;
+    white-space: nowrap;
+    // Readable over the dark green header as well as the page.
+    text-shadow: 0 0 2px white, 0 0 8px white, 0 0 14px white;
+  }
+}
+
+// The blessings themselves fall upright and whole, one after another on two lanes, so each phrase can
+// be read; the stars and crescents around them keep tumbling. Nine phrases fit the five seconds.
+.confetti:not(.confetti2) .confetti-piece {
+  width: auto;
+  transform: none;
+
+  @for $i from 1 through 9 {
+    $lane: 30%;
+    @if $i % 2 == 0 {
+      $lane: 70%;
+    }
+
+    &:nth-child(#{$i}) {
+      left: $lane;
+      animation: makeItRain 2400ms ease-out #{($i - 1) * 300}ms 1 both;
+    }
+  }
+
+  &:nth-child(n + 10) {
+    display: none;
+  }
+
+  label {
+    display: block;
+    transform: translateX(-50%);
   }
 }
 
@@ -34,7 +65,7 @@
 }
 
 .confetti-piece:nth-child(3n) {
-  color: #27fdc7 !important;
+  color: $action-color !important;
 }
 
 .confetti2 {
@@ -269,4 +300,10 @@
   to {
     transform: translateY(350px);
   }
+}
+
+.confetti2 .shape {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
 }

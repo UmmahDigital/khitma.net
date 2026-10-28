@@ -13,6 +13,8 @@ export class JuzToggleComponent implements OnInit {
 
   @Input() juz: Juz;
   @Input() isMyJuz: boolean;
+  /** Plays the "finished" moment once, when this circle appears as done. */
+  @Input() celebrate = false;
 
   stateName: string;
 
@@ -35,6 +37,10 @@ export class JuzToggleComponent implements OnInit {
 
     if (this.isMyJuz) {
       classes += " my-juz";
+    }
+
+    if (this.celebrate && this.stateName === "done") {
+      classes += " celebrate";
     }
 
     return classes;

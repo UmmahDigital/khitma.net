@@ -24,26 +24,18 @@
     @if (myAjzaIndexes.length > 0) {
       <div>
         @for (juzIndex of myAjzaIndexes; track juzIndex) {
-          <section class="mat-elevation-z16">
-            <section class="my-juz-actions fx-row-wrap">
-              <div class="fx-flex-25 center-center">
-                <a [routerLink]="['/quran/juz' , juzIndex + 1]" class="quran-explorer-btn">
-                  <mat-icon>
-                  menu_book</mat-icon>
-                  <span>{{juzIndex + 1}}</span>
-                </a>
-              </div>
-              <div class="fx-flex-50 center-center">
-                <button mat-raised-button color="accent" class="block large action-btn"
-                  (click)="juzDone(juzIndex)"><span [translate]="'sequential.finished'">أتممت قراءة جزء</span>
-                {{juzIndex + 1}}</button>
-              </div>
-              <div class="fx-flex-25 center-center">
-                <button class="giveup-btn" mat-flat-button (click)="juzGiveup(juzIndex)"><span
-                [translate]="'sequential.release'">تنازل عن الجزء</span></button>
-              </div>
+          <section class="my-juz-card">
+            <section class="my-juz-actions">
+              <a [routerLink]="['/quran/juz' , juzIndex + 1]" class="quran-explorer-btn">
+                <mat-icon>
+                menu_book</mat-icon>
+                <span>{{juzIndex + 1}}</span>
+              </a>
+              <button mat-flat-button class="action-btn finish-btn" (click)="juzDone(juzIndex)"><span
+                [translate]="'sequential.finished'">أتممت قراءة جزء</span> {{juzIndex + 1}}</button>
+              <button class="giveup-btn" mat-button (click)="juzGiveup(juzIndex)"><span
+              [translate]="'sequential.release'">تنازل عن الجزء</span></button>
             </section>
-            <!-- <div *ngIf="myJuzIndex == null" style="padding:16px" class="center-center">يرجى اختيار جزء</div> -->
           </section>
         }
         <div class="space"></div>
@@ -60,7 +52,7 @@
   </div>
   <section class="juz-grid-section">
     <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes"
-      (onJuzSelection)="juzSelected($event)">
+      [celebrateJuzIndex]="celebrateJuzIndex" (onJuzSelection)="juzSelected($event)">
     </app-juz-grid>
   </section>
   <div class="space" style="margin-bottom: -16px;"></div>

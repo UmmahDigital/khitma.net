@@ -1,3 +1,9 @@
 <span class="juz-toggle noselect" [ngClass]="getCssClasses()">
     {{juz.index + 1}}
+    @if (stateName === 'done') {
+        <svg class="juz-check" viewBox="0 0 18 18" aria-hidden="true">
+            <circle cx="9" cy="9" r="9"></circle>
+            <path d="M5 9.3l2.7 2.7L13 6.5"></path>
+        </svg>
+    }
 </span>

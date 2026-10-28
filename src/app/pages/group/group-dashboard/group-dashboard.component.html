@@ -24,6 +24,9 @@
     </mat-menu>
 
     <app-khitma-info [group]="group" [isExpanded]="false"></app-khitma-info>
+    @if (group) {
+      <app-ajza-progress class="header-progress" [counts]="progress" [showCount]="true"></app-ajza-progress>
+    }
   </header>
 
   @if (isAdmin) {

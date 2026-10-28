@@ -1,9 +1,10 @@
 @use "src/variables" as *;
 
 .home {
-  font-size: larger;
+  font-size: 20px;
   line-height: normal;
-  text-align: justify;
+  // Right-aligned rather than justified: without kashida, justifying Arabic only stretches the spaces.
+  text-align: start;
 
   .logo {
     display: block;
@@ -88,4 +89,5 @@ font-weight: bold;
 mat-card{
   padding:32px;
   margin-bottom: 16px;
+  border-radius: $surface-radius;
 }

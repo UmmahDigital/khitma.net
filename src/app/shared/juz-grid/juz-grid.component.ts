@@ -14,6 +14,8 @@ export class JuzGridComponent implements OnInit {
 
   @Input() ajza: Juz[];
   @Input() myAjzaIndexes: number[] = [];
+  /** The juz just finished on this phone, whose circle marks the moment. */
+  @Input() celebrateJuzIndex: number = null;
   @Output() onJuzSelection = new EventEmitter<Juz>();
 
   constructor() { }

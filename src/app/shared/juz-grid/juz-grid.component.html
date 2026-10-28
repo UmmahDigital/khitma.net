@@ -1,7 +1,8 @@
 <section dir="ltr" class="fx-row-wrap juz-grid-row">
   @for (juz of ajza; track juz) {
     <div class="fx-flex-20" style="text-align:center">
-      <app-juz-toggle [juz]="juz" [isMyJuz]="myAjzaIndexes.indexOf(juz.index)>=0" (click)="juzClicked(juz)">
+      <app-juz-toggle [juz]="juz" [isMyJuz]="myAjzaIndexes.indexOf(juz.index)>=0"
+        [celebrate]="juz.index === celebrateJuzIndex" (click)="juzClicked(juz)">
       </app-juz-toggle>
     </div>
   }

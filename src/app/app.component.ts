@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconRegistry } from '@angular/material/icon';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import { CelebrationService } from './celebration.service';
 import { NotificationsService } from './notifications.service';
@@ -30,7 +31,11 @@ export class AppComponent {
 
   constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router,
     private notificationsService: NotificationsService,
-    private celebrationService: CelebrationService, public common: CommonService) {
+    private celebrationService: CelebrationService, public common: CommonService,
+    iconRegistry: MatIconRegistry) {
+
+    // Outlined icons, loaded in index.html: the same names as Material Icons, in the lighter line style.
+    iconRegistry.setDefaultFontSetClass('material-icons-outlined', 'mat-ligature-font');
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
       this.isPwaInstalled = true;

@@ -51,7 +51,7 @@ export class JuzComponent implements OnInit {
     }
 
     if (this.juz.status == JUZ_STATUS.IDLE) {
-      _cssClasses += " mat-elevation-z2"; // add elevation --> clickable
+      _cssClasses += " selectable";
       this.msg = this.common.translation.juz?.select;
     }
 

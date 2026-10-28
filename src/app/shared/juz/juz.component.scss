@@ -47,8 +47,12 @@
   border: none !important;
 }
 
-.mat-elevation-z2 {
+// Open ajza, which can be tapped to take: a light outlined row.
+.juz.list-item.selectable {
   background-color: white;
+  border: 1px solid $hairline !important;
+  border-radius: 12px;
+  color: $text-muted;
 }
 
 .juz.list-item.my-juz {
@@ -56,6 +60,7 @@
   color: white;
   padding: 16px 8px;
   margin: 10px auto;
+  border-radius: 12px;
 
   .index {
     color: $primary-color;
