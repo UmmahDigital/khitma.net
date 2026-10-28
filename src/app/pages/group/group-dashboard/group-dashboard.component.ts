@@ -13,7 +13,8 @@ import { GoogleAnalyticsService } from '../../../analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from '../../../alert.service';
 import { SharingService } from '../../../sharing.service';
-import { inviteMessage } from '../../../share-messages';
+import { ajzaCount, fill, inviteMessage } from '../../../share-messages';
+import { staleBookings } from '../../../booking-age';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
 import { NativeShareService } from '../../../native-share.service';
@@ -120,6 +121,16 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
 
     });
 
+  }
+
+  /** Booked a week or more ago and still not done: the admin can free them for others. */
+  get staleCount(): number {
+    return this.group?.ajza ? staleBookings(this.group.ajza).length : 0;
+  }
+
+  get releaseStaleLabel(): string {
+    const template = this.common.translation.gDashboard?.releaseStale || 'إتاحة المحجوز منذ أسبوع أو أكثر ({count})';
+    return fill(template, { count: this.staleCount });
   }
 
   ngOnDestroy(): void {

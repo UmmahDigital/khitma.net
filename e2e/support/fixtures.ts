@@ -5,6 +5,8 @@ export const JUZ_STATUS = { IDLE: 0, BOOKED: 1, DONE: 2 } as const;
 export interface JuzSpec {
   owner: string;
   status: number;
+  /** When the juz last changed (booked, finished…). */
+  updatedAt?: Date;
 }
 
 export interface Juz extends JuzSpec {
@@ -23,7 +25,12 @@ export function newGroupId(label: string): string {
 export function buildAjza(assigned: Record<number, JuzSpec> = {}): Juz[] {
   return Array.from({ length: 30 }, (_, index) => {
     const spec = assigned[index + 1];
-    return { index, owner: spec?.owner ?? '', status: spec?.status ?? JUZ_STATUS.IDLE };
+    return {
+      index,
+      owner: spec?.owner ?? '',
+      status: spec?.status ?? JUZ_STATUS.IDLE,
+      ...(spec?.updatedAt ? { updatedAt: spec.updatedAt } : {}),
+    };
   });
 }
 

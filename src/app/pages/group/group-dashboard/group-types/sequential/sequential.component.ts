@@ -15,6 +15,8 @@ import { SharingService } from '../../../../../sharing.service';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
+import { bookedForDays, bookingAgeText, staleBookings } from '../../../../../booking-age';
+import { JuzAction, JuzActionsComponent, JuzActionsData } from '../../../../../dialog/juz-actions/juz-actions.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../../../../service/common.service';
 
@@ -100,11 +102,31 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   adminJuzUpdate(juz: Juz) {
 
     if (juz.status == JUZ_STATUS.BOOKED) {
-      const completesKhitma = this.isLastJuz(juz.index);
-      this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
-      if (completesKhitma) {
-        this.$gaService.send('khitma_completed', { completed_by: 'admin' });
-      }
+      // A tap used to mark the juz read right away, so one mis-tap marked someone else's juz as read. Now the admin
+      // says what they meant, seeing whose booking it is and how old it is.
+      const days = bookedForDays(juz);
+      const data: JuzActionsData = {
+        juzNumber: juz.index + 1,
+        owner: juz.owner,
+        ageText: days === null ? null : bookingAgeText(days, this.common.translation, this.common.currentLanguage),
+      };
+      this.dialog
+        .open<JuzActionsComponent, JuzActionsData, JuzAction>(JuzActionsComponent, { data, maxWidth: '80vw', width: '320px' })
+        .afterClosed()
+        .subscribe((action) => {
+          if (action === 'done') {
+            const completesKhitma = this.isLastJuz(juz.index);
+            this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
+            if (completesKhitma) {
+              this.$gaService.send('khitma_completed', { completed_by: 'admin' });
+            }
+          } else if (action === 'release') {
+            this.groupsApi.updateJuz(this.group.id, juz.index, '', JUZ_STATUS.IDLE);
+          }
+          if (action) {
+            this.$gaService.send('admin_juz_update', { action });
+          }
+        });
     }
 
     if (juz.status == JUZ_STATUS.DONE) {
@@ -121,13 +143,12 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
         if (dialogResult) {
           this.groupsApi.updateJuz(this.group.id, juz.index, "", JUZ_STATUS.IDLE);
+          this.$gaService.send('admin_juz_update', { action: 'clear' });
         }
 
       });
 
     }
-
-    this.$gaService.event('admin_juz_update');
 
   }
 
@@ -209,6 +230,34 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       this.$gaService.send('next_juz_offer', { action: 'accepted' });
       this.juzSelected(juz);
     }
+  }
+
+  /**
+   * Frees ajza booked a week or more ago and still not done, after the admin confirms. Khitmas that stall at
+   * 26-29 of 30 are nearly always waiting on bookings like these.
+   */
+  releaseStaleBookings() {
+    const stale = staleBookings(this.group.ajza);
+    if (!stale.length) {
+      return;
+    }
+    const t = this.common.translation.gDashboard ?? {};
+    const count = ajzaCount(stale.length, this.common.currentLanguage);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogModel(
+        t.releaseTitle || 'إتاحة الأجزاء المتأخّرة',
+        fill(t.releaseText || 'سيُتاح للاختيار من جديد ما حُجز منذ أسبوع أو أكثر ولم يُتَمّ بعد ({count})، مع حذف اسم من حجزه.', { count })
+      ),
+      maxWidth: '80vw',
+    });
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (!confirmed) {
+        return;
+      }
+      stale.forEach((juz) => this.groupsApi.updateJuz(this.group.id, juz.index, '', JUZ_STATUS.IDLE));
+      this.$gaService.send('stale_bookings_released', { count: stale.length });
+      this.alert.show(fill(t.released || 'أُتيح {count} من جديد', { count }), 4000);
+    });
   }
 
   /** Members who start a khitma of their own are how khitma.net grows; only 1.4% did so far. */

@@ -74,6 +74,12 @@
           <mat-icon>format_list_numbered_rtl</mat-icon>
           <span [translate]="'gDashboard.shareStatus'">مشاركة وضع الختمة</span>
         </button>
+        @if (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL && staleCount > 0) {
+          <button mat-flat-button class="release-stale-btn" (click)="sequentialGroupChildComponent.releaseStaleBookings(); adminPanelOpen = false">
+            <mat-icon>restart_alt</mat-icon>
+            <span>{{ releaseStaleLabel }}</span>
+          </button>
+        }
         @if (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL) {
           <button
             mat-flat-button

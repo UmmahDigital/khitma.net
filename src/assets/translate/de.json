@@ -162,6 +162,10 @@
     "done": "- Gott sei Dank"
   },
   "gDashboard": {
+    "releaseStale": "Seit einer Woche oder länger Gebuchtes freigeben ({count})",
+    "releaseTitle": "Verspätete Buchungen freigeben",
+    "releaseText": "{count}, seit einer Woche oder länger gebucht und nicht beendet, werden wieder frei; die Namen darauf werden entfernt.",
+    "released": "{count} freigegeben",
     "join": "Tritt der Gruppe bei",
     "link": "Über den Link",
     "status": "Konfliktmodus:",
@@ -238,6 +242,11 @@
     "m": "Möge Allah mit Ihnen zufrieden sein",
     "n": "Gott akzeptiert"
   },
+  "juzActions": {
+    "title": "Juz {n}",
+    "done": "Als gelesen markieren",
+    "release": "Für jemand anderen freigeben"
+  },
   "dialog": {
     "yes": "ja",
     "no": "Nein",
@@ -258,6 +267,9 @@
     "member": "Der Name des neuen Mitglieds"
   },
   "juz": {
+    "bookedToday": "heute gebucht",
+    "bookedOneDay": "vor 1 Tag gebucht",
+    "bookedDays": "vor {n} Tagen gebucht",
     "notRead": "Nicht lesen.",
     "select": "Klicken Sie hier, um diesen Teil auszuwählen",
     "responsible": "Für Gruppenadministrator:",

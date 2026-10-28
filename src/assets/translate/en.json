@@ -162,6 +162,10 @@
     "done": "- Thanks to God"
   },
   "gDashboard": {
+    "releaseStale": "Free ajza booked a week or more ago ({count})",
+    "releaseTitle": "Release late bookings",
+    "releaseText": "{count} booked a week or more ago and not finished will be free to choose again; the names on them are removed.",
+    "released": "{count} released",
     "join": "Join the group",
     "link": "Across the link",
     "status": "Conflict mode:",
@@ -238,6 +242,11 @@
     "m": "May Allah be pleased with you",
     "n": "May god accepts"
   },
+  "juzActions": {
+    "title": "Juz {n}",
+    "done": "Mark as read",
+    "release": "Free it for another reader"
+  },
   "dialog": {
     "yes": "Yes",
     "no": "No",
@@ -258,6 +267,9 @@
     "member": "The name of the new member"
   },
   "juz": {
+    "bookedToday": "booked today",
+    "bookedOneDay": "booked 1 day ago",
+    "bookedDays": "booked {n} days ago",
     "notRead": "Not read yet",
     "select": "Click to choose this part",
     "responsible": "group admin",

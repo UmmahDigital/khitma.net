@@ -72,6 +72,17 @@ test.describe('screenshots of the current design', () => {
       members: { [ADMIN]: true, 'سارة': false, 'خالد': true },
       totalDoneTasks: 12,
     });
+    // Booking times relative to the frozen clock (2026-03-01 09:00 UTC): 9 days, 2 days and a few hours ago.
+    await createSequentialGroup('visual-stale', {
+      title: 'ختمة العائلة',
+      author: ADMIN,
+      assigned: {
+        1: { owner: 'خالد', status: DONE, updatedAt: new Date('2026-02-25T10:00:00Z') },
+        2: { owner: 'سارة', status: BOOKED, updatedAt: new Date('2026-02-20T08:00:00Z') },
+        3: { owner: 'ليلى', status: BOOKED, updatedAt: new Date('2026-02-27T08:00:00Z') },
+        4: { owner: 'محمود', status: BOOKED, updatedAt: new Date('2026-03-01T06:00:00Z') },
+      },
+    });
     await createPagesGroup('visual-pages-waiting', { title: 'ختمة عن روح الوالد', author: ADMIN, members: { [ADMIN]: {}, 'سارة': {} } });
     await createPagesGroup('visual-pages', {
       title: 'ختمة عن روح الوالد',
@@ -159,6 +170,29 @@ test.describe('screenshots of the current design', () => {
     await page.getByText('أدوات مسؤول المجموعة').click();
     await expect(page.getByRole('button', { name: 'ختمة جديدة للمجموعة' })).toBeVisible();
     await snap(page, 'sequential-admin');
+  });
+
+  test('sequential group: admin sees how long ajza have been booked', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openAsMember(page, 'visual-stale', ADMIN);
+    await expect(page.locator('app-juz-list app-juz').nth(1)).toContainText('محجوز منذ 9 أيام');
+    await page.locator('app-juz-list app-juz').first().evaluate((row) => row.scrollIntoView({ block: 'start' }));
+    await snap(page, 'sequential-admin-booking-ages');
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.getByText('أدوات مسؤول المجموعة').click();
+    await expect(page.getByRole('button', { name: 'إتاحة المحجوز منذ أسبوع أو أكثر (1)' })).toBeVisible();
+    await snap(page, 'sequential-admin-stale-tools');
+  });
+
+  test('sequential group: admin taps a booked juz', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openAsMember(page, 'visual-stale', ADMIN);
+    await page.locator('app-juz-grid app-juz-toggle').nth(1).click();
+    await expect(page.getByRole('button', { name: 'تمّت قراءته' })).toBeVisible();
+    // The dialog focuses its first button; drop focus so the focus halo doesn't flicker between runs.
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await settle(page);
+    await expect(page.locator('mat-dialog-container')).toHaveScreenshot('sequential-admin-juz-actions.png');
   });
 
   test('sequential group: new khitmah dialog', async ({ page }) => {

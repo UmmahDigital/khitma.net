@@ -162,6 +162,10 @@
     "done": "- Grâce à Dieu"
   },
   "gDashboard": {
+    "releaseStale": "Libérer les réservations d’une semaine ou plus ({count})",
+    "releaseTitle": "Libérer les réservations en retard",
+    "releaseText": "{count} réservés depuis une semaine ou plus et non terminés redeviendront disponibles ; les noms seront retirés.",
+    "released": "{count} libérés",
     "join": "Rejoins le groupe",
     "link": "À travers le lien",
     "status": "Mode de conflit:",
@@ -238,6 +242,11 @@
     "m": "Que Allah soit satisfait de toi",
     "n": "Dieu accepte"
   },
+  "juzActions": {
+    "title": "Juz {n}",
+    "done": "Marquer comme lu",
+    "release": "Le libérer pour un autre lecteur"
+  },
   "dialog": {
     "yes": "Oui",
     "no": "Non",
@@ -258,6 +267,9 @@
     "member": "Le nom du nouveau membre"
   },
   "juz": {
+    "bookedToday": "réservé aujourd’hui",
+    "bookedOneDay": "réservé il y a 1 jour",
+    "bookedDays": "réservé il y a {n} jours",
     "notRead": "Ne pas lire après ..",
     "select": "Cliquez pour choisir cette partie",
     "responsible": "Pour l'administrateur de groupe:",

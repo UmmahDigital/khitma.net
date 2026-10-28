@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test';
-import { chooseMenuItem, joinedGroups, openApp, readLocalStorage, sharedPayloads } from '../support/app';
+import { analyticsEvents, chooseMenuItem, joinedGroups, openApp, readLocalStorage, sharedPayloads } from '../support/app';
 import { getDoc } from '../support/firestore';
 import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtures';
 
@@ -146,16 +146,36 @@ test.describe('sequential group: members', () => {
 });
 
 test.describe('sequential group: admin', () => {
-  test('tapping a booked juz marks it done; tapping a done juz clears it after confirming', async ({ page }) => {
+  test('tapping a booked juz asks whether to mark it read or free it; tapping a done juz clears it after confirming', async ({ page }) => {
     const groupId = newGroupId('seq-admin-tap');
     await createSequentialGroup(groupId, {
       author: ADMIN,
-      assigned: { 3: { owner: 'خالد', status: BOOKED }, 4: { owner: 'سارة', status: DONE } },
+      assigned: { 3: { owner: 'خالد', status: BOOKED }, 4: { owner: 'سارة', status: DONE }, 6: { owner: 'ليلى', status: BOOKED } },
     });
 
     await openDashboard(page, groupId, ADMIN);
+    // A mis-tap changes nothing: the admin is asked first.
     await juzToggle(page, 3).click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toContainText('الجزء 3');
+    await expect(dialog).toContainText('خالد');
+    await dialog.getByRole('button', { name: 'الغاء' }).click();
+    await expect(dialog).toHaveCount(0);
+    expect(await storedJuz(groupId, 3)).toEqual({ owner: 'خالد', status: BOOKED });
+
+    await juzToggle(page, 3).click();
+    await page.getByRole('button', { name: 'تمّت قراءته' }).click();
     await expect.poll(() => storedJuz(groupId, 3)).toEqual({ owner: 'خالد', status: DONE });
+
+    await juzToggle(page, 6).click();
+    await page.getByRole('button', { name: 'إتاحته لقارئ آخر' }).click();
+    await expect.poll(() => storedJuz(groupId, 6)).toEqual({ owner: '', status: IDLE });
+    expect(await analyticsEvents(page)).toEqual(
+      expect.arrayContaining([
+        ['admin_juz_update', expect.objectContaining({ action: 'done' })],
+        ['admin_juz_update', expect.objectContaining({ action: 'release' })],
+      ])
+    );
 
     await juzToggle(page, 4).click();
     await page.getByRole('button', { name: 'نعم' }).click();
