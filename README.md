@@ -79,9 +79,19 @@ The simulated old browser cannot catch JavaScript syntax that old engines fail t
 
 Shared group links (`/group/{id}`) are answered by a small Cloud Function (`functions/`): it returns the app's
 `index.html` with the khitma's title and progress in its preview tags, marked `noindex` (see `functions/preview.js`).
-Firebase Hosting sends those links to it (`firebase.json` rewrites), and its CDN keeps each answer for 5 minutes.
+Firebase Hosting sends those links to it (`firebase.json` rewrites), and its CDN keeps each answer for 5 minutes and
+purges it on every deploy.
 
-- Deploy the function before Hosting starts pointing at it: `cd functions && npm ci && cd .. && firebase deploy --only functions:groupPreview`.
+- The function revalidates `index.html` on every request (an ETag check), because a copy from before a deploy would name
+  bundles that no longer exist. It reads it from the site the visitor used, so preview channels work too
+  (`functions/shell.js`).
+- If Firestore can't be read, the page goes out without the khitma's tags; if `index.html` can't be fetched, the last
+  copy is used, or the page reloads itself after two seconds.
+- One instance is kept warm (`minInstances: 1` in `functions/index.js`, about $8 a month), so people opening a shared
+  link don't wait for a cold start. Set it to 0 to drop the cost.
+- Deploy the function before Hosting starts pointing at it:
+  `cd functions && npm ci && cd .. && firebase deploy --only functions:groupPreview --project quran-khitma`.
+  CI deploys Hosting only, so a change in `functions/` is deployed by hand the same way.
 - Tests: `cd functions && npm test`.
 - Locally: `echo SITE_ORIGIN=http://127.0.0.1:5000 > functions/.env.local`, then
   `firebase emulators:start --only hosting,functions,firestore --project demo-khitma` and open `/group/{id}`.
