@@ -27,6 +27,9 @@
                 <mat-icon>close</mat-icon>
               </button> -->
             </mat-form-field>
+            @if (ageText) {
+              <span class="booking-age">{{ ageText }}</span>
+            }
           </div>
           @if (updatedOwner !=  juz.owner) {
             <div class="fx-flex-20 center-center"

@@ -1,7 +1,18 @@
 <div class="home">
   <label style="display: block; text-align: center">﷽</label>
 
-  <img class="logo" src="assets/khitma-logo.png" alt="logo of khitmah" />
+  <img class="logo" src="assets/khitma-logo.png" width="1024" height="1024" [alt]="common.translation.app?.title || 'ختمة.نت'" />
+
+  @if (ramadanSeason) {
+    <div class="ramadan-card">
+      <p class="ramadan-title" [translate]="'ramadan.homeTitle'">ختمات رمضان</p>
+      <p class="ramadan-text" [translate]="'ramadan.homeText'">اجمعوا أهلكم وأصدقاءكم على ختم القرآن في رمضان.</p>
+      <a mat-raised-button class="block action-btn" routerLink="/new"
+        [queryParams]="{ type: 'onetime', purpose: 'ramadan', from: 'home_ramadan' }"><span [translate]="'ramadan.oneKhitma'">ختمة واحدة خلال رمضان</span></a>
+      <a mat-stroked-button class="block" routerLink="/new"
+        [queryParams]="{ type: 'recurring', template: 'ramadan-daily', from: 'home_ramadan' }"><span [translate]="'ramadan.daily'">ختمة كاملة كل يوم</span></a>
+    </div>
+  }
 
   <!-- <hr /> -->
   <!-- <app-login (onLogin)="onLogin($event)"></app-login> -->
@@ -16,6 +27,16 @@
     </section>
   }
 
+  @if (impact.length) {
+    <div class="impact-card">
+      <p class="impact-title" [translate]="'referral.title'">أثر دعواتك 🤍</p>
+      @for (line of impact; track line) {
+        <p class="impact-line">{{ line }}</p>
+      }
+      <p class="impact-hadith">{{ impactHadith }}</p>
+    </div>
+  }
+
   @if (isShowArchive) {
     <a
       mat-button
@@ -28,7 +49,7 @@
     <p [translate]="'home.intro'">
       ختمة.نت هو تطبيق انطلق من رحاب المسجد الأقصى المبارك ليتيح قراءة وختم القرآن
       الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء
-      المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح
+      المصحف على الأعضاء بطريقة سلسة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح
       لجميع المشتركين في مجموعتك.
     </p>
 
@@ -114,7 +135,7 @@
             <span [translate]="'home.bilion'"> مليار </span>
           </strong>
           <span [translate]="'home.more'">
-            حسنة أو يزيد. فـ "من قرأ حرفا من كتاب الله فله حسنة والحسنة بعشر أمثالها"،
+            حسنة أو يزيد. فـ "من قرأ حرفًا من كتاب الله فله به حسنة، والحسنة بعشر أمثالها"،
             والله يضاعف لمن يشاء.
           </span>
         </small>
@@ -153,7 +174,7 @@
       <mat-card appearance="outlined" class="friendly-app">
         <h2 [translate]="'home.apps'">تطبيقات صديقة</h2>
         <div class="app-intro">
-          <img src="assets/dayma-icon.png" alt="" width="56" height="56" />
+          <img src="assets/dayma-icon.png" alt="" width="56" height="56" loading="lazy" decoding="async" />
           <div>
             <strong [translate]="'home.daymaName'">دايمة</strong>
             <span [translate]="'home.daymaTagline'">من نيّةٍ طيّبة، إلى عملٍ يدوم.</span>

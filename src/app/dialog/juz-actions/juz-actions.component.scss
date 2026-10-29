@@ -1,0 +1,22 @@
+.juz-actions-booking {
+  .owner {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .age {
+    color: #8a6d1d;
+    margin-top: 4px;
+  }
+}
+
+.juz-actions-buttons.mat-mdc-dialog-actions {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+
+  button {
+    margin: 0 !important;
+    width: 100%;
+  }
+}

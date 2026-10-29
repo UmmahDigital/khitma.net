@@ -25,12 +25,12 @@ test.describe('creating a group', () => {
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
     const groupId = groupIdFromInviteUrl(page);
     const group = await getDoc(`groups/${groupId}`);
-    expect(group).toMatchObject({ title: 'ختمة الجمعة', author: 'أبو محمد', type: 'SEQUENTIAL', cycle: 0 });
+    expect(group).toMatchObject({ title: 'ختمة الجمعة', author: 'أبو محمد', type: 'SEQUENTIAL', cycle: 0, purpose: 'regular' });
     expect(Object.keys(group!.ajza)).toHaveLength(30);
     expect(Object.values<any>(group!.ajza).every((juz) => juz.status === 0 && juz.owner === undefined)).toBe(true);
     expect(await readLocalStorage(page, 'groups')).toMatchObject({ [groupId]: { isJoined: true, username: 'أبو محمد' } });
 
-    const invite = page.getByLabel('رسالة الدعوة للإنضمام (يمكنك تعديلها)');
+    const invite = page.getByLabel('رسالة الدعوة للانضمام (يمكنك تعديلها)');
     await expect(invite).toHaveValue(new RegExp(`/group/${groupId}`));
     await page.getByRole('button', { name: 'مشاركة' }).click();
     const [shared] = await sharedPayloads(page);
@@ -44,6 +44,9 @@ test.describe('creating a group', () => {
   test('recurring same-task group stores the first task and the admin as a member', async ({ page }) => {
     await openApp(page, '/new?type=recurring');
     await fillGroupDetails(page, 'ورد الكهف', 'أم علي');
+    // Same-task khitmas are less common: their choice waits under "more options".
+    await expect(page.getByRole('radio', { name: 'نفس المهمّة' })).toHaveCount(0);
+    await page.getByRole('button', { name: 'خيارات أخرى' }).click();
     await page.getByRole('radio', { name: 'نفس المهمّة' }).click();
     await page.getByLabel('المهمّة الأولى').fill('سورة الكهف');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
@@ -64,6 +67,7 @@ test.describe('creating a group', () => {
     await expect(page).toHaveURL(/\/new\?type=onetime$/);
 
     await fillGroupDetails(page, 'ختمة عن روح جدّي', 'خالد');
+    await page.getByRole('button', { name: 'خيارات أخرى' }).click();
     await page.getByRole('radio', { name: 'توزيع صفحات' }).click();
     await page.getByRole('button', { name: 'إنشاء الختمة الجماعيّة' }).click();
 

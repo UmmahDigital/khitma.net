@@ -95,12 +95,26 @@
   }
 }
 
+// In the toolbar, beside its icons: at the end of its row (the left in Arabic), within the app's column, which
+// is the middle third of wide screens.
 .group-options-menu-button {
   position: fixed;
   color: white;
   left: 102px;
-  top: 0;
   top: 8px;
+
+  @media (min-width: 960px) {
+    left: calc(33.5% + 102px);
+  }
+}
+
+.ltr .group-options-menu-button {
+  left: auto;
+  right: 102px;
+
+  @media (min-width: 960px) {
+    right: calc(33.5% + 102px);
+  }
 }
 
 mat-panel-title {

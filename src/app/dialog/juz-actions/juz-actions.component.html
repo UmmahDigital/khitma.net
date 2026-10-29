@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+
+<div mat-dialog-content class="juz-actions-booking">
+  <div class="owner">{{ data.owner }}</div>
+  @if (data.ageText) {
+    <div class="age">{{ data.ageText }}</div>
+  }
+</div>
+
+<div mat-dialog-actions class="juz-actions-buttons">
+  <button mat-raised-button color="primary" class="app-btn-primary" (click)="choose('done')">
+    <mat-icon>task_alt</mat-icon>
+    <span [translate]="'juzActions.done'">تمّت قراءته</span>
+  </button>
+  <button mat-stroked-button (click)="choose('release')">
+    <mat-icon>remove_circle_outline</mat-icon>
+    <span [translate]="'juzActions.release'">إتاحته لقارئ آخر</span>
+  </button>
+  <button mat-button (click)="choose()"><span [translate]="'dialog.cancel'">إلغاء</span></button>
+</div>

@@ -8,6 +8,7 @@
 
   .logo {
     display: block;
+    height: auto;
     width: 50%;
     margin: 0px auto 32px auto !important;
   }
@@ -28,7 +29,7 @@ a {
 
 
 #aqsa-khitma-btn{
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.25)), url('../../../assets/aqsa-btn-bg.png') !important;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.25)), url('../../../assets/aqsa-btn-bg.webp') !important;
   background-position: center;
   background-size: cover!important;
   margin-bottom: 16px;
@@ -124,4 +125,60 @@ mat-card{
   padding:32px;
   margin-bottom: 16px;
   border-radius: $surface-radius;
+}
+
+// What this member's invitations brought about, with the hadith on guiding others to good.
+.impact-card {
+  max-width: 420px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #e3f1ee;
+  text-align: center;
+
+  p {
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+
+  .impact-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c6151;
+  }
+
+  .impact-hadith {
+    margin: 10px 0 0;
+    font-size: 17px;
+    color: #4d5b57;
+    white-space: pre-line;
+  }
+}
+
+// Mid-Sha'ban to the end of Ramadan: the two Ramadan khitmas, first.
+.ramadan-card {
+  max-width: 420px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #0d3b36;
+  color: #fff;
+  text-align: center;
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  .ramadan-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f5d77a;
+  }
+
+  a {
+    margin: 12px 0 0 !important;
+  }
+
+  a.mat-mdc-outlined-button {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.7);
+  }
 }

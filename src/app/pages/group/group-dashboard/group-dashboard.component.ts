@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ProgressCounts, progressCounts } from '../../../shared/ajza-progress/ajza-progress.component';
 import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from '../../../entities/entities';
 import { LocalDatabaseService } from '../../../local-database.service';
@@ -12,14 +12,19 @@ import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay'
 import { GoogleAnalyticsService } from '../../../analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from '../../../alert.service';
-import { NativeApiService } from '../../../native-api.service';
+import { SharingService } from '../../../sharing.service';
+import { ReferralService } from '../../../referral.service';
+import { ajzaCount, fill, inviteMessage } from '../../../share-messages';
+import { staleBookings } from '../../../booking-age';
+import { isRoundDue, RoundSchedule } from '../../../schedule';
+import { ScheduleComponent } from '../../../dialog/schedule/schedule.component';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
 import { NativeShareService } from '../../../native-share.service';
 import { Router } from '@angular/router';
 import { NewTaskComponent } from '../../../dialog/new-task/new-task.component';
 import { StatusMessageGenerators } from './status-messages';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
 import { Group_Pages_Component } from './group-types/pages/pages.component';
 import { Group_Sequential_Component } from './group-types/sequential/sequential.component';
@@ -35,7 +40,7 @@ import { CommonService } from '../../../service/common.service';
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class GroupDashboardComponent implements OnInit {
+export class GroupDashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild(Group_SameTask_Component) sameTaskGroupChildComponent: Group_SameTask_Component;
   @ViewChild(Group_Pages_Component) pagesGroupChildComponent: Group_Pages_Component;
@@ -58,20 +63,23 @@ export class GroupDashboardComponent implements OnInit {
   inviteMsg = "";
   statusMsg = "";
 
+  private groupSubscription: Subscription;
+
   constructor(private groupsApi: KhitmaGroupService,
     private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
     private titleService: Title,
     private alert: AlertService,
-    private nativeApi: NativeApiService,
+    private sharing: SharingService,
+    private referral: ReferralService,
     private router: Router,
     private celebrationService: CelebrationService, public common: CommonService) {
   }
 
   ngOnInit(): void {
 
-    this.groupsApi.getCurrentGroup().subscribe((group: KhitmaGroup) => {
+    this.groupSubscription = this.groupsApi.getCurrentGroup().subscribe((group: KhitmaGroup) => {
 
       this.titleService.setTitle(group.title);
 
@@ -106,26 +114,86 @@ export class GroupDashboardComponent implements OnInit {
         this.isInitiated = true;
       }
 
-      this.inviteMsg = this.common.translation.gDashboard?.join
-        + ' "' + this.group.title + '" '
-        + this.common.translation.gDashboard?.link
-        + this.group.getURL();
+      this.$gaService.setGroupContext({
+        group_id: this.group.id,
+        group_type: this.group.type,
+        role: this.isAdmin ? 'admin' : 'member',
+        cycle: this.group.cycle || 0,
+        ...(this.group.purpose ? { group_purpose: this.group.purpose } : {}),
+      });
 
+      this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.referral.groupUrl(this.group.id));
+
+      this.startDueRound();
     });
 
   }
 
+  /** The round this page already tried to start, so it tries once per round. */
+  private dueRoundTried: number | null = null;
+
+  /** A repeating khitma whose next round is due: whoever opens it first starts it (once; see startScheduledRound). */
+  private startDueRound() {
+    const group = this.group;
+    const cycle = group.cycle || 0;
+    if (group.type !== KHITMA_GROUP_TYPE.SEQUENTIAL || this.dueRoundTried === cycle || !isRoundDue(<any>group, Date.now())) {
+      return;
+    }
+    this.dueRoundTried = cycle;
+    this.groupsApi
+      .startScheduledRound(group.id)
+      .then((started) => {
+        if (started) {
+          this.$gaService.send('round_started', { trigger: 'schedule', every: group.schedule.every });
+        }
+      })
+      .catch(() => {});
+  }
+
+  openSchedule() {
+    this.dialog
+      .open<ScheduleComponent, RoundSchedule | null, RoundSchedule | null>(ScheduleComponent, {
+        data: (this.group.schedule as RoundSchedule) ?? null,
+        maxWidth: '90vw',
+        width: '380px',
+      })
+      .afterClosed()
+      .subscribe((schedule) => {
+        if (schedule === undefined) {
+          return;
+        }
+        this.groupsApi.setSchedule(this.group.id, schedule);
+        this.$gaService.send('schedule_set', { every: schedule?.every ?? 'off' });
+        this.alert.show(this.common.translation.schedule?.saved || 'تمّ حفظ التكرار', 3000);
+      });
+  }
+
+  /** Booked a week or more ago and still not done: the admin can free them for others. */
+  get staleCount(): number {
+    return this.group?.ajza ? staleBookings(this.group.ajza).length : 0;
+  }
+
+  get releaseStaleLabel(): string {
+    const template = this.common.translation.gDashboard?.releaseStale || 'إتاحة المحجوز منذ أسبوع أو أكثر ({count})';
+    return fill(template, { count: this.staleCount });
+  }
+
+  ngOnDestroy(): void {
+    this.groupSubscription?.unsubscribe();
+    this.$gaService.setGroupContext(null);
+  }
+
   getKhitmaStatusMsg() {
-    return StatusMessageGenerators[this.group.type](this.group);
+    return StatusMessageGenerators[this.group.type](this.group, this.referral.groupUrl(this.group.id), this.common.translation, this.common.currentLanguage);
   }
 
 
   shareStatusMsg() {
-    this.nativeApi.share((this.common.translation.gDashboard?.status + this.group.title), this.getKhitmaStatusMsg(), null);
+    this.sharing.share((this.common.translation.gDashboard?.status + this.group.title), this.getKhitmaStatusMsg(), 'status', this.group.id);
   }
 
   shareInviteMsg() {
-    this.nativeApi.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, null);
+    this.sharing.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, 'invite', this.group.id);
   }
 
 
@@ -150,7 +218,8 @@ export class GroupDashboardComponent implements OnInit {
           dialogResult.title,
           dialogResult.description,
           dialogResult.targetDate,
-          dialogResult.admins
+          dialogResult.admins,
+          (dialogResult.targetDate || '') !== (this.group.targetDate || '')
         );
 
       }

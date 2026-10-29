@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Juz, JUZ_STATUS } from '../../entities/entities';
 import { CommonService } from '../../service/common.service';
+import { bookedForDays, bookingAgeText } from '../../booking-age';
 
 @Component({
     selector: 'app-juz',
@@ -24,6 +25,8 @@ export class JuzComponent implements OnInit {
   cssClasses: string;
 
   updatedOwner: string;
+  /** For admins: how long this juz has been booked ("محجوز منذ 9 أيام"), when that's known. */
+  ageText: string = null;
 
   constructor(public common: CommonService) {
   }
@@ -56,6 +59,11 @@ export class JuzComponent implements OnInit {
     }
 
     this.cssClasses = _cssClasses;
+
+    const days = this.juz.status == JUZ_STATUS.BOOKED ? bookedForDays(this.juz) : null;
+    if (this.isEditMode && days !== null) {
+      this.ageText = bookingAgeText(days, this.common.translation, this.common.currentLanguage);
+    }
   }
 
   juzClicked() {

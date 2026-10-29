@@ -47,10 +47,18 @@ export class NotificationsService {
     if (!notification) {
       notification = this._mostRecentNotification;
     }
+    // Tapped before any announcement has loaded (or there is none): no empty dialog.
+    if (!notification) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(NotificationComponent, {
       data: notification,
-      maxWidth: "80vw"
+      // A readable line length on wide screens; the whole width less a margin on phones.
+      width: '440px',
+      maxWidth: 'calc(100vw - 32px)',
+      // Focus the dialog itself rather than its close button, which would show highlighted on opening.
+      autoFocus: 'dialog'
     });
 
     dialogRef.afterClosed().subscribe(dontDisplayAgain => {

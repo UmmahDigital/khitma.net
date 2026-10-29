@@ -1,4 +1,6 @@
-# Allow all URLs (see https://www.robotstxt.org/robotstxt.html)
+# khitma.net: everything public may be crawled. Group pages carry people's names and ask not to be indexed
+# (robots meta tag), which only works if crawlers can read them, so they are not blocked here.
 User-agent: *
-Disallow:
-Sitemap: https://angular.io/generated/sitemap.xml
+Allow: /
+
+Sitemap: https://khitma.net/sitemap.xml

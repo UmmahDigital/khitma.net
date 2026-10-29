@@ -42,7 +42,7 @@ test.describe('personal and global khitmahs', () => {
     await expect(chosen).toHaveText('5');
     await expect(chosen).toHaveCSS('background-color', 'rgb(7, 94, 84)');
     await expect(chosen.locator('button')).toHaveCSS('color', 'rgb(255, 255, 255)');
-    await page.getByRole('button', { name: 'أريد تلاوة 5 صحفات' }).click();
+    await page.getByRole('button', { name: 'أريد تلاوة 5 صفحات' }).click();
 
     const from = (before.granted % 604) + 1;
     await expect.poll(async () => (await getDoc('global/aqsa'))!.pages.granted).toBe(before.granted + 5);

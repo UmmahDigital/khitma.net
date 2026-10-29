@@ -5,6 +5,8 @@ export const JUZ_STATUS = { IDLE: 0, BOOKED: 1, DONE: 2 } as const;
 export interface JuzSpec {
   owner: string;
   status: number;
+  /** When the juz last changed (booked, finished…). */
+  updatedAt?: Date;
 }
 
 export interface Juz extends JuzSpec {
@@ -19,11 +21,21 @@ export function newGroupId(label: string): string {
   return `${label}-${Date.now().toString(36)}-${groupCounter}`;
 }
 
+/** A sharer's reference code (?r=) unique to this test run, so counts don't add up across browser projects. */
+export function newRefCode(): string {
+  return 't' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6).padEnd(4, '0');
+}
+
 /** The 30 ajza of a group; `assigned` maps 1-based juz numbers to their owner and status. */
 export function buildAjza(assigned: Record<number, JuzSpec> = {}): Juz[] {
   return Array.from({ length: 30 }, (_, index) => {
     const spec = assigned[index + 1];
-    return { index, owner: spec?.owner ?? '', status: spec?.status ?? JUZ_STATUS.IDLE };
+    return {
+      index,
+      owner: spec?.owner ?? '',
+      status: spec?.status ?? JUZ_STATUS.IDLE,
+      ...(spec?.updatedAt ? { updatedAt: spec.updatedAt } : {}),
+    };
   });
 }
 
@@ -39,9 +51,18 @@ export interface SequentialGroupOptions {
   cycle?: number;
   admins?: string;
   targetDate?: string;
+  /** YYYY-MM-DD, as picked when the group was created. */
+  targetAt?: string;
   assigned?: Record<number, JuzSpec>;
   /** `map` is today's format; `array` and `untyped` are older documents still in production. */
   format?: 'map' | 'array' | 'untyped';
+  /** What the khitma is for (memorial, healing…), and رحمه/رحمها for memorial ones. */
+  purpose?: string;
+  honoreeGender?: 'male' | 'female';
+  /** A khitma that repeats by itself, when its next round starts, and when past rounds were completed. */
+  schedule?: { every: string; weekday?: number; cycleType: number };
+  nextRoundAt?: Date;
+  completedRounds?: Record<string, Date>;
 }
 
 export async function createSequentialGroup(id: string, options: SequentialGroupOptions = {}): Promise<void> {
@@ -59,6 +80,12 @@ export async function createSequentialGroup(id: string, options: SequentialGroup
   }
   if (options.admins !== undefined) doc.admins = options.admins;
   if (options.targetDate !== undefined) doc.targetDate = options.targetDate;
+  if (options.targetAt !== undefined) doc.targetAt = options.targetAt;
+  if (options.purpose !== undefined) doc.purpose = options.purpose;
+  if (options.honoreeGender !== undefined) doc.honoreeGender = options.honoreeGender;
+  if (options.schedule !== undefined) doc.schedule = options.schedule;
+  if (options.nextRoundAt !== undefined) doc.nextRoundAt = options.nextRoundAt;
+  if (options.completedRounds !== undefined) doc.completedRounds = options.completedRounds;
   await setDoc(`groups/${id}`, doc);
 }
 
@@ -137,6 +164,10 @@ export async function seedGlobalDocs(): Promise<void> {
     isActive: true,
     title: 'مجتمع ختمة.نت',
     text: 'انضّموا الآن إلى مجموعة ختمة.نت على الفيسبوك.',
-    actions: [],
+    // One link within the app and one outside it, like the Ramadan announcement (tools/ramadan/README.md).
+    actions: [
+      { text: 'ابدأ ختمة جديدة', url: '/new?type=onetime&from=notification' },
+      { text: 'مجموعة الفيسبوك', url: 'https://www.facebook.com/groups/khitma.net' },
+    ],
   });
 }

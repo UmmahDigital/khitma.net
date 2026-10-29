@@ -6,6 +6,7 @@
 
   .logo {
     display: block;
+    height: auto;
     width: 25%;
     margin: 32px auto 32px auto !important;
   }
@@ -31,5 +32,30 @@ hr {
   a {
     color: gray;
     margin: 0 8px;
+  }
+}
+
+.guides {
+  margin: 32px 0;
+  text-align: start;
+
+  h2 {
+    margin-bottom: 8px;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  ul {
+    padding-inline-start: 24px;
+  }
+
+  li {
+    margin-bottom: 12px;
+  }
+
+  a {
+    color: #075e54;
+    font-weight: 700;
   }
 }

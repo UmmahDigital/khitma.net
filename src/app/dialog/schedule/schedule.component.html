@@ -1,0 +1,41 @@
+<h1 mat-dialog-title [translate]="'schedule.title'">تكرار الختمة تلقائيًا</h1>
+
+<div mat-dialog-content class="schedule-dialog">
+  <p class="schedule-hint" [translate]="'schedule.hint'">تبدأ كل ختمة جديدة بنفسها في موعدها، دون أن تحتاج إلى بدئها بنفسك.</p>
+
+  <mat-radio-group class="radio-group" [(ngModel)]="every" aria-label="تكرار الختمة">
+    <mat-radio-button class="radio-button" value="week"><span [translate]="'schedule.week'">كل أسبوع، يوم:</span></mat-radio-button>
+    @if (every === 'week') {
+      <div class="weekday-chips" role="group">
+        @for (day of weekdays; track day.value) {
+          <button type="button" class="weekday-chip" [class.selected]="weekday === day.value" [attr.aria-pressed]="weekday === day.value"
+            (click)="weekday = day.value">{{ day.label }}</button>
+        }
+      </div>
+    }
+    <mat-radio-button class="radio-button" value="day"><span [translate]="'schedule.day'">كل يوم</span></mat-radio-button>
+    <mat-radio-button class="radio-button" value="month"><span [translate]="'schedule.month'">أوّل كل شهر</span></mat-radio-button>
+    <mat-radio-button class="radio-button" value="completion"><span [translate]="'schedule.completion'">بعد اكتمال كل ختمة</span></mat-radio-button>
+    <mat-radio-button class="radio-button" value="off"><span [translate]="'schedule.off'">بدون تكرار (أبدأ كل ختمة بنفسي)</span></mat-radio-button>
+  </mat-radio-group>
+
+  @if (every !== 'off') {
+    <label id="schedule-round-label" class="schedule-label" [translate]="'schedule.newRound'">في كل ختمة جديدة:</label>
+    <mat-radio-group class="radio-group" [(ngModel)]="cycleType" aria-labelledby="schedule-round-label">
+      <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.AUTO_BOOK">
+        <span [translate]="'newKhitma.autoBook'">حجز الجزء التالي لكل عضو تلقائيّا</span>
+      </mat-radio-button>
+      <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.AUTO_BOOK_FOR_DONE_ONLY">
+        <span [translate]="'newKhitma.autoBookDone'">حجز الجزء التالي تلقائيّا فقط للأعضاء الذين أتمّوا جزءهم</span>
+      </mat-radio-button>
+      <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.ALL_IDLE">
+        <span [translate]="'newKhitma.allIdle'">إتاحة جميع الأجزاء للاختيار</span>
+      </mat-radio-button>
+    </mat-radio-group>
+  }
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()"><span [translate]="'dialog.cancel'">إلغاء</span></button>
+  <button mat-raised-button color="primary" class="app-btn-primary" (click)="save()"><span [translate]="'schedule.save'">حفظ</span></button>
+</div>

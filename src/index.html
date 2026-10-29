@@ -2,29 +2,12 @@
 <html lang="ar" dir="rtl">
 
 <head>
-  <!-- <meta charset="utf-8">
-  <title>ختمة.نت</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-
-  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
- -->
-
-
   <base href="/">
-
-
-  <!-- Must -->
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-
-
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> -->
-
-  <meta name="description"
-    content="ختمة.نت هو تطبيق يتيح  قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.">
-  <meta name="keywords" content="قران , تلاوة , ختمة">
-  <title>ختمة.نت</title>
+  <!-- Pinch-zoom stays on: many readers are older and enlarge the text. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ختمة.نت — ختمة القرآن الكريم جماعيًّا</title>
+  <meta name="description" content="أنشئ ختمة قرآن جماعيّة مجّانًا، وشارك رابطها عبر واتساب ليختار كلّ مشارك جزءًا ويقرأه، وتابعوا معًا تقدّم الختمة حتى تتمّ. بلا تسجيل ولا تثبيت.">
 
   <!-- Android  -->
   <meta name="theme-color" content="#1c6151">
@@ -34,111 +17,175 @@
   <meta name="apple-mobile-web-app-title" content="ختمة.نت">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link href="assets/icons/maskable_icon_x192.png" rel="apple-touch-icon">
 
   <!-- Windows  -->
+  <meta name="application-name" content="ختمة.نت">
   <meta name="msapplication-navbutton-color" content="#1c6151">
   <meta name="msapplication-TileColor" content="#1c6151">
-  <meta name="msapplication-TileImage" content="assets/icons/favicon-144x144.png">
-  <meta name="msapplication-config" content="browserconfig.xml">
-
-  <!-- Pinned Sites  -->
-  <meta name="application-name" content="ختمة.نت">
-  <meta name="msapplication-tooltip" content="Tooltip Text">
+  <meta name="msapplication-TileImage" content="assets/icons/maskable_icon_x128.png">
   <meta name="msapplication-starturl" content="/">
-
-  <!-- Tap highlighting  -->
   <meta name="msapplication-tap-highlight" content="no">
 
   <!-- UC Mobile Browser  -->
   <meta name="full-screen" content="yes">
   <meta name="browsermode" content="application">
-
-  <!-- Disable night mode for this page  -->
   <meta name="nightmode" content="disable">
-
-  <!-- Fitscreen  -->
-  <!-- <meta name="viewport" content="uc-fitscreen=yes" /> -->
-
-  <!-- Layout mode -->
   <meta name="layoutmode" content="fitscreen/standard">
-
-  <!-- imagemode - show image even in text only mode  -->
   <meta name="imagemode" content="force">
-
-  <!-- Orientation  -->
   <meta name="screen-orientation" content="portrait">
 
-
-
-  <!-- Main Link Tags  -->
   <link href="assets/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
   <link href="assets/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
   <link href="assets/icons/favicon-48x48.png" rel="icon" type="image/png" sizes="48x48">
-
-  <!-- iOS  -->
-  <link href="assets/icons/maskable_icon.png" rel="apple-touch-icon">
-  <!-- <link href="touch-icon-ipad.png" rel="apple-touch-icon" sizes="76x76">
-  <link href="touch-icon-iphone-retina.png" rel="apple-touch-icon" sizes="120x120">
-  <link href="touch-icon-ipad-retina.png" rel="apple-touch-icon" sizes="152x152"> -->
-
-  <!-- Startup Image  -->
-  <link href="assets/khitma-logo.png" rel="apple-touch-startup-image">
-
-  <!-- Pinned Tab  -->
-  <link href="assets/khitma-logo.png" rel="mask-icon" size="any" color="red">
-
-  <!-- Android  -->
   <link href="assets/icons/maskable_icon_x192.png" rel="icon" sizes="192x192">
   <link href="assets/icons/maskable_icon_x128.png" rel="icon" sizes="128x128">
-
-  <!-- Others -->
-  <link href="assets/icons/favicon.icon" rel="shortcut icon" type="image/x-icon">
-
-  <!-- UC Browser  -->
-  <!-- <link href="images/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57">
-  <link href="images/icon-72x72.png" rel="apple-touch-icon" sizes="72x72"> -->
-
-  <!-- Manifest.json  -->
+  <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="assets/khitma-logo.png" rel="apple-touch-startup-image">
   <link rel="manifest" href="manifest.webmanifest">
 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- The app reads its groups from Firestore: open the connection while the app's code downloads. -->
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-
-  <meta name="theme-color" content="#1c6151">
-
-
-
-  <!-- Open Graph / Facebook -->
+  <!-- Link previews (WhatsApp, Telegram, Facebook, X). Image URLs must be absolute. -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://khitma.net">
-  <meta property="og:title" content="ختمة.نت">
-  <meta property="og:description"
-    content="ختمة.نت هو تطبيق يتيح  قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.">
-  <meta property="og:image" content="assets/link-preview.png">
+  <meta property="og:site_name" content="ختمة.نت">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:url" content="https://khitma.net/">
+  <meta property="og:title" content="ختمة.نت — ختمة القرآن الكريم جماعيًّا">
+  <meta property="og:description" content="اختر جزءك من الأجزاء الثلاثين، وتابعوا معًا حتى تتمّ الختمة. مجّاني، بلا تسجيل.">
+  <meta property="og:image" content="https://khitma.net/assets/og/default.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ختمة.نت: ختمة جماعيّة للقرآن الكريم">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ختمة.نت — ختمة القرآن الكريم جماعيًّا">
+  <meta name="twitter:description" content="اختر جزءك من الأجزاء الثلاثين، وتابعوا معًا حتى تتمّ الختمة. مجّاني، بلا تسجيل.">
+  <meta name="twitter:image" content="https://khitma.net/assets/og/default.jpg">
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://khitma.net">
-  <meta property="twitter:title" content="ختمة.نت">
-  <meta property="twitter:description"
-    content="ختمة.نت هو تطبيق يتيح  قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.">
-  <meta property="twitter:image" content="assets/link-preview.png">
+  <!-- What khitma.net is, for search engines and AI assistants. Keep in step with the page text in <app-root>. -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://khitma.net/#app",
+          "name": "ختمة.نت",
+          "alternateName": "Khitma.net",
+          "url": "https://khitma.net/",
+          "description": "تطبيق ويب مجّاني لختم القرآن الكريم جماعيًّا: أنشئ ختمة، وشارك رابطها، ليختار كلّ مشارك جزءًا من الأجزاء الثلاثين ويقرأه، وتابعوا التقدّم حتى تتمّ الختمة.",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "Web",
+          "inLanguage": [
+            "ar",
+            "en",
+            "fr",
+            "es",
+            "de"
+          ],
+          "isAccessibleForFree": true,
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://khitma.net/#faq",
+          "inLanguage": "ar",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "ما هي الختمة الجماعيّة في ختمة.نت؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "مجموعة تقرأ القرآن الكريم كاملًا معًا: تُوزَّع الأجزاء الثلاثون على المشاركين، فيختار كلّ منهم جزءًا ويقرؤه، ويرى الجميع تقدّم الختمة حتى تتمّ."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "كيف أنشئ ختمة جماعيّة؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "من الصفحة الرئيسيّة اختر «بدء ختمة جماعيّة لمرّة واحدة» أو «إنشاء مجموعة ختمة دوريّة»، واكتب عنوان الختمة واسمك، ثمّ شارك رابط الدعوة مع المشاركين، في مجموعة واتساب مثلًا."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "هل يحتاج المشاركون إلى حساب أو تثبيت تطبيق؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "لا. يفتح المشارك الرابط ويكتب اسمه فقط. يعمل ختمة.نت من المتصفّح على الهاتف والحاسوب."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "هل يمكن تخصيص الختمة عن روح متوفّى؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "نعم، وكثير من الختمات على ختمة.نت تُنشأ عن أرواح الأحبّة: اكتب ذلك في عنوان الختمة ووصفها، وشارك الرابط مع الأهل والأصدقاء."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "هل يمكن تكرار الختمة؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "نعم. يبدأ مسؤول المجموعة ختمة جديدة متى شاء، ويمكن أن يُحجز لكلّ مشارك الجزء التالي تلقائيًّا."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "هل ختمة.نت مجّاني؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "نعم، مجّاني بالكامل."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-5LT07C165Z"></script>
+  <!-- Google Analytics: the app configures it (src/app/analytics.ts). This stub only queues calls made before that,
+       and the update screen below configures it itself, as the app never starts there. -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-QXJ6QZFWZL');
   </script>
 
-  <!-- The "please update" screen in <body>. Plain CSS that old browsers understand. -->
+  <!-- English, French, German and Spanish read left to right: the page says so before the app starts, so that
+       Angular Material's dialogs, menus and fields follow it too (the app's own layout follows body.ltr). -->
+  <script>
+    try {
+      var lng = localStorage.getItem('lng');
+      if (lng && lng !== 'ar') {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = lng;
+      }
+    } catch (e) {}
+  </script>
+
+  <!-- The loading screen inside <app-root>: plain CSS, matching the home page's logo and intro. -->
+  <style>
+    /* Same column as the app (#app-container): full width on phones, a third of wide screens, on the black page. */
+    .boot { display: block; box-sizing: border-box; min-height: 100vh; margin: 0 auto; padding: 72px 24px 40px;
+      background: #fafafa; text-align: center; font-family: "Markazi Text", Tahoma, Arial, sans-serif; color: #212121; }
+    @media (min-width: 960px) { .boot { max-width: 33%; } }
+    .boot-logo { display: block; width: 112px; height: 112px; margin: 0 auto 20px; }
+    .boot h1 { margin: 0 0 12px; color: #1c6151; font-size: 30px; line-height: 1.3; font-weight: 700; }
+    .boot-lead { margin: 0; font-size: 21px; line-height: 1.6; }
+    /* Read by crawlers and screen readers; the loading screen itself stays short. */
+    .boot-more { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);
+      clip-path: inset(50%); white-space: nowrap; }
+  </style>
+
+  <!-- The "please update" screen (added to <body> when needed). Plain CSS that old browsers understand. -->
   <style>
     #unsupported-browser { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10000; overflow-y: auto;
       background: #fafafa; color: #212121; font-family: "Markazi Text", Tahoma, Arial, sans-serif; text-align: right; }
@@ -154,22 +201,26 @@
 </head>
 
 <body class="mat-typography">
-  <div id="unsupported-browser" style="display: none" dir="rtl" lang="ar">
-    <div class="ub-bar">ختمة.نت</div>
-    <div class="ub-content">
-      <img class="ub-logo" data-src="assets/khitma-logo.png" alt="">
-      <h1>يحتاج المتصفّح إلى تحديث</h1>
-      <p>لا يعمل ختمة.نت على هذا الإصدار القديم من المتصفّح. لمتابعة ختمتك:</p>
-      <ul>
-        <li data-platform="ios">حدّث نظام الهاتف: الإعدادات ← عام ← تحديث البرنامج.</li>
-        <li data-platform="android">حدّث متصفّح Chrome أو Samsung Internet من متجر Google Play.</li>
-        <li data-platform="other">حدّث المتصفّح، أو استخدم متصفّح Chrome.</li>
-        <li>أو افتح الرابط من هاتف آخر.</li>
-      </ul>
-      <p class="ub-note">التحديث لا يؤثّر على مجموعاتك أو أجزائك.</p>
-      <p class="ub-en" dir="ltr" lang="en">This browser is too old for khitma.net. Please update your phone or browser, or open the link on another device.</p>
+  <!-- The "please update" screen, added to the page only when needed (see below): as a script it is never
+       rendered, and crawlers don't mistake it for the page's text. -->
+  <script type="text/html" id="unsupported-browser-html">
+    <div id="unsupported-browser" dir="rtl" lang="ar">
+      <div class="ub-bar">ختمة.نت</div>
+      <div class="ub-content">
+        <img class="ub-logo" src="assets/khitma-logo.png" alt="">
+        <h1>يحتاج المتصفّح إلى تحديث</h1>
+        <p>لا يعمل ختمة.نت على هذا الإصدار القديم من المتصفّح. لمتابعة ختمتك:</p>
+        <ul>
+          <li data-platform="ios">حدّث نظام الهاتف: الإعدادات ← عام ← تحديث البرنامج.</li>
+          <li data-platform="android">حدّث متصفّح Chrome أو Samsung Internet من متجر Google Play.</li>
+          <li data-platform="other">حدّث المتصفّح، أو استخدم متصفّح Chrome.</li>
+          <li>أو افتح الرابط من هاتف آخر.</li>
+        </ul>
+        <p class="ub-note">التحديث لا يؤثّر على مجموعاتك أو أجزائك.</p>
+        <p class="ub-en" dir="ltr" lang="en">This browser is too old for khitma.net. Please update your phone or browser, or open the link on another device.</p>
+      </div>
     </div>
-  </div>
+  </script>
   <script>
     // Phones too old for the app get the screen above instead of a blank page: browsers without
     // ES modules (the nomodule script below), and browsers where the app's own scripts threw
@@ -181,8 +232,10 @@
         if (event.message && event.message !== 'Script error.') appScriptFailed = true;
       });
       window.khitmaShowUnsupported = function (reason) {
-        var screen = document.getElementById('unsupported-browser');
-        if (!screen || screen.style.display === 'block') return;
+        if (document.getElementById('unsupported-browser')) return;
+        var holder = document.createElement('div');
+        holder.innerHTML = document.getElementById('unsupported-browser-html').text;
+        var screen = holder.querySelector('#unsupported-browser');
         var ua = navigator.userAgent;
         var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
         var platform = ios ? 'ios' : /Android/.test(ua) ? 'android' : 'other';
@@ -190,22 +243,65 @@
         for (var i = 0; i < steps.length; i++) {
           if (steps[i].getAttribute('data-platform') !== platform) steps[i].parentNode.removeChild(steps[i]);
         }
-        var logo = screen.querySelector('img[data-src]');
-        logo.src = logo.getAttribute('data-src');
-        screen.style.display = 'block';
-        if (window.gtag) gtag('event', 'unsupported_browser', { reason: reason });
+        document.body.appendChild(screen);
+        if (window.gtag) {
+          gtag('js', new Date());
+          gtag('config', 'G-QXJ6QZFWZL', { page_title: 'unsupported_browser' });
+          gtag('event', 'unsupported_browser', { reason: reason });
+          var tag = document.createElement('script');
+          tag.async = true;
+          tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-QXJ6QZFWZL';
+          document.head.appendChild(tag);
+        }
       };
       window.addEventListener('load', function () {
         setTimeout(function () {
           var root = document.querySelector('app-root');
-          if (appScriptFailed && root && !root.children.length) window.khitmaShowUnsupported('script_error');
+          if (appScriptFailed && root && root.querySelector('[data-boot]')) window.khitmaShowUnsupported('script_error');
         }, 3000);
       });
     })();
   </script>
   <script nomodule>window.khitmaShowUnsupported('no_modules');</script>
-  <app-root></app-root>
-  <noscript>Please enable JavaScript to continue using this application.</noscript>
+  <app-root>
+    <!-- Shown until the app starts (Angular replaces it): a calm loading screen for people, and the page's text for
+         crawlers and AI assistants that don't run JavaScript. Keep in step with the FAQ in the JSON-LD above. -->
+    <main class="boot" data-boot dir="rtl" lang="ar">
+      <img class="boot-logo" src="assets/khitma-logo.png" width="112" height="112" alt="">
+      <h1>ختمة.نت: ختمة القرآن الكريم جماعيًّا</h1>
+      <p class="boot-lead">أنشئ ختمة جماعيّة مجّانًا، وشارك رابطها مع أهلك وأصدقائك عبر واتساب، ليختار كلّ منهم جزءًا من الأجزاء الثلاثين ويقرأه، وتابعوا معًا تقدّم الختمة حتى تتمّ بإذن الله.</p>
+      <div class="boot-more">
+        <h2>كيف تعمل؟</h2>
+        <ol>
+          <li>أنشئ ختمة لمرّة واحدة، عن روح عزيز فقدتموه مثلًا، أو ختمة دوريّة لمجموعتك، واكتب اسمك.</li>
+          <li>شارك رابط الختمة في مجموعة واتساب أو مع من تحب.</li>
+          <li>يفتح كلّ مشارك الرابط ويكتب اسمه ويختار جزءًا، ثمّ يضغط «أتممت قراءة جزء» عند الانتهاء.</li>
+          <li>تتمّ الختمة عند قراءة الأجزاء كلّها، ويمكن لمسؤول المجموعة بدء ختمة جديدة يُحجز فيها لكلّ مشارك الجزء التالي تلقائيًّا.</li>
+        </ol>
+        <h2>أسئلة شائعة</h2>
+        <h3>هل يحتاج المشاركون إلى حساب أو تثبيت تطبيق؟</h3>
+        <p>لا. يفتح المشارك الرابط ويكتب اسمه فقط. يعمل ختمة.نت من المتصفّح على الهاتف والحاسوب.</p>
+        <h3>هل يمكن تخصيص الختمة عن روح متوفّى؟</h3>
+        <p>نعم، وكثير من الختمات على ختمة.نت تُنشأ عن أرواح الأحبّة: اكتب ذلك في عنوان الختمة ووصفها، وشارك الرابط مع الأهل والأصدقاء.</p>
+        <h3>هل ختمة.نت مجّاني؟</h3>
+        <p>نعم، مجّاني بالكامل، ويعمل بالعربيّة والإنجليزيّة والفرنسيّة والإسبانيّة والألمانيّة.</p>
+        <h2>أدلة</h2>
+        <ul>
+          <li><a href="/guide/khitma-for-the-deceased/">ختمة عن روح الميت: كيف تنظّمها مع العائلة والأصدقاء</a></li>
+          <li><a href="/guide/ramadan-group-khitma/">ختمة رمضان الجماعية: طريقتان لتنظيمها</a></li>
+          <li><a href="/guide/whatsapp-group-khitma/">كيف تنظّم ختمة قرآن جماعية عبر واتساب</a></li>
+        </ul>
+        <section dir="ltr" lang="en">
+          <h2>Khitma.net: read the whole Quran together</h2>
+          <p>Create a group khitma for free, share its link (for example on WhatsApp), and each person picks one of the 30 juz to read and marks it done. Everyone follows the progress until the khitma is complete. No sign-up and nothing to install; it works in the browser, in Arabic, English, French, Spanish and German.</p>
+        </section>
+      </div>
+    </main>
+  </app-root>
+  <noscript>
+    <p dir="rtl" lang="ar">يحتاج ختمة.نت إلى تفعيل JavaScript في المتصفّح.</p>
+    <p dir="ltr" lang="en">Please enable JavaScript to use khitma.net.</p>
+  </noscript>
 </body>
 
 </html>

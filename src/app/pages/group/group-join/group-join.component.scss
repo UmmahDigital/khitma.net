@@ -1,0 +1,26 @@
+
+.in-app-hint {
+  margin: 0 auto 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #fff4d6;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.continue-as {
+  margin-top: 16px;
+
+  .continue-title {
+    margin: 0 0 10px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .name-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+}

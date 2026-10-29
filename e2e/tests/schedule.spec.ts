@@ -1,0 +1,113 @@
+import { expect, Page, test } from '@playwright/test';
+import { analyticsEvents, joinedGroups, openApp } from '../support/app';
+import { getDoc } from '../support/firestore';
+import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtures';
+
+// Repeating khitmas start their next round by themselves: the first member to open the group once it's due starts
+// it, in a transaction, so it happens once however many open it at the same moment.
+
+const { IDLE, BOOKED, DONE } = JUZ_STATUS;
+const ADMIN = 'أبو أحمد';
+const AUTO_BOOK = 1;
+const hoursAgo = (hours: number) => new Date(Date.now() - hours * 3_600_000);
+const allDone = () => Object.fromEntries(Array.from({ length: 30 }, (_, i) => [i + 1, { owner: `عضو ${i + 1}`, status: DONE }]));
+
+async function openAs(page: Page, groupId: string, username: string, freezeTime = false) {
+  await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: username }) }, freezeTime });
+  await expect(page.getByText(`السلام عليكم يا ${username}`)).toBeVisible();
+}
+
+async function storedJuz(groupId: string, juzNumber: number) {
+  const juz = (await getDoc(`groups/${groupId}`))!.ajza[String(juzNumber - 1)];
+  return [juz.owner ?? '', juz.status];
+}
+
+test.describe('repeating khitmas', () => {
+  test('the admin makes the khitma repeat every Friday, and everyone sees when the next one starts', async ({ page }) => {
+    const groupId = newGroupId('repeat-set');
+    await createSequentialGroup(groupId, { author: ADMIN });
+
+    // The test clock: Sunday 1 March 2026, 11:00 in Jerusalem.
+    await openAs(page, groupId, ADMIN, true);
+    await page.getByText('أدوات مسؤول المجموعة').click();
+    await page.getByRole('button', { name: 'تكرار الختمة تلقائيًا' }).click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByRole('radio', { name: 'كل أسبوع، يوم:' })).toBeChecked();
+    await expect(dialog.getByRole('button', { name: 'الجمعة' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(dialog.getByRole('radio', { name: 'حجز الجزء التالي لكل عضو تلقائيّا' })).toBeChecked();
+    await dialog.getByRole('button', { name: 'حفظ' }).click();
+
+    await expect.poll(async () => (await getDoc(`groups/${groupId}`))?.schedule).toEqual({ every: 'week', weekday: 5, cycleType: AUTO_BOOK });
+    // Friday 6 March at midnight, Jerusalem time.
+    expect((await getDoc(`groups/${groupId}`))!.nextRoundAt).toEqual(new Date('2026-03-05T22:00:00Z'));
+    await expect(page.locator('.repeat-line')).toHaveText('🔁 تبدأ الختمة التالية تلقائيًا يوم الجمعة 6/3');
+    expect(await analyticsEvents(page)).toContainEqual(['schedule_set', expect.objectContaining({ every: 'week' })]);
+  });
+
+  test('the first members to open it after its time start the next round, once', async ({ browser }) => {
+    const groupId = newGroupId('repeat-due');
+    await createSequentialGroup(groupId, {
+      author: ADMIN,
+      cycle: 3,
+      schedule: { every: 'week', weekday: 5, cycleType: AUTO_BOOK },
+      nextRoundAt: hoursAgo(1),
+      assigned: { 1: { owner: 'سارة', status: DONE }, 2: { owner: 'خالد', status: BOOKED } },
+    });
+
+    // Two members open the group at the same moment.
+    const [sara, khaled] = await Promise.all([browser.newPage(), browser.newPage()]);
+    await Promise.all([openAs(sara, groupId, 'سارة'), openAs(khaled, groupId, 'خالد')]);
+
+    await expect.poll(async () => (await getDoc(`groups/${groupId}`))!.cycle).toBe(4);
+    expect(await storedJuz(groupId, 2)).toEqual(['سارة', BOOKED]);
+    expect(await storedJuz(groupId, 3)).toEqual(['خالد', BOOKED]);
+    expect(await storedJuz(groupId, 1)).toEqual(['', IDLE]);
+    expect(((await getDoc(`groups/${groupId}`))!.nextRoundAt as Date).getTime()).toBeGreaterThan(Date.now());
+    await expect(sara.getByRole('button', { name: 'أتممت قراءة جزء 2' })).toBeVisible();
+
+    // Only one of them started it.
+    const started = [...(await analyticsEvents(sara)), ...(await analyticsEvents(khaled))].filter(([name]) => name === 'round_started');
+    expect(started).toEqual([['round_started', expect.objectContaining({ trigger: 'schedule', every: 'week' })]]);
+    await sara.waitForTimeout(500);
+    expect((await getDoc(`groups/${groupId}`))!.cycle).toBe(4);
+    await Promise.all([sara.context().close(), khaled.context().close()]);
+  });
+
+  test('a khitma that repeats after each completion lets everyone see it complete first', async ({ page }) => {
+    const [justDone, doneEarlier] = [newGroupId('repeat-just-done'), newGroupId('repeat-done-earlier')];
+    const schedule = { every: 'completion', cycleType: AUTO_BOOK };
+    await createSequentialGroup(justDone, { author: ADMIN, assigned: allDone(), schedule, completedRounds: { '0': hoursAgo(1) } });
+    await createSequentialGroup(doneEarlier, { author: ADMIN, assigned: allDone(), schedule, completedRounds: { '0': hoursAgo(7) } });
+
+    await openApp(page, `/group/${justDone}`, { storage: { groups: joinedGroups({ [justDone]: 'عضو 3', [doneEarlier]: 'عضو 3' }) } });
+    await expect(page.getByRole('button', { name: 'مشاركة دعاء الختمة' })).toBeVisible();
+    await expect(page.locator('.repeat-line')).toHaveText('🔁 تبدأ الختمة التالية تلقائيًا بعد اكتمال هذه الختمة');
+    await page.waitForTimeout(500);
+    expect((await getDoc(`groups/${justDone}`))!.cycle).toBe(0);
+
+    await page.goto(`/group/${doneEarlier}`);
+    await expect(page.getByText('السلام عليكم يا عضو 3')).toBeVisible();
+    await expect.poll(async () => (await getDoc(`groups/${doneEarlier}`))!.cycle).toBe(1);
+    expect(await storedJuz(doneEarlier, 4)).toEqual(['عضو 3', BOOKED]);
+  });
+
+  test('the admin can stop the repetition', async ({ page }) => {
+    const groupId = newGroupId('repeat-stop');
+    await createSequentialGroup(groupId, {
+      author: ADMIN, schedule: { every: 'day', cycleType: AUTO_BOOK }, nextRoundAt: new Date(Date.now() + 3_600_000),
+    });
+
+    await openAs(page, groupId, ADMIN);
+    await expect(page.locator('.repeat-line')).toBeVisible();
+    await page.getByText('أدوات مسؤول المجموعة').click();
+    await page.getByRole('button', { name: 'تكرار الختمة تلقائيًا' }).click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByRole('radio', { name: 'كل يوم' })).toBeChecked();
+    await dialog.getByRole('radio', { name: 'بدون تكرار (أبدأ كل ختمة بنفسي)' }).click();
+    await dialog.getByRole('button', { name: 'حفظ' }).click();
+
+    await expect.poll(async () => (await getDoc(`groups/${groupId}`))?.schedule).toBeUndefined();
+    expect((await getDoc(`groups/${groupId}`))!.nextRoundAt).toBeUndefined();
+    await expect(page.locator('.repeat-line')).toHaveCount(0);
+  });
+});

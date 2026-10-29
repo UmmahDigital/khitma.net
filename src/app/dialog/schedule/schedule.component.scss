@@ -1,0 +1,42 @@
+.schedule-dialog {
+  .schedule-hint {
+    margin-top: 0;
+    color: #4d5b57;
+  }
+
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+
+  .schedule-label {
+    display: block;
+    margin: 8px 0 4px;
+    font-weight: 700;
+  }
+
+  .weekday-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 8px;
+    padding-inline-start: 40px;
+
+    .weekday-chip {
+      min-height: 36px;
+      padding: 4px 12px;
+      border: 2px solid #075e54;
+      border-radius: 18px;
+      background: white;
+      color: #075e54;
+      font: inherit;
+      cursor: pointer;
+
+      &.selected {
+        background: #075e54;
+        color: white;
+      }
+    }
+  }
+}

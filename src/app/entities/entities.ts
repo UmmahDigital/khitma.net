@@ -39,6 +39,8 @@ export class Juz {
   index: number;
   status: number;
   owner: string;
+  /** When the juz last changed (a Firestore Timestamp); missing on juz untouched since before it was recorded. */
+  updatedAt?: { toMillis(): number } | null;
 
   public constructor(init?: Partial<Juz>) {
     Object.assign(this, init);
@@ -59,9 +61,23 @@ export class KhitmaGroup {
   creationDate?: Date;
   cycle?: number;
   targetDate?: string;
+  /** The deadline as YYYY-MM-DD, when it was picked from the choices (targetDate is its readable text). */
+  targetAt?: string;
   admins?: string;
   type?: string;
   authorId?: string;
+  /** Firestore Timestamps, recorded since 2026-10; older groups don't have them. */
+  createdAt?: { toMillis(): number } | null;
+  roundStartedAt?: { toMillis(): number } | null;
+  /** When each round (by cycle number) had its last juz done. */
+  completedRounds?: Record<string, { toMillis(): number }>;
+  /** What the khitma is for (see purpose.ts), chosen when it was created; older groups don't have it. */
+  purpose?: string;
+  /** For memorial and healing khitmas: رحمه/رحمها, شفاه/شفاها. */
+  honoreeGender?: 'male' | 'female';
+  /** Khitmas that repeat by themselves (see schedule.ts), and when the next round starts. */
+  schedule?: { every: 'day' | 'week' | 'month' | 'completion'; weekday?: number; cycleType: number } | null;
+  nextRoundAt?: { toMillis(): number; toDate(): Date } | null;
 
   public constructor(init?: Partial<KhitmaGroup>) {
     Object.assign(this, init);

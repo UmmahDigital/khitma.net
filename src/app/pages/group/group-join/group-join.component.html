@@ -1,14 +1,32 @@
 <app-khitma-info [group]="group" [isExpanded]="true"></app-khitma-info>
 
+@if (inAppBrowser) {
+  <p class="in-app-hint" [translate]="'gJoin.inApp'">لتبقى ختمتك محفوظة على هاتفك، افتح هذا الرابط في المتصفّح (Safari أو Chrome) من قائمة التطبيق.</p>
+}
+
 <mat-card appearance="outlined">
-    <mat-card-content>
+  <mat-card-content>
 
-        <mat-form-field appearance="fill" class="block">
-            <mat-label [translate]="'gJoin.name'">اسمك</mat-label>
-            <input matInput [(ngModel)]="username" name="title" required="true">
-        </mat-form-field>
+    <mat-form-field appearance="fill" class="block">
+      <mat-label [translate]="'gJoin.name'">اسمك</mat-label>
+      <input matInput [(ngModel)]="username" name="title" required="true">
+    </mat-form-field>
 
-        <button class="block large action-btn" mat-raised-button (click)="join()" [disabled]="!username"
-            [translate]="'gJoin.join'">الإنضمام للختمة</button>
-    </mat-card-content>
+    <button class="block large action-btn" mat-raised-button (click)="join()" [disabled]="!username"
+      [translate]="'gJoin.join'">الانضمام للختمة</button>
+  </mat-card-content>
 </mat-card>
+
+@if (existingNames.length) {
+  <!-- Second: most people here are new; members whose phone forgot them find their name below. -->
+  <mat-card appearance="outlined" class="continue-as">
+    <mat-card-content>
+      <p class="continue-title" [translate]="'gJoin.isThisYou'">انضممت من قبل؟ اختر اسمك ليعود إليك جزؤك:</p>
+      <div class="name-choices">
+        @for (name of existingNames; track name) {
+          <button mat-stroked-button (click)="continueAs(name)">{{ name }}</button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+}

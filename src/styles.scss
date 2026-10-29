@@ -5,10 +5,39 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;700&display=swap");
 
+// Icons: Material Symbols Outlined with only the icons the app uses (5 kB instead of the 155 kB full font).
+// After using a new icon, run: node tools/icons/update-icon-font.mjs (the e2e test icons.spec.ts checks it).
+@font-face {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("assets/fonts/material-symbols-outlined.woff2") format("woff2");
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
 
 html,
 body {
   height: 100%;
+  // Pinch-zoom is allowed; this only stops iOS from zooming on a quick double tap (e.g. on the juz grid).
+  touch-action: manipulation;
   margin: 0;
   // font-family: "Scheherazade", serif !important;
   // font-size: 100% !important;
@@ -73,4 +102,10 @@ hr {
     flex: 1 1 $percent * 1%;
     max-width: $percent * 1%;
   }
+}
+
+// Sending on WhatsApp: the main sharing action (most members arrive from a WhatsApp link).
+.whatsapp-btn.mat-mdc-unelevated-button:not([disabled]) {
+  background-color: #1c6151;
+  color: #fff;
 }

@@ -1,23 +1,22 @@
 @if (group) {
   <div class="group-invite">
-    <app-khitma-info [group]="group" [showLink]="flase" [isExpanded]="false"></app-khitma-info>
-    <p [translate]="'gInvite.done'">
-      تمّ إنشاء مجموعة الختمة بنجاح. يمكنك الآن مشاركة رسالة الدعوة مع معارفك وأصدقائك، أو الانتقال إلى صفحة المجموعة
-      ومشاركة الرسالة من هناك.
-    </p>
+    <app-khitma-info [group]="group" [showLink]="false" [isExpanded]="false"></app-khitma-info>
+    <section class="invite-intro">
+      <h2 [translate]="'sharing.inviteTitle'">ادعُ أهلك وأصدقاءك</h2>
+      <p [translate]="'sharing.inviteText'">كلّ من يفتح الرابط يكتب اسمه ويختار جزءًا ليقرأه.</p>
+    </section>
     <mat-form-field appearance="fill" class="block">
-      <mat-label [translate]="'gInvite.message'">رسالة الدعوة للإنضمام (يمكنك تعديلها)</mat-label>
-      <textarea matInput rows="4" [(ngModel)]="inviteMsg" name="invite-msg"></textarea>
+      <mat-label [translate]="'gInvite.message'">رسالة الدعوة للانضمام (يمكنك تعديلها)</mat-label>
+      <textarea matInput rows="6" [(ngModel)]="inviteMsg" name="invite-msg"></textarea>
     </mat-form-field>
-    <!-- <p class="invite-link">{{inviteLink}}</p> -->
-    <!--
-    <button class=" copy-msg-btn large" mat-raised-button [cdkCopyToClipboard]="inviteMsg" (click)="msgCopied()">
-      <mat-icon>share</mat-icon> مشاركة
-    </button> -->
-    <button class=" copy-msg-btn large" mat-raised-button (click)="share()">
-      <mat-icon>share</mat-icon> <span [translate]="'share'">مشاركة</span>
+    <button class="block large action-btn whatsapp-btn" mat-flat-button (click)="sendOnWhatsApp()">
+      <mat-icon>share</mat-icon> <span [translate]="'sharing.whatsapp'">إرسال عبر واتساب</span>
     </button>
-    <a mat-raised-button color="accent" class="block  large action-btn" [routerLink]="['/group',group.id]"><span
+    <div class="invite-more">
+      <button mat-stroked-button (click)="share()"><span [translate]="'sharing.other'">مشاركة بطريقة أخرى</span></button>
+      <button mat-stroked-button (click)="copy()"><span [translate]="'sharing.copy'">نسخ الرسالة</span></button>
+    </div>
+    <a mat-button class="block go-to-group" [routerLink]="['/group',group.id]"><span
     [translate]="'gInvite.go'">الانتقال لصفحة مجموعة الختمة</span></a>
   </div>
 }

@@ -13,6 +13,9 @@
 # covered by the Chrome line: Samsung Internet 12 runs Chromium 79, hence 79.
 # (With 80, `??` stayed in the bundle and Samsung Internet 12 showed a blank
 # page.) Check changes here in a real old Chromium; see README.
+# Lazy-loaded pages: once a build has 3 or more lazy chunks, Angular merges them in a second pass (Rolldown) that
+# ignores this list and brings `?.` and `??` back. The npm build scripts turn that pass off
+# (NG_BUILD_OPTIMIZE_CHUNKS=0), and e2e/tests/bundle-syntax.spec.ts fails if newer syntax reaches the bundles.
 Chrome >= 79
 ChromeAndroid >= 79
 Edge >= 88

@@ -3,6 +3,12 @@
     @if (group.isDone() > 0) {
       <section class="khitma-done">
         <app-khitma-done-celebration></app-khitma-done-celebration>
+        @if (memorialDuaText) {
+          <div class="memorial-dua">
+            <p class="memorial-dua-title" [translate]="'purpose.duaTitle'">دعاء للمتوفّى</p>
+            <p class="memorial-dua-text" lang="ar" dir="rtl">{{ memorialDuaText }}</p>
+          </div>
+        }
         @if (isAdmin) {
           <button (click)="startNewKhitmah()" mat-raised-button color="accent"
             class="block large action-btn admin-action-btn" [translate]="'sequential.start'">بدء
@@ -14,9 +20,32 @@
           مشاركة
           دعاء
         الختمة</button>
+        <button mat-stroked-button class="block status-card-btn" (pointerdown)="prepareCard('complete')" (click)="shareCard('complete')">
+          <mat-icon>image</mat-icon> <span [translate]="'shareCard.button'">شارك في حالة واتساب</span>
+        </button>
+        <ng-container *ngTemplateOutlet="startOwn; context: { source: 'completion' }"></ng-container>
       </section>
     }
     <div class="block user-msg" style="margin:32px auto; text-align: center;">
+    @if (offerAfter !== null && offeredJuz === null && !group.isDone()) {
+      <!-- Just finished, and nothing left to take here: the best moment to start a khitma of their own. -->
+      <div class="next-juz-offer">
+        <p class="next-juz-title" [translate]="'sequential.thanks'">جزاكم الله خيرًا 🤍</p>
+        <ng-container *ngTemplateOutlet="statusCard"></ng-container>
+        <ng-container *ngTemplateOutlet="startOwn; context: { source: 'juz_done' }"></ng-container>
+      </div>
+    }
+    @if (offeredJuz !== null) {
+      <div class="next-juz-offer">
+        <p class="next-juz-title">{{ offerTitle }}</p>
+        <p>{{ offerText('nextAsk', 'هل تقرأ الجزء {juz} أيضًا؟') }}</p>
+        <div class="next-juz-actions">
+          <button mat-flat-button class="action-btn" (click)="acceptNextJuz()">{{ offerText('nextTake', 'اقرأ الجزء {juz}') }}</button>
+          <button mat-button (click)="dismissNextJuz()">{{ offerText('nextLater', 'لاحقًا') }}</button>
+        </div>
+        <ng-container *ngTemplateOutlet="statusCard"></ng-container>
+      </div>
+    }
       <!-- <span *ngIf="myAjzaIndexes.length > 0; else noCurrentJuz">
       جزؤك الحالي:
       <strong *ngFor="let juzIndex of myAjzaIndexes"> {{juzIndex + 1}} </strong>
@@ -50,6 +79,43 @@
       }
     }
   </div>
+  @if (afterRamadanPrompt) {
+    <div class="help-finish after-ramadan">
+      <p class="help-finish-title" [translate]="'ramadan.afterTitle'">بعد رمضان: هل تستمرّ المجموعة بختمة أسبوعية؟</p>
+      <p class="help-finish-text" [translate]="'ramadan.afterText'">تبدأ ختمة جديدة كل جمعة تلقائيًا، ويُحجز لكل عضو الجزء الذي يلي جزءه.</p>
+      <div class="next-juz-actions">
+        <button mat-flat-button class="action-btn" (click)="continueWeeklyAfterRamadan()"><span [translate]="'ramadan.afterYes'">نعم، كل جمعة</span></button>
+        <button mat-button (click)="answerAfterRamadan('later')"><span [translate]="'ramadan.afterLater'">لاحقًا</span></button>
+      </div>
+    </div>
+  }
+  @if (deadlineLine) {
+    <p class="deadline-line">⏳ {{ deadlineLine }}</p>
+  }
+  @if (repeatLine) {
+    <p class="deadline-line repeat-line">🔁 {{ repeatLine }}</p>
+  }
+  @if (!group.isDone()) {
+    @if (freeAjza.length > 0) {
+      <div class="help-finish">
+        <p class="help-finish-title">{{ freeAjzaText }}</p>
+        <p class="help-finish-text" [translate]="'sharing.freeAsk'">ادعُ من يقرؤها لتتمّ الختمة.</p>
+        <button mat-flat-button class="whatsapp-btn" (click)="shareFreeAjza()">
+          <mat-icon>share</mat-icon> <span [translate]="'sharing.whatsapp'">إرسال عبر واتساب</span>
+        </button>
+        @if (impactLine) {
+          <p class="help-finish-impact">🤍 {{ impactLine }}</p>
+        }
+      </div>
+    } @else if (isAdmin && readingAjza.length > 0) {
+      <div class="help-finish">
+        <p class="help-finish-title">{{ allBookedText }}</p>
+        <button mat-flat-button class="whatsapp-btn" (click)="remindReaders()">
+          <mat-icon>share</mat-icon> <span [translate]="'sharing.remind'">ذكّر القرّاء عبر واتساب</span>
+        </button>
+      </div>
+    }
+  }
   <section class="juz-grid-section">
     <app-juz-grid class="app-juz-grid1" [ajza]="group.ajza" [myAjzaIndexes]="myAjzaIndexes"
       [celebrateJuzIndex]="celebrateJuzIndex" (onJuzSelection)="juzSelected($event)">
@@ -72,3 +138,16 @@
 }
 </div>
 }
+<ng-template #statusCard>
+  <button mat-button class="status-card-btn" (pointerdown)="prepareCard('juz')" (click)="shareCard('juz')">
+    <mat-icon>image</mat-icon> <span [translate]="'shareCard.button'">شارك في حالة واتساب</span>
+  </button>
+</ng-template>
+
+<ng-template #startOwn let-source="source">
+  <div class="start-own">
+    <p class="start-own-title" [translate]="'completion.startOwn'">هل تودّ أن تبدأ ختمة جماعيّة لمن تحب؟</p>
+    <a mat-stroked-button routerLink="/new" [queryParams]="{ type: 'onetime.sequential', from: source }"
+      (click)="startOwnClicked(source)"><span [translate]="'completion.startOwnButton'">ابدأ ختمة جديدة</span></a>
+  </div>
+</ng-template>

@@ -45,7 +45,7 @@
               (click)="pagesGroupChildComponent.start(); adminPanelOpen = false"
               >
               <mat-icon>play_arrow</mat-icon>
-              <span [translate]="'gDashboard.start'">بدأ الختمة</span>
+              <span [translate]="'gDashboard.start'">بدء الختمة</span>
             </button>
           }
           @if (group.isStarted) {
@@ -74,6 +74,12 @@
           <mat-icon>format_list_numbered_rtl</mat-icon>
           <span [translate]="'gDashboard.shareStatus'">مشاركة وضع الختمة</span>
         </button>
+        @if (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL && staleCount > 0) {
+          <button mat-flat-button class="release-stale-btn" (click)="sequentialGroupChildComponent.releaseStaleBookings(); adminPanelOpen = false">
+            <mat-icon>restart_alt</mat-icon>
+            <span>{{ releaseStaleLabel }}</span>
+          </button>
+        }
         @if (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL) {
           <button
             mat-flat-button
@@ -84,6 +90,10 @@
             >
             <mat-icon>refresh</mat-icon>
             <span [translate]="'gDashboard.new'">ختمة جديدة للمجموعة</span>
+          </button>
+          <button mat-flat-button (click)="openSchedule(); adminPanelOpen = false">
+            <mat-icon>loop</mat-icon>
+            <span [translate]="'schedule.button'">تكرار الختمة تلقائيًا</span>
           </button>
         }
         <button
@@ -106,7 +116,7 @@
         <strong
           ><b [translate]="'gDashboard.hi'">السلام عليكم يا</b>
           {{ username }}</strong
-          >،
+          >{{ common.currentLanguage === 'ar' ? '،' : '' }}
         </span>
       </section>
 

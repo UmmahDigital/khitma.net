@@ -7,13 +7,16 @@ import { LocalDatabaseService } from '../../../local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
+import { fill } from '../../../share-messages';
+import { SharedModule } from '../../../modules/shared.module';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class DashboardComponent implements OnInit {
 
@@ -67,8 +70,7 @@ export class DashboardComponent implements OnInit {
     this.$gaService.event('group_leave');
 
     const dialogData = new ConfirmDialogModel(this.common.translation.home?.archiveConfirm
-      , this.common.translation.home?.archiveGroup
-      + group.title + '"؟'
+      , fill(this.common.translation.home?.archiveGroup || 'أرشفة مجموعة «{title}»؟', { title: group.title })
     );
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

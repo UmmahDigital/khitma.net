@@ -1,31 +1,25 @@
-<h1 mat-dialog-title>
-    ختمة جديدة للمجموعة
-</h1>
+<h1 mat-dialog-title [translate]="'newKhitma.title'">ختمة جديدة للمجموعة</h1>
 
 <div mat-dialog-content>
 
-
-
-    <label id="radio-group-label">الرجاء اختيار الحالة المرجوّة للختمة الجديدة</label>
+    <label id="radio-group-label" [translate]="'newKhitma.label'">الرجاء اختيار الحالة المرجوّة للختمة الجديدة</label>
 
     <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="newCycleState">
 
-
         <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.AUTO_BOOK">
-            حجز الجزء التالي لكل عضو تلقائيّا
+            <span [translate]="'newKhitma.autoBook'">حجز الجزء التالي لكل عضو تلقائيّا</span>
         </mat-radio-button>
 
         <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.AUTO_BOOK_FOR_DONE_ONLY">
-            حجز الجزء التالي تلقائيّا فقط للأعضاء الذين أتمّوا جزءهم
+            <span [translate]="'newKhitma.autoBookDone'">حجز الجزء التالي تلقائيّا فقط للأعضاء الذين أتمّوا جزءهم</span>
         </mat-radio-button>
 
-
         <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.ALL_IDLE">
-            إتاحة جميع الأجزاء للإختيار
+            <span [translate]="'newKhitma.allIdle'">إتاحة جميع الأجزاء للاختيار</span>
         </mat-radio-button>
 
         <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.REWIND" [disabled]="group.cycle <= 0">
-            إرجاع الختمة خطوة إلى الوراء (إعطاء كل عضو الجزء السابق له)
+            <span [translate]="'newKhitma.rewind'">إرجاع الختمة خطوة إلى الوراء (إعطاء كل عضو الجزء السابق له)</span>
         </mat-radio-button>
 
     </mat-radio-group>
@@ -33,6 +27,6 @@
 </div>
 
 <div mat-dialog-actions>
-    <button mat-button (click)="onDismiss()">الغاء</button>
-    <button mat-raised-button type="submit" class="action-btn" (click)="onConfirm()">موافق</button>
+    <button mat-button (click)="onDismiss()"><span [translate]="'newKhitma.cancel'">إلغاء</span></button>
+    <button mat-raised-button type="submit" class="action-btn" (click)="onConfirm()"><span [translate]="'newKhitma.ok'">موافق</span></button>
 </div>

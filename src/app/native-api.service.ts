@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+/** The phone's share sheet, or the store app's share bridge. Use SharingService, which adds fallbacks and analytics. */
 @Injectable({
   providedIn: 'root',
 })
@@ -10,6 +11,11 @@ export class NativeApiService {
     if (navigator.share) {
       this.isAvailable = true;
     }
+  }
+
+  /** Inside the store app (a web view), sharing goes through its Flutter bridge. */
+  get hasBridge(): boolean {
+    return !!window['Flutter'];
   }
 
   share(title, text, url) {

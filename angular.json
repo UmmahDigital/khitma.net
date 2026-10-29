@@ -37,6 +37,9 @@
               "src/.well-known/assetlinks.json",
               "src/apple-app-site-association",
               "src/robots.txt",
+              "src/sitemap.xml",
+              "src/llms.txt",
+              { "glob": "**/*", "input": "src/guide", "output": "guide" },
               "src/firebase-messaging-sw.js"
             ],
             "styles": [
@@ -105,6 +108,11 @@
             },
             "development": {
               "buildTarget": "khitma:build:development"
+            },
+            "emulator": {
+              "buildTarget": "khitma:build:development,e2e",
+              "port": 4201,
+              "ssl": false
             }
           },
           "options": {

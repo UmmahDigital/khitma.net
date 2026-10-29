@@ -1,13 +1,15 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Juz, JUZ_STATUS, KhitmaGroup } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
+import { SharedModule } from '../../../modules/shared.module';
 
 @Component({
     selector: 'app-personal-khitma',
     templateUrl: './personal-khitma.component.html',
     styleUrls: ['./personal-khitma.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class PersonalKhitmaComponent implements OnInit {
 

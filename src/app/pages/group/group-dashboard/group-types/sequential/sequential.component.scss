@@ -173,3 +173,115 @@
         font-weight: 700;
     }
 }
+
+// "Help finish": what the khitma still needs, and one tap to ask for it on WhatsApp.
+.help-finish {
+  margin: 0 auto 36px;
+  padding: 12px 16px 14px;
+  max-width: 420px;
+  border-radius: 16px;
+  background: #e3f1ee;
+  text-align: center;
+
+  p {
+    margin: 0 0 6px;
+    line-height: 1.35;
+  }
+
+  .help-finish-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c6151;
+  }
+
+  .help-finish-text {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .help-finish-impact {
+    margin: 10px 0 0;
+    font-size: 16px;
+    color: #1c6151;
+  }
+}
+
+// "Read another juz?": offered right after finishing one.
+.next-juz-offer {
+  margin: 0 auto 20px;
+  padding: 14px 16px;
+  max-width: 420px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+
+  p {
+    margin: 0 0 6px;
+    line-height: 1.35;
+  }
+
+  .next-juz-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1c6151;
+  }
+
+  .next-juz-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+.deadline-line {
+  margin: 0 auto 12px;
+  text-align: center;
+  font-weight: 700;
+  color: #1c6151;
+}
+
+.start-own {
+  margin: 20px auto 0;
+  text-align: center;
+
+  .start-own-title {
+    margin: 0 0 8px;
+    line-height: 1.4;
+  }
+}
+
+// A memorial khitma ends with the supplication for the deceased.
+.memorial-dua {
+  margin: 8px auto 20px;
+  padding: 14px 16px;
+  max-width: 420px;
+  border-radius: 16px;
+  background: #e3f1ee;
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+
+  .memorial-dua-title {
+    font-size: 18px;
+    color: #1c6151;
+    margin-bottom: 8px;
+  }
+
+  .memorial-dua-text {
+    font-size: 24px;
+    line-height: 1.7;
+  }
+}
+
+// "Share to WhatsApp Status": an image of the moment, made on the phone.
+.status-card-btn {
+  margin-top: 12px !important;
+
+  mat-icon {
+    margin-inline-end: 4px;
+  }
+}

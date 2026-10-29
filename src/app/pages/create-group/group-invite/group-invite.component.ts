@@ -2,10 +2,12 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from '../../../alert.service';
 import { KhitmaGroup } from '../../../entities/entities';
-import { NativeApiService } from '../../../native-api.service';
-import { NativeShareService } from '../../../native-share.service';
+import { SharingService } from '../../../sharing.service';
+import { ReferralService } from '../../../referral.service';
+import { inviteMessage } from '../../../share-messages';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
+import { SharedModule } from '../../../modules/shared.module';
 
 @Component({
     selector: 'app-group-invite',
@@ -13,7 +15,8 @@ import { CommonService } from '../../../service/common.service';
     styleUrls: ['./group-invite.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    standalone: true,
+    imports: [SharedModule]
 })
 export class GroupInviteComponent implements OnInit {
   group: KhitmaGroup;
@@ -24,8 +27,8 @@ export class GroupInviteComponent implements OnInit {
     private route: ActivatedRoute,
     private groupsApi: KhitmaGroupService,
     private alert: AlertService,
-    private nativeShare: NativeShareService,
-    private nativeApi: NativeApiService,
+    private sharing: SharingService,
+    private referral: ReferralService,
     public common: CommonService
   ) {}
 
@@ -38,31 +41,22 @@ export class GroupInviteComponent implements OnInit {
         .subscribe((group: KhitmaGroup) => {
           this.group = group;
 
-          this.inviteLink = this.groupsApi.getGroupURL(this.group.id);
+          this.inviteLink = this.referral.groupUrl(this.group.id);
 
-          this.inviteMsg =
-            this.common.translation.gInvite?.join +
-            ' "' +
-            this.group.title +
-            '" ' +
-            this.common.translation.gInvite?.link +
-            '" ' +
-            this.inviteLink +
-            '\n' +
-            this.common.translation.gInvite?.bless;
+          this.inviteMsg = inviteMessage(this.common.translation, this.group.title, this.inviteLink);
         });
     });
   }
 
-  msgCopied() {
-    this.alert.show(this.common.translation.gInvite?.alert, 5000);
+  sendOnWhatsApp() {
+    this.sharing.whatsapp(this.inviteMsg, 'invite', this.group.id);
   }
 
   share() {
-    this.nativeApi.share(
-      this.common.translation.gInvite?.share,
-      this.inviteMsg,
-      null
-    );
+    this.sharing.share(this.common.translation.gInvite?.share, this.inviteMsg, 'invite', this.group.id);
+  }
+
+  copy() {
+    this.sharing.copy(this.inviteMsg, 'invite', this.group.id);
   }
 }
