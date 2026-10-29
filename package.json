@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "demo": "firebase emulators:exec --only firestore --project demo-khitma \"node tools/demo/seed.mjs && ng serve --configuration emulator\"",
+    "demo:browse": "node tools/demo/browse.mjs",
     "build": "NG_BUILD_OPTIMIZE_CHUNKS=0 ng build",
     "build:prod": "NG_BUILD_OPTIMIZE_CHUNKS=0 ng build --configuration production",
     "test": "ng test",

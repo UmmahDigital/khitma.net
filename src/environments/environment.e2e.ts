@@ -1,6 +1,6 @@
-// Used by `npm run e2e:build` (`ng build --configuration production,e2e`).
+// Used by `npm run e2e:build` (`ng build --configuration production,e2e`) and the local demo (`npm run demo`).
 // Points the app at the local Firestore emulator under a `demo-` project ID,
-// so end-to-end tests can never read or write production data.
+// so end-to-end tests and the demo can never read or write production data.
 export const environment = {
   production: true,
   useEmulators: true,

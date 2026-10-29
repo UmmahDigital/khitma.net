@@ -108,6 +108,11 @@
             },
             "development": {
               "buildTarget": "khitma:build:development"
+            },
+            "emulator": {
+              "buildTarget": "khitma:build:development,e2e",
+              "port": 4201,
+              "ssl": false
             }
           },
           "options": {
