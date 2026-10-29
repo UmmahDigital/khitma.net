@@ -105,6 +105,13 @@
         ]
       }
     ],
+    "redirects": [
+      {
+        "source": "/get",
+        "destination": "/",
+        "type": 302
+      }
+    ],
     "appAssociation": "AUTO",
     "ignore": [
       "firebase.json",
