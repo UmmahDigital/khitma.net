@@ -56,6 +56,7 @@ test.describe('the announcement', () => {
     expect(close.x).toBeGreaterThan(box.x + box.width / 2);
     expect(await dialog.evaluate((el) => getComputedStyle(el).direction)).toBe('ltr');
     expect(await dialog.getByRole('heading').evaluate((el) => getComputedStyle(el).direction)).toBe('rtl');
+    expect(await dialog.getByRole('link', { name: 'ابدأ ختمة جديدة' }).evaluate((el) => getComputedStyle(el).direction)).toBe('rtl');
     // The title's text keeps clear of the close button.
     const titleEnd = await dialog.getByRole('heading').evaluate((el) => {
       const range = document.createRange();

@@ -47,6 +47,10 @@ export class NotificationsService {
     if (!notification) {
       notification = this._mostRecentNotification;
     }
+    // Tapped before any announcement has loaded (or there is none): no empty dialog.
+    if (!notification) {
+      return;
+    }
 
     const dialogRef = this.dialog.open(NotificationComponent, {
       data: notification,
