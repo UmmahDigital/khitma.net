@@ -112,7 +112,9 @@ export class CreateGroupComponent implements OnInit {
     //   this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
     // }
 
-    const targetAt = deadlineDate(this.deadlineChoice, this.deadlinePicked);
+    // Only one-time khitmas have a deadline, even if one was picked before switching the form to recurring.
+    const deadlineChoice: DeadlineChoice = this.isRecurring ? 'none' : this.deadlineChoice;
+    const targetAt = deadlineDate(deadlineChoice, this.deadlinePicked);
 
     this.groupsApi
       .createGroup(
@@ -125,7 +127,7 @@ export class CreateGroupComponent implements OnInit {
       )
       .then((docRef) => {
         const groupId = docRef.id;
-        this.$gaService.send('group_created', { group_id: groupId, group_type: this.groupType, deadline: this.deadlineChoice });
+        this.$gaService.send('group_created', { group_id: groupId, group_type: this.groupType, deadline: deadlineChoice });
 
         this.alert.show(this.common.translation.gCreate?.success, 5000);
 
