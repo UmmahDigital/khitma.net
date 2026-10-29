@@ -52,6 +52,13 @@ test.describe('home', () => {
     await expect(page.getByText('ختمة رمضان الماضي')).toBeVisible();
   });
 
+  test('the old app link opens the web app (the store apps are gone)', async ({ page }) => {
+    // Hosting answers /get with a redirect to / (firebase.json); the app does the same if it's opened there.
+    await openApp(page, '/get');
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole('link', { name: 'إنشاء مجموعة ختمة دوريّة' })).toBeVisible();
+  });
+
   test('switches to English and remembers the choice', async ({ page }) => {
     await openApp(page, '/', { storage: { lng: 'en' } });
 

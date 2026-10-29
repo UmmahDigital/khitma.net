@@ -12,6 +12,14 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "runtime": "nodejs22",
+      "ignore": ["node_modules", ".git", "*.test.js"]
+    }
+  ],
   "hosting": {
     "public": "dist/khitma",
     "headers": [
@@ -61,6 +69,15 @@
         ]
       },
       {
+        "source": "/group/*",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, s-maxage=300"
+          }
+        ]
+      },
+      {
         "source": "/@(index.html|ngsw.json|ngsw-worker.js|safety-worker.js|worker-basic.min.js|firebase-messaging-sw.js|manifest.webmanifest)",
         "headers": [
           {
@@ -88,6 +105,13 @@
         ]
       }
     ],
+    "redirects": [
+      {
+        "source": "/get",
+        "destination": "/",
+        "type": 302
+      }
+    ],
     "appAssociation": "AUTO",
     "ignore": [
       "firebase.json",
@@ -98,6 +122,13 @@
       {
         "source": "/dl/**",
         "dynamicLinks": true
+      },
+      {
+        "source": "/group/*",
+        "function": {
+          "functionId": "groupPreview",
+          "region": "us-central1"
+        }
       },
       {
         "source": "**",

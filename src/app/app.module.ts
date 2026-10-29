@@ -71,7 +71,6 @@ const routes: Routes = [
     data: { screen: 'quran_juz' },
   },
   { path: 'about', loadComponent: () => import('./pages/about/about.component').then((m) => m.AboutComponent), data: { screen: 'about' } },
-  { path: 'get', loadComponent: () => import('./pages/get/get.component').then((m) => m.GetComponent), data: { screen: 'get_app' } },
   {
     path: 'ramadan',
     loadComponent: () => import('./pages/global-khitma/global-khitma.component').then((m) => m.GlobalKhitmaComponent),
