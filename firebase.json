@@ -52,6 +52,15 @@
         ]
       },
       {
+        "source": "/assets/translate/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
         "source": "/@(index.html|ngsw.json|ngsw-worker.js|safety-worker.js|worker-basic.min.js|firebase-messaging-sw.js|manifest.webmanifest)",
         "headers": [
           {
