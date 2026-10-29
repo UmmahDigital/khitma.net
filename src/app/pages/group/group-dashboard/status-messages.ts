@@ -1,54 +1,64 @@
 import { JUZ_STATUS, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
+import { localDeadlineText } from '../../../deadline';
+import { fill } from '../../../share-messages';
 
-function _getDateInArabic(date: Date) {
-  // var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
-  //   "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+// The status message admins share in the group's WhatsApp chat. Arabic is the source; the other languages come
+// from the translation files' `status` section.
 
-  var days = [
-    'اﻷحد',
-    'اﻷثنين',
-    'الثلاثاء',
-    'اﻷربعاء',
-    'الخميس',
-    'الجمعة',
-    'السبت',
-  ];
+const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-  return (
-    days[date.getDay()] +
-    ' ' +
-    date.getDate() +
-    '/' +
-    (date.getMonth() + 1) +
-    '/' +
-    date.getUTCFullYear()
-  );
+function todayText(date: Date, lang: string): string {
+  if (lang !== 'ar') {
+    return date.toLocaleDateString(lang, { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
+  }
+  return ARABIC_DAYS[date.getDay()] + ' ' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getUTCFullYear();
 }
 
-function statusMsg_Sequential(group, url: string = group.getURL()) {
+/** The admin's free-text date; a picked date in the reader's language. */
+function dueText(group, lang: string): string {
+  return lang !== 'ar' && group.targetAt ? localDeadlineText(group.targetAt, lang) : group.targetDate;
+}
+
+function texts(translation: any) {
+  const t = translation?.status ?? {};
+  return {
+    summary: t.summary || '🟢 تمّ {done} · 🟡 قيد القراءة {reading} · 🔴 متاح {free}',
+    freeList: t.freeList || 'الأجزاء المتاحة: {list}',
+    task: t.task || 'المهمّة الحاليّة: {task}',
+    deadline: t.deadline || 'موعد تسليم الختمة: {date}.',
+    taskDeadline: t.taskDeadline || 'موعد تسليم المهمّة: {date}.',
+    updateJuz: t.updateJuz || 'رجاء تحديث حالة جزئكم عن طريق الرابط: {url}',
+    updateTask: t.updateTask || 'رجاء تحديث حالة مهمّتكم عن طريق الرابط: {url}',
+    updatePages: t.updatePages || 'رجاء تحديث حالة صفحاتكم عن طريق الرابط: {url}',
+    bless: t.bless || 'بارك الله بكم!',
+  };
+}
+
+function statusMsg_Sequential(group, url: string = group.getURL(), translation?: any, lang = 'ar') {
   function getJuzIcon(juz) {
     const ICONS = ['🔴', '🟡', '🟢'];
 
     return ICONS[juz.status];
   }
 
+  const t = texts(translation);
   const NEW_LINE = '\n';
   const now = new Date();
 
   let msg = group.title;
 
   msg += NEW_LINE;
-  msg += _getDateInArabic(now);
+  msg += todayText(now, lang);
   msg += NEW_LINE;
   msg += NEW_LINE;
 
   // What the khitma still needs comes first: the free ajza are what the group can act on.
   const count = (status) => group.ajza.filter((juz) => juz.status === status).length;
   const free = group.ajza.filter((juz) => juz.status === JUZ_STATUS.IDLE).map((juz) => juz.index + 1);
-  msg += '🟢 تمّ ' + count(JUZ_STATUS.DONE) + ' · 🟡 قيد القراءة ' + count(JUZ_STATUS.BOOKED) + ' · 🔴 متاح ' + free.length;
+  msg += fill(t.summary, { done: count(JUZ_STATUS.DONE), reading: count(JUZ_STATUS.BOOKED), free: free.length });
   msg += NEW_LINE;
   if (free.length) {
-    msg += 'الأجزاء المتاحة: ' + free.join('، ');
+    msg += fill(t.freeList, { list: free.join(lang === 'ar' ? '، ' : ', ') });
     msg += NEW_LINE;
   }
   msg += NEW_LINE;
@@ -61,10 +71,6 @@ function statusMsg_Sequential(group, url: string = group.getURL()) {
       ' ' +
       (juz.owner || '');
 
-    // if (juz.status === JUZ_STATUS.DONE) {
-    //   msg += " 👏";
-    // }
-
     msg += NEW_LINE;
   });
 
@@ -72,37 +78,38 @@ function statusMsg_Sequential(group, url: string = group.getURL()) {
   msg += NEW_LINE;
 
   if (group.targetDate) {
-    msg += 'موعد تسليم الختمة: ' + group.targetDate + '.';
+    msg += fill(t.deadline, { date: dueText(group, lang) });
     msg += NEW_LINE;
     msg += NEW_LINE;
   }
 
-  msg += 'رجاء تحديث حالة جزئكم عن طريق الرابط: ' + url;
+  msg += fill(t.updateJuz, { url });
 
   msg += NEW_LINE;
   msg += NEW_LINE;
 
-  msg += 'بارك الله بكم!';
+  msg += t.bless;
 
   return msg;
 }
 
-function statusMsg_SameTask(group, url: string = group.getURL()) {
+function statusMsg_SameTask(group, url: string = group.getURL(), translation?: any, lang = 'ar') {
   function getStatusIcon(isDone) {
     return isDone ? '🟢' : '🔴';
   }
 
+  const t = texts(translation);
   const NEW_LINE = '\n';
   const now = new Date();
 
   let msg = group.title;
 
   msg += NEW_LINE;
-  msg += _getDateInArabic(now);
+  msg += todayText(now, lang);
   msg += NEW_LINE;
   msg += NEW_LINE;
 
-  msg += 'المهمّة الحاليّة: ' + group.task;
+  msg += fill(t.task, { task: group.task });
   msg += NEW_LINE;
   msg += NEW_LINE;
 
@@ -114,22 +121,22 @@ function statusMsg_SameTask(group, url: string = group.getURL()) {
   msg += NEW_LINE;
 
   if (group.targetDate) {
-    msg += 'موعد تسليم المهمّة: ' + group.targetDate + '.';
+    msg += fill(t.taskDeadline, { date: dueText(group, lang) });
     msg += NEW_LINE;
     msg += NEW_LINE;
   }
 
-  msg += 'رجاء تحديث حالة مهمّتكم عن طريق الرابط: ' + url;
+  msg += fill(t.updateTask, { url });
 
   msg += NEW_LINE;
   msg += NEW_LINE;
 
-  msg += 'بارك الله بكم!';
+  msg += t.bless;
 
   return msg;
 }
 
-function statusMsg_Pages(group, url: string = group.getURL()) {
+function statusMsg_Pages(group, url: string = group.getURL(), translation?: any, lang = 'ar') {
   function getStatusIcon(isDone) {
     return isDone ? '🟢' : '🔴';
   }
@@ -138,13 +145,14 @@ function statusMsg_Pages(group, url: string = group.getURL()) {
     return member.pagesTask?.start != null;
   }
 
+  const t = texts(translation);
   const NEW_LINE = '\n';
   const now = new Date();
 
   let msg = group.title;
 
   msg += NEW_LINE;
-  msg += _getDateInArabic(now);
+  msg += todayText(now, lang);
   msg += NEW_LINE;
   msg += NEW_LINE;
 
@@ -167,17 +175,17 @@ function statusMsg_Pages(group, url: string = group.getURL()) {
   msg += NEW_LINE;
 
   if (group.targetDate) {
-    msg += 'موعد تسليم الختمة: ' + group.targetDate + '.';
+    msg += fill(t.deadline, { date: dueText(group, lang) });
     msg += NEW_LINE;
     msg += NEW_LINE;
   }
 
-  msg += 'رجاء تحديث حالة صفحاتكم عن طريق الرابط: ' + url;
+  msg += fill(t.updatePages, { url });
 
   msg += NEW_LINE;
   msg += NEW_LINE;
 
-  msg += 'بارك الله بكم!';
+  msg += t.bless;
 
   return msg;
 }

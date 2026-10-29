@@ -55,8 +55,11 @@ test.describe('home', () => {
   test('switches to English and remembers the choice', async ({ page }) => {
     await openApp(page, '/', { storage: { lng: 'en' } });
 
-    await expect(page.getByRole('link', { name: 'Create a periodical set' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Create a recurring khitma group' })).toBeVisible();
     await expect(page.locator('body')).toHaveClass(/ltr/);
+    // Angular Material reads the page's direction for dialogs, menus and fields.
+    await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   });
 
   test('recommends Dayma in the reader\'s language, in a new tab', async ({ page, browser }) => {

@@ -6,7 +6,7 @@
       <p [translate]="'sharing.inviteText'">كلّ من يفتح الرابط يكتب اسمه ويختار جزءًا ليقرأه.</p>
     </section>
     <mat-form-field appearance="fill" class="block">
-      <mat-label [translate]="'gInvite.message'">رسالة الدعوة للإنضمام (يمكنك تعديلها)</mat-label>
+      <mat-label [translate]="'gInvite.message'">رسالة الدعوة للانضمام (يمكنك تعديلها)</mat-label>
       <textarea matInput rows="6" [(ngModel)]="inviteMsg" name="invite-msg"></textarea>
     </mat-form-field>
     <button class="block large action-btn whatsapp-btn" mat-flat-button (click)="sendOnWhatsApp()">

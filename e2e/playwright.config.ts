@@ -38,7 +38,7 @@ export default defineConfig({
       // The behavior tests again, with Chromium made to act like iOS 14.5 and Chromium 79 (see support/legacy-browser.ts).
       name: 'oldest-supported-browser',
       dependencies: ['setup'],
-      testIgnore: [/global\.setup\.ts/, /visual\.spec\.ts/, /real-old-browser\.spec\.ts/],
+      testIgnore: [/global\.setup\.ts/, /visual\.spec\.ts/, /real-old-browser\.spec\.ts/, /translations\.spec\.ts/],
       metadata: { oldestSupportedBrowser: true },
     },
   ],

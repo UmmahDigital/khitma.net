@@ -12,7 +12,7 @@ test.describe('joining a group from an invite link', () => {
     await expect(page).toHaveURL(new RegExp(`/group/${groupId}/join$`));
     await expect(page.getByText('ختمة العائلة')).toBeVisible();
 
-    const join = page.getByRole('button', { name: 'الإنضمام للختمة' });
+    const join = page.getByRole('button', { name: 'الانضمام للختمة' });
     await expect(join).toBeDisabled();
     await page.getByLabel('اسمك').fill('  سارة  ');
     await join.click();
@@ -32,7 +32,7 @@ test.describe('joining a group from an invite link', () => {
 
     await openApp(page, `/group/${groupId}`);
     await page.getByLabel('اسمك').fill('سارة');
-    await page.getByRole('button', { name: 'الإنضمام للختمة' }).click();
+    await page.getByRole('button', { name: 'الانضمام للختمة' }).click();
 
     await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`), { timeout: 20_000 });
     await expect
@@ -54,6 +54,6 @@ test.describe('joining a group from an invite link', () => {
 
     await openApp(page, `/group/${groupId}`);
     await expect(page).toHaveURL(new RegExp(`/group/${groupId}/join$`));
-    await expect(page.getByRole('button', { name: 'الإنضمام للختمة' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'الانضمام للختمة' })).toBeVisible();
   });
 });

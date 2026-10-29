@@ -12,7 +12,7 @@ const HADITH = '«مَنْ دَلَّ عَلَى خَيْرٍ فَلَهُ مِ�
 
 async function joinAs(page: Page, groupId: string, name: string) {
   await page.getByLabel('اسمك').fill(name);
-  await page.getByRole('button', { name: 'الإنضمام للختمة' }).click();
+  await page.getByRole('button', { name: 'الانضمام للختمة' }).click();
   await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`), { timeout: 20_000 });
   await expect(page.getByText(`السلام عليكم يا ${name}`)).toBeVisible();
 }

@@ -6,8 +6,10 @@ publishing by hand around **16 Sha'ban 1448 (about 24 January 2027)**. Both need
 
 ## 1. In-app notification
 
-Everyone who opens the app sees the newest active document in the `notifications` collection once (the bell then
-shows it again on demand). Add a document in the Firebase console, in `notifications`:
+The newest active document in the `notifications` collection puts a badge on the bell in the app's top bar; tapping
+the bell opens it (and keeps opening the latest one after the badge is gone). It never opens by itself, so it doesn't
+stand between someone who followed a link and the khitma they came for. Add a document in the Firebase console, in
+`notifications`:
 
 | Field | Type | Value |
 |---|---|---|
@@ -17,8 +19,9 @@ shows it again on demand). Add a document in the Firebase console, in `notificat
 | `text` | string | `اقترب رمضان. اجمعوا أهلكم وأصدقاءكم على ختم القرآن: ختمة واحدة خلال الشهر، أو ختمة كاملة كل يوم تبدأ وحدها ويتنقّل فيها كل مشارك بين الأجزاء. شاركوا الرابط في مجموعاتكم، ومن دلّ على خير فله مثل أجر فاعله.` |
 | `actions` | array of maps | `[{ text: "ختمة واحدة خلال رمضان", url: "/new?type=onetime&purpose=ramadan&from=notification_ramadan" }, { text: "ختمة كاملة كل يوم", url: "/new?type=recurring&template=ramadan-daily&from=notification_ramadan" }]` |
 
-`from=notification_ramadan` reaches `group_created.source`, so the notification's effect shows in analytics. After
-Ramadan, set `isActive` to `false`.
+`from=notification_ramadan` reaches `group_created.source`, so the notification's effect shows in analytics. The first
+action is the main (filled) button and the others are outlined, one under the other; links starting with `/` open
+within the app, and tapping any action counts as reading the notification. After Ramadan, set `isActive` to `false`.
 
 ## 2. A message to forward on WhatsApp
 

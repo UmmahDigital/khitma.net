@@ -162,7 +162,7 @@ test.describe('screenshots of the current design', () => {
   test('home: English', async ({ page }) => {
     await page.setViewportSize(PHONE);
     await openApp(page, '/', { storage: { lng: 'en' }, now: OUTSIDE_RAMADAN });
-    await expect(page.getByRole('link', { name: 'Create a periodical set' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Create a recurring khitma group' })).toBeVisible();
     await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
     await snap(page, 'home-english');
   });
@@ -195,14 +195,14 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(PHONE);
     // A fixed sharer's code: the invite link shows it (?r=visualref).
     await openApp(page, '/group/visual-family/invite', { storage: { refCode: 'visualref' }, freezeTime: true });
-    await expect(page.getByLabel('رسالة الدعوة للإنضمام (يمكنك تعديلها)')).toHaveValue(/visual-family/);
+    await expect(page.getByLabel('رسالة الدعوة للانضمام (يمكنك تعديلها)')).toHaveValue(/visual-family/);
     await snap(page, 'group-invite');
   });
 
   test('join page', async ({ page }) => {
     await page.setViewportSize(PHONE);
     await openApp(page, '/group/visual-family', { freezeTime: true });
-    await expect(page.getByRole('button', { name: 'الإنضمام للختمة' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'الانضمام للختمة' })).toBeVisible();
     await snap(page, 'group-join');
   });
 
@@ -382,7 +382,7 @@ test.describe('screenshots of the current design', () => {
   test('Aqsa khitmah', async ({ page }) => {
     await page.setViewportSize(TALL_PHONE);
     await openApp(page, '/aqsa', { storage: { lastRecievedNotificationId: '2' }, freezeTime: true });
-    await expect(page.getByRole('button', { name: 'أريد تلاوة 10 صحفات' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'أريد تلاوة 10 صفحات' })).toBeVisible();
     await expect(page.locator('app-aqsa-khitma .main-counter').first()).toHaveText(/1,?250/);
     await snap(page, 'aqsa');
   });
@@ -404,6 +404,16 @@ test.describe('screenshots of the current design', () => {
     await expect(page.getByRole('menuitem', { name: 'ترك المجموعة' })).toBeVisible();
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await snap(page, 'popup-group-menu');
+  });
+
+  test('popup: announcement', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openApp(page, '/', { now: OUTSIDE_RAMADAN });
+    await expect(page.locator('.mat-badge-content')).toBeVisible();
+    await page.locator('mat-icon[gaevent="show_notification_clicked"]').click();
+    await expect(page.getByRole('link', { name: 'مجموعة الفيسبوك' })).toBeVisible();
+    await settle(page);
+    await expect(page.locator('mat-dialog-container')).toHaveScreenshot('popup-announcement.png');
   });
 
   test('popup: confirm finishing a juz', async ({ page }) => {

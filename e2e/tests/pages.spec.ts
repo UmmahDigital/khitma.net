@@ -38,7 +38,7 @@ test.describe('page distribution group', () => {
 
     await openDashboard(page, groupId, ADMIN);
     await page.getByText('أدوات مسؤول المجموعة').click();
-    await page.getByRole('button', { name: 'بدأ الختمة' }).click();
+    await page.getByRole('button', { name: 'بدء الختمة' }).click();
 
     await expect.poll(() => storedPages(groupId)).toEqual({
       isStarted: true,

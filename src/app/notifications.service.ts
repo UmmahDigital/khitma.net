@@ -50,7 +50,11 @@ export class NotificationsService {
 
     const dialogRef = this.dialog.open(NotificationComponent, {
       data: notification,
-      maxWidth: "80vw"
+      // A readable line length on wide screens; the whole width less a margin on phones.
+      width: '440px',
+      maxWidth: 'calc(100vw - 32px)',
+      // Focus the dialog itself rather than its close button, which would show highlighted on opening.
+      autoFocus: 'dialog'
     });
 
     dialogRef.afterClosed().subscribe(dontDisplayAgain => {

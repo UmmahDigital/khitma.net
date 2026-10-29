@@ -30,7 +30,7 @@ import {
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { ReferralService } from '../../referral.service';
 import { impactLines } from '../../referral';
-import { hadithLine } from '../../share-messages';
+import { fill, hadithLine } from '../../share-messages';
 import { isRamadanSeason } from '../../ramadan';
 import { CommonService } from '../../service/common.service';
 
@@ -133,7 +133,7 @@ export class HomeComponent implements OnInit {
   archiveGroup(group: KhitmaGroup) {
     const dialogData = new ConfirmDialogModel(
       this.common.translation.home?.archiveConfirm,
-      this.common.translation.home?.archiveGroup + group.title + '"؟'
+      fill(this.common.translation.home?.archiveGroup || 'أرشفة مجموعة «{title}»؟', { title: group.title })
     );
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

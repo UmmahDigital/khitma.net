@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SharedModule } from '../../modules/shared.module';
+import { CommonService } from '../../service/common.service';
 
 @Component({
     selector: 'app-about',
@@ -11,7 +12,7 @@ import { SharedModule } from '../../modules/shared.module';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  constructor(public common: CommonService) { }
 
   ngOnInit(): void {
 

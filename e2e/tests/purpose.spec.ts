@@ -36,7 +36,7 @@ test.describe('khitma purpose', () => {
       honoreeGender: 'female',
     });
     // The invitation doesn't say "khitma" twice.
-    await expect(page.getByLabel('رسالة الدعوة للإنضمام (يمكنك تعديلها)')).toHaveValue(
+    await expect(page.getByLabel('رسالة الدعوة للانضمام (يمكنك تعديلها)')).toHaveValue(
       /^انضمّوا إلى ختمة عن روح فاطمة رحمها الله، واختاروا جزءًا لقراءته 📖/
     );
     expect(await recordedEvents(page)).toContainEqual(['group_created', expect.objectContaining({ purpose: 'memorial' })]);

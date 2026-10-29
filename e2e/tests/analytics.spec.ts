@@ -149,7 +149,7 @@ test.describe('analytics', () => {
     await recordEventsAcrossReloads(page);
     await openApp(page, `/group/${groupId}`);
     await page.getByLabel('اسمك').fill('سارة');
-    await page.getByRole('button', { name: 'الإنضمام للختمة' }).click();
+    await page.getByRole('button', { name: 'الانضمام للختمة' }).click();
     await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`), { timeout: 20_000 });
 
     expect(await recordedEvents(page)).toContainEqual(['group_joined', { group_id: groupId, group_type: 'SEQUENTIAL' }]);

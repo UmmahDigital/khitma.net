@@ -15,7 +15,7 @@
         </mat-radio-button>
 
         <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.ALL_IDLE">
-            <span [translate]="'newKhitma.allIdle'">إتاحة جميع الأجزاء للإختيار</span>
+            <span [translate]="'newKhitma.allIdle'">إتاحة جميع الأجزاء للاختيار</span>
         </mat-radio-button>
 
         <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.REWIND" [disabled]="group.cycle <= 0">
@@ -27,6 +27,6 @@
 </div>
 
 <div mat-dialog-actions>
-    <button mat-button (click)="onDismiss()"><span [translate]="'newKhitma.cancel'">الغاء</span></button>
+    <button mat-button (click)="onDismiss()"><span [translate]="'newKhitma.cancel'">إلغاء</span></button>
     <button mat-raised-button type="submit" class="action-btn" (click)="onConfirm()"><span [translate]="'newKhitma.ok'">موافق</span></button>
 </div>

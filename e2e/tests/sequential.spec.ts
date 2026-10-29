@@ -159,7 +159,7 @@ test.describe('sequential group: admin', () => {
     const dialog = page.getByRole('dialog');
     await expect(dialog).toContainText('الجزء 3');
     await expect(dialog).toContainText('خالد');
-    await dialog.getByRole('button', { name: 'الغاء' }).click();
+    await dialog.getByRole('button', { name: 'إلغاء' }).click();
     await expect(dialog).toHaveCount(0);
     expect(await storedJuz(groupId, 3)).toEqual({ owner: 'خالد', status: BOOKED });
 
@@ -233,7 +233,7 @@ test.describe('sequential group: admin', () => {
     });
 
     await openDashboard(page, groupId, ADMIN);
-    await startNewKhitmah(page, 'إتاحة جميع الأجزاء للإختيار');
+    await startNewKhitmah(page, 'إتاحة جميع الأجزاء للاختيار');
 
     await expect.poll(() => storedOwners(groupId)).toEqual({ cycle: 4, ajza: expectedAjza({}) });
   });
@@ -270,7 +270,7 @@ test.describe('sequential group: admin', () => {
     await expect(
       page.getByRole('radio', { name: 'إرجاع الختمة خطوة إلى الوراء (إعطاء كل عضو الجزء السابق له)' })
     ).toBeDisabled();
-    await page.getByRole('button', { name: 'الغاء' }).click();
+    await page.getByRole('button', { name: 'إلغاء' }).click();
     expect((await getDoc(`groups/${groupId}`))!.cycle).toBe(0);
   });
 
@@ -366,7 +366,7 @@ test.describe('sequential group: admin', () => {
     await page.getByRole('button', { name: 'مشاركة دعاء الختمة' }).click();
 
     const [shared] = await sharedPayloads(page);
-    expect(shared.text).toContain('اللهم ارحمنى بالقرآن');
+    expect(shared.text).toContain('اللهم ارحمني بالقرآن');
   });
 });
 

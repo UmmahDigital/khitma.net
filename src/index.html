@@ -159,6 +159,18 @@
     function gtag() { dataLayer.push(arguments); }
   </script>
 
+  <!-- English, French, German and Spanish read left to right: the page says so before the app starts, so that
+       Angular Material's dialogs, menus and fields follow it too (the app's own layout follows body.ltr). -->
+  <script>
+    try {
+      var lng = localStorage.getItem('lng');
+      if (lng && lng !== 'ar') {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = lng;
+      }
+    } catch (e) {}
+  </script>
+
   <!-- The loading screen inside <app-root>: plain CSS, matching the home page's logo and intro. -->
   <style>
     /* Same column as the app (#app-container): full width on phones, a third of wide screens, on the black page. */

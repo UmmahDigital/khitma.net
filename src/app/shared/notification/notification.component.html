@@ -1,20 +1,22 @@
 @if (notification) {
-  <div style="position: relative;">
-    <button class="close-btn" mat-icon-button aria-label="close dialog" mat-dialog-close>
-      <mat-icon>close</mat-icon>
-    </button>
-    <h2 mat-dialog-title> {{notification.title}} </h2>
-    <div mat-dialog-content>
-      <p>{{notification.text}}</p>
+  <button class="close-btn" mat-icon-button mat-dialog-close [aria-label]="common.translation.dialog?.close || 'إغلاق'">
+    <mat-icon>close</mat-icon>
+  </button>
+  <h2 mat-dialog-title dir="auto">{{ notification.title }}</h2>
+  <div mat-dialog-content>
+    <p class="notification-text" dir="auto">{{ notification.text }}</p>
+  </div>
+  @if (notification.actions?.length) {
+    <div mat-dialog-actions class="notification-actions">
+      @for (action of notification.actions; track $index; let first = $first) {
+        @if (first) {
+          <a mat-raised-button color="primary" class="app-btn-primary" [href]="action.url" (click)="openAction($event, action)"
+            gaEvent="notification_action_clicked" gaCategory="notifications">{{ action.text }}</a>
+        } @else {
+          <a mat-stroked-button [href]="action.url" (click)="openAction($event, action)"
+            gaEvent="notification_action_clicked" gaCategory="notifications">{{ action.text }}</a>
+        }
+      }
     </div>
-    <!-- <div mat-dialog-actions> -->
-    @for (action of notification.actions; track action) {
-      <a [href]="action.url" mat-raised-button color="primary" class="block"
-      autofocus gaEvent="notification_action_clicked" gaCategory="notifications">{{action.text}}</a>
-    }
-    <!-- <hr /> -->
-    <!-- <mat-checkbox [(ngModel)]="dontDisplayAgain">قرأت هذا الإشعار</mat-checkbox> -->
-    <!-- <button mat-button class="block" (click)="close()">إغلاق</button> -->
-  <!-- </div> -->
-</div>
+  }
 }

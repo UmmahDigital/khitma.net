@@ -184,7 +184,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
   }
 
   getKhitmaStatusMsg() {
-    return StatusMessageGenerators[this.group.type](this.group, this.referral.groupUrl(this.group.id));
+    return StatusMessageGenerators[this.group.type](this.group, this.referral.groupUrl(this.group.id), this.common.translation, this.common.currentLanguage);
   }
 
 

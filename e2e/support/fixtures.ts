@@ -164,6 +164,10 @@ export async function seedGlobalDocs(): Promise<void> {
     isActive: true,
     title: 'مجتمع ختمة.نت',
     text: 'انضّموا الآن إلى مجموعة ختمة.نت على الفيسبوك.',
-    actions: [],
+    // One link within the app and one outside it, like the Ramadan announcement (tools/ramadan/README.md).
+    actions: [
+      { text: 'ابدأ ختمة جديدة', url: '/new?type=onetime&from=notification' },
+      { text: 'مجموعة الفيسبوك', url: 'https://www.facebook.com/groups/khitma.net' },
+    ],
   });
 }

@@ -7,6 +7,8 @@ import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { SharedModule } from '../../modules/shared.module';
+import { CommonService } from '../../service/common.service';
+import { fill } from '../../share-messages';
 
 @Component({
     selector: 'app-archive',
@@ -21,7 +23,7 @@ export class ArchiveComponent implements OnInit {
   archivedGroups;
 
 
-  constructor(private dialog: MatDialog, private localDB: LocalDatabaseService, private groupsApi: KhitmaGroupService,) {
+  constructor(private dialog: MatDialog, private localDB: LocalDatabaseService, private groupsApi: KhitmaGroupService, public common: CommonService) {
   }
 
   ngOnInit(): void {
@@ -33,8 +35,8 @@ export class ArchiveComponent implements OnInit {
   clearArchive(group: KhitmaGroup) {
 
     const dialogData = new ConfirmDialogModel(
-      "تأكيد تنظيف الأرشيف",
-      "تنظيف " + this.archivedGroups.length + " مجموعة من الأرشيف؟"
+      this.common.translation.archive?.cleanConfirm || 'تأكيد تنظيف الأرشيف',
+      fill(this.common.translation.archive?.cleanText || 'إزالة جميع المجموعات من الأرشيف ({count})؟', { count: this.archivedGroups.length })
     );
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

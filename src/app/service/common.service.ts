@@ -13,7 +13,7 @@ export class CommonService {
     { text: "العربية", value: "Ar" },
     { text: "English", value: "En" },
     { text: "Français", value: "Fr" },
-    { text: "Espaniol", value: "Es" },
+    { text: "Español", value: "Es" },
     { text: "Deutsch", value: "De" },
   ]
   constructor(private httpClient: HttpClient) {

@@ -45,7 +45,7 @@
               (click)="pagesGroupChildComponent.start(); adminPanelOpen = false"
               >
               <mat-icon>play_arrow</mat-icon>
-              <span [translate]="'gDashboard.start'">بدأ الختمة</span>
+              <span [translate]="'gDashboard.start'">بدء الختمة</span>
             </button>
           }
           @if (group.isStarted) {
@@ -116,7 +116,7 @@
         <strong
           ><b [translate]="'gDashboard.hi'">السلام عليكم يا</b>
           {{ username }}</strong
-          >،
+          >{{ common.currentLanguage === 'ar' ? '،' : '' }}
         </span>
       </section>
 

@@ -1,7 +1,7 @@
 <div class="home">
   <label style="display: block; text-align: center">﷽</label>
 
-  <img class="logo" src="assets/khitma-logo.png" width="1024" height="1024" alt="ختمة.نت" />
+  <img class="logo" src="assets/khitma-logo.png" width="1024" height="1024" [alt]="common.translation.app?.title || 'ختمة.نت'" />
 
   @if (ramadanSeason) {
     <div class="ramadan-card">
@@ -49,7 +49,7 @@
     <p [translate]="'home.intro'">
       ختمة.نت هو تطبيق انطلق من رحاب المسجد الأقصى المبارك ليتيح قراءة وختم القرآن
       الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء
-      المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح
+      المصحف على الأعضاء بطريقة سلسة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح
       لجميع المشتركين في مجموعتك.
     </p>
 
@@ -135,7 +135,7 @@
             <span [translate]="'home.bilion'"> مليار </span>
           </strong>
           <span [translate]="'home.more'">
-            حسنة أو يزيد. فـ "من قرأ حرفا من كتاب الله فله حسنة والحسنة بعشر أمثالها"،
+            حسنة أو يزيد. فـ "من قرأ حرفًا من كتاب الله فله به حسنة، والحسنة بعشر أمثالها"،
             والله يضاعف لمن يشاء.
           </span>
         </small>

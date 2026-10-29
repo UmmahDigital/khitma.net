@@ -30,7 +30,7 @@ test.describe('creating a group', () => {
     expect(Object.values<any>(group!.ajza).every((juz) => juz.status === 0 && juz.owner === undefined)).toBe(true);
     expect(await readLocalStorage(page, 'groups')).toMatchObject({ [groupId]: { isJoined: true, username: 'أبو محمد' } });
 
-    const invite = page.getByLabel('رسالة الدعوة للإنضمام (يمكنك تعديلها)');
+    const invite = page.getByLabel('رسالة الدعوة للانضمام (يمكنك تعديلها)');
     await expect(invite).toHaveValue(new RegExp(`/group/${groupId}`));
     await page.getByRole('button', { name: 'مشاركة' }).click();
     const [shared] = await sharedPayloads(page);
