@@ -40,7 +40,7 @@ test.describe('home', () => {
 
     await page.getByText('settings', { exact: true }).click();
     await page.getByText('archive', { exact: true }).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'أرشفة' }).click();
     await expect(page.getByRole('dialog')).toHaveCount(0);
 
     await expect(page.getByRole('link', { name: 'ختمة رمضان الماضي' })).toHaveCount(0);

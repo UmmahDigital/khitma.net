@@ -13,6 +13,7 @@ import { NativeApiService } from '../../../../../native-api.service';
 import { NativeShareService } from '../../../../../native-share.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../../../../service/common.service';
+import { fill } from '../../../../../share-messages';
 
 @Component({
     selector: 'app-group-sametask',
@@ -112,8 +113,10 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
-        this.common.translation.gPages?.confirm,
-        ""),
+        fill(this.common.translation.gPages?.confirm || 'حذف {name} من المجموعة؟', { name: member.name }),
+        "",
+        this.common.translation.gPages?.remove,
+        this.common.translation.dialog?.cancel),
       maxWidth: "80vw"
     });
 

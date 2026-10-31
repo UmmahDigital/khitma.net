@@ -54,6 +54,30 @@ test.describe('same-task group', () => {
       .toMatchObject({ task: 'سورة الملك', cycle: 2, members: { [ADMIN]: false, 'سارة': false } });
   });
 
+  test("Cancel keeps the current task and everyone's status", async ({ page }) => {
+    const groupId = newGroupId('same-new-task-cancel');
+    await createSameTaskGroup(groupId, {
+      author: ADMIN,
+      cycle: 1,
+      task: 'سورة الكهف',
+      members: { [ADMIN]: true, 'سارة': true },
+    });
+
+    await openDashboard(page, groupId, ADMIN);
+    await page.getByText('أدوات مسؤول المجموعة').click();
+    await page.getByRole('button', { name: 'مهمّة جديدة' }).click();
+    await page.getByLabel('عنوان المهمّة الجديدة').fill('سورة الملك');
+    await page.getByRole('button', { name: 'إلغاء' }).click();
+
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await page.waitForTimeout(500);
+    expect(await storedGroup(groupId)).toMatchObject({
+      task: 'سورة الكهف',
+      cycle: 1,
+      members: { [ADMIN]: true, 'سارة': true },
+    });
+  });
+
   test("the admin toggles a member's status by tapping their name", async ({ page }) => {
     const groupId = newGroupId('same-admin-toggle');
     await createSameTaskGroup(groupId, { author: ADMIN, members: { [ADMIN]: false, 'سارة': false } });
@@ -92,7 +116,7 @@ test.describe('same-task group', () => {
 
     await openDashboard(page, groupId, 'سارة');
     await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'ترك المجموعة' }).click();
 
     await expect(page).toHaveURL(/localhost:4300\/$/);
     await expect.poll(async () => Object.keys((await storedGroup(groupId)).members)).toEqual([ADMIN]);

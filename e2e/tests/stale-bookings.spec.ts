@@ -59,8 +59,8 @@ test.describe('stale bookings', () => {
     await openAsAdmin(page, groupId);
     await page.getByText('أدوات مسؤول المجموعة').click();
     await page.getByRole('button', { name: 'إتاحة المحجوز منذ أسبوع أو أكثر (2)' }).click();
-    await expect(page.getByRole('dialog')).toContainText('سيُتاح للاختيار من جديد ما حُجز منذ أسبوع أو أكثر ولم يُتَمّ بعد (جزءان)');
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await expect(page.getByRole('dialog')).toContainText('سيُتاح من جديد ما حُجز منذ أسبوع أو أكثر ولم يُتَمّ (جزءان)');
+    await page.getByRole('button', { name: 'إتاحتها' }).click();
 
     await expect(page.getByText('أُتيح جزءان من جديد')).toBeVisible();
     await expect.poll(() => storedJuz(groupId, 5)).toEqual({ owner: '', status: IDLE });

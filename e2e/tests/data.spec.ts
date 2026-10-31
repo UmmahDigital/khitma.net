@@ -50,7 +50,7 @@ test('finishing the last juz records the completed round', async ({ page }) => {
 
   await openDashboard(page, groupId, 'سارة');
   await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-  await page.getByRole('button', { name: 'نعم' }).click();
+  await page.getByRole('button', { name: 'نعم، أتممته' }).click();
 
   await expect.poll(async () => (await getDoc(`groups/${groupId}`))!.completedRounds).toBeTruthy();
   const group = await getDoc(`groups/${groupId}`);
@@ -67,7 +67,7 @@ test('a juz finished before the last one does not complete the round', async ({ 
 
   await openDashboard(page, groupId, 'سارة');
   await page.getByRole('button', { name: 'أتممت قراءة جزء 1' }).click();
-  await page.getByRole('button', { name: 'نعم' }).click();
+  await page.getByRole('button', { name: 'نعم، أتممته' }).click();
 
   await expect.poll(async () => (await getDoc(`groups/${groupId}`))!.ajza['0'].status).toBe(DONE);
   expect((await getDoc(`groups/${groupId}`))!.completedRounds).toBeUndefined();
@@ -80,8 +80,8 @@ test('a new round records when it started, for every juz', async ({ page }) => {
 
   await openDashboard(page, groupId, ADMIN);
   await page.getByText('أدوات مسؤول المجموعة').click();
-  await page.getByRole('button', { name: 'ختمة جديدة للمجموعة', exact: true }).click();
-  await page.getByRole('button', { name: 'موافق' }).click();
+  await page.locator('.admin-tools').getByRole('button', { name: 'بدء الختمة التالية' }).click();
+  await page.getByRole('button', { name: 'بدء', exact: true }).click();
 
   await expect.poll(async () => (await getDoc(`groups/${groupId}`))!.cycle).toBe(1);
   const group = await getDoc(`groups/${groupId}`);

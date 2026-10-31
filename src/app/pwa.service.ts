@@ -25,7 +25,8 @@ export class PwaService {
       .pipe(filter((event): event is VersionReadyEvent => event.type === 'VERSION_READY'))
       .subscribe(() => {
 
-      const dialogData = new ConfirmDialogModel(this.common.translation.dialog?.update, this.common.translation.dialog?.updateDesc
+      const dialogData = new ConfirmDialogModel(this.common.translation.dialog?.update, this.common.translation.dialog?.updateDesc,
+        this.common.translation.dialog?.updateNow, this.common.translation.dialog?.later
       );
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {

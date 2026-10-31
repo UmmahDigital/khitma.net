@@ -109,7 +109,9 @@ export class GlobalKhitmaComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
         this.common.translation.gKhitma?.new,
-        this.common.translation.gKhitma?.bless
+        this.common.translation.gKhitma?.bless,
+        this.common.translation.gKhitma?.start,
+        this.common.translation.dialog?.cancel
       ),
       maxWidth: '80vw',
     });

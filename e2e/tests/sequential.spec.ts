@@ -38,13 +38,13 @@ async function openAdminTools(page: Page) {
 
 async function startNewKhitmah(page: Page, option?: string) {
   await openAdminTools(page);
-  await page.getByRole('button', { name: 'ختمة جديدة للمجموعة' }).click();
+  await page.getByRole('button', { name: 'بدء الختمة التالية' }).click();
   if (option) {
     // Material keeps the real radio input visually hidden; users tap the option itself.
     await page.locator('mat-radio-button', { hasText: option }).click();
     await expect(page.getByRole('radio', { name: option })).toBeChecked();
   }
-  await page.getByRole('button', { name: 'موافق' }).click();
+  await page.getByRole('button', { name: 'بدء', exact: true }).click();
 }
 
 function expectedAjza(assigned: Record<number, [string, number]>) {
@@ -83,13 +83,13 @@ test.describe('sequential group: members', () => {
 
     await openDashboard(page, groupId, 'سارة');
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-    await expect(page.getByText('تأكيد إتمام الجزء')).toBeVisible();
-    await page.getByRole('button', { name: 'لا' }).click();
+    await expect(page.getByText('هل أتممت قراءة الجزء 5؟')).toBeVisible();
+    await page.getByRole('button', { name: 'ليس بعد' }).click();
     await expect(page.getByRole('dialog')).toHaveCount(0);
     expect(await storedJuz(groupId, 5)).toEqual({ owner: 'سارة', status: BOOKED });
 
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('button', { name: 'نعم، أتممته' }).click();
 
     await expect.poll(() => storedJuz(groupId, 5)).toEqual({ owner: 'سارة', status: DONE });
     await expect(page.getByRole('button', { name: 'أتممت قراءة جزء 5' })).toHaveCount(0);
@@ -121,7 +121,10 @@ test.describe('sequential group: members', () => {
 
     await openDashboard(page, groupId, 'سارة');
     await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
-    await page.getByRole('button', { name: 'نعم' }).click();
+    // Nothing booked, so the question stands alone.
+    await expect(page.getByRole('dialog').getByRole('heading', { name: 'ترك المجموعة؟' })).toBeVisible();
+    await expect(page.getByRole('dialog').getByText('سيُتاح ما حجزته لقارئ آخر.')).toHaveCount(0);
+    await page.getByRole('dialog').getByRole('button', { name: 'ترك المجموعة' }).click();
 
     await expect(page).toHaveURL(/localhost:4300\/$/);
     await expect.poll(() => readLocalStorage(page, 'groups')).toEqual({});
@@ -137,7 +140,8 @@ test.describe('sequential group: members', () => {
 
     await openDashboard(page, groupId, 'سارة');
     await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await expect(page.getByRole('dialog')).toContainText('سيُتاح ما حجزته لقارئ آخر.');
+    await page.getByRole('dialog').getByRole('button', { name: 'ترك المجموعة' }).click();
     await expect(page).toHaveURL(/localhost:4300\/$/);
 
     await expect.poll(() => storedJuz(groupId, 6)).toEqual({ owner: '', status: IDLE });
@@ -178,7 +182,7 @@ test.describe('sequential group: admin', () => {
     );
 
     await juzToggle(page, 4).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('button', { name: 'إتاحة الجزء' }).click();
     await expect.poll(() => storedJuz(groupId, 4)).toEqual({ owner: '', status: IDLE });
   });
 
@@ -216,7 +220,7 @@ test.describe('sequential group: admin', () => {
     });
 
     await openDashboard(page, groupId, ADMIN);
-    await startNewKhitmah(page, 'حجز الجزء التالي تلقائيّا فقط للأعضاء الذين أتمّوا جزءهم');
+    await startNewKhitmah(page, 'حجز الجزء التالي لمن أتمّ جزءه فقط');
 
     await expect.poll(() => storedOwners(groupId)).toEqual({
       cycle: 2,
@@ -251,7 +255,7 @@ test.describe('sequential group: admin', () => {
     });
 
     await openDashboard(page, groupId, ADMIN);
-    await startNewKhitmah(page, 'إرجاع الختمة خطوة إلى الوراء (إعطاء كل عضو الجزء السابق له)');
+    await startNewKhitmah(page, 'حجز الجزء السابق لكل عضو');
 
     await expect.poll(() => storedOwners(groupId)).toEqual({
       cycle: 1,
@@ -265,10 +269,10 @@ test.describe('sequential group: admin', () => {
 
     await openDashboard(page, groupId, ADMIN);
     await openAdminTools(page);
-    await page.getByRole('button', { name: 'ختمة جديدة للمجموعة' }).click();
+    await page.getByRole('button', { name: 'بدء الختمة التالية' }).click();
 
     await expect(
-      page.getByRole('radio', { name: 'إرجاع الختمة خطوة إلى الوراء (إعطاء كل عضو الجزء السابق له)' })
+      page.getByRole('radio', { name: 'حجز الجزء السابق لكل عضو' })
     ).toBeDisabled();
     await page.getByRole('button', { name: 'إلغاء' }).click();
     expect((await getDoc(`groups/${groupId}`))!.cycle).toBe(0);
@@ -318,6 +322,21 @@ test.describe('sequential group: admin', () => {
       .toEqual({ title: 'عنوان جديد', admins: 'سارة' });
   });
 
+  test('Cancel leaves the group details as they were', async ({ page }) => {
+    const groupId = newGroupId('seq-edit-cancel');
+    await createSequentialGroup(groupId, { title: 'عنوان قديم', author: ADMIN });
+
+    await openDashboard(page, groupId, ADMIN);
+    await openAdminTools(page);
+    await page.getByRole('button', { name: 'تعديل تفاصيل الختمة' }).click();
+    await page.getByLabel('عنوان الختمة').fill('عنوان جديد');
+    await page.getByRole('button', { name: 'إلغاء' }).click();
+
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await page.waitForTimeout(500);
+    expect((await getDoc(`groups/${groupId}`))!.title).toBe('عنوان قديم');
+  });
+
   test('an additional admin sees the admin tools', async ({ page }) => {
     const groupId = newGroupId('seq-coadmin');
     await createSequentialGroup(groupId, { author: ADMIN, admins: 'سارة' });
@@ -362,7 +381,7 @@ test.describe('sequential group: admin', () => {
     await createSequentialGroup(groupId, { author: ADMIN, assigned: everyoneDone });
 
     await openDashboard(page, groupId, ADMIN);
-    await expect(page.getByRole('button', { name: 'بدء ختمة جديدة للمجموعة' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'بدء الختمة التالية' })).toBeVisible();
     await page.getByRole('button', { name: 'مشاركة دعاء الختمة' }).click();
 
     const [shared] = await sharedPayloads(page);

@@ -12,7 +12,7 @@ const ADMIN = 'أبو أحمد';
 async function finishJuz(page: Page, groupId: string, juzNumber: number) {
   await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: 'سارة' }) } });
   await page.getByRole('button', { name: `أتممت قراءة جزء ${juzNumber}` }).click();
-  await page.getByRole('button', { name: 'نعم' }).click();
+  await page.getByRole('button', { name: 'نعم، أتممته' }).click();
 }
 
 async function storedJuz(groupId: string, juzNumber: number) {

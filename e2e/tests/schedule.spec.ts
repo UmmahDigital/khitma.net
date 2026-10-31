@@ -34,7 +34,7 @@ test.describe('repeating khitmas', () => {
     const dialog = page.getByRole('dialog');
     await expect(dialog.getByRole('radio', { name: 'كل أسبوع، يوم:' })).toBeChecked();
     await expect(dialog.getByRole('button', { name: 'الجمعة' })).toHaveAttribute('aria-pressed', 'true');
-    await expect(dialog.getByRole('radio', { name: 'حجز الجزء التالي لكل عضو تلقائيّا' })).toBeChecked();
+    await expect(dialog.getByRole('radio', { name: 'حجز الجزء التالي لكل عضو', exact: true })).toBeChecked();
     await dialog.getByRole('button', { name: 'حفظ' }).click();
 
     await expect.poll(async () => (await getDoc(`groups/${groupId}`))?.schedule).toEqual({ every: 'week', weekday: 5, cycleType: AUTO_BOOK });

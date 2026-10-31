@@ -80,7 +80,7 @@ test.describe('archive', () => {
 
     await expect(page.getByRole('link', { name: 'ختمة رمضان 2023' })).toHaveAttribute('href', '/group/old-group');
     await page.getByRole('button', { name: 'تنظيف الأرشيف' }).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'تنظيف الأرشيف' }).click();
 
     await expect(page.getByText('لا توجد لديك مجموعات في الأرشيف')).toBeVisible();
     await expect.poll(() => readLocalStorage(page, 'archivedGroups')).toEqual({});

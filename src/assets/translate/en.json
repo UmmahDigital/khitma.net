@@ -15,14 +15,14 @@
   "terms": "Terms of use",
   "share": "Share",
   "newKhitma": {
-    "title": "A new khitma for the group",
-    "label": "Choose how the new khitma starts",
-    "autoBook": "Give every member their next juz automatically",
-    "autoBookDone": "Give the next juz only to members who finished theirs",
+    "title": "Start the next khitma",
+    "label": "How are the juz assigned?",
+    "autoBook": "Give every member their next juz",
+    "autoBookDone": "Give the next juz only to those who finished theirs",
     "allIdle": "Make every juz available to choose",
-    "rewind": "Go back one step (give every member their previous juz)",
+    "rewind": "Give every member their previous juz",
     "cancel": "Cancel",
-    "ok": "OK"
+    "ok": "Start"
   },
   "completion": {
     "startOwn": "Would you like to start a group khitma for someone you love?",
@@ -71,8 +71,8 @@
   "archive": {
     "no": "You have no groups in the archive",
     "clean": "Clear the archive",
-    "cleanConfirm": "Confirm clearing the archive",
-    "cleanText": "Remove all groups from the archive ({count})?"
+    "cleanConfirm": "Clear the archive?",
+    "cleanText": "All groups ({count}) will be removed from the archive."
   },
   "gInvite": {
     "message": "Invitation message (you can edit it)",
@@ -108,6 +108,7 @@
   "gKhitma": {
     "header": "Al-Aqsa Mosque Ramadan khitma",
     "new": "Start a new khitma?",
+    "start": "Start",
     "bless": "May Allah bless you and your recitation.",
     "ramadan": "Ramadan",
     "world": "juz recited worldwide",
@@ -123,7 +124,8 @@
     "members": "Group members",
     "responsible": "For the group admin:",
     "responsibleDesc": "Tap a member’s name to change whether they have done their task. You can also edit the members with the edit button below.",
-    "confirm": "Confirm removing the group member",
+    "confirm": "Remove {name} from the group?",
+    "remove": "Remove",
     "deleted": "Removed ",
     "success": ".",
     "add": "Added ",
@@ -143,37 +145,41 @@
     "nextAsk": "Will you read juz {juz} too?",
     "nextTake": "Read juz {juz}",
     "nextLater": "Later",
-    "start": "Start a new khitma for the group",
+    "start": "Start the next khitma",
     "doaa": "Share the khitma dua (in Arabic)",
     "finished": "I finished juz",
     "release": "Give up this juz",
     "select": "You can choose any of the juz in red.",
     "all": "Every juz in this group is taken.",
     "toggle": "Show the list of names",
-    "dialog": "Confirm freeing the juz",
-    "dialog2": "Confirm finishing the juz",
+    "dialog": "Free juz {juz}?",
     "dialog2Q": "Did you finish reading juz {juz}?",
+    "doneYes": "Yes, I finished it",
+    "doneNo": "Not yet",
     "done": " - The khitma is complete, by Allah’s grace",
-    "releaseText": "The current member’s name will be removed from juz {juz}, and it will be free to choose again."
+    "releaseText": "Its reader’s name will be removed, and it will be free to choose again.",
+    "releaseYes": "Free the juz"
   },
   "gDashboard": {
     "releaseStale": "Free juz booked a week or more ago ({count})",
-    "releaseTitle": "Release late bookings",
-    "releaseText": "{count} booked a week or more ago and not finished will be free to choose again; the names on them are removed.",
+    "releaseTitle": "Release late bookings?",
+    "releaseText": "{count} booked a week or more ago and not finished will be free to choose again.",
+    "releaseYes": "Release them",
     "released": "{count} released",
     "status": "Khitma status: ",
     "invite": "Invitation to join: ",
-    "confirm": "Confirm leaving the group",
-    "advice": "We advise against leaving the group, so you don’t miss out on the great reward, in sha Allah. If you leave, your juz will be free to choose again and you’ll be taken to the home page.",
+    "confirm": "Leave the group?",
+    "advice": "Your booked juz will be free for others to choose.",
     "start": "Start the khitma",
     "distribute": "Share out the pages again",
     "task": "New task",
     "shareStatus": "Share the khitma status",
-    "new": "New khitma for the group",
+    "new": "Start the next khitma",
     "update": "Edit the khitma details",
     "hi": "As-salamu alaykum,",
     "shareLink": "Share the group link",
     "leave": "Leave the group",
+    "stay": "Stay",
     "tools": "Group admin tools"
   },
   "gJoin": {
@@ -200,8 +206,9 @@
     "daymaTagline": "Turn intention into everyday action.",
     "daymaDesc": "An app that helps you keep up good deeds, for “the most beloved deed to Allah is the most regular and constant even if it were little” (Sahih al-Bukhari). Start with a small step you can keep, like one page of Quran a day, tie it to a fixed time such as after prayer, log it with a single tap, and invite your family to a private circle if you wish.",
     "dayma": "Discover Dayma",
-    "archiveConfirm": "Confirm archiving the group",
-    "archiveGroup": "Archive the group “{title}”?"
+    "archiveConfirm": "Archive the group?",
+    "archiveGroup": "The group “{title}” will move to the khitma archive.",
+    "archiveYes": "Archive"
   },
   "me": {
     "no": "You don’t have any groups yet",
@@ -261,7 +268,7 @@
   "schedule": {
     "button": "Repeat automatically",
     "title": "Repeat the khitma automatically",
-    "hint": "Each new khitma starts by itself on time, without you having to start it.",
+    "hint": "Each new khitma starts automatically on schedule.",
     "week": "Every week, on:",
     "day": "Every day",
     "month": "On the 1st of every month",
@@ -302,6 +309,8 @@
     "no": "No",
     "update": "Update the app",
     "updateDesc": "A new version of the site is available. Would you like to use it now? Updating won’t affect your groups or your juz.",
+    "updateNow": "Update now",
+    "later": "Later",
     "header": "Edit the khitma details",
     "title": "Khitma title",
     "more": "Additional text (optional)",
