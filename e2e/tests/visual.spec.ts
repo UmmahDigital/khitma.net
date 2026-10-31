@@ -218,7 +218,7 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(TALL_PHONE);
     await openAsMember(page, 'visual-family', ADMIN);
     await page.getByText('أدوات مسؤول المجموعة').click();
-    await expect(page.getByRole('button', { name: 'ختمة جديدة للمجموعة' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'بدء الختمة التالية' })).toBeVisible();
     await snap(page, 'sequential-admin');
   });
 
@@ -249,10 +249,10 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(TALL_PHONE);
     await openAsMember(page, 'visual-family', ADMIN);
     await page.getByText('أدوات مسؤول المجموعة').click();
-    const newKhitmah = page.getByRole('button', { name: 'ختمة جديدة للمجموعة' });
+    const newKhitmah = page.getByRole('button', { name: 'بدء الختمة التالية' });
     await expect(newKhitmah).toBeVisible();
     await newKhitmah.click();
-    await expect(page.getByRole('button', { name: 'موافق' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'بدء', exact: true })).toBeVisible();
     // The dialog focuses the first option; drop focus so the focus halo doesn't flicker between runs.
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await settle(page);
@@ -274,7 +274,7 @@ test.describe('screenshots of the current design', () => {
   test('sequential group: completed khitmah', async ({ page }) => {
     await page.setViewportSize(PHONE);
     await openAsMember(page, 'visual-complete', ADMIN);
-    await expect(page.getByRole('button', { name: 'بدء ختمة جديدة للمجموعة' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'بدء الختمة التالية' })).toBeVisible();
     await snap(page, 'sequential-complete');
   });
 
@@ -289,7 +289,7 @@ test.describe('screenshots of the current design', () => {
   test('WhatsApp Status image: a juz just finished', async ({ page }) => {
     await openAsMember(page, 'visual-card', 'سارة');
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('button', { name: 'نعم، أتممته' }).click();
     await settle(page);
     await page.locator('.next-juz-offer').getByRole('button', { name: 'شارك في حالة واتساب' }).click();
     await expect.poll(() => page.evaluate(() => (window as any).__sharedFiles.length)).toBe(1);
@@ -420,7 +420,7 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(PHONE);
     await openAsMember(page, 'visual-family', 'سارة');
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-    await expect(page.getByRole('button', { name: 'نعم' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'نعم، أتممته' })).toBeVisible();
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await snap(page, 'popup-confirm-juz');
   });

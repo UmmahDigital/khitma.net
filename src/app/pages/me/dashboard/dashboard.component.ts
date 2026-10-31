@@ -70,7 +70,8 @@ export class DashboardComponent implements OnInit {
     this.$gaService.event('group_leave');
 
     const dialogData = new ConfirmDialogModel(this.common.translation.home?.archiveConfirm
-      , fill(this.common.translation.home?.archiveGroup || 'أرشفة مجموعة «{title}»؟', { title: group.title })
+      , fill(this.common.translation.home?.archiveGroup || 'ستنتقل مجموعة «{title}» إلى أرشيف الختمات.', { title: group.title })
+      , this.common.translation.home?.archiveYes, this.common.translation.dialog?.cancel
     );
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

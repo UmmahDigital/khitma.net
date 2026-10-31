@@ -52,10 +52,12 @@ button.large.mat-mdc-button-base {
     }
   }
 
+  // No cap of its own (Material's is 65vh): the dialog's maxHeight (app.module.ts) keeps it on screen, and the body
+  // takes whatever room the title and buttons leave, scrolling only beyond that.
   .mat-mdc-dialog-content {
     margin: 0 -24px;
     padding: 0 24px;
-    max-height: 65vh;
+    max-height: none;
   }
 
   .mat-mdc-dialog-actions {

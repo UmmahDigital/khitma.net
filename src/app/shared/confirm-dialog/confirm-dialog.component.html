@@ -2,12 +2,25 @@
     {{title}}
 </h1>
 
-<div mat-dialog-content>
-    <p>{{message}}</p>
-</div>
+@if (message) {
+    <div mat-dialog-content>
+        <p>{{message}}</p>
+    </div>
+}
 
 <div mat-dialog-actions>
-    <button mat-button (click)="onDismiss()"><span [translate]="'dialog.no'">لا</span></button>
-    <button mat-raised-button color="primary" class="app-btn-primary" (click)="onConfirm()"><span
-            [translate]="'dialog.yes'">نعم</span></button>
+    <button mat-button (click)="onDismiss()">
+        @if (dismiss) {
+            <span>{{dismiss}}</span>
+        } @else {
+            <span [translate]="'dialog.no'">لا</span>
+        }
+    </button>
+    <button mat-raised-button color="primary" class="app-btn-primary" (click)="onConfirm()">
+        @if (confirm) {
+            <span>{{confirm}}</span>
+        } @else {
+            <span [translate]="'dialog.yes'">نعم</span>
+        }
+    </button>
 </div>

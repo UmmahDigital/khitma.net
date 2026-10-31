@@ -15,14 +15,14 @@
   "terms": "Condiciones de uso",
   "share": "Compartir",
   "newKhitma": {
-    "title": "Una nueva khitma para el grupo",
-    "label": "Elige cómo empieza la nueva khitma",
-    "autoBook": "Dar a cada miembro su siguiente juz automáticamente",
+    "title": "Empezar la siguiente khitma",
+    "label": "¿Cómo se reparten los juz?",
+    "autoBook": "Dar a cada miembro su siguiente juz",
     "autoBookDone": "Dar el siguiente juz solo a quienes terminaron el suyo",
     "allIdle": "Dejar todos los juz disponibles",
-    "rewind": "Volver un paso atrás (dar a cada miembro su juz anterior)",
+    "rewind": "Dar a cada miembro su juz anterior",
     "cancel": "Cancelar",
-    "ok": "Aceptar"
+    "ok": "Empezar"
   },
   "completion": {
     "startOwn": "¿Quieres empezar una khitma en grupo por alguien a quien quieres?",
@@ -71,8 +71,8 @@
   "archive": {
     "no": "No tienes grupos en el archivo",
     "clean": "Vaciar el archivo",
-    "cleanConfirm": "Confirmar el vaciado del archivo",
-    "cleanText": "¿Quitar todos los grupos del archivo ({count})?"
+    "cleanConfirm": "¿Vaciar el archivo?",
+    "cleanText": "Se quitarán todos los grupos ({count}) del archivo."
   },
   "gInvite": {
     "message": "Mensaje de invitación (puedes editarlo)",
@@ -108,6 +108,7 @@
   "gKhitma": {
     "header": "Khitma de Ramadán de la mezquita de Al-Aqsa",
     "new": "¿Empezar una nueva khitma?",
+    "start": "Empezar",
     "bless": "Que Allah te bendiga a ti y a tu recitación.",
     "ramadan": "Ramadán",
     "world": "juz recitados en todo el mundo",
@@ -123,7 +124,8 @@
     "members": "Miembros del grupo",
     "responsible": "Para el administrador del grupo:",
     "responsibleDesc": "Toca el nombre de un miembro para cambiar el estado de su tarea. También puedes editar los miembros con el botón de edición de abajo.",
-    "confirm": "Confirmar que se quita al miembro",
+    "confirm": "¿Quitar a {name} del grupo?",
+    "remove": "Quitar",
     "deleted": "Se quitó a ",
     "success": ".",
     "add": "Se añadió a ",
@@ -143,37 +145,41 @@
     "nextAsk": "¿Lees también el juz {juz}?",
     "nextTake": "Leer el juz {juz}",
     "nextLater": "Más tarde",
-    "start": "Empezar una nueva khitma para el grupo",
+    "start": "Empezar la siguiente khitma",
     "doaa": "Compartir la súplica de la khitma (en árabe)",
     "finished": "Terminé el juz",
     "release": "Dejar este juz",
     "select": "Puedes elegir cualquiera de los juz en rojo.",
     "all": "Todos los juz de este grupo están reservados.",
     "toggle": "Mostrar la lista de nombres",
-    "dialog": "Confirmar la liberación del juz",
-    "dialog2": "Confirmar que terminaste el juz",
+    "dialog": "¿Liberar el juz {juz}?",
     "dialog2Q": "¿Terminaste de leer el juz {juz}?",
+    "doneYes": "Sí, lo terminé",
+    "doneNo": "Todavía no",
     "done": " - La khitma se completó, por la gracia de Allah",
-    "releaseText": "Se quitará el nombre del miembro actual del juz {juz} y volverá a estar disponible."
+    "releaseText": "Se quitará el nombre de su lector y volverá a estar disponible.",
+    "releaseYes": "Liberar el juz"
   },
   "gDashboard": {
     "releaseStale": "Liberar lo reservado hace una semana o más ({count})",
-    "releaseTitle": "Liberar reservas atrasadas",
-    "releaseText": "{count} reservados hace una semana o más y sin terminar volverán a estar disponibles; se quitarán los nombres.",
+    "releaseTitle": "¿Liberar reservas atrasadas?",
+    "releaseText": "{count} reservados hace una semana o más y sin terminar volverán a estar disponibles.",
+    "releaseYes": "Liberarlas",
     "released": "{count} liberados",
     "status": "Estado de la khitma: ",
     "invite": "Invitación: ",
-    "confirm": "Confirmar la salida del grupo",
-    "advice": "Te recomendamos no salir del grupo, para no perder la gran recompensa, in sha Allah. Si sales, tu juz volverá a estar disponible y volverás a la página de inicio.",
+    "confirm": "¿Salir del grupo?",
+    "advice": "Tus juz reservados quedarán libres para otros.",
     "start": "Iniciar la khitma",
     "distribute": "Repartir de nuevo las páginas",
     "task": "Nueva tarea",
     "shareStatus": "Compartir el estado de la khitma",
-    "new": "Nueva khitma para el grupo",
+    "new": "Empezar la siguiente khitma",
     "update": "Editar los detalles de la khitma",
     "hi": "As-salamu alaikum,",
     "shareLink": "Compartir el enlace del grupo",
     "leave": "Salir del grupo",
+    "stay": "Quedarme",
     "tools": "Herramientas del administrador"
   },
   "gJoin": {
@@ -200,8 +206,9 @@
     "daymaTagline": "De la buena intención a la acción constante.",
     "daymaDesc": "Una aplicación que te ayuda a ser constante en las buenas obras, pues «la obra más amada por Allah es la más constante, aunque sea poca» (narrado por al-Bujari). Empieza con un pequeño paso que puedas mantener, como una página del Corán al día, asócialo a un momento fijo, por ejemplo después de la oración, regístralo con un solo toque y, si quieres, invita a tu familia a un círculo privado.",
     "dayma": "Descubre Dayma",
-    "archiveConfirm": "Confirmar que se archiva el grupo",
-    "archiveGroup": "¿Archivar el grupo «{title}»?"
+    "archiveConfirm": "¿Archivar el grupo?",
+    "archiveGroup": "El grupo «{title}» pasará al archivo de khitmas.",
+    "archiveYes": "Archivar"
   },
   "me": {
     "no": "Todavía no tienes grupos",
@@ -261,7 +268,7 @@
   "schedule": {
     "button": "Repetir automáticamente",
     "title": "Repetir la khitma automáticamente",
-    "hint": "Cada nueva khitma empieza sola a su hora, sin que tengas que iniciarla.",
+    "hint": "Cada nueva khitma empieza automáticamente en su fecha.",
     "week": "Cada semana, el:",
     "day": "Cada día",
     "month": "El día 1 de cada mes",
@@ -302,6 +309,8 @@
     "no": "No",
     "update": "Actualizar la aplicación",
     "updateDesc": "Hay una nueva versión del sitio. ¿Quieres usarla ahora? La actualización no afecta a tus grupos ni a tus juz.",
+    "updateNow": "Actualizar ahora",
+    "later": "Más tarde",
     "header": "Editar los detalles de la khitma",
     "title": "Título de la khitma",
     "more": "Texto adicional (opcional)",

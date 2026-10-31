@@ -20,7 +20,7 @@ async function joinAs(page: Page, groupId: string, name: string) {
 async function readJuz(page: Page, juzNumber: number) {
   await page.locator('app-juz-grid app-juz-toggle').nth(juzNumber - 1).click();
   await page.getByRole('button', { name: `أتممت قراءة جزء ${juzNumber}` }).click();
-  await page.getByRole('button', { name: 'نعم' }).click();
+  await page.getByRole('button', { name: 'نعم، أتممته' }).click();
 }
 
 test.describe('share the reward', () => {

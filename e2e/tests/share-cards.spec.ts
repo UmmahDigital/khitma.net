@@ -20,7 +20,7 @@ test.describe('WhatsApp Status images', () => {
 
     await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: 'سارة' }), refCode: REF } });
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('button', { name: 'نعم، أتممته' }).click();
     await page.locator('.next-juz-offer').getByRole('button', { name: 'شارك في حالة واتساب' }).click();
 
     await expect.poll(async () => (await sharedPayloads(page)).length).toBe(1);

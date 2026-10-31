@@ -35,8 +35,10 @@ export class ArchiveComponent implements OnInit {
   clearArchive(group: KhitmaGroup) {
 
     const dialogData = new ConfirmDialogModel(
-      this.common.translation.archive?.cleanConfirm || 'تأكيد تنظيف الأرشيف',
-      fill(this.common.translation.archive?.cleanText || 'إزالة جميع المجموعات من الأرشيف ({count})؟', { count: this.archivedGroups.length })
+      this.common.translation.archive?.cleanConfirm || 'تنظيف الأرشيف؟',
+      fill(this.common.translation.archive?.cleanText || 'ستُزال جميع المجموعات من الأرشيف ({count}).', { count: this.archivedGroups.length }),
+      this.common.translation.archive?.clean,
+      this.common.translation.dialog?.cancel
     );
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

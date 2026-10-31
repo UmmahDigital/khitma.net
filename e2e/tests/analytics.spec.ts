@@ -123,7 +123,7 @@ test.describe('analytics', () => {
 
     await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: 'سارة' }) } });
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('button', { name: 'نعم، أتممته' }).click();
 
     await expect(page.locator('app-khitma-done-celebration')).toBeVisible();
     expect((await events(page)).filter((call) => call[1] === 'khitma_completed')).toEqual([

@@ -230,9 +230,11 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
 
   leaveGroup() {
 
+    // Only a sequential group's booked ajza change hands when a member leaves (see the children's 'leave-group').
+    const hasBookings = !!this.sequentialGroupChildComponent?.myAjzaIndexes?.length;
+    const t = this.common.translation.gDashboard;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogModel(this.common.translation.gDashboard?.confirm, this.common.translation.gDashboard?.advice
-      ),
+      data: new ConfirmDialogModel(t?.confirm, hasBookings ? t?.advice : '', t?.leave, t?.stay),
       maxWidth: "80vw"
     });
 

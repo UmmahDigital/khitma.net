@@ -143,8 +143,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
     if (juz.status == JUZ_STATUS.DONE) {
 
-      const dialogData = new ConfirmDialogModel(this.common.translation.sequential?.dialog,
-        fill(this.common.translation.sequential?.releaseText || 'ستتمّ إزالة اسم العضو الحالي من الجزء {juz} وإتاحته للاختيار.', { juz: juz.index + 1 }));
+      const t = this.common.translation.sequential;
+      const dialogData = new ConfirmDialogModel(fill(t?.dialog || 'إتاحة الجزء {juz}؟', { juz: juz.index + 1 }),
+        t?.releaseText || 'سيُحذف اسم قارئه، ويُتاح للاختيار من جديد.', t?.releaseYes, this.common.translation.dialog?.cancel);
 
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         data: dialogData,
@@ -257,8 +258,10 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     const count = ajzaCount(stale.length, this.common.currentLanguage);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
-        t.releaseTitle || 'إتاحة الأجزاء المتأخّرة',
-        fill(t.releaseText || 'سيُتاح للاختيار من جديد ما حُجز منذ أسبوع أو أكثر ولم يُتَمّ بعد ({count})، مع حذف اسم من حجزه.', { count })
+        t.releaseTitle || 'إتاحة الأجزاء المتأخّرة؟',
+        fill(t.releaseText || 'سيُتاح من جديد ما حُجز منذ أسبوع أو أكثر ولم يُتَمّ ({count}).', { count }),
+        t.releaseYes,
+        this.common.translation.dialog?.cancel
       ),
       maxWidth: '80vw',
     });
@@ -414,9 +417,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   juzDone(juzIndex) {
 
+    const t = this.common.translation.sequential;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogModel(this.common.translation.sequential?.dialog2,
-        fill(this.common.translation.sequential?.dialog2Q || 'هل أتممت قراءة الجزء {juz}؟', { juz: juzIndex + 1 })),
+      data: new ConfirmDialogModel(fill(t?.dialog2Q || 'هل أتممت قراءة الجزء {juz}؟', { juz: juzIndex + 1 }), '', t?.doneYes, t?.doneNo),
       maxWidth: "80vw"
     });
 

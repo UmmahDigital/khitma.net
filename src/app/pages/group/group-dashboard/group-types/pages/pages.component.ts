@@ -9,6 +9,7 @@ import { GroupMember, KhitmaGroup_Pages, NUM_OF_PAGES } from '../../../../../ent
 import { KhitmaGroupService } from '../../../../../khitma-group.service';
 import { CommonService } from '../../../../../service/common.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
+import { fill } from '../../../../../share-messages';
 
 @Component({
     selector: 'app-group-pages',
@@ -92,8 +93,10 @@ export class Group_Pages_Component implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
-        this.common.translation.gPages?.confirm,
-        ""),
+        fill(this.common.translation.gPages?.confirm || 'حذف {name} من المجموعة؟', { name: member.name }),
+        "",
+        this.common.translation.gPages?.remove,
+        this.common.translation.dialog?.cancel),
       maxWidth: "80vw"
     });
 

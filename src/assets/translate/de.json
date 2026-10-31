@@ -15,14 +15,14 @@
   "terms": "Nutzungsbedingungen",
   "share": "Teilen",
   "newKhitma": {
-    "title": "Eine neue Khitma für die Gruppe",
-    "label": "Wähle, wie die neue Khitma beginnt",
-    "autoBook": "Jedem Mitglied automatisch seinen nächsten Juz geben",
-    "autoBookDone": "Den nächsten Juz nur Mitgliedern geben, die ihren beendet haben",
+    "title": "Nächste Khitma beginnen",
+    "label": "Wie werden die Juz verteilt?",
+    "autoBook": "Jedem Mitglied seinen nächsten Juz geben",
+    "autoBookDone": "Den nächsten Juz nur denen geben, die ihren beendet haben",
     "allIdle": "Alle Juz zur Auswahl freigeben",
-    "rewind": "Einen Schritt zurück (jedem seinen vorherigen Juz geben)",
+    "rewind": "Jedem Mitglied seinen vorherigen Juz geben",
     "cancel": "Abbrechen",
-    "ok": "OK"
+    "ok": "Beginnen"
   },
   "completion": {
     "startOwn": "Möchtest du eine gemeinsame Khitma für einen geliebten Menschen beginnen?",
@@ -71,8 +71,8 @@
   "archive": {
     "no": "Du hast keine Gruppen im Archiv",
     "clean": "Archiv leeren",
-    "cleanConfirm": "Leeren des Archivs bestätigen",
-    "cleanText": "Alle Gruppen aus dem Archiv entfernen ({count})?"
+    "cleanConfirm": "Archiv leeren?",
+    "cleanText": "Alle Gruppen ({count}) werden aus dem Archiv entfernt."
   },
   "gInvite": {
     "message": "Einladungsnachricht (du kannst sie bearbeiten)",
@@ -108,6 +108,7 @@
   "gKhitma": {
     "header": "Ramadan-Khitma der Al-Aqsa-Moschee",
     "new": "Eine neue Khitma beginnen?",
+    "start": "Beginnen",
     "bless": "Möge Allah dich und deine Rezitation segnen.",
     "ramadan": "Ramadan",
     "world": "Juz weltweit rezitiert",
@@ -123,7 +124,8 @@
     "members": "Mitglieder der Gruppe",
     "responsible": "Für den Admin der Gruppe:",
     "responsibleDesc": "Tippe auf den Namen eines Mitglieds, um den Stand seiner Aufgabe zu ändern. Mit der Bearbeiten-Schaltfläche unten kannst du auch die Mitglieder bearbeiten.",
-    "confirm": "Entfernen des Mitglieds bestätigen",
+    "confirm": "{name} aus der Gruppe entfernen?",
+    "remove": "Entfernen",
     "deleted": "Entfernt: ",
     "success": ".",
     "add": "Hinzugefügt: ",
@@ -143,37 +145,41 @@
     "nextAsk": "Liest du auch Juz {juz}?",
     "nextTake": "Juz {juz} lesen",
     "nextLater": "Später",
-    "start": "Neue Khitma für die Gruppe beginnen",
+    "start": "Nächste Khitma beginnen",
     "doaa": "Das Khitma-Bittgebet teilen (auf Arabisch)",
     "finished": "Fertig gelesen: Juz",
     "release": "Juz abgeben",
     "select": "Du kannst jeden rot markierten Juz wählen.",
     "all": "Alle Juz dieser Gruppe sind vergeben.",
     "toggle": "Namensliste anzeigen",
-    "dialog": "Freigabe des Juz bestätigen",
-    "dialog2": "Abschluss des Juz bestätigen",
+    "dialog": "Juz {juz} freigeben?",
     "dialog2Q": "Hast du Juz {juz} zu Ende gelesen?",
+    "doneYes": "Ja, beendet",
+    "doneNo": "Noch nicht",
     "done": " - Die Khitma ist vollendet, durch Allahs Gnade",
-    "releaseText": "Der Name des aktuellen Mitglieds wird von Juz {juz} entfernt, und der Juz wird wieder frei."
+    "releaseText": "Der Name des Lesers wird entfernt, und der Juz wird wieder frei.",
+    "releaseYes": "Juz freigeben"
   },
   "gDashboard": {
     "releaseStale": "Seit einer Woche oder länger Gebuchtes freigeben ({count})",
-    "releaseTitle": "Verspätete Buchungen freigeben",
-    "releaseText": "{count}, seit einer Woche oder länger gebucht und nicht beendet, werden wieder frei; die Namen darauf werden entfernt.",
+    "releaseTitle": "Verspätete Buchungen freigeben?",
+    "releaseText": "{count}, seit einer Woche oder länger gebucht und nicht beendet, werden wieder frei.",
+    "releaseYes": "Freigeben",
     "released": "{count} freigegeben",
     "status": "Stand der Khitma: ",
     "invite": "Einladung: ",
-    "confirm": "Verlassen der Gruppe bestätigen",
-    "advice": "Wir raten davon ab, die Gruppe zu verlassen, damit dir der große Lohn nicht entgeht, in sha Allah. Wenn du sie verlässt, wird dein Juz wieder frei und du kommst zur Startseite.",
+    "confirm": "Gruppe verlassen?",
+    "advice": "Deine gebuchten Juz werden für andere frei.",
     "start": "Khitma starten",
     "distribute": "Seiten neu verteilen",
     "task": "Neue Aufgabe",
     "shareStatus": "Stand der Khitma teilen",
-    "new": "Neue Khitma für die Gruppe",
+    "new": "Nächste Khitma beginnen",
     "update": "Details der Khitma bearbeiten",
     "hi": "As-salamu alaikum,",
     "shareLink": "Gruppenlink teilen",
     "leave": "Gruppe verlassen",
+    "stay": "Bleiben",
     "tools": "Admin-Werkzeuge"
   },
   "gJoin": {
@@ -200,8 +206,9 @@
     "daymaTagline": "Von der guten Absicht zur beständigen Tat.",
     "daymaDesc": "Eine App, die dir hilft, gute Taten beständig zu verrichten, denn „die Allah liebste Tat ist die beständigste, auch wenn sie gering ist“ (überliefert von al-Buchari). Beginne mit einem kleinen Schritt, den du durchhalten kannst, etwa einer Seite Koran am Tag, verknüpfe ihn mit einer festen Zeit, zum Beispiel nach dem Gebet, halte ihn mit einem Tippen fest und lade, wenn du möchtest, deine Familie in einen privaten Kreis ein.",
     "dayma": "Dayma entdecken",
-    "archiveConfirm": "Archivieren der Gruppe bestätigen",
-    "archiveGroup": "Gruppe „{title}“ archivieren?"
+    "archiveConfirm": "Gruppe archivieren?",
+    "archiveGroup": "Die Gruppe „{title}“ kommt ins Khitma-Archiv.",
+    "archiveYes": "Archivieren"
   },
   "me": {
     "no": "Du hast noch keine Gruppen",
@@ -261,7 +268,7 @@
   "schedule": {
     "button": "Automatisch wiederholen",
     "title": "Khitma automatisch wiederholen",
-    "hint": "Jede neue Khitma beginnt pünktlich von selbst, ohne dass du sie starten musst.",
+    "hint": "Jede neue Khitma beginnt automatisch zum geplanten Zeitpunkt.",
     "week": "Jede Woche, am:",
     "day": "Jeden Tag",
     "month": "Am 1. jedes Monats",
@@ -302,6 +309,8 @@
     "no": "Nein",
     "update": "App aktualisieren",
     "updateDesc": "Eine neue Version der Seite ist verfügbar. Möchtest du sie jetzt verwenden? Das Update ändert nichts an deinen Gruppen oder deinen Juz.",
+    "updateNow": "Jetzt aktualisieren",
+    "later": "Später",
     "header": "Details der Khitma bearbeiten",
     "title": "Titel der Khitma",
     "more": "Zusätzlicher Text (optional)",

@@ -78,19 +78,19 @@ test('main flows in a real old Chromium', async () => {
       const overlay = await b.evaluate(`[getComputedStyle(document.querySelector('.cdk-overlay-container')).zIndex,
         getComputedStyle(document.querySelector('.cdk-overlay-backdrop')).backgroundColor]`);
       expect(overlay).toEqual(['1000', 'rgba(0, 0, 0, 0.32)']);
-      await b.click('mat-dialog-container button', 'نعم');
+      await b.click('mat-dialog-container button', 'نعم، أتممته');
       await expect.poll(() => juz(seq, 5), { timeout: 15_000 }).toEqual(['سارة', DONE]);
     });
 
     await step('the admin rewinds the khitmah', async () => {
       await b.open(ORIGIN, `/group/${rewind}`, { groups: joined({ [rewind]: ADMIN }) });
       await b.clickText('أدوات مسؤول المجموعة');
-      await b.click('button', 'ختمة جديدة للمجموعة');
-      await b.see('mat-dialog-container mat-radio-button', 'إرجاع الختمة خطوة إلى الوراء');
+      await b.click('button', 'بدء الختمة التالية');
+      await b.see('mat-dialog-container mat-radio-button', 'حجز الجزء السابق لكل عضو');
       await new Promise((r) => setTimeout(r, 600));
       await b.screenshot(join(shots, 'new-khitmah-dialog.png'));
-      await b.evaluate(`[...document.querySelectorAll('mat-radio-button')].find((r) => r.textContent.includes('إرجاع الختمة')).querySelector('input').click()`);
-      await b.click('mat-dialog-container button', 'موافق');
+      await b.evaluate(`[...document.querySelectorAll('mat-radio-button')].find((r) => r.textContent.includes('حجز الجزء السابق')).querySelector('input').click()`);
+      await b.click('mat-dialog-container button', 'بدء');
       await expect
         .poll(async () => [(await getDoc(`groups/${rewind}`))!.cycle, await juz(rewind, 30), await juz(rewind, 1), await juz(rewind, 2)], { timeout: 15_000 })
         .toEqual([1, ['سارة', BOOKED], ['خالد', BOOKED], [ADMIN, BOOKED]]);

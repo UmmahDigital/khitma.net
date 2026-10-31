@@ -46,7 +46,7 @@ test.describe('starting a khitma of your own', () => {
 
     await openDashboard(page, groupId, 'سارة');
     await page.getByRole('button', { name: 'أتممت قراءة جزء 5' }).click();
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('button', { name: 'نعم، أتممته' }).click();
 
     const card = page.locator('.next-juz-offer');
     await expect(card).toContainText('جزاكم الله خيرًا');
@@ -59,8 +59,8 @@ test.describe('starting a khitma of your own', () => {
 
     await openDashboard(page, groupId, ADMIN, { lng: 'en' });
     await page.locator('.admin-tools mat-expansion-panel-header').click();
-    await page.locator('.admin-tools button').filter({ hasText: /new/i }).first().click();
-    await expect(page.getByRole('dialog')).toContainText('Give every member their next juz automatically');
-    await expect(page.getByRole('dialog').getByRole('button', { name: 'OK' })).toBeVisible();
+    await page.locator('.admin-tools button').filter({ hasText: 'Start the next khitma' }).click();
+    await expect(page.getByRole('dialog')).toContainText('Give every member their next juz');
+    await expect(page.getByRole('dialog').getByRole('button', { name: 'Start', exact: true })).toBeVisible();
   });
 });

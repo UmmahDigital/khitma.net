@@ -116,7 +116,7 @@ test.describe('same-task group', () => {
 
     await openDashboard(page, groupId, 'سارة');
     await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
-    await page.getByRole('button', { name: 'نعم' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'ترك المجموعة' }).click();
 
     await expect(page).toHaveURL(/localhost:4300\/$/);
     await expect.poll(async () => Object.keys((await storedGroup(groupId)).members)).toEqual([ADMIN]);
