@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/button-toggle';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -113,6 +114,17 @@ const routes: Routes = [
     {
       provide: MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS,
       useValue: { hideSingleSelectionIndicator: true, hideMultipleSelectionIndicator: true },
+    },
+    // Dialogs fit the screen: their title and buttons stay in view and only their body scrolls. Without a maxHeight,
+    // Material lets a dialog grow past the screen (large text, a phone held sideways), taking its buttons out of reach.
+    // dvh is the screen between the browser's bars. Browsers without it (before Chrome 108, Samsung Internet 21 and
+    // iOS 15.4) get vh, which is measured as if the bars were hidden, so it can be a little taller.
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useFactory: (): MatDialogConfig => ({
+        ...new MatDialogConfig(),
+        maxHeight: CSS.supports('height', '1dvh') ? 'calc(100dvh - 32px)' : 'calc(100vh - 32px)',
+      }),
     },
     GroupJoinedGuard,
     KhitmaGroupService,

@@ -7,6 +7,8 @@ import { Page } from '@playwright/test';
  * esbuild already lowers JavaScript syntax for those targets, but it does not polyfill APIs or
  * rewrite CSS, so this covers what it leaves behind:
  * - JavaScript APIs that shipped after Safari 14.1 or Chromium 79 are removed before the app boots;
+ * - CSS.supports() reports no support for the viewport units sized by the browser's bars (dvh, svh, lvh…), which
+ *   came after both, so the app falls back to what it does without them;
  * - CSS those browsers drop is renamed so Chromium drops it the same way: whole `@layer` blocks,
  *   rules whose selector uses `:has()` or `:focus-visible`, and `color-mix()` values (custom
  *   properties holding one become invalid where they are used, as in an old browser).
@@ -33,6 +35,11 @@ export async function simulateOldestSupportedBrowser(page: Page): Promise<void> 
     remove(Crypto.prototype, ['randomUUID']);
     remove(HTMLElement.prototype, ['popover', 'showPopover', 'hidePopover', 'togglePopover']);
     remove(Element.prototype, ['checkVisibility']);
+    const supports = CSS.supports.bind(CSS) as (...args: string[]) => boolean;
+    Object.defineProperty(CSS, 'supports', {
+      configurable: true,
+      value: (...args: string[]) => !/\d[dsl]v(h|w|i|b|min|max)\b/.test(args.join(' ')) && supports(...args),
+    });
   });
   await page.route(/\/(main|polyfills|chunk|styles)-\w+\.(js|css)$/, async (route) => {
     const response = await route.fetch();

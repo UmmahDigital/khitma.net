@@ -318,6 +318,21 @@ test.describe('sequential group: admin', () => {
       .toEqual({ title: 'عنوان جديد', admins: 'سارة' });
   });
 
+  test('Cancel leaves the group details as they were', async ({ page }) => {
+    const groupId = newGroupId('seq-edit-cancel');
+    await createSequentialGroup(groupId, { title: 'عنوان قديم', author: ADMIN });
+
+    await openDashboard(page, groupId, ADMIN);
+    await openAdminTools(page);
+    await page.getByRole('button', { name: 'تعديل تفاصيل الختمة' }).click();
+    await page.getByLabel('عنوان الختمة').fill('عنوان جديد');
+    await page.getByRole('button', { name: 'إلغاء' }).click();
+
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await page.waitForTimeout(500);
+    expect((await getDoc(`groups/${groupId}`))!.title).toBe('عنوان قديم');
+  });
+
   test('an additional admin sees the admin tools', async ({ page }) => {
     const groupId = newGroupId('seq-coadmin');
     await createSequentialGroup(groupId, { author: ADMIN, admins: 'سارة' });
