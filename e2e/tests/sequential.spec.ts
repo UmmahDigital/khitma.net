@@ -57,7 +57,7 @@ test.describe('sequential group: members', () => {
     await createSequentialGroup(groupId, { author: ADMIN, assigned: { 1: { owner: ADMIN, status: DONE } } });
 
     await openDashboard(page, groupId, 'سارة');
-    await expect(page.getByText('يمكنك اختيار أي من الأجزاء التي باللون الأحمر.')).toBeVisible();
+    await expect(page.getByText('اختر أيّ جزء متاح (باللون الأحمر).')).toBeVisible();
     await juzToggle(page, 5).click();
 
     await expect.poll(() => storedJuz(groupId, 5)).toEqual({ owner: 'سارة', status: BOOKED });
@@ -299,7 +299,7 @@ test.describe('sequential group: admin', () => {
     expect(lines).toContain('01 🟢 سارة');
     expect(lines).toContain('02 🟡 خالد');
     expect(lines).toContain('03 🔴 ');
-    expect(shared.text).toContain('موعد تسليم الختمة: يوم الخميس.');
+    expect(shared.text).toContain('موعد إتمام الختمة: يوم الخميس.');
     expect(shared.text).toContain(`http://localhost:4300/group/${groupId}`);
   });
 

@@ -24,7 +24,7 @@ test.describe('khitma purpose', () => {
     await page.getByRole('button', { name: 'رحمها الله' }).click();
     await expect(page.getByLabel('عنوان الختمة')).toHaveValue('ختمة عن روح فاطمة رحمها الله');
 
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill('خالد');
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill('خالد');
     await page.getByRole('button', { name: 'إنشاء الختمة الجماعيّة' }).click();
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
     const groupId = new URL(page.url()).pathname.split('/')[2];

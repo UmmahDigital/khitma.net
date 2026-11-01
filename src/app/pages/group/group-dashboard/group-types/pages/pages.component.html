@@ -1,10 +1,7 @@
 @if (group.isStarted && myMember?.pagesTask?.start == null) {
   <section>
     <div class="user-msg">
-      <label [translate]="'gPages.header'"> تمّ توزيع الصفحات في هذه الختمة.
-        يمكنك التوجّه لمسؤول/ة المجموعة وطلب توزيع الصفحات من جديد. يمكنك أيضا قراءة أيّ عدد من الصفحات بدون
-        تسجيلها، فكلّ تلاوة لك مسجّلة في صحيفة أعمالك الصالحة ولك الأجر عليها إن شاء الله :)
-      </label>
+      <label [translate]="'gPages.header'">وُزّعت صفحات هذه الختمة. يمكنك أن تطلب من مسؤول المجموعة إعادة توزيعها، أو أن تقرأ ما شئت دون تسجيل، ولك أجره إن شاء الله.</label>
     </div>
   </section>
 }
@@ -24,7 +21,7 @@
         </div>
       </app-todo>
       @if (this.group.targetDate) {
-        <span class="task-target-date"><span [translate]="'sametask.date'">موعد التسليم:</span> {{this.group.targetDate}}.</span>
+        <span class="task-target-date"><span [translate]="'sametask.date'">موعد الإتمام:</span> {{this.group.targetDate}}.</span>
       }
     </section>
   }
@@ -51,9 +48,7 @@
     <div class="center-center" style="flex-direction: column;">
       <div class="tip">
         <strong [translate]="'gPages.responsible'">لمسؤول المجموعة:</strong>
-        <span [translate]="'gPages.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
-          ويمكنك تعديل الأعضاء عن طريق الضغط
-        على كبسة التعديل أدناه.</span>
+        <span [translate]="'gPages.responsibleDesc'">اضغط على اسم العضو لتغيير حالة مهمّته، وعلى زرّ التعديل أدناه لتعديل الأعضاء.</span>
       </div>
       @if (isAdmin) {
         <mat-button-toggle class="members-list-edit-btn"

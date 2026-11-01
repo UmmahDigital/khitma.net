@@ -91,7 +91,7 @@ test.describe('share the reward', () => {
     await expect(page).toHaveURL(new RegExp(`/group/${groupId}/join$`));
     await page.goto('/new?type=onetime');
     await page.getByLabel('عنوان الختمة').fill('ختمة عن روح جدّي');
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill('سارة');
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill('سارة');
     await page.getByRole('button', { name: 'إنشاء الختمة الجماعيّة' }).click();
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
 

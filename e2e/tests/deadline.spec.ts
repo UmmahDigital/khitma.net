@@ -11,7 +11,7 @@ const ADMIN = 'أبو أحمد';
 async function createGroup(page: Page, choose: () => Promise<void>) {
   await openApp(page, '/new?type=onetime', { freezeTime: true });
   await page.getByLabel('عنوان الختمة').fill('ختمة العائلة');
-  await page.getByLabel('اسمك (مسؤول الختمة)').fill('أبو محمد');
+  await page.getByLabel('اسمك (مسؤول المجموعة)').fill('أبو محمد');
   await choose();
   await page.getByRole('button', { name: 'إنشاء الختمة الجماعيّة' }).click();
   await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
@@ -64,7 +64,7 @@ test.describe('deadline', () => {
     await expect(question).toHaveCount(0);
 
     await page.getByLabel('عنوان الختمة').fill('ختمة الجمعة');
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill('أبو محمد');
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill('أبو محمد');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
     const group = await getDoc(`groups/${new URL(page.url()).pathname.split('/')[2]}`);
@@ -81,7 +81,7 @@ test.describe('deadline', () => {
     await expect(page.locator('.deadline-line')).toContainText('بعد 5 أيام');
     await page.getByText('أدوات مسؤول المجموعة').click();
     await page.getByRole('button', { name: 'تعديل تفاصيل الختمة' }).click();
-    await page.getByLabel('موعد التسليم').fill('بعد العيد');
+    await page.getByRole('dialog').getByLabel('موعد إتمام الختمة').fill('بعد العيد');
     await page.getByRole('button', { name: 'حفظ التغييرات' }).click();
 
     await expect.poll(async () => (await getDoc(`groups/${groupId}`))!.targetAt).toBeUndefined();

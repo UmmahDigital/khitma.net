@@ -107,7 +107,7 @@ test('main flows in a real old Chromium', async () => {
       await b.open(ORIGIN, '/');
       await b.click('a', 'إنشاء مجموعة ختمة دوريّة');
       await b.fill('عنوان الختمة', 'ختمة الجمعة');
-      await b.fill('اسمك (مسؤول الختمة)', 'أبو محمد');
+      await b.fill('اسمك (مسؤول المجموعة)', 'أبو محمد');
       await b.screenshot(join(shots, 'create.png'));
       await b.click('button', 'إنشاء مجموعة الختمة');
       await b.waitFor(`/^\\/group\\/[^/]+\\/invite$/.test(location.pathname)`, 'the invite page');

@@ -154,7 +154,7 @@ test.describe('the app in English', () => {
     expect(lines[1]).toBe('Friday, 1/23/2026');
     expect(lines[3]).toBe('🟢 Read 1 · 🟡 Being read 1 · 🔴 Free 28');
     expect(lines[4]).toBe('Free juz: ' + Array.from({ length: 28 }, (_, i) => i + 3).join(', '));
-    expect(shared.text).toContain('Khitma due: Friday, 1/30/2026.');
+    expect(shared.text).toContain('Complete the khitma by: Friday, 1/30/2026.');
     expect(shared.text).toContain(`Please update the status of your juz through the link: http://localhost:4300/group/${groupId}`);
     expect(shared.text).toMatch(/May Allah bless you!$/);
     expect(shared.text).not.toMatch(/[\u0600-\u06FF]/);

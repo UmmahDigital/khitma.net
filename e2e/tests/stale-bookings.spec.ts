@@ -58,7 +58,7 @@ test.describe('stale bookings', () => {
 
     await openAsAdmin(page, groupId);
     await page.getByText('أدوات مسؤول المجموعة').click();
-    await page.getByRole('button', { name: 'إتاحة المحجوز منذ أسبوع أو أكثر (2)' }).click();
+    await page.getByRole('button', { name: 'إتاحة الأجزاء المتأخّرة (2)' }).click();
     await expect(page.getByRole('dialog')).toContainText('سيُتاح من جديد ما حُجز منذ أسبوع أو أكثر ولم يُتَمّ (جزءان)');
     await page.getByRole('button', { name: 'إتاحتها' }).click();
 
@@ -76,6 +76,6 @@ test.describe('stale bookings', () => {
 
     await openAsAdmin(page, groupId);
     await page.getByText('أدوات مسؤول المجموعة').click();
-    await expect(page.getByRole('button', { name: /إتاحة المحجوز منذ/ })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /إتاحة الأجزاء المتأخّرة/ })).toHaveCount(0);
   });
 });

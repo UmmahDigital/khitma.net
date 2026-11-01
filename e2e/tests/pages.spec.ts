@@ -73,7 +73,7 @@ test.describe('page distribution group', () => {
     });
 
     await openDashboard(page, groupId, 'سارة');
-    await expect(page.getByText('تمّ توزيع الصفحات في هذه الختمة.', { exact: false })).toBeVisible();
+    await expect(page.getByText('وُزّعت صفحات هذه الختمة.', { exact: false })).toBeVisible();
   });
 
   test('the admin redistributes the pages to include new members', async ({ page }) => {

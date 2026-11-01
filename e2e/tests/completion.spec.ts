@@ -29,7 +29,7 @@ test.describe('starting a khitma of your own', () => {
       expect.objectContaining({ source: 'completion', group_id: groupId }),
     ]);
     await page.getByLabel('عنوان الختمة').fill('ختمة عن روح الجدّة');
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill('سارة');
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill('سارة');
     await page.getByRole('button', { name: 'إنشاء الختمة الجماعيّة' }).click();
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
     expect(await analyticsEvents(page)).toContainEqual([

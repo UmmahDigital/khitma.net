@@ -189,6 +189,11 @@ section > p {
   padding: 16px;
   border-radius: $surface-radius;
   display: block;
+
+  // "For the group admin:" and the hint after it (Angular drops the whitespace between the two elements).
+  > strong {
+    margin-inline-end: 0.3em;
+  }
 }
 
 .help-btn {

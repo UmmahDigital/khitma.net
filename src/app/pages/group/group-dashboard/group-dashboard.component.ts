@@ -174,7 +174,7 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
   }
 
   get releaseStaleLabel(): string {
-    const template = this.common.translation.gDashboard?.releaseStale || 'إتاحة المحجوز منذ أسبوع أو أكثر ({count})';
+    const template = this.common.translation.gDashboard?.releaseStale || 'إتاحة الأجزاء المتأخّرة ({count})';
     return fill(template, { count: this.staleCount });
   }
 

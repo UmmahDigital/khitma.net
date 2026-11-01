@@ -38,7 +38,7 @@ test.describe('Ramadan', () => {
     await expect(page.getByRole('button', { name: 'في رمضان' })).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByLabel('عنوان الختمة')).toHaveValue('ختمة رمضان');
     await expect(page.getByLabel('تاريخ إتمام الختمة')).toHaveValue('2026-03-19');
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill(ADMIN);
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill(ADMIN);
     await page.getByRole('button', { name: 'إنشاء الختمة الجماعيّة' }).click();
 
     const group = await getDoc(`groups/${await createdGroupId(page)}`);
@@ -53,7 +53,7 @@ test.describe('Ramadan', () => {
 
     await expect(page.getByText('تبدأ ختمة جديدة كل يوم تلقائيًا')).toBeVisible();
     await expect(page.getByLabel('عنوان الختمة')).toHaveValue('ختمة رمضان اليومية');
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill(ADMIN);
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill(ADMIN);
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
 
     const group = await getDoc(`groups/${await createdGroupId(page)}`);

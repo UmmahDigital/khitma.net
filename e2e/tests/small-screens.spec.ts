@@ -133,7 +133,7 @@ for (const screen of SCREENS) {
       await expect(page.locator('.admin-tools').getByRole('button', { name: 'تعديل تفاصيل الختمة' })).toBeVisible();
       await expectFitsWidth(page, 'the admin’s page');
 
-      for (const tool of ['بدء الختمة التالية', 'تكرار الختمة تلقائيًا', 'تعديل تفاصيل الختمة', /إتاحة المحجوز منذ أسبوع/]) {
+      for (const tool of ['بدء الختمة التالية', 'تكرار الختمة تلقائيًا', 'تعديل تفاصيل الختمة', /إتاحة الأجزاء المتأخّرة/]) {
         await adminTool(page, tool);
         await expectButtonsOnScreen(page, String(tool));
       }

@@ -230,7 +230,7 @@ test.describe('screenshots of the current design', () => {
     await snap(page, 'sequential-admin-booking-ages');
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.getByText('أدوات مسؤول المجموعة').click();
-    await expect(page.getByRole('button', { name: 'إتاحة المحجوز منذ أسبوع أو أكثر (1)' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'إتاحة الأجزاء المتأخّرة (1)' })).toBeVisible();
     await snap(page, 'sequential-admin-stale-tools');
   });
 
