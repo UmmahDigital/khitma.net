@@ -168,6 +168,17 @@ mat-toolbar {
     flex-basis: 100%;
     max-width: 100%;
   }
+
+  // The big screen (group-screen): the whole width of a TV, without the app's toolbar.
+  &.wide {
+    flex-basis: 100%;
+    max-width: 100%;
+
+    #app-content {
+      top: 0;
+      padding: 0;
+    }
+  }
 }
 
 .spacer {

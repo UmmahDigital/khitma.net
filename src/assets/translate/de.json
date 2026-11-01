@@ -25,8 +25,10 @@
     "ok": "Beginnen"
   },
   "completion": {
-    "startOwn": "Möchtest du eine gemeinsame Khitma für einen geliebten Menschen beginnen?",
-    "startOwnButton": "Neue Khitma beginnen"
+    "startOwn": "Möchtest du eine gemeinsame Khitma für einen geliebten Menschen beginnen?"
+  },
+  "startLike": {
+    "button": "Eine ähnliche starten"
   },
   "deadline": {
     "question": "Bis wann soll die Khitma vollendet sein?",
@@ -103,7 +105,8 @@
     "partsB": "Juz verteilen",
     "distr": "Zuerst treten die Mitglieder bei, dann startest du die Khitma und die Seiten des Mushaf werden gleichmäßig unter ihnen aufgeteilt. Ideal für große Gruppen: Bei 60 Personen liest jede etwa zehn Seiten.",
     "distrNo": "Jedes Mitglied liest einen anderen Juz, sodass die Gruppe gemeinsam den ganzen Koran vollendet.",
-    "recurringNoDesc": "Für Familien-Khitmas für Verstorbene (möge Allah sich ihrer erbarmen), in Trauerhäusern und zu besonderen Anlässen."
+    "recurringNoDesc": "Für Familien-Khitmas für Verstorbene (möge Allah sich ihrer erbarmen), in Trauerhäusern und zu besonderen Anlässen.",
+    "noRepeat": "Nicht wiederholen"
   },
   "gKhitma": {
     "header": "Ramadan-Khitma der Al-Aqsa-Moschee",
@@ -151,7 +154,9 @@
     "finished": "Fertig gelesen: Juz",
     "release": "Juz abgeben",
     "select": "Wähle einen freien Juz (rot markiert).",
-    "all": "Alle Juz dieser Gruppe sind vergeben.",
+    "allTitle": "Alle Juz sind vergeben",
+    "allRead": "Aber du kannst am Lohn teilhaben, indem du Juz {juz} liest.",
+    "allAnother": "Ein anderer Juz",
     "toggle": "Namensliste anzeigen",
     "dialog": "Juz {juz} freigeben?",
     "dialog2Q": "Hast du Juz {juz} zu Ende gelesen?",
@@ -160,6 +165,26 @@
     "done": " - Die Khitma ist vollendet, durch Allahs Gnade",
     "releaseText": "Der Name des Lesers wird entfernt, und der Juz wird wieder frei.",
     "releaseYes": "Juz freigeben"
+  },
+  "reminder": {
+    "button": "Erinnere mich ans Lesen",
+    "google": "Google Kalender",
+    "phone": "Kalender des Handys",
+    "title": "📖 Juz {juz} lesen – {khitma}",
+    "details": "Wenn du ihn gelesen hast, markiere ihn auf der Seite der Khitma als beendet:\n{url}"
+  },
+  "screen": {
+    "open": "Auf großem Bildschirm zeigen",
+    "qrTitle": "Oder scannt den Code, um beizutreten",
+    "qrLabel": "QR-Code für den Link der Khitma",
+    "scan": "Scannt den Code, um einen Juz zu wählen",
+    "done": "Gelesen",
+    "reading": "Werden gelesen",
+    "free": "Frei",
+    "hideNames": "Namen ausblenden",
+    "fullscreen": "Vollbild",
+    "back": "Zurück zur Khitma",
+    "complete": "Die Khitma ist vollendet, durch die Gnade Allahs"
   },
   "gDashboard": {
     "releaseStale": "Verspätete Buchungen freigeben ({count})",
@@ -280,6 +305,13 @@
     "saved": "Wiederholung gespeichert",
     "nextAt": "Die nächste Khitma beginnt automatisch am {when}",
     "nextAfterCompletion": "Die nächste Khitma beginnt automatisch, sobald diese vollendet ist"
+  },
+  "repeat": {
+    "title": "Wiederholt ihr die Khitma?",
+    "text": "Eine neue Khitma beginnt von selbst, und jedes Mitglied bekommt den Juz nach seinem.",
+    "weekly": "Jeden Freitag",
+    "no": "Nein, danke",
+    "done": "Die Khitma wiederholt sich von selbst, in sha Allah"
   },
   "shareCard": {
     "button": "Im WhatsApp-Status teilen",

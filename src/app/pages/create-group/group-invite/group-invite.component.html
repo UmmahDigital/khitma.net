@@ -16,6 +16,16 @@
       <button mat-stroked-button (click)="share()"><span [translate]="'sharing.other'">مشاركة بطريقة أخرى</span></button>
       <button mat-stroked-button (click)="copy()"><span [translate]="'sharing.copy'">نسخ الرسالة</span></button>
     </div>
+    <!-- Together in one place: people scan the organiser's phone, or a big screen in the room. -->
+    <section class="invite-qr">
+      <p class="invite-qr-title" [translate]="'screen.qrTitle'">أو امسحوا الرمز للانضمام</p>
+      <app-qr-code class="invite-qr-code" [value]="inviteLink" [label]="common.translation.screen?.qrLabel || 'رمز QR لرابط الختمة'"></app-qr-code>
+      @if (sharesAjza) {
+        <a mat-stroked-button [routerLink]="['/group', group.id, 'screen']">
+          <mat-icon>tv</mat-icon> <span [translate]="'screen.open'">عرض على شاشة كبيرة</span>
+        </a>
+      }
+    </section>
     <a mat-button class="block go-to-group" [routerLink]="['/group',group.id]"><span
     [translate]="'gInvite.go'">الانتقال لصفحة مجموعة الختمة</span></a>
   </div>

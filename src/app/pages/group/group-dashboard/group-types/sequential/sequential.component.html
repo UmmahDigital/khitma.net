@@ -9,6 +9,17 @@
             <p class="memorial-dua-text" lang="ar" dir="rtl">{{ memorialDuaText }}</p>
           </div>
         }
+        @if (repeatPrompt) {
+          <div class="help-finish repeat-prompt">
+            <p class="help-finish-title" [translate]="'repeat.title'">هل تكرّرون الختمة؟</p>
+            <p class="help-finish-text" [translate]="'repeat.text'">تبدأ ختمة جديدة تلقائيًا، ويُحجز لكل عضو الجزء الذي يلي جزءه.</p>
+            <div class="repeat-actions">
+              <button mat-flat-button class="action-btn" (click)="repeatKhitma('week')"><span [translate]="'repeat.weekly'">كل جمعة</span></button>
+              <button mat-stroked-button (click)="repeatKhitma('month')"><span [translate]="'schedule.month'">أوّل كل شهر</span></button>
+              <button mat-button (click)="answerRepeat('no')"><span [translate]="'repeat.no'">لا، شكرًا</span></button>
+            </div>
+          </div>
+        }
         @if (isAdmin) {
           <button (click)="startNewKhitmah()" mat-raised-button color="accent"
             class="block large action-btn admin-action-btn" [translate]="'sequential.start'">بدء الختمة التالية</button>
@@ -63,6 +74,9 @@
               <button class="giveup-btn" mat-button (click)="juzGiveup(juzIndex)"><span
               [translate]="'sequential.release'">تنازل عن الجزء</span></button>
             </section>
+            <button mat-button class="remind-btn" [matMenuTriggerFor]="reminderMenu" (click)="reminderJuz = juzIndex">
+              <mat-icon>alarm</mat-icon> <span [translate]="'reminder.button'">ذكّرني بقراءته</span>
+            </button>
           </section>
         }
         <div class="space"></div>
@@ -70,8 +84,16 @@
     } @else {
       @if (this.group.hasIdleAjza()) {
         <span [translate]="'sequential.select'">اختر أيّ جزء متاح (باللون الأحمر).</span>
-      } @else {
-        <span class="large" [translate]="'sequential.all'"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+      } @else if (suggestion) {
+        <!-- Every juz is taken: a juz to read anyway, for the reward, instead of a dead end. -->
+        <div class="next-juz-offer all-booked">
+          <p class="next-juz-title" [translate]="'sequential.allTitle'">جميع الأجزاء محجوزة</p>
+          <p>{{ suggestionText('allRead', 'ولكن يمكنك أن تشارك في الأجر بقراءة الجزء {juz}.') }}</p>
+          <div class="next-juz-actions">
+            <a mat-flat-button class="action-btn" [routerLink]="['/quran/juz', suggestion]" (click)="readSuggestion()">{{ suggestionText('nextTake', 'اقرأ الجزء {juz}') }}</a>
+            <button mat-button (click)="anotherSuggestion()"><span [translate]="'sequential.allAnother'">جزء آخر</span></button>
+          </div>
+        </div>
       }
     }
   </div>
@@ -140,10 +162,19 @@
   </button>
 </ng-template>
 
+<mat-menu #reminderMenu="matMenu">
+  <a mat-menu-item [href]="googleReminderUrl" target="_blank" rel="noopener" (click)="reminderAdded('google')">
+    <mat-icon>event</mat-icon> <span [translate]="'reminder.google'">تقويم Google</span>
+  </a>
+  <button mat-menu-item (click)="downloadReminder()">
+    <mat-icon>calendar_month</mat-icon> <span [translate]="'reminder.phone'">تقويم الهاتف</span>
+  </button>
+</mat-menu>
+
 <ng-template #startOwn let-source="source">
   <div class="start-own">
     <p class="start-own-title" [translate]="'completion.startOwn'">هل تودّ أن تبدأ ختمة جماعيّة لمن تحب؟</p>
-    <a mat-stroked-button routerLink="/new" [queryParams]="{ type: 'onetime.sequential', from: source }"
-      (click)="startOwnClicked(source)"><span [translate]="'completion.startOwnButton'">ابدأ ختمة جديدة</span></a>
+    <a mat-stroked-button routerLink="/new" [queryParams]="likeParams(source)"
+      (click)="startOwnClicked(source)"><span [translate]="'startLike.button'">ابدأ ختمة مثلها</span></a>
   </div>
 </ng-template>

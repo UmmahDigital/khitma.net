@@ -65,7 +65,9 @@ test.describe('Ramadan', () => {
 
   test('from the 20th of Ramadan, the admin is asked whether the group continues weekly after Eid', async ({ page }) => {
     const groupId = newGroupId('after-ramadan');
-    await createSequentialGroup(groupId, { title: 'ختمة رمضان', author: ADMIN, purpose: 'ramadan' });
+    await createSequentialGroup(groupId, {
+      title: 'ختمة رمضان', author: ADMIN, purpose: 'ramadan', targetAt: '2026-03-19', targetDate: 'الخميس 19/3/2026',
+    });
 
     // Monday 9 March 2026: the 20th of Ramadan.
     await page.clock.setFixedTime(new Date('2026-03-09T09:00:00Z'));
@@ -77,6 +79,9 @@ test.describe('Ramadan', () => {
     await expect.poll(async () => (await getDoc(`groups/${groupId}`))?.schedule).toEqual({ every: 'week', weekday: 5, cycleType: AUTO_BOOK });
     // The first weekly round: Friday 20 March (Eid), at midnight in Jerusalem; Ramadan's khitma carries on until then.
     expect((await getDoc(`groups/${groupId}`))!.nextRoundAt).toEqual(new Date('2026-03-19T22:00:00Z'));
+    // Until then, the khitma keeps its deadline, the last day of Ramadan; the first weekly round starts without it.
+    expect((await getDoc(`groups/${groupId}`))!.targetAt).toBe('2026-03-19');
+    await expect(page.locator('.deadline-line:not(.repeat-line)')).toContainText('الخميس 19/3/2026');
     await expect(prompt).toHaveCount(0);
     expect(await analyticsEvents(page)).toContainEqual(['after_ramadan_weekly', expect.objectContaining({ action: 'yes' })]);
   });

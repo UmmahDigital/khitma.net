@@ -115,6 +115,30 @@ test.describe('sequential group: members', () => {
     await expect(page.locator('app-juz-list app-juz').nth(1)).toContainText('خالد');
   });
 
+  test('when every juz is taken, a member is offered one still being read, for the reward', async ({ page }) => {
+    const groupId = newGroupId('seq-all-booked');
+    const assigned = Object.fromEntries(Array.from({ length: 30 }, (_, i) => [i + 1, { owner: 'خالد', status: i < 27 ? DONE : BOOKED }]));
+    await createSequentialGroup(groupId, { author: ADMIN, assigned });
+
+    await openDashboard(page, groupId, 'سارة');
+    const card = page.locator('.all-booked');
+    await expect(card).toContainText('جميع الأجزاء محجوزة');
+    const offered = async () => Number((await card.locator('p').nth(1).textContent())!.match(/الجزء (\d+)/)![1]);
+    const first = await offered();
+    expect([28, 29, 30]).toContain(first);
+    await expect(card.getByRole('link', { name: `اقرأ الجزء ${first}` })).toHaveAttribute('href', `/quran/juz/${first}`);
+
+    await card.getByRole('button', { name: 'جزء آخر' }).click();
+    const second = await offered();
+    expect([28, 29, 30]).toContain(second);
+    expect(second).not.toBe(first);
+    expect(await analyticsEvents(page)).toContainEqual(['all_booked_suggestion', expect.objectContaining({ action: 'another' })]);
+
+    // The same suggestion all day, so it doesn't change on every visit.
+    await page.reload();
+    await expect(card).toContainText(`بقراءة الجزء ${first}.`);
+  });
+
   test('leaving archives the group on this phone and returns home', async ({ page }) => {
     const groupId = newGroupId('seq-leave');
     await createSequentialGroup(groupId, { title: 'ختمة للمغادرة', author: ADMIN });
@@ -205,6 +229,27 @@ test.describe('sequential group: admin', () => {
       cycle: 2,
       ajza: expectedAjza({ 1: [ADMIN, BOOKED], 2: ['سارة', BOOKED], 3: ['خالد', BOOKED] }),
     });
+  });
+
+  test('new khitmah: a date picked as the last khitma’s deadline is not carried over; a typed one is', async ({ page }) => {
+    const picked = newGroupId('seq-next-picked');
+    const typed = newGroupId('seq-next-typed');
+    await createSequentialGroup(picked, { author: ADMIN, targetAt: '2026-02-27', targetDate: 'الجمعة 27/2/2026' });
+    await createSequentialGroup(typed, { author: ADMIN, cycle: 1, targetDate: 'يوم الجمعة' });
+
+    await openApp(page, `/group/${picked}`, { storage: { groups: joinedGroups({ [picked]: ADMIN, [typed]: ADMIN }) } });
+    await expect(page.locator('.deadline-line')).toContainText('انتهى الموعد');
+    await startNewKhitmah(page);
+    await expect.poll(async () => (await getDoc(`groups/${picked}`))!.cycle).toBe(1);
+    expect((await getDoc(`groups/${picked}`))!.targetAt).toBeUndefined();
+    expect((await getDoc(`groups/${picked}`))!.targetDate).toBeUndefined();
+    await expect(page.locator('.deadline-line')).toHaveCount(0);
+
+    await page.goto(`/group/${typed}`);
+    await startNewKhitmah(page);
+    await expect.poll(async () => (await getDoc(`groups/${typed}`))!.cycle).toBe(2);
+    expect((await getDoc(`groups/${typed}`))!.targetDate).toBe('يوم الجمعة');
+    await expect(page.locator('.deadline-line')).toHaveText('⏳ موعد إتمام الختمة: يوم الجمعة');
   });
 
   test('new khitmah: only members who finished get their next juz', async ({ page }) => {
@@ -382,6 +427,8 @@ test.describe('sequential group: admin', () => {
 
     await openDashboard(page, groupId, ADMIN);
     await expect(page.getByRole('button', { name: 'بدء الختمة التالية' })).toBeVisible();
+    // Finished, not "every juz is taken".
+    await expect(page.locator('.all-booked')).toHaveCount(0);
     await page.getByRole('button', { name: 'مشاركة دعاء الختمة' }).click();
 
     const [shared] = await sharedPayloads(page);

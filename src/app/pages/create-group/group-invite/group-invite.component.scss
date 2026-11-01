@@ -37,3 +37,19 @@ textarea {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+// The QR code to scan in person, and the big screen.
+.group-invite .invite-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .invite-qr-title {
+    margin: 0 0 8px;
+  }
+
+  .invite-qr-code {
+    width: 200px;
+    margin-bottom: 16px;
+  }
+}

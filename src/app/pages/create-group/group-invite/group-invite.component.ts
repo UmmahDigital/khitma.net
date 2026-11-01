@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from '../../../alert.service';
-import { KhitmaGroup } from '../../../entities/entities';
+import { KhitmaGroup, KHITMA_GROUP_TYPE } from '../../../entities/entities';
 import { SharingService } from '../../../sharing.service';
 import { ReferralService } from '../../../referral.service';
 import { inviteMessage } from '../../../share-messages';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 import { CommonService } from '../../../service/common.service';
 import { SharedModule } from '../../../modules/shared.module';
+import { QrCodeComponent } from '../../../shared/qr-code/qr-code.component';
 
 @Component({
     selector: 'app-group-invite',
@@ -16,12 +17,17 @@ import { SharedModule } from '../../../modules/shared.module';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
-    imports: [SharedModule]
+    imports: [SharedModule, QrCodeComponent]
 })
 export class GroupInviteComponent implements OnInit {
   group: KhitmaGroup;
   inviteLink: string;
   inviteMsg: string;
+
+  /** The big screen shows ajza; same-task and page groups don't have them. */
+  get sharesAjza(): boolean {
+    return !this.group?.type || this.group.type === KHITMA_GROUP_TYPE.SEQUENTIAL;
+  }
 
   constructor(
     private route: ActivatedRoute,

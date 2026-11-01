@@ -1,10 +1,11 @@
 <div class="center-center fx-row-wrap" style="height: 100%">
-  <div id="app-container" [class.dark]="isDarkStyle">
+  <div id="app-container" [class.dark]="isDarkStyle" [class.wide]="isWide">
     @if (showCelebration) {
       <app-celebration class="celebration-container">
       </app-celebration>
     }
 
+    @if (!isWide) {
     <mat-toolbar color="primary">
       <button mat-icon-button aria-label="menu">
         <mat-icon (click)="openMenu()">menu</mat-icon>
@@ -73,6 +74,7 @@
   <mat-icon class="help-btn">help_outline</mat-icon>
 </a>
 </mat-toolbar>
+    }
 
 <div id="app-content">
   <router-outlet></router-outlet>

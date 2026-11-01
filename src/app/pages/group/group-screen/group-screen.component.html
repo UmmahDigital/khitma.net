@@ -1,0 +1,55 @@
+@if (group) {
+  <div class="screen">
+    <header class="screen-header">
+      <img class="screen-logo" src="assets/khitma-logo.png" width="72" height="72" alt="">
+      <h1>{{ group.title }}</h1>
+      <div class="screen-controls">
+        <mat-slide-toggle [ngModel]="hideNames" (ngModelChange)="toggleNames($event)"><span [translate]="'screen.hideNames'">إخفاء الأسماء</span></mat-slide-toggle>
+        @if (canFullscreen) {
+          <button mat-icon-button (click)="toggleFullscreen()" [attr.aria-label]="common.translation.screen?.fullscreen || 'ملء الشاشة'">
+            <mat-icon>fullscreen</mat-icon>
+          </button>
+        }
+        <a mat-icon-button [routerLink]="['/group', group.id]" [attr.aria-label]="common.translation.screen?.back || 'العودة لصفحة الختمة'">
+          <mat-icon>close</mat-icon>
+        </a>
+      </div>
+    </header>
+
+    <main class="screen-body">
+      <section class="screen-ajza">
+        <div class="screen-counts">
+          <span class="count done"><b>{{ counts.done }}</b> <span [translate]="'screen.done'">تمّت قراءتها</span></span>
+          <span class="count reading"><b>{{ counts.reading }}</b> <span [translate]="'screen.reading'">قيد القراءة</span></span>
+          <span class="count free"><b>{{ counts.free }}</b> <span [translate]="'screen.free'">متاحة</span></span>
+        </div>
+        <ol class="juz-cells">
+          @for (juz of group.ajza; track juz.index) {
+            <li class="juz-cell" [class.free]="juz.status === JUZ_STATUS.IDLE" [class.reading]="juz.status === JUZ_STATUS.BOOKED"
+              [class.done]="juz.status === JUZ_STATUS.DONE">
+              <span class="juz-number">{{ juz.index + 1 }}</span>
+              @if (!hideNames && juz.owner && juz.status !== JUZ_STATUS.IDLE) {
+                <span class="juz-owner">{{ juz.owner }}</span>
+              }
+            </li>
+          }
+        </ol>
+      </section>
+
+      <aside class="screen-join">
+        @if (group.isDone()) {
+          <p class="screen-complete" [translate]="'screen.complete'">تمّت الختمة بفضل الله</p>
+          @if (memorialDuaText) {
+            <p class="screen-dua" lang="ar" dir="rtl">{{ memorialDuaText }}</p>
+          }
+        } @else {
+          <app-qr-code class="screen-qr" [value]="link" [label]="common.translation.screen?.qrLabel || 'رمز QR لرابط الختمة'"></app-qr-code>
+          <p class="screen-scan" [translate]="'screen.scan'">امسحوا الرمز ليختار كلٌّ منكم جزءًا</p>
+          <p class="screen-link" dir="ltr">{{ shortLink }}</p>
+        }
+      </aside>
+    </main>
+  </div>
+} @else if (missing) {
+  <p class="screen-missing" [translate]="'khitma.notFound'">لم يتم العثور على الختمة المطلوبة.</p>
+}

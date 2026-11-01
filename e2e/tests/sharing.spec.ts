@@ -108,7 +108,7 @@ test.describe('sharing', () => {
     await createSequentialGroup(groupId, { author: ADMIN, assigned });
 
     await openDashboard(page, groupId, 'سارة');
-    await expect(page.getByText('جميع الأجزاء في هذه المجموعة محجوزة.')).toBeVisible();
+    await expect(page.locator('.all-booked')).toContainText('جميع الأجزاء محجوزة');
     await expect(page.locator('.help-finish')).toHaveCount(0);
   });
 

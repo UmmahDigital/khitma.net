@@ -1,10 +1,14 @@
+alarm
 archive
+calendar_month
 close
 edit
+event
 exit_to_app
 expand_less
 expand_more
 format_list_numbered_rtl
+fullscreen
 group_add
 groups
 help_outline
@@ -30,4 +34,5 @@ settings
 share
 sports_score
 task_alt
+tv
 verified

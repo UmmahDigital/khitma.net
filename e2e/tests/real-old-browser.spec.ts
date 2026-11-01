@@ -112,7 +112,22 @@ test('main flows in a real old Chromium', async () => {
       await b.click('button', 'إنشاء مجموعة الختمة');
       await b.waitFor(`/^\\/group\\/[^/]+\\/invite$/.test(location.pathname)`, 'the invite page');
       await b.see('textarea');
+      // The QR code's encoder loads on its own, as a separate chunk.
+      await b.see('app-qr-code svg path');
       await b.screenshot(join(shots, 'invite.png'));
+    });
+
+    await step('the big screen shows the ajza as they change', async () => {
+      await b.open(ORIGIN, `/group/${seq}/screen`);
+      await b.see('.juz-cell', 'سارة');
+      await b.see('.screen-qr svg path');
+      await createSequentialGroup(seq, {
+        title: 'ختمة الحيّ',
+        author: ADMIN,
+        assigned: { 1: { owner: ADMIN, status: DONE }, 5: { owner: 'سارة', status: DONE }, 9: { owner: 'ليلى', status: BOOKED } },
+      });
+      await b.see('.juz-cell', 'ليلى');
+      await b.screenshot(join(shots, 'big-screen.png'));
     });
   } finally {
     await b.close();

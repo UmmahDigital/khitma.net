@@ -17,6 +17,7 @@ import { ReferralService } from '../../../referral.service';
 import { ajzaCount, fill, inviteMessage } from '../../../share-messages';
 import { staleBookings } from '../../../booking-age';
 import { isRoundDue, RoundSchedule } from '../../../schedule';
+import { startLikeParams } from '../../../start-like';
 import { ScheduleComponent } from '../../../dialog/schedule/schedule.component';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
@@ -194,6 +195,26 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
 
   shareInviteMsg() {
     this.sharing.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, 'invite', this.group.id);
+  }
+
+  /** «ابدأ ختمة مثلها» in the members' menu: a khitma like this one, without its names (start-like.ts). */
+  get likeParams(): Record<string, string> {
+    // The same object while the group's kind is the same, so the template binding stays stable.
+    const key = JSON.stringify([this.group?.type, this.group?.purpose, this.group?.schedule, this.group?.cycle]);
+    if (this.likeCache?.key !== key) {
+      this.likeCache = { key, params: startLikeParams(this.group ?? {}, 'group_menu') };
+    }
+    return this.likeCache.params;
+  }
+  private likeCache: { key: string; params: Record<string, string> } | null = null;
+
+  startLikeClicked() {
+    this.$gaService.send('start_own_khitma_click', { source: 'group_menu' });
+  }
+
+  /** The khitma on a TV or laptop where people gather (group-screen.component.ts). */
+  openBigScreen() {
+    this.router.navigate(['/group', this.group.id, 'screen']);
   }
 
 

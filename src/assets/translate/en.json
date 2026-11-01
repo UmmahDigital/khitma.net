@@ -25,8 +25,10 @@
     "ok": "Start"
   },
   "completion": {
-    "startOwn": "Would you like to start a group khitma for someone you love?",
-    "startOwnButton": "Start a new khitma"
+    "startOwn": "Would you like to start a group khitma for someone you love?"
+  },
+  "startLike": {
+    "button": "Start one like it"
   },
   "deadline": {
     "question": "When would you like to complete the khitma?",
@@ -103,7 +105,8 @@
     "partsB": "Share out juz",
     "distr": "Members join first, then you start the khitma and the pages of the mushaf are shared out equally among them. Best for large groups: with 60 people, each reads about ten pages.",
     "distrNo": "Each member reads a different juz, so together the group completes the whole Quran.",
-    "recurringNoDesc": "For family khitmas for loved ones who have passed away (may Allah have mercy on them), in houses of condolence, and on special occasions."
+    "recurringNoDesc": "For family khitmas for loved ones who have passed away (may Allah have mercy on them), in houses of condolence, and on special occasions.",
+    "noRepeat": "Don't repeat"
   },
   "gKhitma": {
     "header": "Al-Aqsa Mosque Ramadan khitma",
@@ -151,7 +154,9 @@
     "finished": "I finished juz",
     "release": "Give up this juz",
     "select": "Choose any available juz (in red).",
-    "all": "Every juz in this group is taken.",
+    "allTitle": "Every juz is taken",
+    "allRead": "But you can share in the reward by reading juz {juz}.",
+    "allAnother": "Another juz",
     "toggle": "Show the list of names",
     "dialog": "Free juz {juz}?",
     "dialog2Q": "Did you finish reading juz {juz}?",
@@ -160,6 +165,26 @@
     "done": " - The khitma is complete, by Allah’s grace",
     "releaseText": "Its reader’s name will be removed, and it will be free to choose again.",
     "releaseYes": "Free the juz"
+  },
+  "reminder": {
+    "button": "Remind me to read it",
+    "google": "Google Calendar",
+    "phone": "Phone calendar",
+    "title": "📖 Read juz {juz} – {khitma}",
+    "details": "When you have read it, mark it as finished on the khitma page:\n{url}"
+  },
+  "screen": {
+    "open": "Show on a big screen",
+    "qrTitle": "Or scan the code to join",
+    "qrLabel": "QR code for the khitma’s link",
+    "scan": "Scan the code to pick a juz",
+    "done": "Read",
+    "reading": "Being read",
+    "free": "Free",
+    "hideNames": "Hide names",
+    "fullscreen": "Full screen",
+    "back": "Back to the khitma",
+    "complete": "The khitma is complete, by the grace of Allah"
   },
   "gDashboard": {
     "releaseStale": "Release late bookings ({count})",
@@ -280,6 +305,13 @@
     "saved": "Repeat saved",
     "nextAt": "The next khitma starts automatically on {when}",
     "nextAfterCompletion": "The next khitma starts automatically once this one is complete"
+  },
+  "repeat": {
+    "title": "Will you repeat the khitma?",
+    "text": "A new khitma starts by itself, and each member gets the juz after theirs.",
+    "weekly": "Every Friday",
+    "no": "No, thanks",
+    "done": "The khitma will repeat by itself, in sha Allah"
   },
   "shareCard": {
     "button": "Share to WhatsApp Status",
