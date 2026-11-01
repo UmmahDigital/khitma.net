@@ -29,6 +29,16 @@ test('a new khitma, a fully booked one, a complete one, and other types', () => 
   assert.equal(previewText({ ajza: ajza([2, 0]) }).title, 'ختمة.نت');
 });
 
+test('a title with $ in it stays as written, and the page whole', () => {
+  // In a replacement string, $' and $` paste the rest of the page, and $& the replaced tag.
+  const page = withPreview(INDEX, { title: "ختمة $' $` $& $1", description: "بقي $'", url: 'https://khitma.net/group/abc' });
+  assert.match(page, /<title>ختمة \$' \$` \$&amp; \$1<\/title>/);
+  assert.match(page, /<meta property="og:title" content="ختمة \$' \$` \$&amp; \$1">/);
+  assert.match(page, /<meta property="og:description" content="بقي \$'">/);
+  assert.equal(page.match(/<\/head>/g).length, 1);
+  assert.equal(page.match(/<html>/g).length, 1);
+});
+
 test('the tags carry the khitma, escaped, and the page stays out of search engines', () => {
   const page = withPreview(INDEX, { title: 'ختمة "العائلة" <3', description: 'بقي جزءان', url: 'https://khitma.net/group/abc' });
   assert.match(page, /<title>ختمة &quot;العائلة&quot; &lt;3<\/title>/);

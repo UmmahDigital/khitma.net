@@ -40,12 +40,13 @@ function escapeAttribute(value) {
 function setMeta(html, attribute, key, value) {
   const pattern = new RegExp(`<meta ${attribute}="${key}" content="[^"]*">`);
   const tag = `<meta ${attribute}="${key}" content="${escapeAttribute(value)}">`;
-  return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `  ${tag}\n</head>`);
+  // Replaced by functions: in a replacement string, a title's $' or $& would paste parts of the page.
+  return pattern.test(html) ? html.replace(pattern, () => tag) : html.replace('</head>', () => `  ${tag}\n</head>`);
 }
 
 /** index.html with the group's preview tags, and kept out of search engines. */
 export function withPreview(html, { title, description, url }) {
-  let page = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeAttribute(title)}</title>`);
+  let page = html.replace(/<title>[^<]*<\/title>/, () => `<title>${escapeAttribute(title)}</title>`);
   page = setMeta(page, 'name', 'description', description);
   page = setMeta(page, 'property', 'og:title', title);
   page = setMeta(page, 'property', 'og:description', description);
