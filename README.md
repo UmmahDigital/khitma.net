@@ -57,6 +57,10 @@ Text sizes are relative to the page's root size: write `font-size: text(20px)` (
 
 The app is dark when the phone is (`prefers-color-scheme`). Colours that change are custom properties in `src/_color-scheme.scss`, whose light values are the app's colours as they always were: use `var(--surface)`, `var(--text)`, `var(--primary)` and the others there, and the `dark` mixin from `src/_variables.scss` for a colour used in one place. Material's components get its dark theme, for the components the app uses: add a component's `*-color` mixin there when starting to use a new one. The loading screen in `index.html` and the guides (`src/guide/guide.css`) follow too. Screenshot baselines starting with `dark-` show the dark screens.
 
+## Reading together in one place
+
+The invite page shows a QR code of the invitation link, and juz khitmas can be shown on a big screen at `/group/:id/screen` (from the invite page and the admin tools): every juz with its reader, live, the code to scan, and an option to hide names, kept on that device. The codes are drawn as SVG by `src/app/shared/qr-code` with `qrcode-generator` (MIT), loaded only when a code is shown; `e2e/tests/big-screen.spec.ts` scans them back with `jsqr` (a dev dependency) to check they open the right link.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io), or `npm run test:ci` for a single headless run.
@@ -96,7 +100,7 @@ Problems on people's phones reach Google Analytics as events (`src/app/field-rep
 - `app_error`: an error the app didn't handle, with `error_message` (anything not in English, such as a name in it, becomes `…`), `error_where` (file and position) and `error_source` (`angular`, `window` or `promise`). Each error is sent once, and at most five per page.
 - `dialog_offscreen`: a dialog whose buttons reach outside the screen, with `dialog` (its component, e.g. `app-start-new-khitma`), `overflow_px`, `viewport` and `root_font_px`.
 
-To see the parameters in GA4's reports, register them once as event-scoped custom dimensions (Admin → Custom definitions).
+To see the parameters in GA4's reports, register them once as event-scoped custom dimensions (Admin → Custom definitions). The same goes for the parameters of the features' own events: `text_size_changed` (`text_size`), `reminder_added` (`calendar`), `all_booked_suggestion` (`action`, `step`), `repeat_prompt` (`action`), `big_screen_names` (`hidden`), and `schedule` on `group_created`.
 
 ## Backups
 

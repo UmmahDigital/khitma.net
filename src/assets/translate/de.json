@@ -173,6 +173,19 @@
     "title": "📖 Juz {juz} lesen – {khitma}",
     "details": "Wenn du ihn gelesen hast, markiere ihn auf der Seite der Khitma als beendet:\n{url}"
   },
+  "screen": {
+    "open": "Auf großem Bildschirm zeigen",
+    "qrTitle": "Oder scannt den Code, um beizutreten",
+    "qrLabel": "QR-Code für den Link der Khitma",
+    "scan": "Scannt den Code, um einen Juz zu wählen",
+    "done": "Gelesen",
+    "reading": "Werden gelesen",
+    "free": "Frei",
+    "hideNames": "Namen ausblenden",
+    "fullscreen": "Vollbild",
+    "back": "Zurück zur Khitma",
+    "complete": "Die Khitma ist vollendet, durch die Gnade Allahs"
+  },
   "gDashboard": {
     "releaseStale": "Verspätete Buchungen freigeben ({count})",
     "releaseTitle": "Verspätete Buchungen freigeben?",

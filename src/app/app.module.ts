@@ -59,6 +59,11 @@ const routes: Routes = [
     data: { screen: 'group_invite' },
   },
   {
+    path: 'group/:groupId/screen',
+    loadComponent: () => import('./pages/group/group-screen/group-screen.component').then((m) => m.GroupScreenComponent),
+    data: { screen: 'group_screen' },
+  },
+  {
     path: 'group/:groupId',
     canActivate: [GroupJoinedGuard],
     children: [

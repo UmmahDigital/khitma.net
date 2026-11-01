@@ -212,6 +212,11 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
     this.$gaService.send('start_own_khitma_click', { source: 'group_menu' });
   }
 
+  /** The khitma on a TV or laptop where people gather (group-screen.component.ts). */
+  openBigScreen() {
+    this.router.navigate(['/group', this.group.id, 'screen']);
+  }
+
 
   showEditGroupDialog() {
 

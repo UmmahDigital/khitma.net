@@ -173,6 +173,19 @@
     "title": "📖 Lire le juz {juz} – {khitma}",
     "details": "Une fois lu, indiquez-le comme terminé sur la page de la khitma :\n{url}"
   },
+  "screen": {
+    "open": "Afficher sur un grand écran",
+    "qrTitle": "Ou scannez le code pour rejoindre",
+    "qrLabel": "Code QR du lien de la khitma",
+    "scan": "Scannez le code pour choisir un juz",
+    "done": "Lus",
+    "reading": "En lecture",
+    "free": "Libres",
+    "hideNames": "Masquer les noms",
+    "fullscreen": "Plein écran",
+    "back": "Retour à la khitma",
+    "complete": "La khitma est terminée, par la grâce d’Allah"
+  },
   "gDashboard": {
     "releaseStale": "Libérer les réservations en retard ({count})",
     "releaseTitle": "Libérer les réservations en retard ?",

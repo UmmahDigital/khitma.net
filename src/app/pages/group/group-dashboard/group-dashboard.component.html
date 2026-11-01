@@ -112,6 +112,12 @@
           <mat-icon>link</mat-icon
             ><span [translate]="'gDashboard.shareLink'">مشاركة رابط المجموعة</span>
           </button>
+        @if (group.type === KHITMA_GROUP_TYPE.SEQUENTIAL) {
+          <button mat-flat-button (click)="openBigScreen()">
+            <mat-icon>tv</mat-icon>
+            <span [translate]="'screen.open'">عرض على شاشة كبيرة</span>
+          </button>
+        }
         </mat-expansion-panel>
       </section>
     }

@@ -78,6 +78,21 @@ export class KhitmaGroupService {
     return this._currentGroup;
   }
 
+  /** A group as it changes, without making it the current group (the big screen, group-screen.component.ts). */
+  public watchGroup(groupId: string): Observable<KhitmaGroup_Sequential | null> {
+    return watchDoc(this.groupDoc(groupId), 'id').pipe(
+      map((group: any) => {
+        if (!group?.ajza) {
+          return null;
+        }
+        if (!Array.isArray(group.ajza)) {
+          group.ajza = KhitmaGroup_Sequential.convertAjzaToArray(group.ajza);
+        }
+        return new KhitmaGroup_Sequential(group);
+      })
+    );
+  }
+
   public getCurrentGroupId() {
     return this._currentGroupObj.id;
   }

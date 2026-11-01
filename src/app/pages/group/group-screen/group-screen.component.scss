@@ -1,0 +1,218 @@
+@use "src/variables" as *;
+
+// Always dark, whatever the phone's setting: a screen across a room reads best as light text and coloured ajza on a
+// dark background. Sizes follow the screen (vmin), from a laptop to a TV.
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #0f1413;
+  color: rgba(255, 255, 255, 0.92);
+  --mat-slide-toggle-label-text-color: rgba(255, 255, 255, 0.85);
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 2.5vmin 3vmin;
+  box-sizing: border-box;
+}
+
+.screen-header {
+  display: flex;
+  align-items: center;
+
+  // Margins rather than flex `gap`, which Samsung Internet 12 lacks.
+  > * + * {
+    margin-inline-start: 2vmin;
+  }
+
+  .screen-logo {
+    width: 7vmin;
+    height: 7vmin;
+  }
+
+  h1 {
+    flex: 1;
+    margin: 0;
+    font-size: 4.6vmin;
+    line-height: 1.25;
+    font-weight: 700;
+  }
+}
+
+// The organiser's controls: small, out of the way.
+.screen-controls {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+
+  > * + * {
+    margin-inline-start: 8px;
+  }
+
+  .mat-mdc-icon-button {
+    color: inherit;
+  }
+}
+
+.screen-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin-top: 2vmin;
+
+  .screen-ajza {
+    flex: 1 1 62%;
+    min-width: 0;
+  }
+
+  .screen-join {
+    flex: 0 0 34%;
+    margin-inline-start: 4vmin;
+    text-align: center;
+  }
+
+  // Upright screens (a tablet at the door): the code to scan first, then the ajza.
+  @media (max-aspect-ratio: 1/1) {
+    flex-direction: column;
+    align-items: stretch;
+
+    .screen-join {
+      order: -1;
+      margin: 0 0 4vmin;
+    }
+  }
+}
+
+.screen-counts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3vmin;
+
+  .count {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 2vmin;
+    font-size: 2.6vmin;
+
+    b {
+      margin-inline-end: 1vmin;
+      font-size: 4.2vmin;
+    }
+
+    &::before {
+      content: "";
+      width: 2.2vmin;
+      height: 2.2vmin;
+      margin-inline-end: 1vmin;
+      border-radius: 50%;
+    }
+
+    &.done::before {
+      background: $status-done-bg-color;
+    }
+
+    &.reading::before {
+      background: $status-booked-bg-color;
+    }
+
+    &.free::before {
+      background: $status-idle-bg-color;
+    }
+  }
+}
+
+.juz-cells {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-row-gap: 2.2vmin;
+  grid-column-gap: 1.5vmin;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.juz-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+
+  .juz-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8.5vmin;
+    height: 8.5vmin;
+    border-radius: 50%;
+    font-size: 4vmin;
+    font-weight: 700;
+  }
+
+  .juz-owner {
+    max-width: 100%;
+    margin-top: 0.6vmin;
+    overflow: hidden;
+    font-size: 2.4vmin;
+    line-height: 1.25;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.free .juz-number {
+    background: $status-idle-bg-color;
+    color: $status-idle-color;
+  }
+
+  &.reading .juz-number {
+    background: $status-booked-bg-color;
+    color: $status-booked-color;
+  }
+
+  &.done .juz-number {
+    background: $status-done-bg-color;
+    color: $status-done-color;
+  }
+}
+
+.screen-qr {
+  width: 34vmin;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.screen-scan {
+  margin: 2.5vmin 0 1vmin;
+  font-size: 3.2vmin;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.screen-link {
+  margin: 0;
+  font-size: 2.2vmin;
+  opacity: 0.8;
+  word-break: break-all;
+}
+
+.screen-complete {
+  margin: 0 0 3vmin;
+  font-size: 5vmin;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #9fe3d4;
+}
+
+.screen-dua {
+  margin: 0;
+  font-size: 3.8vmin;
+  line-height: 1.7;
+}
+
+.screen-missing {
+  padding: 32px;
+  text-align: center;
+}

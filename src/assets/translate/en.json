@@ -173,6 +173,19 @@
     "title": "📖 Read juz {juz} – {khitma}",
     "details": "When you have read it, mark it as finished on the khitma page:\n{url}"
   },
+  "screen": {
+    "open": "Show on a big screen",
+    "qrTitle": "Or scan the code to join",
+    "qrLabel": "QR code for the khitma’s link",
+    "scan": "Scan the code to pick a juz",
+    "done": "Read",
+    "reading": "Being read",
+    "free": "Free",
+    "hideNames": "Hide names",
+    "fullscreen": "Full screen",
+    "back": "Back to the khitma",
+    "complete": "The khitma is complete, by the grace of Allah"
+  },
   "gDashboard": {
     "releaseStale": "Release late bookings ({count})",
     "releaseTitle": "Release late bookings?",

@@ -24,6 +24,8 @@ export class AppComponent {
   menuDialogRef;
 
   isDarkStyle = false;
+  /** The big screen (/group/:id/screen) takes the whole width, without the toolbar. */
+  isWide = false;
 
   unreadNotification = null;
 
@@ -54,6 +56,7 @@ export class AppComponent {
       }
       else if (event instanceof NavigationEnd) {
         this.isDarkStyle = event.url === "/ramadan";
+        this.isWide = /^\/group\/[^/?#]+\/screen([?#]|$)/.test(event.urlAfterRedirects);
         this.seo.update(event.urlAfterRedirects);
 
         // window.scroll(0, 0);
