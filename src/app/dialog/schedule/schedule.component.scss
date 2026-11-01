@@ -1,7 +1,7 @@
 .schedule-dialog {
   .schedule-hint {
     margin-top: 0;
-    color: #4d5b57;
+    color: var(--text-muted);
   }
 
   .radio-group {
@@ -28,7 +28,7 @@
       padding: 4px 12px;
       border: 2px solid #075e54;
       border-radius: 18px;
-      background: white;
+      background: var(--surface);
       color: #075e54;
       font: inherit;
       cursor: pointer;

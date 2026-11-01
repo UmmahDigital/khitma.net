@@ -6,6 +6,8 @@
   <meta charset="utf-8">
   <!-- Pinch-zoom stays on: many readers are older and enlarge the text. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Light and dark (src/_color-scheme.scss): browsers then don't darken the app themselves. -->
+  <meta name="color-scheme" content="light dark">
   <!-- The text size picked in the menu (src/app/text-size.ts), before the first paint so nothing jumps. -->
   <script>try{var t=localStorage.getItem('textSize');if(t)document.documentElement.setAttribute('data-text-size',t)}catch(e){}</script>
   <title>ختمة.نت — ختمة القرآن الكريم جماعيًّا</title>
@@ -182,6 +184,11 @@
     .boot-logo { display: block; width: 112px; height: 112px; margin: 0 auto 20px; }
     .boot h1 { margin: 0 0 12px; color: #1c6151; font-size: 30px; line-height: 1.3; font-weight: 700; }
     .boot-lead { margin: 0; font-size: 21px; line-height: 1.6; }
+    /* Dark like the app when the phone is (src/_color-scheme.scss), so it doesn't flash light first. */
+    @media (prefers-color-scheme: dark) {
+      .boot { background: #0f1413; color: rgba(255, 255, 255, 0.88); }
+      .boot h1 { color: #9fe3d4; }
+    }
     /* Read by crawlers and screen readers; the loading screen itself stays short. */
     .boot-more { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);
       clip-path: inset(50%); white-space: nowrap; }

@@ -12,14 +12,14 @@
 .radio-button {
     margin: 5px;
     padding: 16px 16px;
-    background: #f3f5f4;
+    background: var(--choice-bg);
     border: 1px solid transparent;
     border-radius: 16px;
 }
 
 .radio-button.mat-mdc-radio-checked {
-    background: $primary-tonal;
-    border-color: rgba(7, 94, 84, 0.25);
+    background: var(--primary-tonal);
+    border-color: var(--choice-border);
 }
 
 

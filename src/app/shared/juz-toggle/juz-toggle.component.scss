@@ -50,7 +50,7 @@
 .juz-booked-mark {
   circle {
     fill: #8a5a00;
-    stroke: $background-color;
+    stroke: var(--page-bg);
     stroke-width: 1.5px;
   }
 
@@ -70,7 +70,7 @@
 .juz-check {
   circle {
     fill: $primary-color;
-    stroke: $background-color;
+    stroke: var(--page-bg);
     stroke-width: 1.5px;
   }
 

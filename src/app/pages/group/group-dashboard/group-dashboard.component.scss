@@ -161,8 +161,8 @@ mat-panel-title {
     margin: 12px auto;
     padding: 0 20px;
     width: 100%;
-    background: $admin-tonal;
-    color: $admin-color;
+    background: var(--admin-tonal);
+    color: var(--admin);
     font-size: text(19px);
     font-weight: 700;
     text-align: start;
@@ -173,8 +173,8 @@ mat-panel-title {
     display: flex;
     justify-content: flex-start;
     height: 56px;
-    --mat-button-filled-container-color: #{$admin-tonal};
-    --mat-button-filled-label-text-color: #{$admin-color};
+    --mat-button-filled-container-color: #{var(--admin-tonal)};
+    --mat-button-filled-label-text-color: var(--admin);
     --mat-button-filled-container-shape: 16px;
   }
 }

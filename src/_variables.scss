@@ -7,6 +7,13 @@
   @return math.div($px, 18px) * 1rem;
 }
 
+// Dark mode for a colour used in one place; shared ones are custom properties in _color-scheme.scss.
+@mixin dark {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
 $primary-color: #075E54;
 // Buttons and links. A touch darker than WhatsApp's #128C7E so white text on it passes WCAG AA (4.6:1).
 $action-color: #118376;

@@ -32,7 +32,7 @@ hr {
   font-size: smaller;
 
   a {
-    color: gray;
+    color: var(--text-muted);
     margin: 0 8px;
   }
 }

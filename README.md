@@ -51,6 +51,12 @@ The Firebase SDK stays on version 11: version 12 and later add about 50 kB to ev
 
 Groups are kept on the phone (Firestore's persistent cache in IndexedDB, `src/app/firestore.ts`): a group opened before opens at once, even when the server can't be reached, and changes made offline (booking or finishing a juz) are sent when the connection returns, even after the page was closed. A bar at the bottom of the screen says so while the phone is offline. Starting the next round reads the group from the server, in a transaction, so a page opened from the cache can't overwrite newer changes; offline, the admin is told it needs a connection.
 
+## Text size and dark mode
+
+Text sizes are relative to the page's root size: write `font-size: text(20px)` (`src/_variables.scss`), which is 20px at the default size. «حجم النص» in the menu sets the root to 100%, 112.5% (default), 125% or 140% of the browser's own size (`src/app/text-size.ts`); the choice is kept on the phone and applied before the first paint by a script in `src/index.html`.
+
+The app is dark when the phone is (`prefers-color-scheme`). Colours that change are custom properties in `src/_color-scheme.scss`, whose light values are the app's colours as they always were: use `var(--surface)`, `var(--text)`, `var(--primary)` and the others there, and the `dark` mixin from `src/_variables.scss` for a colour used in one place. Material's components get its dark theme, for the components the app uses: add a component's `*-color` mixin there when starting to use a new one. The loading screen in `index.html` and the guides (`src/guide/guide.css`) follow too. Screenshot baselines starting with `dark-` show the dark screens.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io), or `npm run test:ci` for a single headless run.

@@ -1,0 +1,92 @@
+@use "@angular/material" as mat;
+@use "src/variables" as *;
+
+// Light and dark. Colours that change between them are custom properties: their light values are the app's colours
+// as they always were, and the dark ones follow the phone's setting (prefers-color-scheme). Telling browsers the app
+// has its own dark colours (color-scheme, and the meta tag in index.html) stops them from darkening it themselves,
+// as Samsung Internet does, which made dialogs and the brand green muddy.
+
+:root {
+  color-scheme: light dark;
+
+  --page-bg: #{$background-color};
+  --surface: white;
+  --surface-raised: white;
+  --text: rgba(0, 0, 0, 0.87);
+  --text-strong: #1d2b29;
+  --text-muted: #{$text-muted};
+  --hairline: #{$hairline};
+  // The brand green as text, icons and outlines on a surface (on a filled green button the text stays white).
+  --primary: #{$primary-color};
+  --primary-tonal: #{$primary-tonal};
+  // Soft green cards (what the khitma still needs, the supplication, the impact card) and the green text on them.
+  --tint: #e3f1ee;
+  --tint-text: #1c6151;
+  // Options to choose from in a dialog, and the outline of the chosen one.
+  --choice-bg: #f3f5f4;
+  --choice-border: rgba(7, 94, 84, 0.25);
+  --admin: #{$admin-color};
+  --admin-action: #{$admin-action-color};
+  --admin-tonal: #{$admin-tonal};
+  --surface-shadow: #{$surface-shadow};
+  --surface-shadow-raised: #{$surface-shadow-raised};
+  --field-fill: rgba(0, 0, 0, 0.04);
+  --field-text: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #0f1413;
+    --surface: #1a2120;
+    --surface-raised: #222a28;
+    --text: rgba(255, 255, 255, 0.88);
+    --text-strong: #e7eeeb;
+    --text-muted: #a7b5b0;
+    --hairline: rgba(255, 255, 255, 0.12);
+    --primary: #6fd4c0;
+    --primary-tonal: #173a33;
+    --tint: #173a33;
+    --tint-text: #9fe3d4;
+    --choice-bg: rgba(255, 255, 255, 0.06);
+    --choice-border: rgba(111, 212, 192, 0.45);
+    --admin: #d4ade0;
+    --admin-action: #d4ade0;
+    --admin-tonal: #2e2433;
+    --surface-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 16px rgba(0, 0, 0, 0.35);
+    --surface-shadow-raised: 0 2px 4px rgba(0, 0, 0, 0.45), 0 12px 28px rgba(0, 0, 0, 0.5);
+    --field-fill: rgba(255, 255, 255, 0.07);
+    --field-text: rgba(255, 255, 255, 0.92);
+  }
+
+  // Material's components in their dark colours: the ones the app uses (all-component-colors would add ~45 kB for
+  // the rest). Included at the top level, its rules are as specific as the app's own choices in _theme.scss
+  // (`html`, `.mat-mdc-unelevated-button.mat-primary`), which come later and win; inside a selector they would
+  // outrank them.
+  $dark-theme: mat.m2-define-dark-theme(
+    (
+      color: (
+        primary: mat.m2-define-palette(mat.$m2-teal-palette, 300),
+        accent: mat.m2-define-palette(mat.$m2-teal-palette, 200),
+      ),
+    )
+  );
+  @include mat.core-color($dark-theme);
+  @include mat.badge-color($dark-theme);
+  @include mat.button-color($dark-theme);
+  @include mat.icon-button-color($dark-theme);
+  @include mat.button-toggle-color($dark-theme);
+  @include mat.card-color($dark-theme);
+  @include mat.dialog-color($dark-theme);
+  @include mat.expansion-color($dark-theme);
+  @include mat.form-field-color($dark-theme);
+  @include mat.icon-color($dark-theme);
+  @include mat.input-color($dark-theme);
+  @include mat.list-color($dark-theme);
+  @include mat.menu-color($dark-theme);
+  @include mat.progress-spinner-color($dark-theme);
+  @include mat.radio-color($dark-theme);
+  @include mat.select-color($dark-theme);
+  @include mat.slide-toggle-color($dark-theme);
+  @include mat.snack-bar-color($dark-theme);
+  @include mat.toolbar-color($dark-theme);
+}
