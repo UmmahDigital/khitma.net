@@ -15,7 +15,7 @@ const asJson = process.argv.includes('--json');
 
 const token = process.env.FIRESTORE_TOKEN || execFileSync('gcloud', ['auth', 'print-access-token'], { encoding: 'utf8' }).trim();
 const base = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/groups`;
-const fields = ['type', 'cycle', 'ajza', 'members', 'completedRounds'];
+const fields = ['type', 'cycle', 'ajza', 'members', 'completedRounds', 'purpose', 'schedule'];
 
 async function* groups() {
   let pageToken = '';
@@ -54,6 +54,9 @@ function summarize(doc) {
   } else {
     for (const name of Object.keys(f.members?.mapValue?.fields ?? {})) names.add(name);
   }
+  // How the group was created: recurring groups get the purpose "regular"; one-time ones the purpose picked
+  // (memorial, healing…); groups from before purposes existed have none.
+  const purpose = f.purpose?.stringValue || '';
   return {
     type,
     cycle,
@@ -61,11 +64,15 @@ function summarize(doc) {
     updated: Date.parse(doc.updateTime),
     completedAt,
     names: names.size,
+    done,
+    createdAs: purpose === 'regular' ? 'recurring' : purpose ? 'one_time' : 'unknown',
+    scheduled: Boolean(f.schedule?.mapValue),
     completed: cycle >= 1 || done === 30 || completedAt.length > 0,
   };
 }
 
 const pct = (part, whole) => (whole ? Math.round((part / whole) * 1000) / 10 : null);
+const shown = (percent) => (percent === null ? '–' : `${percent}%`);
 const median = (values) => {
   if (!values.length) return null;
   const sorted = [...values].sort((a, b) => a - b);
@@ -87,6 +94,44 @@ const roundsThisWeek = all.flatMap((g) => g.completedAt).filter((t) => t > now -
 const recordsRounds = all.some((g) => g.completedAt.length > 0);
 const types = ['SEQUENTIAL', 'SAME_TASK', 'PAGES_DISTRIBUTION'];
 
+// Where new juz groups stop on the way to their first completed khitma. A group that completed one, or started
+// another round, passed every step.
+const reached = (g, ajzaDone) => g.completed || g.done >= ajzaDone;
+const daysToComplete = month
+  .filter((g) => g.completedAt.length)
+  .map((g) => Math.round(((Math.min(...g.completedAt) - g.created) / DAY) * 10) / 10)
+  .filter((days) => days >= 0);
+const funnel = {
+  groups: month.length,
+  any_juz_booked_pct: pct(month.filter((g) => g.names >= 1 || g.completed).length, month.length),
+  two_or_more_names_pct: pct(month.filter((g) => g.names >= 2).length, month.length),
+  half_read_pct: pct(month.filter((g) => reached(g, 15)).length, month.length),
+  read_27_pct: pct(month.filter((g) => reached(g, 27)).length, month.length),
+  completed_pct: pct(month.filter((g) => g.completed).length, month.length),
+  stalled_near_end_pct: pct(month.filter((g) => !g.completed && g.done >= 26 && g.updated < now - 7 * DAY).length, month.length),
+  // Only rounds completed since completion times are recorded.
+  median_days_to_complete: median(daysToComplete),
+};
+
+// One-time and recurring khitmas, by how they were created (purposes are recorded since 2026-10-29), over a longer
+// window for steadier numbers; two weeks is enough for most one-time khitmas to finish.
+const older = createdBetween(juz, 14, 90);
+const createdAs = Object.fromEntries(
+  ['one_time', 'recurring', 'unknown'].map((kind) => {
+    const list = older.filter((g) => g.createdAs === kind);
+    return [
+      kind,
+      {
+        groups: list.length,
+        completed_pct: pct(list.filter((g) => g.completed).length, list.length),
+        two_or_more_names_pct: pct(list.filter((g) => g.names >= 2).length, list.length),
+        another_round_pct: pct(list.filter((g) => g.cycle >= 1).length, list.length),
+        scheduled_pct: pct(list.filter((g) => g.scheduled).length, list.length),
+      },
+    ];
+  })
+);
+
 const report = {
   date: new Date(now).toISOString().slice(0, 10),
   groups_total: all.length,
@@ -106,6 +151,8 @@ const report = {
   },
   repeat_pct_of_completed_30_90_days: pct(repeatable.filter((g) => g.cycle >= 1).length, repeatable.length),
   active_recurring_groups: juz.filter((g) => g.cycle >= 2 && g.updated > now - 30 * DAY).length,
+  funnel_30_37_days: funnel,
+  created_as_14_90_days: createdAs,
 };
 
 if (asJson) {
@@ -126,5 +173,30 @@ if (asJson) {
 | ... median names | ${c30.median_names} |
 | Juz groups created 7-14 days ago with no juz booked | ${report.cohort_7_14_days.no_juz_booked_pct}% of ${report.cohort_7_14_days.groups} |
 | Finished groups (created 30-90 days ago) that started another khitma | ${report.repeat_pct_of_completed_30_90_days}% |
-| Active recurring groups (2+ rounds, active in the last 30 days) | ${report.active_recurring_groups} |`);
+| Active recurring groups (2+ rounds, active in the last 30 days) | ${report.active_recurring_groups} |
+
+## Where new juz groups stop (created 30-37 days ago)
+
+| Step | Groups |
+|---|---|
+| Created | ${funnel.groups} |
+| A juz booked | ${funnel.any_juz_booked_pct}% |
+| Two or more names | ${funnel.two_or_more_names_pct}% |
+| Half the khitma read | ${funnel.half_read_pct}% |
+| 27 of 30 ajza read | ${funnel.read_27_pct}% |
+| First khitma completed | ${funnel.completed_pct}% |
+| Stalled near the end (26+ read, nothing changed for a week) | ${funnel.stalled_near_end_pct}% |
+| Median days to complete | ${funnel.median_days_to_complete ?? 'not recorded yet'} |
+
+## One-time and recurring (juz groups created 14-90 days ago)
+
+| Created as | Groups | Completed | Two or more names | Started another round | Set a schedule |
+|---|---|---|---|---|---|
+${[
+  ['One-time', createdAs.one_time],
+  ['Recurring', createdAs.recurring],
+  ['Before purposes existed', createdAs.unknown],
+]
+  .map(([label, k]) => `| ${label} | ${k.groups} | ${shown(k.completed_pct)} | ${shown(k.two_or_more_names_pct)} | ${shown(k.another_round_pct)} | ${shown(k.scheduled_pct)} |`)
+  .join('\n')}`);
 }

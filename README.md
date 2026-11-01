@@ -69,7 +69,7 @@ The simulated old browser cannot catch JavaScript syntax that old engines fail t
 
 ## Tools
 
-- `node tools/metrics/weekly-report.mjs`: the weekly numbers (groups created, first-khitma completion, groups with no juz booked, repeat rate, active recurring groups), read-only from Firestore. It needs a `gcloud` login that can read the project, and prints counts only, never names or titles.
+- `node tools/metrics/weekly-report.mjs`: the weekly numbers, read-only from Firestore: groups created, first-khitma completion, groups with no juz booked, repeat rate, active recurring groups; where new juz groups stop on the way to their first khitma (a juz booked, a second name, half read, 27 of 30, completed, stalled near the end); and one-time against recurring khitmas, by how they were created. It needs a `gcloud` login that can read the project, and prints counts only, never names or titles.
 - `node tools/icons/update-icon-font.mjs`: rebuilds the small icon font after an icon is added to a template (`e2e/tests/icons.spec.ts` checks it).
 - `node tools/og-images/render.mjs`: renders the link-preview images in `src/assets/og/` from the HTML templates in `tools/og-images/`.
 - `tools/ramadan/README.md`: the Ramadan announcement (an in-app notification to add in Firestore, and a WhatsApp message), to publish by hand in mid-Sha'ban.
