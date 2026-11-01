@@ -77,5 +77,11 @@
 <div id="app-content">
   <router-outlet></router-outlet>
 </div>
+
+@if (isOffline) {
+  <div class="offline-bar" role="status">
+    <span [translate]="'network.offline'">لا يوجد اتصال بالإنترنت. ما تغيّره يُحفظ ويُرسَل عند عودة الاتصال.</span>
+  </div>
+}
 </div>
 </div>

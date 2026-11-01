@@ -238,3 +238,18 @@ hr {
     }
   }
 }
+
+// Shown while the phone has no connection, at the bottom of the screen whatever is scrolled; dialogs stay above it.
+.offline-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 900;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: $snack-color;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.4;
+}

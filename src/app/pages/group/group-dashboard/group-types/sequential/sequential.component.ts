@@ -496,13 +496,14 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
       this.$gaService.event('group_new_khitmah');
 
-      const isRewind = selectedCycleType === KHITMA_CYCLE_TYPE.REWIND;
-      const nextCycle = isRewind
-        ? Math.max(0, this.group.cycle - 1)
-        : this.group.cycle + 1;
-
-      this.group.cycle = nextCycle;
-      this.groupsApi.startNewSequentialKhitmaCycle(this.group.cycle, selectedCycleType);
+      const failed = () =>
+        this.alert.show(this.common.translation.sequential?.startFailed || 'تعذّر بدء الختمة التالية. تأكّد من الاتصال بالإنترنت ثمّ أعد المحاولة.', 6000);
+      // It reads the group from the server (see the service), so it can't work offline: say so at once.
+      if (!navigator.onLine) {
+        failed();
+        return;
+      }
+      this.groupsApi.startNewSequentialKhitmaCycle(this.group.id, selectedCycleType).then((cycle) => (this.group.cycle = cycle), failed);
 
     });
 

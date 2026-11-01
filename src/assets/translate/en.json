@@ -146,6 +146,7 @@
     "nextTake": "Read juz {juz}",
     "nextLater": "Later",
     "start": "Start the next khitma",
+    "startFailed": "Couldn’t start the next khitma. Check your internet connection and try again.",
     "doaa": "Share the khitma dua (in Arabic)",
     "finished": "I finished juz",
     "release": "Give up this juz",
@@ -360,5 +361,8 @@
     "updateTask": "Please update the status of your task through the link: {url}",
     "updatePages": "Please update the status of your pages through the link: {url}",
     "bless": "May Allah bless you!"
+  },
+  "network": {
+    "offline": "You’re offline. Your changes are saved and sent when you’re back online."
   }
 }

@@ -45,6 +45,12 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `npm run build:prod` for a production build. The build artifacts will be stored in `dist/khitma`, which Firebase Hosting serves.
 
+The Firebase SDK stays on version 11: version 12 and later add about 50 kB to every first visit (transferred), for Firestore features the app doesn't use. Check a new major against `.browserslistrc` the way the README describes for Angular (the old-browser project and a real Chromium 79).
+
+## Offline
+
+Groups are kept on the phone (Firestore's persistent cache in IndexedDB, `src/app/firestore.ts`): a group opened before opens at once, even when the server can't be reached, and changes made offline (booking or finishing a juz) are sent when the connection returns, even after the page was closed. A bar at the bottom of the screen says so while the phone is offline. Starting the next round reads the group from the server, in a transaction, so a page opened from the cache can't overwrite newer changes; offline, the admin is told it needs a connection.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io), or `npm run test:ci` for a single headless run.

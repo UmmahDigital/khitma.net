@@ -241,10 +241,20 @@ export class KhitmaGroupService {
     return forkJoin(groups$);
   }
 
-  startNewSequentialKhitmaCycle(newCycle, newCycleType) {
-    const currentSequentialKhitma = <KhitmaGroup_Sequential>this._currentGroupObj;
-    const ajzaObj = newRoundAjzaObj(nextRoundAjza(currentSequentialKhitma.ajza, newCycleType));
-    updateDoc(this.groupDoc(this._currentGroupObj.id), { cycle: newCycle, ajza: ajzaObj, roundStartedAt: serverTimestamp() });
+  /**
+   * Starts the next round, or goes one back (KHITMA_CYCLE_TYPE.REWIND), from the group as the server has it: a page
+   * opened from the phone's cache, or offline, must not overwrite what others changed meanwhile. Needs a connection;
+   * resolves to the new round's number.
+   */
+  startNewSequentialKhitmaCycle(groupId: string, newCycleType: number): Promise<number> {
+    const ref = this.groupDoc(groupId);
+    return runTransaction(this.db, async (transaction) => {
+      const data: any = (await transaction.get(ref)).data();
+      const ajza: Juz[] = Array.isArray(data.ajza) ? data.ajza : KhitmaGroup_Sequential.convertAjzaToArray(data.ajza);
+      const cycle = newCycleType === KHITMA_CYCLE_TYPE.REWIND ? Math.max(0, (data.cycle || 0) - 1) : (data.cycle || 0) + 1;
+      transaction.update(ref, { cycle, ajza: newRoundAjzaObj(nextRoundAjza(ajza, newCycleType)), roundStartedAt: serverTimestamp() });
+      return cycle;
+    });
   }
 
   /** Repeats the khitma on a rhythm (see schedule.ts), or stops repeating it (null); `startAt` sets the first round. */

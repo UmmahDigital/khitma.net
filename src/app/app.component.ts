@@ -30,6 +30,9 @@ export class AppComponent {
   showCelebration = false;
   showLang = false;
 
+  // Without a connection, changes are kept on the phone and sent later (firestore.ts); the bar says so.
+  isOffline = !navigator.onLine;
+
   constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router,
     private notificationsService: NotificationsService,
     private celebrationService: CelebrationService, public common: CommonService,
@@ -67,6 +70,9 @@ export class AppComponent {
     this.celebrationService.newCelebration().subscribe(() => {
       this.celebrate();
     });
+
+    window.addEventListener('online', () => (this.isOffline = false));
+    window.addEventListener('offline', () => (this.isOffline = true));
 
   }
 
