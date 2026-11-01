@@ -45,6 +45,8 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `npm run build:prod` for a production build. The build artifacts will be stored in `dist/khitma`, which Firebase Hosting serves.
 
+The Firebase SDK stays on version 11: version 12 and later add about 50 kB to every first visit (transferred), for Firestore features the app doesn't use. Check a new major against `.browserslistrc` the way the README describes for Angular (the old-browser project and a real Chromium 79).
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io), or `npm run test:ci` for a single headless run.
