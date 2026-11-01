@@ -1,4 +1,5 @@
 import { Juz, JUZ_STATUS } from './entities/entities';
+import { intlLocale } from './languages';
 
 // Khitmas that repeat on a rhythm (every Friday, every day, on the 1st of each month, or after each completion) start
 // their next round by themselves: the first member to open the group once it's due starts it, inside a Firestore
@@ -103,7 +104,7 @@ export function ruleText(schedule: RoundSchedule, translation: any, lang: string
     default: {
       const weekday = schedule.weekday ?? FRIDAY;
       // 2026-03-01 was a Sunday (weekday 0).
-      const day = lang === 'ar' ? ARABIC_DAYS[weekday] : new Date(2026, 2, 1 + weekday).toLocaleDateString(lang, { weekday: 'long' });
+      const day = lang === 'ar' ? ARABIC_DAYS[weekday] : new Date(2026, 2, 1 + weekday).toLocaleDateString(intlLocale(lang), { weekday: 'long' });
       return `${t.week || 'كل أسبوع، يوم:'} ${day}`;
     }
   }
@@ -126,6 +127,6 @@ export function repeatText(group: SchedulableGroup & { nextRoundAt?: { toDate?()
   const when =
     lang === 'ar'
       ? `يوم ${ARABIC_DAYS[at.getDay()]} ${at.getDate()}/${at.getMonth() + 1}`
-      : at.toLocaleDateString(lang, { weekday: 'long', day: 'numeric', month: 'numeric' });
+      : at.toLocaleDateString(intlLocale(lang), { weekday: 'long', day: 'numeric', month: 'numeric' });
   return (t.nextAt || 'تبدأ الختمة التالية تلقائيًا {when}').replace('{when}', when);
 }

@@ -4,12 +4,13 @@ import { join } from 'node:path';
 import { joinedGroups, openApp, OUTSIDE_RAMADAN, sharedPayloads } from '../support/app';
 import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtures';
 
-// Arabic is the source; English, French, German and Spanish come from src/assets/translate. A key missing from a
-// file shows up as the key itself ("me.archive") wherever the [translate] directive uses it, so these checks keep
-// the five files in step, and the screens free of Arabic interface text in the other languages.
+// Arabic is the source; the other nine languages come from src/assets/translate (tools/i18n/check.mjs checks one
+// file). A key missing from a file shows up as the key itself ("me.archive") wherever the [translate] directive uses
+// it, so these checks keep the files in step, and the screens free of Arabic interface text in the other languages.
 
-const LANGS = ['ar', 'en', 'fr', 'de', 'es'] as const;
-const TRANSLATED = ['en', 'fr', 'de', 'es'] as const;
+const LANGS = ['ar', 'en', 'fr', 'de', 'es', 'ur', 'id', 'ms', 'tr', 'bn'] as const;
+// Languages written without Arabic letters: any left in them is untranslated text. Urdu is checked apart.
+const TRANSLATED = ['en', 'fr', 'de', 'es', 'id', 'ms', 'tr', 'bn'] as const;
 // Sentences Arabic builds in code (for its plural forms), so only the other languages have them.
 const ONLY_TRANSLATED = new Set(['referral.joined', 'referral.read', 'referral.started']);
 // Arabic quotes the hadith itself; the other languages add its meaning.
@@ -47,12 +48,12 @@ function templateKeys(dir = join(__dirname, '../../src/app'), keys = new Set<str
 }
 
 test.describe('translation files', () => {
-  test('every key the pages use is in all five languages', () => {
+  test('every key the pages use is in every language', () => {
     const missing = [...templateKeys()].flatMap((key) => LANGS.filter((lang) => !(key in files[lang])).map((lang) => `${lang}: ${key}`));
     expect(missing).toEqual([]);
   });
 
-  test('the five languages have the same keys', () => {
+  test('the languages have the same keys', () => {
     const all = new Set(LANGS.flatMap((lang) => Object.keys(files[lang])));
     const missing = [...all].flatMap((key) =>
       LANGS.filter((lang) => !(key in files[lang]) && !(lang === 'ar' && ONLY_TRANSLATED.has(key))).map((lang) => `${lang}: ${key}`)
@@ -76,6 +77,18 @@ test.describe('translation files', () => {
     }
     expect(problems).toEqual([]);
   });
+
+  test('Urdu keeps the placeholders, and isn’t the Arabic text copied', () => {
+    const problems: string[] = [];
+    for (const [key, english] of Object.entries(files.en)) {
+      const value = files.ur[key];
+      if (typeof value !== 'string') continue;
+      if (placeholders(value) !== placeholders(english)) problems.push(`ur ${key}: "${placeholders(value)}" instead of "${placeholders(english)}"`);
+      if (!value.trim()) problems.push(`ur ${key}: empty`);
+      if (value.length > 15 && value === files.ar[key]) problems.push(`ur ${key}: the Arabic text`);
+    }
+    expect(problems).toEqual([]);
+  });
 });
 
 /** Arabic, or translation keys, in the page's text; quoted Arabic (marked lang="ar", like the guides' titles) aside. */
@@ -91,6 +104,41 @@ async function untranslatedTexts(page: Page): Promise<string[]> {
     return found;
   });
 }
+
+test.describe('the app in the languages added in 2026', () => {
+  let groupId: string;
+
+  test.beforeAll(async () => {
+    groupId = newGroupId('new-languages');
+    await createSequentialGroup(groupId, {
+      title: 'Family khitma',
+      author: 'Ahmad',
+      assigned: { 1: { owner: 'Sara', status: JUZ_STATUS.DONE }, 2: { owner: 'Omar', status: JUZ_STATUS.BOOKED } },
+    });
+  });
+
+  for (const lang of ['ur', 'id', 'ms', 'tr', 'bn']) {
+    test(`${lang}: no ${lang === 'ur' ? 'translation keys' : 'Arabic interface text'} on the home, join and group pages`, async ({ page }) => {
+      await openApp(page, '/', { storage: { lng: lang, lastRecievedNotificationId: '2' }, now: OUTSIDE_RAMADAN });
+      await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+      const check = async () => {
+        const texts = await untranslatedTexts(page);
+        // Urdu is written in Arabic letters: only keys left as they are ("me.archive") give it away.
+        return lang === 'ur' ? texts.filter((text) => /^[a-z][A-Za-z]*(\.[A-Za-z_]+)+$/.test(text)) : texts;
+      };
+      await expect.poll(check).toEqual([]);
+      await page.goto(`/group/${groupId}`);
+      await expect(page.getByRole('button', { name: files[lang]['gJoin.join'] as string })).toBeVisible();
+      await expect.poll(check).toEqual([]);
+      await page.evaluate((id) => {
+        localStorage.setItem('groups', JSON.stringify({ [id]: { isJoined: true, username: 'Sara', joinTimestamp: 1_700_000_000_000 } }));
+      }, groupId);
+      await page.goto(`/group/${groupId}`);
+      await expect(page.locator('app-juz-grid app-juz-toggle')).toHaveCount(30);
+      await expect.poll(check).toEqual([]);
+    });
+  }
+});
 
 test.describe('the app in English', () => {
   // Names and titles in Latin letters, so any Arabic left on a screen is the app's own text.

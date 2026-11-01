@@ -39,7 +39,9 @@
               "src/robots.txt",
               "src/sitemap.xml",
               "src/llms.txt",
+              "src/1225c1545f69fa71487f15a8629dcabb.txt",
               { "glob": "**/*", "input": "src/guide", "output": "guide" },
+              { "glob": "**/*", "input": "src/landing", "output": "/" },
               "src/firebase-messaging-sw.js"
             ],
             "styles": [

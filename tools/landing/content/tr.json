@@ -1,0 +1,74 @@
+{
+  "lang": "tr",
+  "locale": "tr_TR",
+  "title": "Khitma.net: Kur’an’ı birlikte hatmedin, ücretsiz toplu hatim",
+  "description": "Ücretsiz bir online toplu hatim başlatın ve bağlantısını WhatsApp’ta paylaşın: herkes 30 cüzden birini seçip okur, Kur’an hatmedilene kadar ilerlemeyi birlikte takip edersiniz. Üye olmak da bir şey yüklemek de gerekmez.",
+  "h1": "Online toplu hatimle Kur’an’ı birlikte hatmedin",
+  "lead": "Khitma.net, toplu hatimler için ücretsiz bir web uygulamasıdır. Bir hatim başlatın, bağlantısını ailenizle ve arkadaşlarınızla paylaşın; herkes okumak için bir cüz seçsin. Hatim tamamlanana kadar herkes hangi cüzlerin okunduğunu, hangilerinin okunmakta olduğunu ve hangilerinin hâlâ boşta olduğunu görür.",
+  "start": "Hatim başlat",
+  "startRecurring": "Düzenli hatim grubu oluştur",
+  "howTitle": "Nasıl çalışır?",
+  "steps": [
+    "Bir hatim başlatın: bir başlık seçin ve adınızı yazın. Vefat eden biri için, hasta biri için, Ramazan için ya da herhangi bir niyetle.",
+    "Daveti bir WhatsApp grubunda paylaşın ya da yanınızdakilerin QR kodunu okutmasını sağlayın.",
+    "Herkes bağlantıyı açar, adını yazar ve 30 cüzden birini seçer. Üye olmak da bir şey yüklemek de gerekmez.",
+    "Okuduktan sonra “Cüzümü bitirdim” düğmesine dokunur. Hatim tamamlanana kadar herkes ilerlemeyi görür."
+  ],
+  "featuresTitle": "Birlikte okumak için tasarlandı",
+  "features": [
+    {
+      "title": "Vefat eden biri için",
+      "text": "Hatmin başlığı onun için hazır olarak yazılır; hatim tamamlandığında da vefat eden için dua, herkesin okuyabilmesi için ekranda belirir."
+    },
+    {
+      "title": "Düzenli hatimler",
+      "text": "Bir grup her gün, her cuma ya da her ay kendiliğinden yeni bir hatme başlayabilir; her üyeye kendi cüzünden sonraki cüz verilir."
+    },
+    {
+      "title": "Kimse unutulmaz",
+      "text": "Aldığınız cüz için takviminizde bir hatırlatıcı, hâlâ boşta olan cüzler için de yardım isteyen hazır bir mesaj."
+    },
+    {
+      "title": "Aynı yerde, bir arada",
+      "text": "Taziye evinde ya da bir buluşmada hatmi, okutulacak bir QR koduyla büyük ekranda gösterin ve cüzlerin dolmasını izleyin."
+    },
+    {
+      "title": "Her telefonda",
+      "text": "Tarayıcıda, eski telefonlarda da çalışır; büyük yazı ve karanlık mod vardır. Daha önce açtığınız gruplar internet olmadan da açılır."
+    },
+    {
+      "title": "Kendi dilinizde",
+      "text": "Arapça, İngilizce, Fransızca, İspanyolca, Almanca, Urduca, Endonezce, Malayca, Türkçe ve Bengalce."
+    }
+  ],
+  "faqTitle": "Sık sorulan sorular",
+  "faq": [
+    {
+      "q": "Hatim nedir?",
+      "a": "Hatim (Arapçada khitma), Kur’an-ı Kerim’in baştan sona eksiksiz okunmasıdır. Toplu hatimde cüz dağıtımı yapılır: Kur’an’ın 30 bölümü, yani 30 cüz, katılımcılar arasında paylaştırılır; böylece grup Kur’an’ın tamamını birlikte okumuş olur."
+    },
+    {
+      "q": "Khitma.net ücretsiz mi?",
+      "a": "Evet, tamamen ücretsiz. Katılımcıların üye olmasına ya da uygulama yüklemesine gerek yok: bağlantıyı açıp adlarını yazmaları yeterli."
+    },
+    {
+      "q": "Toplu hatim ne kadar sürer?",
+      "a": "Bu, gruba bağlı: her biri bir cüz okuyan 30 kişiyle bir hatim bir günde tamamlanabilir. Hatmi başlatırken bir bitiş tarihi seçebilirsiniz: üç gün, bir hafta, cumaya kadar ya da başka bir tarih."
+    },
+    {
+      "q": "Biri cüz alıp okumazsa ne olur?",
+      "a": "Grup yöneticisi, bir hafta ya da daha önce alınmış cüzleri başkaları alabilsin diye serbest bırakabilir; bir cüzü başkası adına okundu olarak da işaretleyebilir."
+    },
+    {
+      "q": "Hatim grubumuz Kur’an’ı her hafta hatmedebilir mi?",
+      "a": "Evet. Düzenli bir hatim her gün, her cuma ya da her ay kendiliğinden yeniden başlayabilir; her üyeye okuduğu cüzden sonraki cüz otomatik olarak verilir."
+    },
+    {
+      "q": "Hatmi kimler görebilir?",
+      "a": "Yalnızca bağlantısına sahip olanlar. Hatim sayfaları arama motorlarının dışında tutulur, çünkü başlıklarında çoğu zaman sevdiklerimizin adları yer alır."
+    }
+  ],
+  "about": "Khitma.net, ilk kod satırlarının yazıldığı mübarek Mescid-i Aksa’da doğdu ve 2021’den bu yana on binlerce toplu hatimde kullanıldı.",
+  "openApp": "Khitma.net’i aç",
+  "otherLanguages": "Diğer diller"
+}

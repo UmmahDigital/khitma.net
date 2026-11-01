@@ -167,6 +167,18 @@ test.describe('screenshots of the current design', () => {
     await snap(page, 'home-english');
   });
 
+  // Urdu: Arabic letters (Markazi Text has its own), right to left. Bengali: the phone's own font, as Markazi Text
+  // has no Bengali letters.
+  for (const [lang, name] of [['ur', 'home-urdu'], ['bn', 'home-bengali']] as const) {
+    test(`home: ${name.replace('home-', '')}`, async ({ page }) => {
+      await page.setViewportSize(PHONE);
+      await openApp(page, '/', { storage: { lng: lang }, now: OUTSIDE_RAMADAN });
+      await expect(page.locator('html')).toHaveAttribute('lang', lang);
+      await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+      await snap(page, name);
+    });
+  }
+
   for (const [name, path] of [
     ['create-recurring', '/new?type=recurring'],
     ['create-onetime', '/new?type=onetime'],

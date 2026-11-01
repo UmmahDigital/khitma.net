@@ -157,6 +157,7 @@
     "allTitle": "Every juz is taken",
     "allRead": "But you can share in the reward by reading juz {juz}.",
     "allAnother": "Another juz",
+    "allReadButton": "Read juz {juz}",
     "toggle": "Show the list of names",
     "dialog": "Free juz {juz}?",
     "dialog2Q": "Did you finish reading juz {juz}?",

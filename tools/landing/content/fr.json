@@ -1,0 +1,74 @@
+{
+  "lang": "fr",
+  "locale": "fr_FR",
+  "title": "Khitma.net : faites le khatm du Coran ensemble, gratuitement",
+  "description": "Lancez gratuitement une khitma collective (khatma) et partagez son lien sur WhatsApp : chacun choisit l’un des 30 juz à lire, et vous suivez ensemble l’avancement jusqu’à ce que tout le Coran soit lu. Sans compte ni installation.",
+  "h1": "Terminez le Coran ensemble",
+  "lead": "Khitma.net est une application web gratuite pour la lecture collective du Coran. Lancez une khitma, partagez son lien avec vos proches et répartissez-vous les juz : chacun choisit celui qu’il lira. Tout le monde voit ce qui a été lu, ce qui est en lecture et ce qui reste libre, jusqu’à ce que la khitma soit terminée.",
+  "start": "Lancer une khitma",
+  "startRecurring": "Créer un groupe qui termine régulièrement le Coran",
+  "howTitle": "Comment ça marche",
+  "steps": [
+    "Lancez une khitma : donnez-lui un titre et écrivez votre nom. Pour un défunt, pour la guérison d’un malade, pour le Ramadan ou pour toute autre intention.",
+    "Partagez l’invitation dans un groupe WhatsApp, ou laissez les personnes autour de vous scanner son code QR.",
+    "Chacun ouvre le lien, écrit son nom et choisit l’un des 30 juz. Sans compte ni installation.",
+    "Une fois son juz lu, chacun appuie sur « J’ai terminé le juz ». Tout le monde voit l’avancement jusqu’à l’achèvement de la khitma."
+  ],
+  "featuresTitle": "Pensé pour lire ensemble",
+  "features": [
+    {
+      "title": "Pour un défunt",
+      "text": "Le titre de la khitma est rédigé à sa mémoire et, une fois celle-ci terminée, l’invocation pour le défunt s’affiche pour que chacun la récite."
+    },
+    {
+      "title": "Des khitmas qui se répètent",
+      "text": "Dans un groupe, une nouvelle khitma peut commencer d’elle-même chaque jour, chaque vendredi ou chaque mois, et chaque membre reçoit le juz qui suit le sien."
+    },
+    {
+      "title": "Personne n’est oublié",
+      "text": "Un rappel dans votre agenda pour le juz que vous avez pris, et un message tout prêt pour demander de l’aide pour les juz encore libres."
+    },
+    {
+      "title": "Ensemble, au même endroit",
+      "text": "Lors des condoléances ou d’un rassemblement, affichez la khitma sur un grand écran avec un code QR à scanner, et regardez les juz se remplir."
+    },
+    {
+      "title": "Sur tous les téléphones",
+      "text": "L’application fonctionne dans le navigateur, y compris sur les anciens téléphones, avec un texte agrandi et un mode sombre, et les groupes déjà consultés s’ouvrent même sans connexion."
+    },
+    {
+      "title": "Dans votre langue",
+      "text": "Arabe, anglais, français, espagnol, allemand, ourdou, indonésien, malais, turc et bengali."
+    }
+  ],
+  "faqTitle": "Questions fréquentes",
+  "faq": [
+    {
+      "q": "Qu’est-ce qu’une khitma ?",
+      "a": "Une khitma (on dit aussi khatma ou khatm) est une lecture complète du Coran, du début à la fin. Dans une khitma collective, les 30 parties du Coran (ajza, au singulier juz) sont réparties entre les participants, pour qu’ensemble le groupe termine tout le Coran."
+    },
+    {
+      "q": "Khitma.net est-il gratuit ?",
+      "a": "Oui, entièrement gratuit. Les participants n’ont besoin ni de compte ni d’application : ils ouvrent le lien et écrivent leur nom."
+    },
+    {
+      "q": "Combien de temps dure une khitma collective ?",
+      "a": "Cela dépend du groupe : avec 30 personnes qui lisent chacune un juz, une khitma peut être terminée en une journée. En la lançant, vous pouvez choisir une échéance : trois jours, une semaine, d’ici vendredi ou une autre date."
+    },
+    {
+      "q": "Et si quelqu’un prend un juz sans le lire ?",
+      "a": "Le responsable du groupe peut libérer les juz réservés depuis une semaine ou plus, pour que d’autres puissent les prendre, et marquer un juz comme lu à la place de quelqu’un."
+    },
+    {
+      "q": "Notre groupe peut-il terminer le Coran chaque semaine ?",
+      "a": "Oui. Une khitma régulière peut recommencer d’elle-même chaque jour, chaque vendredi ou chaque mois, et chaque membre reçoit automatiquement le juz qui suit celui qu’il a lu."
+    },
+    {
+      "q": "Qui peut voir la khitma ?",
+      "a": "Seules les personnes qui ont son lien. Les pages des khitmas sont exclues des moteurs de recherche, car leurs titres portent souvent le nom d’êtres chers."
+    }
+  ],
+  "about": "Khitma.net est né à la mosquée bénie Al-Aqsa, où ses premières lignes de code ont été écrites, et a servi depuis 2021 à des dizaines de milliers de khitmas collectives.",
+  "openApp": "Ouvrir Khitma.net",
+  "otherLanguages": "Autres langues"
+}

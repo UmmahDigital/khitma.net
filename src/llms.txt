@@ -1,29 +1,45 @@
 # Khitma.net (ختمة.نت)
 
-> A free web app for reading the whole Quran together. Someone creates a group khitma and shares its link, usually in a WhatsApp group. Each participant opens the link, writes their name, picks one of the 30 juz (ajza) to read, and marks it done when finished; everyone sees the progress until the khitma is complete. No account and nothing to install. Arabic by default, also in English, French, Spanish and German.
+> A free web app for reading the whole Quran together. Someone creates a group khitma and shares its link, usually in a WhatsApp group. Each participant opens the link, writes their name, picks one of the 30 juz (ajza) to read, and marks it done when finished; everyone sees the progress until the khitma is complete. No account and nothing to install. Arabic by default, also in English, French, Spanish, German, Urdu, Indonesian, Malay, Turkish and Bengali.
 
-Khitma.net has been used for tens of thousands of group khitmas since 2021, mostly by families and friends in the Arab world and in Muslim communities abroad.
+Khitma.net has been used for tens of thousands of group khitmas since 2021, mostly by families and friends in the Arab world and in Muslim communities abroad. It began at the blessed Al-Aqsa Mosque, where its first lines of code were written.
 
 ## What people use it for
 
-- A khitma for someone who passed away (ختمة عن روح ...): the family shares the link and completes the Quran together, often within a week.
-- A recurring khitma for a group (daily, weekly or monthly): the admin starts the next round with one button, and each member can automatically get the next juz.
+- A khitma for someone who passed away (ختمة عن روح ...): the family shares the link and completes the Quran together, often within a week. The title is written for them, and the supplication for the deceased appears when the khitma is complete.
+- A recurring khitma for a group: it can start again by itself every day, every Friday or on the 1st of each month, and each member automatically gets the juz after the one they read.
 - A khitma during Ramadan, for healing (شفاء), or for a shared intention (نيّة).
+- Reading together in one place, such as a house of condolence: people scan a QR code to join, and the khitma can be shown on a big screen with every juz and its reader, updated as people book and finish.
 
 ## How it works
 
-1. Create a khitma at https://khitma.net/new: one-time or recurring, with a title and the organiser's name.
-2. Share the invite link. Participants join with their name only.
-3. Each participant books a juz, reads it, and taps "أتممت قراءة جزء" (I finished reading juz …).
-4. The organiser can share a WhatsApp-ready status message, mark juz done on behalf of others, edit who has each juz, and start a new khitma.
+1. Create a khitma at https://khitma.net/new: one-time (optionally with a deadline: three days, a week, by Friday, or a date) or recurring, with a title and the organiser's name.
+2. Share the invite link, or show its QR code. Participants join with their name only.
+3. Each participant books a juz, reads it, and taps "أتممت قراءة جزء" (I finished reading juz …). They can add a reminder for it to their calendar.
+4. The organiser can share a WhatsApp-ready status message or a message asking for help with the free ajza, free ajza booked a week or more ago, mark juz read on behalf of others, edit who has each juz, and start the next khitma.
+5. When every juz is taken, latecomers are offered a juz to read anyway, for the reward, without booking it.
 
-Other group types: "same task" (everyone reads the same portion, e.g. one juz a day) and "page distribution" (the 604 pages are split evenly between members).
+Other group types: "same task" (everyone reads the same portion, e.g. one juz a day) and "page distribution" (the 604 pages are split evenly between members, for large groups).
+
+It works in any modern phone browser, including older phones (iOS 14.5 and later, and Android browsers from Chrome 79 or Samsung Internet 12 on). Groups opened before also open without a connection, and changes made offline are sent when the connection returns. Text size and dark mode follow the reader's choice. Khitma pages are kept out of search engines, because their titles often carry the names of the deceased.
 
 ## Guides (Arabic)
 
+- [All guides](https://khitma.net/guide/)
+- [Frequently asked questions](https://khitma.net/guide/faq/)
 - [A khitma for someone who passed away](https://khitma.net/guide/khitma-for-the-deceased/): organising it with family over WhatsApp, step by step, and the supplication for the deceased.
 - [The group Ramadan khitma](https://khitma.net/guide/ramadan-group-khitma/): one khitma during the month, or a complete khitma every day with 30 people.
 - [Organising a group khitma over WhatsApp](https://khitma.net/guide/whatsapp-group-khitma/): one link instead of copied name lists.
+- [Dividing the Quran among a number of people](https://khitma.net/guide/divide-quran-among-people/): by juz, hizb or page, for any group size.
+- [A weekly family khitma every Friday](https://khitma.net/guide/weekly-family-khitma/): a khitma that repeats by itself, each member moving to the next juz.
+- [A khitma at a house of condolence](https://khitma.net/guide/khitma-at-a-house-of-condolence/): a QR code to join and the khitma on a big screen.
+- [A khitma for someone who is ill](https://khitma.net/guide/khitma-for-healing/): reading and making dua together.
+- [When a group khitma stalls](https://khitma.net/guide/when-a-khitma-stalls/): finishing the last ajza.
+- [How long completing the Quran takes](https://khitma.net/guide/how-long-to-complete-the-quran/): alone and with a group, in a day or a week.
+
+## In other languages
+
+- [English](https://khitma.net/en/), [Français](https://khitma.net/fr/), [Español](https://khitma.net/es/), [Deutsch](https://khitma.net/de/), [اردو](https://khitma.net/ur/), [Bahasa Indonesia](https://khitma.net/id/), [Bahasa Melayu](https://khitma.net/ms/), [Türkçe](https://khitma.net/tr/), [বাংলা](https://khitma.net/bn/)
 
 ## Links
 
@@ -32,3 +48,4 @@ Other group types: "same task" (everyone reads the same portion, e.g. one juz a 
 - [How to use it (Arabic)](https://khitma.net/about)
 - [Read the Quran by juz](https://khitma.net/quran)
 - [The global Al-Aqsa khitma](https://khitma.net/aqsa)
+- [Source code](https://github.com/UmmahDigital/khitma.net)

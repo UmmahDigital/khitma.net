@@ -1,0 +1,74 @@
+{
+  "lang": "id",
+  "locale": "id_ID",
+  "title": "Khitma.net: khataman Al-Qur'an online bersama, gratis",
+  "description": "Buat khataman Al-Qur'an bersama secara gratis dan kirim tautannya lewat WhatsApp untuk membagi juz: setiap orang memilih satu dari 30 juz untuk dibaca, lalu bersama-sama memantau perkembangannya hingga Al-Qur'an khatam. Tanpa akun, tanpa perlu instal aplikasi.",
+  "h1": "Khatam Al-Qur'an bersama",
+  "lead": "Khitma.net adalah aplikasi web gratis untuk khataman Al-Qur'an bersama secara online. Mulai khataman, bagikan tautannya kepada keluarga dan teman, lalu setiap orang mengambil satu juz untuk dibaca. Semua orang bisa melihat juz yang sudah dibaca, yang sedang dibaca, dan yang masih tersedia, hingga khataman selesai.",
+  "start": "Mulai khataman",
+  "startRecurring": "Buat grup yang rutin mengkhatamkan Al-Qur'an",
+  "howTitle": "Cara kerjanya",
+  "steps": [
+    "Mulai khataman: beri judul dan tulis nama Anda. Untuk almarhum atau almarhumah, untuk yang sedang sakit, untuk bulan Ramadan, atau untuk niat apa pun.",
+    "Bagikan undangannya di grup WhatsApp, atau minta orang-orang di sekitar Anda memindai kode QR-nya.",
+    "Setiap orang membuka tautan, menulis namanya, dan memilih satu dari 30 juz. Tanpa akun dan tanpa perlu instal apa pun.",
+    "Setelah selesai membaca, mereka menekan “Selesai membaca juz”. Semua orang bisa melihat perkembangannya hingga khataman selesai."
+  ],
+  "featuresTitle": "Dibuat untuk membaca bersama",
+  "features": [
+    {
+      "title": "Untuk yang telah wafat",
+      "text": "Judul khataman ditulis untuknya, dan saat khataman selesai, doa untuk almarhum atau almarhumah muncul agar dibaca oleh semua orang."
+    },
+    {
+      "title": "Khataman rutin",
+      "text": "Grup bisa memulai khataman baru dengan sendirinya setiap hari (seperti One Day One Juz), setiap Jumat, atau setiap bulan, dan setiap anggota mendapat juz berikutnya."
+    },
+    {
+      "title": "Tak ada yang terlupakan",
+      "text": "Pengingat di kalender untuk juz yang Anda ambil, dan pesan siap kirim untuk meminta bantuan membaca juz yang masih tersedia."
+    },
+    {
+      "title": "Bersama di satu tempat",
+      "text": "Di rumah duka atau saat berkumpul, tampilkan khataman di layar besar dengan kode QR untuk dipindai, lalu saksikan juz demi juz terisi."
+    },
+    {
+      "title": "Di ponsel apa pun",
+      "text": "Berjalan di browser, juga di ponsel lama, dengan teks besar dan mode gelap, dan grup yang pernah Anda buka tetap bisa dibuka meski tanpa koneksi internet."
+    },
+    {
+      "title": "Dalam bahasa Anda",
+      "text": "Bahasa Arab, Inggris, Prancis, Spanyol, Jerman, Urdu, Indonesia, Melayu, Turki, dan Bengali."
+    }
+  ],
+  "faqTitle": "Pertanyaan",
+  "faq": [
+    {
+      "q": "Apa itu khataman Al-Qur'an?",
+      "a": "Khataman (disebut juga khatam atau khotmil Qur'an) adalah membaca Al-Qur'an secara lengkap, dari awal hingga akhir. Dalam khataman bersama, 30 juz Al-Qur'an dibagi di antara para peserta, sehingga bersama-sama mereka mengkhatamkan seluruh Al-Qur'an."
+    },
+    {
+      "q": "Apakah Khitma.net gratis?",
+      "a": "Ya, sepenuhnya gratis. Peserta tidak memerlukan akun atau aplikasi: cukup buka tautannya dan tulis nama."
+    },
+    {
+      "q": "Berapa lama khataman bersama berlangsung?",
+      "a": "Tergantung grupnya: dengan 30 orang yang masing-masing membaca satu juz, khataman bisa selesai dalam sehari. Saat memulai khataman, Anda bisa memilih target selesai: tiga hari, seminggu, hingga hari Jumat, atau tanggal lain."
+    },
+    {
+      "q": "Bagaimana jika seseorang mengambil juz tetapi tidak membacanya?",
+      "a": "Admin grup bisa melepaskan juz yang diambil seminggu lalu atau lebih agar bisa diambil orang lain, dan bisa menandai suatu juz sudah dibaca atas nama seseorang."
+    },
+    {
+      "q": "Bisakah grup kami khatam Al-Qur'an setiap pekan?",
+      "a": "Bisa. Khataman rutin bisa dimulai lagi dengan sendirinya setiap hari, setiap Jumat, atau setiap bulan, dan setiap anggota otomatis mendapat juz setelah juz yang telah dibacanya."
+    },
+    {
+      "q": "Siapa yang bisa melihat khataman?",
+      "a": "Hanya orang yang memiliki tautannya. Halaman khataman tidak dimunculkan di mesin pencari, karena judulnya sering memuat nama orang-orang tercinta."
+    }
+  ],
+  "about": "Khitma.net bermula dari Masjid Al-Aqsa yang diberkahi, tempat baris-baris kode pertamanya ditulis, dan sejak 2021 telah digunakan untuk puluhan ribu khataman bersama.",
+  "openApp": "Buka Khitma.net",
+  "otherLanguages": "Bahasa lain"
+}

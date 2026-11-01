@@ -1,0 +1,72 @@
+{
+  "ur": {
+    "brand": "ختمة.نت",
+    "complete": "اللہ کے فضل سے ختمِ قرآن مکمل ہو گیا",
+    "progress": "30 پاروں میں سے {done} کی تلاوت مکمل",
+    "freeLeft": "{count} ابھی بغیر قاری کے",
+    "invitation": "ایک پارہ لیں اور اجر میں شریک ہوں",
+    "allTaken": "تمام پارے لیے جا چکے ہیں",
+    "join": "ختم میں شامل ہوں",
+    "stop": "۔",
+    "juz": {
+      "one": "پارہ",
+      "other": "پارے"
+    }
+  },
+  "id": {
+    "brand": "Khitma.net",
+    "complete": "Alhamdulillah, khataman telah selesai",
+    "progress": "{done} dari 30 juz sudah dibaca",
+    "freeLeft": "{count} belum ada pembacanya",
+    "invitation": "Ambil satu juz dan ikut meraih pahalanya",
+    "allTaken": "Semua juz sudah diambil",
+    "join": "Ikut khataman",
+    "stop": ".",
+    "juz": {
+      "one": "juz",
+      "other": "juz"
+    }
+  },
+  "ms": {
+    "brand": "Khitma.net",
+    "complete": "Khatam telah selesai dengan kurnia Allah",
+    "progress": "{done} daripada 30 juzuk sudah dibaca",
+    "freeLeft": "{count} masih tiada pembaca",
+    "invitation": "Pilih satu juzuk dan kongsi pahalanya",
+    "allTaken": "Semua juzuk sudah diambil",
+    "join": "Sertai khatam",
+    "stop": ".",
+    "juz": {
+      "one": "juzuk",
+      "other": "juzuk"
+    }
+  },
+  "tr": {
+    "brand": "Khitma.net",
+    "complete": "Allah’ın lütfuyla hatim tamamlandı",
+    "progress": "30 cüzden {done} tanesi okundu",
+    "freeLeft": "{count} hâlâ okuyanını bekliyor",
+    "invitation": "Bir cüz seçin, sevaba ortak olun",
+    "allTaken": "Tüm cüzler alındı",
+    "join": "Hatme katıl",
+    "stop": ".",
+    "juz": {
+      "one": "cüz",
+      "other": "cüz"
+    }
+  },
+  "bn": {
+    "brand": "Khitma.net",
+    "complete": "আল্লাহর রহমতে খতম সম্পন্ন হয়েছে",
+    "progress": "30 পারার মধ্যে {done} পারা পড়া হয়েছে",
+    "freeLeft": "{count} এখনো কেউ নেয়নি",
+    "invitation": "একটি পারা বেছে নিন, সওয়াবে শরিক হোন",
+    "allTaken": "সব পারা নেওয়া হয়ে গেছে",
+    "join": "খতমে যোগ দিন",
+    "stop": "।",
+    "juz": {
+      "one": "পারা",
+      "other": "পারা"
+    }
+  }
+}

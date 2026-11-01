@@ -18,6 +18,7 @@ import { ajzaCount, fill, inviteMessage } from '../../../share-messages';
 import { staleBookings } from '../../../booking-age';
 import { isRoundDue, RoundSchedule } from '../../../schedule';
 import { startLikeParams } from '../../../start-like';
+import { arabicComma } from '../../../languages';
 import { ScheduleComponent } from '../../../dialog/schedule/schedule.component';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
@@ -195,6 +196,11 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
 
   shareInviteMsg() {
     this.sharing.share((this.common.translation.gDashboard?.invite + this.group.title), this.inviteMsg, 'invite', this.group.id);
+  }
+
+  /** «السلام عليكم يا سارة،»: Arabic and Urdu end the greeting with their comma. */
+  get greetingComma(): string {
+    return arabicComma(this.common.currentLanguage) ? '،' : '';
   }
 
   /** «ابدأ ختمة مثلها» in the members' menu: a khitma like this one, without its names (start-like.ts). */

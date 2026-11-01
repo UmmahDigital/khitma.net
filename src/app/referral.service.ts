@@ -12,6 +12,7 @@ import {
   RefStats,
   withRef,
 } from './referral';
+import { appLanguage, withLanguageHint } from './languages';
 
 export type ReferralCredit = 'joined' | 'read' | 'started';
 
@@ -40,12 +41,12 @@ export class ReferralService {
 
   /** The group's link, carrying this phone's reference. */
   groupUrl(groupId: string): string {
-    return withRef(location.origin + '/group/' + groupId, this.myCode);
+    return withLanguageHint(withRef(location.origin + '/group/' + groupId, this.myCode), appLanguage());
   }
 
   /** The home page, carrying this phone's reference: for inviting people to start khitmas of their own. */
   homeUrl(): string {
-    return withRef(location.origin + '/', this.myCode);
+    return withLanguageHint(withRef(location.origin + '/', this.myCode), appLanguage());
   }
 
   /** Called on every share: from now on, this phone looks up what its invitations brought about. */

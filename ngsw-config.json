@@ -1,7 +1,12 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
-  "navigationUrls": ["/**", "!/**/*.*", "!/**/*__*", "!/**/*__*/**", "!/guide/**"],
+  "navigationUrls": [
+    "/**", "!/**/*.*", "!/**/*__*", "!/**/*__*/**",
+    "!/guide", "!/guide/**",
+    "!/en", "!/en/**", "!/fr", "!/fr/**", "!/es", "!/es/**", "!/de", "!/de/**", "!/ur", "!/ur/**",
+    "!/id", "!/id/**", "!/ms", "!/ms/**", "!/tr", "!/tr/**", "!/bn", "!/bn/**"
+  ],
   "assetGroups": [
     {
       "name": "app",

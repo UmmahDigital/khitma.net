@@ -157,6 +157,7 @@
     "allTitle": "Alle Juz sind vergeben",
     "allRead": "Aber du kannst am Lohn teilhaben, indem du Juz {juz} liest.",
     "allAnother": "Ein anderer Juz",
+    "allReadButton": "Juz {juz} lesen",
     "toggle": "Namensliste anzeigen",
     "dialog": "Juz {juz} freigeben?",
     "dialog2Q": "Hast du Juz {juz} zu Ende gelesen?",
