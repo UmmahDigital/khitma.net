@@ -238,7 +238,7 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(PHONE);
     await openAsMember(page, 'visual-stale', ADMIN);
     await page.locator('app-juz-grid app-juz-toggle').nth(1).click();
-    await expect(page.getByRole('button', { name: 'تمّت قراءته' })).toBeVisible();
+    await expect(page.getByRole('dialog').getByRole('button', { name: 'تمّت قراءته' })).toBeVisible();
     // The dialog focuses its first button; drop focus so the focus halo doesn't flicker between runs.
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await settle(page);

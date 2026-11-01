@@ -1,7 +1,15 @@
 <span class="juz-toggle noselect" [ngClass]="getCssClasses()">
     {{juz.index + 1}}
+    @if (stateName === 'booked') {
+        <!-- Someone is reading it: a mark, so "booked" never depends on telling yellow from red. -->
+        <svg class="juz-mark juz-booked-mark" viewBox="0 0 18 18" aria-hidden="true">
+            <circle cx="9" cy="9" r="9"></circle>
+            <circle class="glyph" cx="9" cy="6.8" r="2.6"></circle>
+            <path class="glyph-line" d="M4.4 13.8c.9-2.1 2.6-3.2 4.6-3.2s3.7 1.1 4.6 3.2"></path>
+        </svg>
+    }
     @if (stateName === 'done') {
-        <svg class="juz-check" viewBox="0 0 18 18" aria-hidden="true">
+        <svg class="juz-mark juz-check" viewBox="0 0 18 18" aria-hidden="true">
             <circle cx="9" cy="9" r="9"></circle>
             <path d="M5 9.3l2.7 2.7L13 6.5"></path>
         </svg>

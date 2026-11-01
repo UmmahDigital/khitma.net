@@ -334,7 +334,13 @@
     "notRead": "Not read yet…",
     "select": "Tap to choose this juz",
     "responsible": "For the group admin:",
-    "intro": "Tap a name to edit it: type the name of another current member or of a new member, then press the save button that appears after the change."
+    "intro": "Tap a name to edit it: type the name of another current member or of a new member, then press the save button that appears after the change.",
+    "a11yFree": "Juz {n}, free",
+    "a11yBooked": "Juz {n}, booked by {name}",
+    "a11yBookedNoName": "Juz {n}, booked",
+    "a11yMine": "Juz {n}, booked for you",
+    "a11yDone": "Juz {n}, read ({name})",
+    "a11yDoneNoName": "Juz {n}, read"
   },
   "khitma": {
     "done": "The khitma is complete",

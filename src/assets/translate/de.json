@@ -334,7 +334,13 @@
     "notRead": "Noch nicht gelesen …",
     "select": "Tippe, um diesen Juz zu wählen",
     "responsible": "Für den Admin der Gruppe:",
-    "intro": "Tippe auf einen Namen, um ihn zu ändern: Gib den Namen eines anderen oder eines neuen Mitglieds ein und tippe dann auf die Speichern-Schaltfläche, die nach der Änderung erscheint."
+    "intro": "Tippe auf einen Namen, um ihn zu ändern: Gib den Namen eines anderen oder eines neuen Mitglieds ein und tippe dann auf die Speichern-Schaltfläche, die nach der Änderung erscheint.",
+    "a11yFree": "Juz {n}, frei",
+    "a11yBooked": "Juz {n}, gebucht von {name}",
+    "a11yBookedNoName": "Juz {n}, gebucht",
+    "a11yMine": "Juz {n}, für dich gebucht",
+    "a11yDone": "Juz {n}, gelesen ({name})",
+    "a11yDoneNoName": "Juz {n}, gelesen"
   },
   "khitma": {
     "done": "Die Khitma ist vollendet",

@@ -168,7 +168,7 @@ test.describe('sequential group: admin', () => {
     expect(await storedJuz(groupId, 3)).toEqual({ owner: 'خالد', status: BOOKED });
 
     await juzToggle(page, 3).click();
-    await page.getByRole('button', { name: 'تمّت قراءته' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'تمّت قراءته' }).click();
     await expect.poll(() => storedJuz(groupId, 3)).toEqual({ owner: 'خالد', status: DONE });
 
     await juzToggle(page, 6).click();

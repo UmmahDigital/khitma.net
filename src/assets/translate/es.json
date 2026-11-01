@@ -334,7 +334,13 @@
     "notRead": "Aún no se ha leído…",
     "select": "Toca para elegir este juz",
     "responsible": "Para el administrador del grupo:",
-    "intro": "Toca un nombre para editarlo: escribe el nombre de otro miembro o de uno nuevo y luego pulsa el botón de guardar que aparece tras el cambio."
+    "intro": "Toca un nombre para editarlo: escribe el nombre de otro miembro o de uno nuevo y luego pulsa el botón de guardar que aparece tras el cambio.",
+    "a11yFree": "Juz {n}, libre",
+    "a11yBooked": "Juz {n}, reservado por {name}",
+    "a11yBookedNoName": "Juz {n}, reservado",
+    "a11yMine": "Juz {n}, reservado para ti",
+    "a11yDone": "Juz {n}, leído ({name})",
+    "a11yDoneNoName": "Juz {n}, leído"
   },
   "khitma": {
     "done": "La khitma se completó",
