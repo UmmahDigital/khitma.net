@@ -20,7 +20,7 @@ async function createGroup(page: Page, choose: () => Promise<void>) {
 
 test.describe('deadline', () => {
   test('choosing Friday sets the date, and the group page counts down to it', async ({ page }) => {
-    const groupId = await createGroup(page, () => page.getByRole('radio', { name: 'الجمعة' }).click());
+    const groupId = await createGroup(page, () => page.getByRole('button', { name: 'الجمعة', exact: true }).click());
     expect(await getDoc(`groups/${groupId}`)).toMatchObject({ targetAt: '2026-03-06', targetDate: 'الجمعة 6/3/2026' });
 
     await page.getByRole('link', { name: 'الانتقال لصفحة مجموعة الختمة' }).click();
@@ -59,7 +59,7 @@ test.describe('deadline', () => {
     const question = page.getByRole('heading', { name: 'متى تريدون إتمام الختمة؟' });
     await openApp(page, '/new', { freezeTime: true });
     await page.getByRole('radio', { name: 'ختمة لمرّة واحدة' }).click();
-    await page.getByRole('radio', { name: 'أسبوع' }).click();
+    await page.getByRole('button', { name: 'أسبوع', exact: true }).click();
     await page.getByRole('radio', { name: 'ختمة دوريّة' }).click();
     await expect(question).toHaveCount(0);
 
