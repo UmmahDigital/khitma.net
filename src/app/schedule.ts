@@ -67,6 +67,48 @@ export function isRoundDue(group: SchedulableGroup, now: number): boolean {
 
 const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
+/** A schedule in a link («ابدأ ختمة مثلها», start-like.ts): every=week&weekday=5&cycle=1. */
+export function scheduleParams(schedule: RoundSchedule): Record<string, string> {
+  return {
+    every: schedule.every,
+    ...(schedule.every === 'week' ? { weekday: String(schedule.weekday ?? FRIDAY) } : {}),
+    cycle: String(schedule.cycleType),
+  };
+}
+
+/** The schedule a link asks for, or null when it asks for none or for something unknown. */
+export function scheduleFromParams(params: Record<string, string | undefined>): RoundSchedule | null {
+  const every = params['every'] as RepeatEvery;
+  const cycleType = Number(params['cycle']);
+  if (!['day', 'week', 'month', 'completion'].includes(every) || !Number.isInteger(cycleType) || cycleType < 1 || cycleType > 4) {
+    return null;
+  }
+  if (every !== 'week') {
+    return { every, cycleType };
+  }
+  const weekday = Number(params['weekday'] ?? FRIDAY);
+  return Number.isInteger(weekday) && weekday >= 0 && weekday <= 6 ? { every, weekday, cycleType } : null;
+}
+
+/** "كل يوم", "كل أسبوع، يوم: الجمعة", "أوّل كل شهر", "بعد اكتمال كل ختمة". */
+export function ruleText(schedule: RoundSchedule, translation: any, lang: string): string {
+  const t = translation?.schedule ?? {};
+  switch (schedule.every) {
+    case 'day':
+      return t.day || 'كل يوم';
+    case 'month':
+      return t.month || 'أوّل كل شهر';
+    case 'completion':
+      return t.completion || 'بعد اكتمال كل ختمة';
+    default: {
+      const weekday = schedule.weekday ?? FRIDAY;
+      // 2026-03-01 was a Sunday (weekday 0).
+      const day = lang === 'ar' ? ARABIC_DAYS[weekday] : new Date(2026, 2, 1 + weekday).toLocaleDateString(lang, { weekday: 'long' });
+      return `${t.week || 'كل أسبوع، يوم:'} ${day}`;
+    }
+  }
+}
+
 /** "تبدأ الختمة التالية تلقائيًا يوم الجمعة 6/3", or "… بعد اكتمال هذه الختمة"; null for khitmas that don't repeat. */
 export function repeatText(group: SchedulableGroup & { nextRoundAt?: { toDate?(): Date } | null }, translation: any, lang: string): string | null {
   const schedule = group?.schedule;

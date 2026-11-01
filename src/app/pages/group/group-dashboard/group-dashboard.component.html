@@ -15,6 +15,11 @@
         ><span [translate]="'gDashboard.shareLink'">مشاركة رابط المجموعة</span>
       </button>
 
+      <a mat-menu-item routerLink="/new" [queryParams]="likeParams" (click)="startLikeClicked()">
+        <mat-icon>group_add</mat-icon>
+        <span [translate]="'startLike.button'">ابدأ ختمة مثلها</span>
+      </a>
+
       @if (!isAdmin) {
         <button mat-menu-item (click)="leaveGroup()">
           <mat-icon>exit_to_app</mat-icon>

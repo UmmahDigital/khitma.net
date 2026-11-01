@@ -25,8 +25,10 @@
     "ok": "Lancer"
   },
   "completion": {
-    "startOwn": "Voulez-vous lancer une khitma collective pour un être cher ?",
-    "startOwnButton": "Lancer une nouvelle khitma"
+    "startOwn": "Voulez-vous lancer une khitma collective pour un être cher ?"
+  },
+  "startLike": {
+    "button": "En commencer une pareille"
   },
   "deadline": {
     "question": "Quand voulez-vous terminer la khitma ?",
@@ -103,7 +105,8 @@
     "partsB": "Répartir des juz",
     "distr": "Les membres rejoignent d’abord le groupe, puis vous lancez la khitma et les pages du mushaf sont réparties équitablement entre eux. Idéal pour les grands groupes : à 60 personnes, chacune lit une dizaine de pages.",
     "distrNo": "Chaque membre lit un juz différent, et ensemble le groupe termine tout le Coran.",
-    "recurringNoDesc": "Pour les khitmas familiales à la mémoire des défunts (qu’Allah leur fasse miséricorde), lors des condoléances et des occasions particulières."
+    "recurringNoDesc": "Pour les khitmas familiales à la mémoire des défunts (qu’Allah leur fasse miséricorde), lors des condoléances et des occasions particulières.",
+    "noRepeat": "Sans répétition"
   },
   "gKhitma": {
     "header": "Khitma du Ramadan de la mosquée Al-Aqsa",
@@ -289,6 +292,13 @@
     "saved": "Répétition enregistrée",
     "nextAt": "La prochaine khitma commence automatiquement le {when}",
     "nextAfterCompletion": "La prochaine khitma commence automatiquement une fois celle-ci terminée"
+  },
+  "repeat": {
+    "title": "Allez-vous répéter la khitma ?",
+    "text": "Une nouvelle khitma commence d’elle-même, et chaque membre reçoit le juz qui suit le sien.",
+    "weekly": "Chaque vendredi",
+    "no": "Non, merci",
+    "done": "La khitma se répétera d’elle-même, in sha Allah"
   },
   "shareCard": {
     "button": "Partager dans le statut WhatsApp",

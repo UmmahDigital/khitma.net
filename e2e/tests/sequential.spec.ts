@@ -231,6 +231,27 @@ test.describe('sequential group: admin', () => {
     });
   });
 
+  test('new khitmah: a date picked as the last khitma’s deadline is not carried over; a typed one is', async ({ page }) => {
+    const picked = newGroupId('seq-next-picked');
+    const typed = newGroupId('seq-next-typed');
+    await createSequentialGroup(picked, { author: ADMIN, targetAt: '2026-02-27', targetDate: 'الجمعة 27/2/2026' });
+    await createSequentialGroup(typed, { author: ADMIN, cycle: 1, targetDate: 'يوم الجمعة' });
+
+    await openApp(page, `/group/${picked}`, { storage: { groups: joinedGroups({ [picked]: ADMIN, [typed]: ADMIN }) } });
+    await expect(page.locator('.deadline-line')).toContainText('انتهى الموعد');
+    await startNewKhitmah(page);
+    await expect.poll(async () => (await getDoc(`groups/${picked}`))!.cycle).toBe(1);
+    expect((await getDoc(`groups/${picked}`))!.targetAt).toBeUndefined();
+    expect((await getDoc(`groups/${picked}`))!.targetDate).toBeUndefined();
+    await expect(page.locator('.deadline-line')).toHaveCount(0);
+
+    await page.goto(`/group/${typed}`);
+    await startNewKhitmah(page);
+    await expect.poll(async () => (await getDoc(`groups/${typed}`))!.cycle).toBe(2);
+    expect((await getDoc(`groups/${typed}`))!.targetDate).toBe('يوم الجمعة');
+    await expect(page.locator('.deadline-line')).toHaveText('⏳ موعد إتمام الختمة: يوم الجمعة');
+  });
+
   test('new khitmah: only members who finished get their next juz', async ({ page }) => {
     const groupId = newGroupId('seq-next-done');
     await createSequentialGroup(groupId, {

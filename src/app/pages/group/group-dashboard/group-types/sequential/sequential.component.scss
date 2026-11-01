@@ -271,6 +271,17 @@
   }
 }
 
+// «هل تكرّرون الختمة؟» when a one-time khitma completes. Margins rather than flex `gap` (Samsung Internet 12).
+.repeat-prompt .repeat-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  > * {
+    margin: 4px;
+  }
+}
+
 .deadline-line {
   margin: 0 auto 12px;
   text-align: center;

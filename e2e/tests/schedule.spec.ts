@@ -73,6 +73,28 @@ test.describe('repeating khitmas', () => {
     await Promise.all([sara.context().close(), khaled.context().close()]);
   });
 
+  test('a one-time khitma made to repeat starts its next round without the deadline picked for it', async ({ page }) => {
+    const groupId = newGroupId('repeat-deadline');
+    await createSequentialGroup(groupId, {
+      author: ADMIN,
+      purpose: 'memorial',
+      assigned: allDone(),
+      targetAt: '2026-02-27',
+      targetDate: 'الجمعة 27/2/2026',
+      schedule: { every: 'week', weekday: 5, cycleType: AUTO_BOOK },
+      nextRoundAt: hoursAgo(1),
+    });
+
+    await openAs(page, groupId, 'عضو 3');
+    await expect.poll(async () => (await getDoc(`groups/${groupId}`))!.cycle).toBe(1);
+    const group = await getDoc(`groups/${groupId}`);
+    expect(group!.targetAt).toBeUndefined();
+    expect(group!.targetDate).toBeUndefined();
+    await expect(page.getByRole('button', { name: 'أتممت قراءة جزء 4' })).toBeVisible();
+    await expect(page.locator('.repeat-line')).toBeVisible();
+    await expect(page.locator('.deadline-line:not(.repeat-line)')).toHaveCount(0);
+  });
+
   test('a khitma that repeats after each completion lets everyone see it complete first', async ({ page }) => {
     const [justDone, doneEarlier] = [newGroupId('repeat-just-done'), newGroupId('repeat-done-earlier')];
     const schedule = { every: 'completion', cycleType: AUTO_BOOK };
@@ -109,5 +131,52 @@ test.describe('repeating khitmas', () => {
     await expect.poll(async () => (await getDoc(`groups/${groupId}`))?.schedule).toBeUndefined();
     expect((await getDoc(`groups/${groupId}`))!.nextRoundAt).toBeUndefined();
     await expect(page.locator('.repeat-line')).toHaveCount(0);
+  });
+});
+
+test.describe('asking whether a one-time khitma repeats', () => {
+  test('when a one-time khitma completes, its admin can make it repeat every Friday', async ({ page }) => {
+    const groupId = newGroupId('repeat-ask');
+    await createSequentialGroup(groupId, { author: ADMIN, purpose: 'memorial', honoreeGender: 'male', assigned: allDone() });
+
+    // The test clock: Sunday 1 March 2026, 11:00 in Jerusalem.
+    await openAs(page, groupId, ADMIN, true);
+    const prompt = page.locator('.repeat-prompt');
+    await expect(prompt).toContainText('هل تكرّرون الختمة؟');
+    await prompt.getByRole('button', { name: 'كل جمعة' }).click();
+
+    await expect.poll(async () => (await getDoc(`groups/${groupId}`))?.schedule).toEqual({ every: 'week', weekday: 5, cycleType: AUTO_BOOK });
+    await expect(prompt).toHaveCount(0);
+    await expect(page.locator('.repeat-line')).toHaveText('🔁 تبدأ الختمة التالية تلقائيًا يوم الجمعة 6/3');
+    expect(await analyticsEvents(page)).toContainEqual(['repeat_prompt', expect.objectContaining({ action: 'week' })]);
+  });
+
+  test('«لا، شكرًا» is remembered', async ({ page }) => {
+    const groupId = newGroupId('repeat-no');
+    await createSequentialGroup(groupId, { author: ADMIN, purpose: 'healing', assigned: allDone() });
+
+    await openAs(page, groupId, ADMIN);
+    await page.locator('.repeat-prompt').getByRole('button', { name: 'لا، شكرًا' }).click();
+    await expect(page.locator('.repeat-prompt')).toHaveCount(0);
+    await page.reload();
+    await expect(page.getByRole('button', { name: 'بدء الختمة التالية' }).first()).toBeVisible();
+    await expect(page.locator('.repeat-prompt')).toHaveCount(0);
+    expect((await getDoc(`groups/${groupId}`))!.schedule).toBeUndefined();
+  });
+
+  test('is not asked of members, of recurring khitmas, or of khitmas that already repeat', async ({ page }) => {
+    const oneTime = newGroupId('repeat-member');
+    const recurring = newGroupId('repeat-recurring');
+    const repeating = newGroupId('repeat-already');
+    await createSequentialGroup(oneTime, { author: ADMIN, purpose: 'memorial', assigned: allDone() });
+    await createSequentialGroup(recurring, { author: ADMIN, purpose: 'regular', assigned: allDone() });
+    await createSequentialGroup(repeating, { author: ADMIN, purpose: 'memorial', assigned: allDone(), schedule: { every: 'month', cycleType: AUTO_BOOK } });
+
+    await openApp(page, '/', { storage: { groups: joinedGroups({ [oneTime]: 'خالد', [recurring]: ADMIN, [repeating]: ADMIN }) } });
+    for (const groupId of [oneTime, recurring, repeating]) {
+      await page.goto(`/group/${groupId}`);
+      await expect(page.locator('.khitma-done')).toBeVisible();
+      await expect(page.locator('.repeat-prompt')).toHaveCount(0);
+    }
   });
 });

@@ -9,7 +9,7 @@ import {
 import { DeadlineChoice, deadlineDate, deadlineText, isoDate } from '../../deadline';
 import { HonoreeGender, namesSomeone, ONE_TIME_PURPOSES, Purpose, purposeLabel, purposeTitle } from '../../purpose';
 import { isRamadanSeason, ramadanLastDay } from '../../ramadan';
-import { RoundSchedule } from '../../schedule';
+import { RoundSchedule, ruleText, scheduleFromParams } from '../../schedule';
 import { KHITMA_CYCLE_TYPE } from '../../entities/entities';
 import { KhitmaGroupService } from '../../khitma-group.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -66,6 +66,8 @@ export class CreateGroupComponent implements OnInit {
 
   /** "ramadan-daily": a khitma that starts again every day of Ramadan, everyone moving to the next juz. */
   template: 'ramadan-daily' | null = null;
+  /** How the khitma repeats, when the link asks for it («ابدأ ختمة مثلها», start-like.ts); recurring khitmas only. */
+  schedule: RoundSchedule | null = null;
   /** The deadline the form suggested for a Ramadan khitma (the last day of Ramadan), until the creator picks another. */
   private suggestedDeadline: string | null = null;
 
@@ -91,6 +93,7 @@ export class CreateGroupComponent implements OnInit {
       this.typeParam = params['type'];
       this.source = params['from'] || null;
       this.template = params['template'] === 'ramadan-daily' ? 'ramadan-daily' : null;
+      this.schedule = scheduleFromParams(params);
       if (ONE_TIME_PURPOSES.includes(params['purpose'])) {
         this.purpose = params['purpose'];
         this.updateTitle();
@@ -147,6 +150,18 @@ export class CreateGroupComponent implements OnInit {
 
   purposeLabel(purpose: Purpose): string {
     return purposeLabel(purpose, this.common.translation);
+  }
+
+  /** The schedule this khitma will have: only recurring khitmas that share out ajza repeat on a rhythm. */
+  private get scheduleToSave(): RoundSchedule | null {
+    if (this.template) {
+      return { every: 'day', cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK };
+    }
+    return this.isRecurring && this.groupType === KHITMA_GROUP_TYPE.SEQUENTIAL ? this.schedule : null;
+  }
+
+  get scheduleLine(): string | null {
+    return this.template || !this.scheduleToSave ? null : ruleText(this.scheduleToSave, this.common.translation, this.common.currentLanguage);
   }
 
   get namesSomeone(): boolean {
@@ -220,7 +235,7 @@ export class CreateGroupComponent implements OnInit {
     const deadlineChoice: DeadlineChoice = this.isRecurring ? 'none' : this.deadlineChoice;
     const targetAt = deadlineDate(deadlineChoice, this.deadlinePicked);
     const purpose = this.template ? 'ramadan' : this.isRecurring ? 'regular' : this.purpose;
-    const schedule: RoundSchedule | null = this.template ? { every: 'day', cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK } : null;
+    const schedule = this.scheduleToSave;
     const honoreeGender = !this.isRecurring && namesSomeone(this.purpose) ? this.honoreeGender : undefined;
 
     this.groupsApi
@@ -242,6 +257,7 @@ export class CreateGroupComponent implements OnInit {
           deadline: deadlineChoice,
           purpose: purpose ?? 'unset',
           ...(this.template ? { template: 'ramadan_daily' } : {}),
+          ...(schedule && !this.template ? { schedule: schedule.every } : {}),
           ...(this.source ? { source: this.source } : {}),
         });
 

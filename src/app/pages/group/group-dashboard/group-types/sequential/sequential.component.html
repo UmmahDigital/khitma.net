@@ -9,6 +9,17 @@
             <p class="memorial-dua-text" lang="ar" dir="rtl">{{ memorialDuaText }}</p>
           </div>
         }
+        @if (repeatPrompt) {
+          <div class="help-finish repeat-prompt">
+            <p class="help-finish-title" [translate]="'repeat.title'">هل تكرّرون الختمة؟</p>
+            <p class="help-finish-text" [translate]="'repeat.text'">تبدأ ختمة جديدة تلقائيًا، ويُحجز لكل عضو الجزء الذي يلي جزءه.</p>
+            <div class="repeat-actions">
+              <button mat-flat-button class="action-btn" (click)="repeatKhitma('week')"><span [translate]="'repeat.weekly'">كل جمعة</span></button>
+              <button mat-stroked-button (click)="repeatKhitma('month')"><span [translate]="'schedule.month'">أوّل كل شهر</span></button>
+              <button mat-button (click)="answerRepeat('no')"><span [translate]="'repeat.no'">لا، شكرًا</span></button>
+            </div>
+          </div>
+        }
         @if (isAdmin) {
           <button (click)="startNewKhitmah()" mat-raised-button color="accent"
             class="block large action-btn admin-action-btn" [translate]="'sequential.start'">بدء الختمة التالية</button>
@@ -163,7 +174,7 @@
 <ng-template #startOwn let-source="source">
   <div class="start-own">
     <p class="start-own-title" [translate]="'completion.startOwn'">هل تودّ أن تبدأ ختمة جماعيّة لمن تحب؟</p>
-    <a mat-stroked-button routerLink="/new" [queryParams]="{ type: 'onetime.sequential', from: source }"
-      (click)="startOwnClicked(source)"><span [translate]="'completion.startOwnButton'">ابدأ ختمة جديدة</span></a>
+    <a mat-stroked-button routerLink="/new" [queryParams]="likeParams(source)"
+      (click)="startOwnClicked(source)"><span [translate]="'startLike.button'">ابدأ ختمة مثلها</span></a>
   </div>
 </ng-template>

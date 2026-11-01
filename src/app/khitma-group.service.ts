@@ -252,7 +252,12 @@ export class KhitmaGroupService {
       const data: any = (await transaction.get(ref)).data();
       const ajza: Juz[] = Array.isArray(data.ajza) ? data.ajza : KhitmaGroup_Sequential.convertAjzaToArray(data.ajza);
       const cycle = newCycleType === KHITMA_CYCLE_TYPE.REWIND ? Math.max(0, (data.cycle || 0) - 1) : (data.cycle || 0) + 1;
-      transaction.update(ref, { cycle, ajza: newRoundAjzaObj(nextRoundAjza(ajza, newCycleType)), roundStartedAt: serverTimestamp() });
+      transaction.update(ref, {
+        cycle,
+        ajza: newRoundAjzaObj(nextRoundAjza(ajza, newCycleType)),
+        roundStartedAt: serverTimestamp(),
+        ...withoutPickedDeadline(data),
+      });
       return cycle;
     });
   }
@@ -288,6 +293,7 @@ export class KhitmaGroupService {
         ajza: newRoundAjzaObj(nextRoundAjza(ajza, data.schedule.cycleType)),
         roundStartedAt: serverTimestamp(),
         nextRoundAt: next ? Timestamp.fromDate(next) : deleteField(),
+        ...withoutPickedDeadline(data),
       });
       return true;
     });
@@ -428,4 +434,13 @@ function newRoundAjzaObj(ajza: Juz[]) {
     ajzaObj[key] = { ...ajzaObj[key], updatedAt: serverTimestamp() };
   }
   return ajzaObj;
+}
+
+/**
+ * A deadline picked as a date when the khitma was created (targetAt, with targetDate its text) is that khitma's: the
+ * next round starts without it, rather than with «انتهى الموعد» on every round of a khitma that now repeats. A date
+ * the admin typed has no targetAt and stays.
+ */
+function withoutPickedDeadline(data: { targetAt?: string }) {
+  return data.targetAt ? { targetAt: deleteField(), targetDate: deleteField() } : {};
 }

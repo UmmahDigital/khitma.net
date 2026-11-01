@@ -1,6 +1,6 @@
 import { JUZ_STATUS, KHITMA_CYCLE_TYPE, Juz } from './entities/entities';
 import { nextRoundAjza } from './khitma-group.service';
-import { isRoundDue, nextRoundAt, repeatText, RoundSchedule } from './schedule';
+import { isRoundDue, nextRoundAt, repeatText, RoundSchedule, ruleText, scheduleFromParams, scheduleParams } from './schedule';
 
 const { IDLE, BOOKED, DONE } = JUZ_STATUS;
 const at = (date: Date) => ({ toMillis: () => date.getTime(), toDate: () => date });
@@ -82,5 +82,33 @@ describe('a new round', () => {
     expect(owners(nextRoundAjza(last, KHITMA_CYCLE_TYPE.REWIND))).toEqual(
       expected({ 1: ['خالد', BOOKED], 29: ['ليلى', BOOKED], 30: ['سارة', BOOKED] })
     );
+  });
+});
+
+describe('a schedule in a link', () => {
+  it('comes back as it went', () => {
+    const schedules: RoundSchedule[] = [
+      { every: 'week', weekday: 1, cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK },
+      { every: 'day', cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK },
+      { every: 'month', cycleType: KHITMA_CYCLE_TYPE.ALL_IDLE },
+      { every: 'completion', cycleType: KHITMA_CYCLE_TYPE.REWIND },
+    ];
+    for (const schedule of schedules) {
+      expect(scheduleFromParams(scheduleParams(schedule))).toEqual(schedule);
+    }
+  });
+
+  it('is ignored when the link asks for something unknown', () => {
+    expect(scheduleFromParams({})).toBeNull();
+    expect(scheduleFromParams({ every: 'year', cycle: '1' })).toBeNull();
+    expect(scheduleFromParams({ every: 'day', cycle: '9' })).toBeNull();
+    expect(scheduleFromParams({ every: 'week', weekday: '7', cycle: '1' })).toBeNull();
+  });
+
+  it('says how the khitma repeats', () => {
+    const friday: RoundSchedule = { every: 'week', weekday: 5, cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK };
+    expect(ruleText(friday, {}, 'ar')).toBe('كل أسبوع، يوم: الجمعة');
+    expect(ruleText(friday, { schedule: { week: 'Every week, on' } }, 'en')).toBe('Every week, on Friday');
+    expect(ruleText({ every: 'completion', cycleType: KHITMA_CYCLE_TYPE.AUTO_BOOK }, {}, 'ar')).toBe('بعد اكتمال كل ختمة');
   });
 });

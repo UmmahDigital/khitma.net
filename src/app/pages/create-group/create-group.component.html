@@ -63,6 +63,14 @@
       <p class="template-note" [translate]="'ramadan.dailyNote'">تبدأ ختمة جديدة كل يوم تلقائيًا، ويُحجز لكل عضو الجزء الذي يلي جزءه، فيتنقّل بين الأجزاء يومًا بعد يوم.</p>
     }
 
+    <!-- Started from «ابدأ ختمة مثلها»: it repeats like the khitma it came from, unless the creator says no. -->
+    @if (scheduleLine) {
+      <p class="template-note schedule-note">
+        🔁 {{ scheduleLine }}
+        <button mat-button type="button" class="no-repeat-btn" (click)="schedule = null"><span [translate]="'gCreate.noRepeat'">بدون تكرار</span></button>
+      </p>
+    }
+
     <h2 [translate]="'gCreate.details'">تفاصيل الختمة</h2>
 
     <mat-form-field appearance="fill" class="block">

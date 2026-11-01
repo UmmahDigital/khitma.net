@@ -14,13 +14,14 @@ import { NativeShareService } from '../../../../../native-share.service';
 import { SharingService } from '../../../../../sharing.service';
 import { ReferralService } from '../../../../../referral.service';
 import { impactLines } from '../../../../../referral';
-import { khitmaName, memorialDua } from '../../../../../purpose';
+import { khitmaName, memorialDua, ONE_TIME_PURPOSES, Purpose } from '../../../../../purpose';
 import { renderShareCard } from '../../../../../share-card';
-import { repeatText } from '../../../../../schedule';
+import { FRIDAY, repeatText, RoundSchedule } from '../../../../../schedule';
 import { firstFridayAfterRamadan, hijri, isAfterRamadanPromptTime } from '../../../../../ramadan';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { suggestedJuz } from '../../../../../all-booked';
 import { googleCalendarUrl, icsFile, Reminder, reminderStart } from '../../../../../reminder';
+import { startLikeParams } from '../../../../../start-like';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
 import { bookedForDays, bookingAgeText, staleBookings } from '../../../../../booking-age';
@@ -425,6 +426,37 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     return repeatText(<any>this.group, this.common.translation, this.common.currentLanguage);
   }
 
+  // «هل تكرّرون الختمة؟»: when a one-time khitma completes, its admin is asked whether it should repeat (families
+  // often read one for the deceased every Friday). Ramadan khitmas have their own question, after Ramadan.
+  private repeatAnswered = false;
+
+  private get repeatKey(): string {
+    return `repeatAsked:${this.group.id}`;
+  }
+
+  get repeatPrompt(): boolean {
+    const group = this.group;
+    if (!this.isAdmin || !group?.isDone() || group.schedule || this.repeatAnswered || localStorage.getItem(this.repeatKey)) {
+      return false;
+    }
+    const purpose = group.purpose as Purpose | undefined;
+    return purpose ? ONE_TIME_PURPOSES.includes(purpose) && purpose !== 'ramadan' : (group.cycle ?? 0) === 0;
+  }
+
+  repeatKhitma(every: 'week' | 'month') {
+    const cycleType = KHITMA_CYCLE_TYPE.AUTO_BOOK;
+    const schedule: RoundSchedule = every === 'week' ? { every, weekday: FRIDAY, cycleType } : { every, cycleType };
+    this.groupsApi.setSchedule(this.group.id, schedule);
+    this.answerRepeat(every);
+    this.alert.show(this.common.translation.repeat?.done || 'ستتكرّر الختمة تلقائيًا بإذن الله', 4000);
+  }
+
+  answerRepeat(action: 'week' | 'month' | 'no') {
+    this.repeatAnswered = true;
+    localStorage.setItem(this.repeatKey, action);
+    this.$gaService.send('repeat_prompt', { action });
+  }
+
   /** For a memorial khitma, the supplication for the deceased that its completion is for. */
   get memorialDuaText(): string | null {
     return this.group?.purpose === 'memorial' ? memorialDua(this.group.honoreeGender) : null;
@@ -437,6 +469,20 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   startOwnClicked(source: string) {
     this.$gaService.send('start_own_khitma_click', { source });
   }
+
+  /** «ابدأ ختمة مثلها»: the same kind of khitma, for the same purpose, repeating the same way; never its names. */
+  likeParams(source: string): Record<string, string> {
+    // The same object while the group's kind is the same, so the template binding stays stable.
+    const key = JSON.stringify([this.group.type, this.group.purpose, this.group.schedule, this.group.cycle]);
+    const cached = this.likeCache.get(source);
+    if (cached?.key === key) {
+      return cached.params;
+    }
+    const params = startLikeParams(this.group, source);
+    this.likeCache.set(source, { key, params });
+    return params;
+  }
+  private likeCache = new Map<string, { key: string; params: Record<string, string> }>();
 
   dismissNextJuz() {
     this.$gaService.send('next_juz_offer', { action: 'dismissed' });
