@@ -146,6 +146,7 @@
     "nextTake": "Juz {juz} lesen",
     "nextLater": "Später",
     "start": "Nächste Khitma beginnen",
+    "startFailed": "Die nächste Khitma konnte nicht beginnen. Prüfe deine Internetverbindung und versuche es erneut.",
     "doaa": "Das Khitma-Bittgebet teilen (auf Arabisch)",
     "finished": "Fertig gelesen: Juz",
     "release": "Juz abgeben",
@@ -360,5 +361,8 @@
     "updateTask": "Bitte aktualisiert den Stand eurer Aufgabe über den Link: {url}",
     "updatePages": "Bitte aktualisiert den Stand eurer Seiten über den Link: {url}",
     "bless": "Möge Allah euch segnen!"
+  },
+  "network": {
+    "offline": "Du bist offline. Deine Änderungen werden gespeichert und gesendet, sobald du wieder online bist."
   }
 }

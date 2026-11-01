@@ -4,8 +4,10 @@ import {
   connectFirestoreEmulator,
   DocumentReference,
   Firestore,
-  getFirestore,
+  initializeFirestore,
   onSnapshot,
+  persistentLocalCache,
+  persistentMultipleTabManager,
   Query,
 } from 'firebase/firestore';
 import { Observable } from 'rxjs';
@@ -14,7 +16,12 @@ import { environment } from '../environments/environment';
 export const FIRESTORE = new InjectionToken<Firestore>('Firestore', {
   providedIn: 'root',
   factory: () => {
-    const firestore = getFirestore(initializeApp(environment.firebaseConfig));
+    // Groups are kept on the phone (IndexedDB, shared by its tabs): they open at once on the next visit, and what
+    // people change without a connection is sent when it returns, even after the page was closed. Where the phone
+    // can't keep them (no IndexedDB, or a broken one), Firestore falls back to memory, as before.
+    const firestore = initializeFirestore(initializeApp(environment.firebaseConfig), {
+      localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+    });
     if (environment.useEmulators) {
       connectFirestoreEmulator(firestore, 'localhost', 8080);
     }
