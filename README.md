@@ -58,6 +58,8 @@ The end-to-end tests use [Playwright](https://playwright.dev) against a local Fi
    - `mobile-chromium`: every behavior test plus screenshot comparisons of the current design;
    - `oldest-supported-browser`: the behavior tests again, with Chromium made to act like the oldest phones in `.browserslistrc` (iOS 14.5, and Chromium 79 for Samsung Internet 12 and old Android WebViews).
 
+The tests use a roomy phone (390×844). `e2e/tests/small-screens.spec.ts` also opens the pages and dialogs on phones with fewer CSS pixels: set to large text (360×595), to the largest display size (320×560), and held sideways (740×340). Pages may not scroll sideways there, and every dialog button must be on the screen.
+
 Screenshot baselines exist for macOS only (`e2e/tests/__screenshots__/darwin`), so CI skips them. After an intended design change, review the diffs and run `npm run e2e:update-screenshots`.
 
 ### Checking a real old browser
@@ -69,11 +71,38 @@ The simulated old browser cannot catch JavaScript syntax that old engines fail t
 
 ## Tools
 
-- `node tools/metrics/weekly-report.mjs`: the weekly numbers (groups created, first-khitma completion, groups with no juz booked, repeat rate, active recurring groups), read-only from Firestore. It needs a `gcloud` login that can read the project, and prints counts only, never names or titles.
+- `node tools/metrics/weekly-report.mjs`: the weekly numbers, read-only from Firestore: groups created, first-khitma completion, groups with no juz booked, repeat rate, active recurring groups; where new juz groups stop on the way to their first khitma (a juz booked, a second name, half read, 27 of 30, completed, stalled near the end); and one-time against recurring khitmas, by how they were created. It needs a `gcloud` login that can read the project, and prints counts only, never names or titles.
 - `node tools/icons/update-icon-font.mjs`: rebuilds the small icon font after an icon is added to a template (`e2e/tests/icons.spec.ts` checks it).
 - `node tools/og-images/render.mjs`: renders the link-preview images in `src/assets/og/` from the HTML templates in `tools/og-images/`.
 - `tools/ramadan/README.md`: the Ramadan announcement (an in-app notification to add in Firestore, and a WhatsApp message), to publish by hand in mid-Sha'ban.
 - `tools/demo/`: the local demo's sample khitmas (`seed.mjs`) and the date-changing browser (`browse.mjs`); see "Running locally".
+
+## Reports from people's phones
+
+Problems on people's phones reach Google Analytics as events (`src/app/field-reports.ts`), without names or titles:
+
+- `app_error`: an error the app didn't handle, with `error_message` (anything not in English, such as a name in it, becomes `…`), `error_where` (file and position) and `error_source` (`angular`, `window` or `promise`). Each error is sent once, and at most five per page.
+- `dialog_offscreen`: a dialog whose buttons reach outside the screen, with `dialog` (its component, e.g. `app-start-new-khitma`), `overflow_px`, `viewport` and `root_font_px`.
+
+To see the parameters in GA4's reports, register them once as event-scoped custom dimensions (Admin → Custom definitions).
+
+## Backups
+
+Firestore keeps, for project `quran-khitma`:
+
+- point-in-time recovery: the database as it was at any minute of the last 7 days;
+- a backup every day, kept 7 days, and every Sunday, kept 14 weeks (`gcloud firestore backups list --location=nam5 --project=quran-khitma`);
+- delete protection on the database.
+
+To put groups back as they were before a bad write (vandalism, a broken release), within 7 days: export them as they were at a minute before it, then import that export. Documents with the same IDs are overwritten; groups created since are kept. The bucket must be in the database's location (nam5, in the US).
+
+```sh
+gcloud firestore export gs://BUCKET/restore-1 --collection-ids=groups --snapshot-time=2026-11-01T06:00:00Z --project=quran-khitma
+gcloud firestore import gs://BUCKET/restore-1 --collection-ids=groups --project=quran-khitma
+```
+
+Further back, restore a backup into a new database, then export from it and import into `(default)` the same way:
+`gcloud firestore databases restore --source-backup=projects/quran-khitma/locations/nam5/backups/BACKUP_ID --destination-database=restored --project=quran-khitma`.
 
 ## Link previews
 

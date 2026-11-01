@@ -43,6 +43,8 @@ section > header {
 }
 
 .deadline-choice {
+  // The form's width, so its chips wrap on narrow phones instead of reaching past the screen.
+  align-self: stretch;
   text-align: center;
 
   .pick-date-btn {

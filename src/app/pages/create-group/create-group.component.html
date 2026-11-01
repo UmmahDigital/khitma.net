@@ -95,13 +95,16 @@
     @if (!isRecurring) {
       <div class="deadline-choice">
         <h2 [translate]="'deadline.question'">متى تريدون إتمام الختمة؟</h2>
-        <div class="center-center multi-choice">
-          <mat-button-toggle-group [(ngModel)]="deadlineChoice" name="deadline">
-            <mat-button-toggle value="3days"><span [translate]="'deadline.in3days'">3 أيام</span></mat-button-toggle>
-            <mat-button-toggle value="week"><span [translate]="'deadline.inWeek'">أسبوع</span></mat-button-toggle>
-            <mat-button-toggle value="friday"><span [translate]="'deadline.byFriday'">الجمعة</span></mat-button-toggle>
-            <mat-button-toggle value="none"><span [translate]="'deadline.none'">بدون موعد</span></mat-button-toggle>
-          </mat-button-toggle-group>
+        <!-- Chips, like the purpose above: they wrap on narrow phones, where a row of four toggles was cut off. -->
+        <div class="choice-chips" role="group">
+          <button type="button" class="choice-chip" [class.selected]="deadlineChoice === '3days'" [attr.aria-pressed]="deadlineChoice === '3days'"
+            (click)="deadlineChoice = '3days'"><span [translate]="'deadline.in3days'">3 أيام</span></button>
+          <button type="button" class="choice-chip" [class.selected]="deadlineChoice === 'week'" [attr.aria-pressed]="deadlineChoice === 'week'"
+            (click)="deadlineChoice = 'week'"><span [translate]="'deadline.inWeek'">أسبوع</span></button>
+          <button type="button" class="choice-chip" [class.selected]="deadlineChoice === 'friday'" [attr.aria-pressed]="deadlineChoice === 'friday'"
+            (click)="deadlineChoice = 'friday'"><span [translate]="'deadline.byFriday'">الجمعة</span></button>
+          <button type="button" class="choice-chip" [class.selected]="deadlineChoice === 'none'" [attr.aria-pressed]="deadlineChoice === 'none'"
+            (click)="deadlineChoice = 'none'"><span [translate]="'deadline.none'">بدون موعد</span></button>
         </div>
         @if (deadlineChoice === 'date') {
           <mat-form-field appearance="fill" class="block">
