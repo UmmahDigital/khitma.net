@@ -1,7 +1,7 @@
 import { onRequest } from 'firebase-functions/v2/https';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { previewText, withPreview } from './preview.js';
+import { previewText, previewUrl, withPreview } from './preview.js';
 import { createShell, RETRY_PAGE, siteOrigin } from './shell.js';
 
 // See preview.js. Firebase Hosting rewrites /group/{id} here (firebase.json); every other path is untouched.
@@ -57,7 +57,8 @@ export const groupPreview = onRequest(
       console.error(group.reason);
     } else if (group.value?.exists) {
       try {
-        html = withPreview(html, { ...previewText(group.value.data()), url: `${SITE}/group/${id}` });
+        const lang = typeof req.query.hl === 'string' ? req.query.hl : undefined;
+        html = withPreview(html, { ...previewText(group.value.data(), lang), url: previewUrl(SITE, id, lang) });
         cache = CACHED;
       } catch (error) {
         console.error(error);

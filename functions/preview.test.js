@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { previewText, withPreview } from './preview.js';
+import { previewText, previewUrl, withPreview } from './preview.js';
 
 const ajza = (statuses) => Object.fromEntries(statuses.map((status, index) => [String(index), { index, status, owner: '' }]));
 const INDEX = `<html><head>
@@ -49,4 +49,34 @@ test('the tags carry the khitma, escaped, and the page stays out of search engin
   assert.match(page, /<meta property="og:url" content="https:\/\/khitma.net\/group\/abc">/);
   assert.match(page, /<meta name="robots" content="noindex">\n<\/head>/);
   assert.equal(page.match(/og:title/g).length, 1);
+});
+
+test('a link shared in one of the languages that carry one (?hl=) gets its preview in that language', () => {
+  const statuses = [...Array(12).fill(2), ...Array(5).fill(1), ...Array(13).fill(0)];
+  const group = { title: 'Ailemizin hatmi', type: 'SEQUENTIAL', ajza: ajza(statuses) };
+  assert.equal(
+    previewText(group, 'tr').description,
+    '30 cüzden 12 tanesi okundu. 13 cüz hâlâ okuyanını bekliyor: Bir cüz seçin, sevaba ortak olun 🤍'
+  );
+  // Urdu ends its sentences with «۔», and has a plural.
+  assert.equal(
+    previewText({ ...group, ajza: ajza([...Array(29).fill(2), 0]) }, 'ur').description,
+    '30 پاروں میں سے 29 کی تلاوت مکمل۔ 1 پارہ ابھی بغیر قاری کے: ایک پارہ لیں اور اجر میں شریک ہوں 🤍'
+  );
+  assert.equal(previewText({ ...group, ajza: ajza(Array(30).fill(2)) }, 'id').description, 'Alhamdulillah, khataman telah selesai 🤍');
+  assert.equal(previewText({ title: '', type: 'SAME_TASK' }, 'ms').title, 'Khitma.net');
+});
+
+test('other languages, or none, keep the Arabic preview', () => {
+  const group = { title: 'ختمة', ajza: ajza(Array(30).fill(0)) };
+  for (const lang of [undefined, 'ar', 'en', 'xx', '__proto__', 'constructor']) {
+    assert.equal(previewText(group, lang).description, 'بقي 30 جزءًا بلا قارئ: اختاروا جزءًا وشاركونا الأجر 🤍');
+  }
+});
+
+test('a localized preview names its own address, with the language (Facebook shows the tags found there)', () => {
+  assert.equal(previewUrl('https://khitma.net', 'abc', 'tr'), 'https://khitma.net/group/abc?hl=tr');
+  for (const lang of [undefined, 'ar', 'en', '__proto__', 'tr&x=1']) {
+    assert.equal(previewUrl('https://khitma.net', 'abc', lang), 'https://khitma.net/group/abc');
+  }
 });
