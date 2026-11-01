@@ -72,6 +72,9 @@ export class GroupJoinComponent implements OnInit {
   }
 
   join() {
+    if (!this.group) {
+      return;
+    }
     this.$gaService.send('group_joined', { group_id: this.group.id, group_type: this.group.type || 'SEQUENTIAL' });
 
     let username = KhitmaGroup.refineOwnerName(this.username);
