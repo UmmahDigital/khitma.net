@@ -63,6 +63,9 @@
               <button class="giveup-btn" mat-button (click)="juzGiveup(juzIndex)"><span
               [translate]="'sequential.release'">تنازل عن الجزء</span></button>
             </section>
+            <button mat-button class="remind-btn" [matMenuTriggerFor]="reminderMenu" (click)="reminderJuz = juzIndex">
+              <mat-icon>alarm</mat-icon> <span [translate]="'reminder.button'">ذكّرني بقراءته</span>
+            </button>
           </section>
         }
         <div class="space"></div>
@@ -70,8 +73,16 @@
     } @else {
       @if (this.group.hasIdleAjza()) {
         <span [translate]="'sequential.select'">اختر أيّ جزء متاح (باللون الأحمر).</span>
-      } @else {
-        <span class="large" [translate]="'sequential.all'"> جميع الأجزاء في هذه المجموعة محجوزة.</span>
+      } @else if (suggestion) {
+        <!-- Every juz is taken: a juz to read anyway, for the reward, instead of a dead end. -->
+        <div class="next-juz-offer all-booked">
+          <p class="next-juz-title" [translate]="'sequential.allTitle'">جميع الأجزاء محجوزة</p>
+          <p>{{ suggestionText('allRead', 'ولكن يمكنك أن تشارك في الأجر بقراءة الجزء {juz}.') }}</p>
+          <div class="next-juz-actions">
+            <a mat-flat-button class="action-btn" [routerLink]="['/quran/juz', suggestion]" (click)="readSuggestion()">{{ suggestionText('nextTake', 'اقرأ الجزء {juz}') }}</a>
+            <button mat-button (click)="anotherSuggestion()"><span [translate]="'sequential.allAnother'">جزء آخر</span></button>
+          </div>
+        </div>
       }
     }
   </div>
@@ -139,6 +150,15 @@
     <mat-icon>image</mat-icon> <span [translate]="'shareCard.button'">شارك في حالة واتساب</span>
   </button>
 </ng-template>
+
+<mat-menu #reminderMenu="matMenu">
+  <a mat-menu-item [href]="googleReminderUrl" target="_blank" rel="noopener" (click)="reminderAdded('google')">
+    <mat-icon>event</mat-icon> <span [translate]="'reminder.google'">تقويم Google</span>
+  </a>
+  <button mat-menu-item (click)="downloadReminder()">
+    <mat-icon>calendar_month</mat-icon> <span [translate]="'reminder.phone'">تقويم الهاتف</span>
+  </button>
+</mat-menu>
 
 <ng-template #startOwn let-source="source">
   <div class="start-own">

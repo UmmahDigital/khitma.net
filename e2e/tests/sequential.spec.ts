@@ -115,6 +115,30 @@ test.describe('sequential group: members', () => {
     await expect(page.locator('app-juz-list app-juz').nth(1)).toContainText('خالد');
   });
 
+  test('when every juz is taken, a member is offered one still being read, for the reward', async ({ page }) => {
+    const groupId = newGroupId('seq-all-booked');
+    const assigned = Object.fromEntries(Array.from({ length: 30 }, (_, i) => [i + 1, { owner: 'خالد', status: i < 27 ? DONE : BOOKED }]));
+    await createSequentialGroup(groupId, { author: ADMIN, assigned });
+
+    await openDashboard(page, groupId, 'سارة');
+    const card = page.locator('.all-booked');
+    await expect(card).toContainText('جميع الأجزاء محجوزة');
+    const offered = async () => Number((await card.locator('p').nth(1).textContent())!.match(/الجزء (\d+)/)![1]);
+    const first = await offered();
+    expect([28, 29, 30]).toContain(first);
+    await expect(card.getByRole('link', { name: `اقرأ الجزء ${first}` })).toHaveAttribute('href', `/quran/juz/${first}`);
+
+    await card.getByRole('button', { name: 'جزء آخر' }).click();
+    const second = await offered();
+    expect([28, 29, 30]).toContain(second);
+    expect(second).not.toBe(first);
+    expect(await analyticsEvents(page)).toContainEqual(['all_booked_suggestion', expect.objectContaining({ action: 'another' })]);
+
+    // The same suggestion all day, so it doesn't change on every visit.
+    await page.reload();
+    await expect(card).toContainText(`بقراءة الجزء ${first}.`);
+  });
+
   test('leaving archives the group on this phone and returns home', async ({ page }) => {
     const groupId = newGroupId('seq-leave');
     await createSequentialGroup(groupId, { title: 'ختمة للمغادرة', author: ADMIN });
@@ -382,6 +406,8 @@ test.describe('sequential group: admin', () => {
 
     await openDashboard(page, groupId, ADMIN);
     await expect(page.getByRole('button', { name: 'بدء الختمة التالية' })).toBeVisible();
+    // Finished, not "every juz is taken".
+    await expect(page.locator('.all-booked')).toHaveCount(0);
     await page.getByRole('button', { name: 'مشاركة دعاء الختمة' }).click();
 
     const [shared] = await sharedPayloads(page);

@@ -151,7 +151,9 @@
     "finished": "I finished juz",
     "release": "Give up this juz",
     "select": "Choose any available juz (in red).",
-    "all": "Every juz in this group is taken.",
+    "allTitle": "Every juz is taken",
+    "allRead": "But you can share in the reward by reading juz {juz}.",
+    "allAnother": "Another juz",
     "toggle": "Show the list of names",
     "dialog": "Free juz {juz}?",
     "dialog2Q": "Did you finish reading juz {juz}?",
@@ -160,6 +162,13 @@
     "done": " - The khitma is complete, by Allah’s grace",
     "releaseText": "Its reader’s name will be removed, and it will be free to choose again.",
     "releaseYes": "Free the juz"
+  },
+  "reminder": {
+    "button": "Remind me to read it",
+    "google": "Google Calendar",
+    "phone": "Phone calendar",
+    "title": "📖 Read juz {juz} – {khitma}",
+    "details": "When you have read it, mark it as finished on the khitma page:\n{url}"
   },
   "gDashboard": {
     "releaseStale": "Release late bookings ({count})",

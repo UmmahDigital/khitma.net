@@ -19,6 +19,8 @@ import { renderShareCard } from '../../../../../share-card';
 import { repeatText } from '../../../../../schedule';
 import { firstFridayAfterRamadan, hijri, isAfterRamadanPromptTime } from '../../../../../ramadan';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
+import { suggestedJuz } from '../../../../../all-booked';
+import { googleCalendarUrl, icsFile, Reminder, reminderStart } from '../../../../../reminder';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
 import { bookedForDays, bookingAgeText, staleBookings } from '../../../../../booking-age';
@@ -56,6 +58,10 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   offerAfter: number = null;
   /** The juz the member just finished, so its circle can mark the moment. */
   celebrateJuzIndex: number = null;
+  /** «جزء آخر» moves the suggestion on, when every juz is taken (see suggestion). */
+  suggestionStep = 0;
+  /** The juz whose «ذكّرني» menu is open. */
+  reminderJuz: number = null;
 
 
   constructor(private groupsApi: KhitmaGroupService,
@@ -188,6 +194,61 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   get allBookedText(): string {
     const template = this.common.translation.sharing?.allBooked || 'كلّ الأجزاء محجوزة، و{count} قيد القراءة';
     return fill(template, { count: ajzaCount(this.readingAjza.length, this.common.currentLanguage) });
+  }
+
+  /** Every juz is taken and none is this member's: a juz to read anyway, for the reward (all-booked.ts). */
+  get suggestion(): number | null {
+    // Not while the member is being thanked for the juz they just finished.
+    if (this.group.isDone() || this.group.hasIdleAjza() || this.myAjzaIndexes?.length || this.offerAfter !== null) {
+      return null;
+    }
+    return suggestedJuz(this.group.ajza, this.group.id, new Date(), this.suggestionStep);
+  }
+
+  suggestionText(key: string, fallback: string): string {
+    return fill(this.common.translation.sequential?.[key] || fallback, { juz: this.suggestion });
+  }
+
+  readSuggestion() {
+    this.$gaService.send('all_booked_suggestion', { action: 'read', step: this.suggestionStep });
+  }
+
+  anotherSuggestion() {
+    this.suggestionStep++;
+    this.$gaService.send('all_booked_suggestion', { action: 'another', step: this.suggestionStep });
+  }
+
+  // «ذكّرني»: an event in the member's own calendar to read the juz they booked (reminder.ts).
+
+  private reminderFor(juzIndex: number): Reminder {
+    const t = this.common.translation.reminder ?? {};
+    return {
+      title: fill(t.title || '📖 قراءة الجزء {juz} – {khitma}', { juz: juzIndex + 1, khitma: this.group.title }),
+      details: fill(t.details || 'بعد قراءته، سجّل إتمامه في صفحة الختمة:\n{url}', { url: this.referral.groupUrl(this.group.id) }),
+      start: reminderStart(new Date()),
+    };
+  }
+
+  get googleReminderUrl(): string {
+    return this.reminderJuz === null ? '' : googleCalendarUrl(this.reminderFor(this.reminderJuz));
+  }
+
+  reminderAdded(calendar: 'google' | 'phone') {
+    this.$gaService.send('reminder_added', { calendar });
+  }
+
+  /** The phone's calendar: an .ics file, which iPhones and Android phones open with their calendar app. */
+  downloadReminder() {
+    const juz = this.reminderJuz + 1;
+    const ics = icsFile(this.reminderFor(this.reminderJuz), new Date(), `${this.group.id}-${juz}-${Date.now()}@khitma.net`);
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+    link.download = `khitma-juz-${juz}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 60_000);
+    this.reminderAdded('phone');
   }
 
   /** "موعد إتمام الختمة: الجمعة 6/3/2026 — بعد 5 أيام", or the date the admin typed (groups before picking existed). */

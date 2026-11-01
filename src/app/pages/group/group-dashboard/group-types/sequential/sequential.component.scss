@@ -84,6 +84,8 @@
     display: flex;
     align-items: center;
     padding: 12px;
+    // Sections get a bottom margin elsewhere; inside the card it would push «ذكّرني» away from the buttons.
+    margin-bottom: 0;
 
     // Margins rather than flex `gap`, which Samsung Internet 12 lacks.
     > * + * {
@@ -236,6 +238,36 @@
     gap: 8px;
     justify-content: center;
     margin-top: 10px;
+  }
+}
+
+// Every juz taken: a juz to read anyway. Margins rather than flex `gap` (Samsung Internet 12), and the labels as
+// ordinary text despite the group page's `.user-msg span` rule.
+.all-booked {
+  .next-juz-actions {
+    gap: 0;
+    flex-wrap: wrap;
+
+    > * + * {
+      margin-inline-start: 8px;
+    }
+  }
+
+  ::ng-deep span {
+    display: inline;
+    margin: 0;
+  }
+}
+
+// «ذكّرني» under the juz card's buttons.
+.remind-btn.mat-mdc-button-base {
+  display: flex;
+  margin: -8px auto 6px;
+  font-size: text(17px);
+
+  ::ng-deep span {
+    display: inline;
+    margin: 0;
   }
 }
 

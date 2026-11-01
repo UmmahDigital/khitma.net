@@ -151,7 +151,9 @@
     "finished": "Fertig gelesen: Juz",
     "release": "Juz abgeben",
     "select": "Wähle einen freien Juz (rot markiert).",
-    "all": "Alle Juz dieser Gruppe sind vergeben.",
+    "allTitle": "Alle Juz sind vergeben",
+    "allRead": "Aber du kannst am Lohn teilhaben, indem du Juz {juz} liest.",
+    "allAnother": "Ein anderer Juz",
     "toggle": "Namensliste anzeigen",
     "dialog": "Juz {juz} freigeben?",
     "dialog2Q": "Hast du Juz {juz} zu Ende gelesen?",
@@ -160,6 +162,13 @@
     "done": " - Die Khitma ist vollendet, durch Allahs Gnade",
     "releaseText": "Der Name des Lesers wird entfernt, und der Juz wird wieder frei.",
     "releaseYes": "Juz freigeben"
+  },
+  "reminder": {
+    "button": "Erinnere mich ans Lesen",
+    "google": "Google Kalender",
+    "phone": "Kalender des Handys",
+    "title": "📖 Juz {juz} lesen – {khitma}",
+    "details": "Wenn du ihn gelesen hast, markiere ihn auf der Seite der Khitma als beendet:\n{url}"
   },
   "gDashboard": {
     "releaseStale": "Verspätete Buchungen freigeben ({count})",

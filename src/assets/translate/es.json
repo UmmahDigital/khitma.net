@@ -151,7 +151,9 @@
     "finished": "Terminé el juz",
     "release": "Dejar este juz",
     "select": "Elige cualquier juz disponible (en rojo).",
-    "all": "Todos los juz de este grupo están reservados.",
+    "allTitle": "Todos los juz están reservados",
+    "allRead": "Pero puedes compartir la recompensa leyendo el juz {juz}.",
+    "allAnother": "Otro juz",
     "toggle": "Mostrar la lista de nombres",
     "dialog": "¿Liberar el juz {juz}?",
     "dialog2Q": "¿Terminaste de leer el juz {juz}?",
@@ -160,6 +162,13 @@
     "done": " - La khitma se completó, por la gracia de Allah",
     "releaseText": "Se quitará el nombre de su lector y volverá a estar disponible.",
     "releaseYes": "Liberar el juz"
+  },
+  "reminder": {
+    "button": "Recordarme leerlo",
+    "google": "Google Calendar",
+    "phone": "Calendario del teléfono",
+    "title": "📖 Leer el juz {juz} – {khitma}",
+    "details": "Cuando lo hayas leído, márcalo como terminado en la página de la khitma:\n{url}"
   },
   "gDashboard": {
     "releaseStale": "Liberar reservas atrasadas ({count})",
