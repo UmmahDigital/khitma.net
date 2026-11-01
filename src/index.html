@@ -163,14 +163,50 @@
     function gtag() { dataLayer.push(arguments); }
   </script>
 
-  <!-- English, French, German and Spanish read left to right: the page says so before the app starts, so that
-       Angular Material's dialogs, menus and fields follow it too (the app's own layout follows body.ltr). -->
+  <!-- The page's language and direction before the app starts, so that Angular Material's dialogs, menus and fields
+       follow it too (the app's own layout follows body.ltr). A ?lang= link (from the language pages) picks the
+       language. Otherwise someone's first visit decides it, and it is kept: the rules of firstLanguage in
+       src/app/languages.ts (Arabic for a phone that opened the app before or lists Arabic; else that of a link shared
+       in Urdu, Indonesian, Malay, Turkish or Bengali, ?hl=, or the phone's, for those five; else Arabic). -->
   <script>
     try {
+      var supported = ['ar', 'en', 'fr', 'es', 'de', 'ur', 'id', 'ms', 'tr', 'bn'];
+      var match = /[?&]lang=([a-z]{2})(?=&|$)/.exec(location.search);
+      if (match && supported.indexOf(match[1]) >= 0) {
+        localStorage.setItem('lng', match[1]);
+        var rest = location.search.replace(/([?&])lang=[a-z]{2}(&|$)/, '$1').replace(/[?&]$/, '');
+        history.replaceState(history.state, '', location.pathname + rest + location.hash);
+      }
       var lng = localStorage.getItem('lng');
-      if (lng && lng !== 'ar') {
-        document.documentElement.dir = 'ltr';
+      var firstVisit = supported.indexOf(lng) < 0;
+      if (firstVisit) {
+        lng = 'ar';
+        var fromPhone = ['ur', 'id', 'ms', 'tr', 'bn'];
+        var phone = (navigator.languages || [navigator.language || '']).map(function (tag) {
+          var code = String(tag).toLowerCase().split(/[-_]/)[0];
+          return code === 'in' ? 'id' : code;
+        });
+        // personalKhitma (OPENED_BEFORE_KEY): this phone has been using the app, in Arabic.
+        if (!localStorage.getItem('personalKhitma') && phone.indexOf('ar') < 0) {
+          var hint = /[?&]hl=([a-z]{2})(?=&|$)/.exec(location.search);
+          if (hint && fromPhone.indexOf(hint[1]) >= 0) {
+            lng = hint[1];
+          } else {
+            for (var i = 0; i < phone.length; i++) {
+              if (fromPhone.indexOf(phone[i]) >= 0) {
+                lng = phone[i];
+                break;
+              }
+            }
+          }
+        }
+      }
+      if (lng !== 'ar') {
+        document.documentElement.dir = lng === 'ur' ? 'rtl' : 'ltr';
         document.documentElement.lang = lng;
+      }
+      if (firstVisit) {
+        localStorage.setItem('lng', lng);
       }
     } catch (e) {}
   </script>
@@ -293,7 +329,7 @@
         <h3>هل يمكن تخصيص الختمة عن روح متوفّى؟</h3>
         <p>نعم، وكثير من الختمات على ختمة.نت تُنشأ عن أرواح الأحبّة: اكتب ذلك في عنوان الختمة ووصفها، وشارك الرابط مع الأهل والأصدقاء.</p>
         <h3>هل ختمة.نت مجّاني؟</h3>
-        <p>نعم، مجّاني بالكامل، ويعمل بالعربيّة والإنجليزيّة والفرنسيّة والإسبانيّة والألمانيّة.</p>
+        <p>نعم، مجّاني بالكامل، ويعمل بالعربيّة والإنجليزيّة والفرنسيّة والإسبانيّة والألمانيّة والأرديّة والإندونيسيّة والملايويّة والتركيّة والبنغاليّة.</p>
         <h2>أدلة</h2>
         <ul>
           <li><a href="/guide/khitma-for-the-deceased/">ختمة عن روح الميت: كيف تنظّمها مع العائلة والأصدقاء</a></li>
@@ -302,7 +338,7 @@
         </ul>
         <section dir="ltr" lang="en">
           <h2>Khitma.net: read the whole Quran together</h2>
-          <p>Create a group khitma for free, share its link (for example on WhatsApp), and each person picks one of the 30 juz to read and marks it done. Everyone follows the progress until the khitma is complete. No sign-up and nothing to install; it works in the browser, in Arabic, English, French, Spanish and German.</p>
+          <p>Create a group khitma for free, share its link (for example on WhatsApp), and each person picks one of the 30 juz to read and marks it done. Everyone follows the progress until the khitma is complete. No sign-up and nothing to install; it works in the browser, in Arabic, English, French, Spanish, German, Urdu, Indonesian, Malay, Turkish and Bengali.</p>
         </section>
       </div>
     </main>

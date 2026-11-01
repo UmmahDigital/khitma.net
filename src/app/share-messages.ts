@@ -1,4 +1,5 @@
 import { Juz, JUZ_STATUS } from './entities/entities';
+import { juzCount, listSeparator } from './languages';
 import { khitmaName } from './purpose';
 
 // Texts for sharing a khitma. Arabic is the source; the other languages come from the translation files.
@@ -6,10 +7,10 @@ import { khitmaName } from './purpose';
 /** Sahih Muslim 1893, in Arabic in every language (translations add its meaning after it). */
 export const SHARE_HADITH = '«مَنْ دَلَّ عَلَى خَيْرٍ فَلَهُ مِثْلُ أَجْرِ فَاعِلِهِ» (رواه مسلم)';
 
-/** "جزء واحد"، "جزءان"، "5 أجزاء"، "18 جزءًا" — or "18 juz" in other languages. */
+/** "جزء واحد"، "جزءان"، "5 أجزاء"، "18 جزءًا" — or "18 juz", "5 پارے", "3 cüz" in other languages (languages.ts). */
 export function ajzaCount(count: number, lang: string): string {
   if (lang !== 'ar') {
-    return lang === 'de' ? `${count} Juz` : `${count} juz`;
+    return juzCount(count, lang);
   }
   if (count === 1) return 'جزء واحد';
   if (count === 2) return 'جزءان';
@@ -47,7 +48,7 @@ export function helpFinishMessage(
 ): string {
   const template =
     translation?.sharing?.helpMessage || 'ساعدونا في إتمام {khitma} 🤍\nبقي {count} بلا قارئ: {list}\nاختاروا جزءًا من الرابط:';
-  const list = free.join(lang === 'ar' ? '، ' : ', ');
+  const list = free.join(listSeparator(lang));
   const lines = [fill(template, { title, khitma: khitmaName(title), count: ajzaCount(free.length, lang), list }), url];
   if (deadline) {
     lines.push('⏳ ' + deadline);

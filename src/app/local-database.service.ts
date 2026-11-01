@@ -20,6 +20,8 @@ export class LocalDatabaseService {
 
     this.archivedGroups = JSON.parse(localStorage.getItem("archivedGroups")) || {};
 
+    // Written on a first visit: index.html also reads it, before the app starts, to tell that this phone has opened
+    // the app before (OPENED_BEFORE_KEY in languages.ts).
     this.personalKhitma = JSON.parse(localStorage.getItem("personalKhitma")) || null;
 
     this.myGlobalKhitmaAjza = JSON.parse(localStorage.getItem("myGlobalKhitmaAjza")) || null;

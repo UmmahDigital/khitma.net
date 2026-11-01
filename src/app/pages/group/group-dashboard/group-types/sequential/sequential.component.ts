@@ -22,6 +22,7 @@ import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../..
 import { suggestedJuz } from '../../../../../all-booked';
 import { googleCalendarUrl, icsFile, Reminder, reminderStart } from '../../../../../reminder';
 import { startLikeParams } from '../../../../../start-like';
+import { isRtl } from '../../../../../languages';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
 import { bookedForDays, bookingAgeText, staleBookings } from '../../../../../booking-age';
@@ -363,7 +364,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       highlight: finished,
       progress: fill(t.progress || 'تمّت قراءة {done} من 30 جزءًا', { done }),
       invitation: kind === 'juz' ? t.juzInvitation || 'اختاروا جزءًا وشاركونا الأجر' : t.completeInvitation || 'ابدؤوا ختمة جماعيّة لمن تحبّون',
-      rtl: this.common.currentLanguage === 'ar',
+      rtl: isRtl(this.common.currentLanguage),
     });
     image.catch(() => {});
     this.card = { key, image };

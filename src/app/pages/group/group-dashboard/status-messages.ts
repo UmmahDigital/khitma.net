@@ -1,6 +1,7 @@
 import { JUZ_STATUS, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
 import { localDeadlineText } from '../../../deadline';
 import { fill } from '../../../share-messages';
+import { intlLocale, listSeparator } from '../../../languages';
 
 // The status message admins share in the group's WhatsApp chat. Arabic is the source; the other languages come
 // from the translation files' `status` section.
@@ -9,7 +10,7 @@ const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأ
 
 function todayText(date: Date, lang: string): string {
   if (lang !== 'ar') {
-    return date.toLocaleDateString(lang, { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
+    return date.toLocaleDateString(intlLocale(lang), { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
   }
   return ARABIC_DAYS[date.getDay()] + ' ' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getUTCFullYear();
 }
@@ -58,7 +59,7 @@ function statusMsg_Sequential(group, url: string = group.getURL(), translation?:
   msg += fill(t.summary, { done: count(JUZ_STATUS.DONE), reading: count(JUZ_STATUS.BOOKED), free: free.length });
   msg += NEW_LINE;
   if (free.length) {
-    msg += fill(t.freeList, { list: free.join(lang === 'ar' ? '، ' : ', ') });
+    msg += fill(t.freeList, { list: free.join(listSeparator(lang)) });
     msg += NEW_LINE;
   }
   msg += NEW_LINE;

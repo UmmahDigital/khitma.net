@@ -90,7 +90,7 @@
           <p class="next-juz-title" [translate]="'sequential.allTitle'">جميع الأجزاء محجوزة</p>
           <p>{{ suggestionText('allRead', 'ولكن يمكنك أن تشارك في الأجر بقراءة الجزء {juz}.') }}</p>
           <div class="next-juz-actions">
-            <a mat-flat-button class="action-btn" [routerLink]="['/quran/juz', suggestion]" (click)="readSuggestion()">{{ suggestionText('nextTake', 'اقرأ الجزء {juz}') }}</a>
+            <a mat-flat-button class="action-btn" [routerLink]="['/quran/juz', suggestion]" (click)="readSuggestion()">{{ suggestionText('allReadButton', 'اقرأ الجزء {juz}') }}</a>
             <button mat-button (click)="anotherSuggestion()"><span [translate]="'sequential.allAnother'">جزء آخر</span></button>
           </div>
         </div>

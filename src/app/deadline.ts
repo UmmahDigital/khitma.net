@@ -1,3 +1,4 @@
+import { intlLocale } from './languages';
 // A khitma's deadline: chosen when it's created, kept as a real date (targetAt, YYYY-MM-DD) for the countdown, and as
 // readable Arabic text (targetDate) for the messages that already show it. Groups with a target date finish far more
 // often (58% vs 21%), but until now the date could only be typed into the edit dialog.
@@ -65,5 +66,5 @@ export function localDeadlineText(targetAt: string, lang: string): string {
   if (lang === 'ar') {
     return deadlineText(targetAt);
   }
-  return localDate(targetAt).toLocaleDateString(lang, { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
+  return localDate(targetAt).toLocaleDateString(intlLocale(lang), { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
 }

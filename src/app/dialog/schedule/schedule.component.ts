@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { KHITMA_CYCLE_TYPE } from '../../entities/entities';
 import { FRIDAY, RepeatEvery, RoundSchedule } from '../../schedule';
 import { CommonService } from '../../service/common.service';
+import { intlLocale } from '../../languages';
 
 /** Saturday first, Friday (the usual day) last. */
 const WEEK = [6, 0, 1, 2, 3, 4, 5];
@@ -33,7 +34,7 @@ export class ScheduleComponent {
     this.every = current?.every ?? 'week';
     this.weekday = current?.weekday ?? FRIDAY;
     this.cycleType = current?.cycleType ?? KHITMA_CYCLE_TYPE.AUTO_BOOK;
-    const format = new Intl.DateTimeFormat(common.currentLanguage || 'ar', { weekday: 'long' });
+    const format = new Intl.DateTimeFormat(intlLocale(common.currentLanguage || 'ar'), { weekday: 'long' });
     // 1 March 2026 was a Sunday (0).
     this.weekdays = WEEK.map((value) => ({ value, label: format.format(new Date(2026, 2, 1 + value)) }));
   }

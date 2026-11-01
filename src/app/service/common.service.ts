@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { appLanguage, isRtl, LANGUAGES } from '../languages';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,14 @@ export class CommonService {
 
   translation: any = { loaded: false }
   missingTranslation: any = { loaded: true }
-  languages = [
-    { text: "العربية", value: "Ar" },
-    { text: "English", value: "En" },
-    { text: "Français", value: "Fr" },
-    { text: "Español", value: "Es" },
-    { text: "Deutsch", value: "De" },
-  ]
+  languages = LANGUAGES.map((language) => ({ text: language.name, value: language.code }));
   constructor(private httpClient: HttpClient) {
     this.loadTranslationFile();
   }
 
 
   get currentLanguage() {
-    let lng = window.localStorage.getItem('lng');
-    if (!lng) {
-      lng = 'ar';
-    }
-    return lng;
+    return appLanguage();
   }
 
   set currentLanguage(value) {
@@ -41,10 +32,7 @@ export class CommonService {
       this.httpClient.get(`assets/translate/${lng}.json`, { responseType: 'json' })
         .subscribe(data => {
           this.translation = data;
-          let dir = "rtl";
-          if (lng !== "ar") {
-            dir = "ltr";
-          }
+          const dir = isRtl(lng) ? "rtl" : "ltr";
           document.body.classList.remove("rtl", "ltr");
           document.body.classList.add(dir);
         }

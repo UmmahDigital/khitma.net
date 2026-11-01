@@ -157,6 +157,7 @@
     "allTitle": "Todos los juz están reservados",
     "allRead": "Pero puedes compartir la recompensa leyendo el juz {juz}.",
     "allAnother": "Otro juz",
+    "allReadButton": "Leer el juz {juz}",
     "toggle": "Mostrar la lista de nombres",
     "dialog": "¿Liberar el juz {juz}?",
     "dialog2Q": "¿Terminaste de leer el juz {juz}?",

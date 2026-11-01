@@ -61,6 +61,12 @@ The app is dark when the phone is (`prefers-color-scheme`). Colours that change 
 
 The invite page shows a QR code of the invitation link, and juz khitmas can be shown on a big screen at `/group/:id/screen` (from the invite page and the admin tools): every juz with its reader, live, the code to scan, and an option to hide names, kept on that device. The codes are drawn as SVG by `src/app/shared/qr-code` with `qrcode-generator` (MIT), loaded only when a code is shown; `e2e/tests/big-screen.spec.ts` scans them back with `jsqr` (a dev dependency) to check they open the right link.
 
+## Languages
+
+Arabic is the source of every text; Arabic, English, French, Spanish, German, Urdu, Indonesian, Malay, Turkish and Bengali are in `src/assets/translate`, and `src/app/languages.ts` lists them (direction, the word for juz after a count, the menu's names). After changing texts, check a translation against English with `node tools/i18n/check.mjs ur`: keys, placeholders and line breaks must match. Urdu, Indonesian, Malay, Turkish and Bengali were translated by an AI and should be read by native speakers.
+
+Someone's first visit decides their language, and it is kept: Arabic if the phone had opened the app before (it spoke Arabic to everyone until 2026) or lists Arabic among its languages; otherwise that of the link they opened, if it was shared from the app in Urdu, Indonesian, Malay, Turkish or Bengali (`?hl=ur`: many of those readers keep their phone in English), or their phone's, for those five; otherwise Arabic. iPhones tell a page only their main language. The language menu, or a `?lang=` link (the language pages use it), changes it. `index.html` applies these rules before the app starts; keep it in step with `firstLanguage` in `languages.ts`.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io), or `npm run test:ci` for a single headless run.
