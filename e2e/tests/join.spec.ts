@@ -26,6 +26,26 @@ test.describe('joining a group from an invite link', () => {
     });
   });
 
+  test('on a slow connection, the join button waits until the group has loaded', async ({ page }) => {
+    const groupId = newGroupId('invite-slow');
+    await createSameTaskGroup(groupId, { members: { 'أبو أحمد': false } });
+    // The group arrives seconds after the page: joining reads its type, so a tap before then used to do nothing.
+    await page.route(/google\.firestore\.v1\.Firestore\/Listen/, async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+      await route.continue().catch(() => {});
+    });
+
+    await openApp(page, `/group/${groupId}`);
+    await page.getByLabel('اسمك').fill('سارة');
+    const join = page.getByRole('button', { name: 'الانضمام للختمة' });
+    await expect(join).toBeDisabled();
+    await expect(join).toBeEnabled({ timeout: 20_000 });
+    await join.click();
+
+    await expect(page).toHaveURL(new RegExp(`/group/${groupId}/dashboard$`), { timeout: 30_000 });
+    await expect.poll(async () => (await getDoc(`groups/${groupId}`))?.members).toMatchObject({ 'سارة': { isTaskDone: false } });
+  });
+
   test('same-task group: joining adds the member to the group', async ({ page }) => {
     const groupId = newGroupId('invite-same');
     await createSameTaskGroup(groupId, { members: { 'أبو أحمد': false } });

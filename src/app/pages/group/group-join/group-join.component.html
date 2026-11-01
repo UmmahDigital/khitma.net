@@ -12,7 +12,8 @@
       <input matInput [(ngModel)]="username" name="title" required="true">
     </mat-form-field>
 
-    <button class="block large action-btn" mat-raised-button (click)="join()" [disabled]="!username"
+    <!-- Joining needs the group (its type decides what's saved): until it has loaded, the button waits. -->
+    <button class="block large action-btn" mat-raised-button (click)="join()" [disabled]="!username || !group"
       [translate]="'gJoin.join'">الانضمام للختمة</button>
   </mat-card-content>
 </mat-card>
