@@ -86,6 +86,24 @@ Problems on people's phones reach Google Analytics as events (`src/app/field-rep
 
 To see the parameters in GA4's reports, register them once as event-scoped custom dimensions (Admin → Custom definitions).
 
+## Backups
+
+Firestore keeps, for project `quran-khitma`:
+
+- point-in-time recovery: the database as it was at any minute of the last 7 days;
+- a backup every day, kept 7 days, and every Sunday, kept 14 weeks (`gcloud firestore backups list --location=nam5 --project=quran-khitma`);
+- delete protection on the database.
+
+To put groups back as they were before a bad write (vandalism, a broken release), within 7 days: export them as they were at a minute before it, then import that export. Documents with the same IDs are overwritten; groups created since are kept. The bucket must be in the database's location (nam5, in the US).
+
+```sh
+gcloud firestore export gs://BUCKET/restore-1 --collection-ids=groups --snapshot-time=2026-11-01T06:00:00Z --project=quran-khitma
+gcloud firestore import gs://BUCKET/restore-1 --collection-ids=groups --project=quran-khitma
+```
+
+Further back, restore a backup into a new database, then export from it and import into `(default)` the same way:
+`gcloud firestore databases restore --source-backup=projects/quran-khitma/locations/nam5/backups/BACKUP_ID --destination-database=restored --project=quran-khitma`.
+
 ## Link previews
 
 Shared group links (`/group/{id}`) are answered by a small Cloud Function (`functions/`): it returns the app's
