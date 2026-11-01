@@ -75,6 +75,15 @@ The simulated old browser cannot catch JavaScript syntax that old engines fail t
 - `tools/ramadan/README.md`: the Ramadan announcement (an in-app notification to add in Firestore, and a WhatsApp message), to publish by hand in mid-Sha'ban.
 - `tools/demo/`: the local demo's sample khitmas (`seed.mjs`) and the date-changing browser (`browse.mjs`); see "Running locally".
 
+## Reports from people's phones
+
+Problems on people's phones reach Google Analytics as events (`src/app/field-reports.ts`), without names or titles:
+
+- `app_error`: an error the app didn't handle, with `error_message` (anything not in English, such as a name in it, becomes `…`), `error_where` (file and position) and `error_source` (`angular`, `window` or `promise`). Each error is sent once, and at most five per page.
+- `dialog_offscreen`: a dialog whose buttons reach outside the screen, with `dialog` (its component, e.g. `app-start-new-khitma`), `overflow_px`, `viewport` and `root_font_px`.
+
+To see the parameters in GA4's reports, register them once as event-scoped custom dimensions (Admin → Custom definitions).
+
 ## Link previews
 
 Shared group links (`/group/{id}`) are answered by a small Cloud Function (`functions/`): it returns the app's

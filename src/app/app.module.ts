@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, inject, NgModule, provideAppInitializer } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/button-toggle';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig } from '@angular/material/dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { AnalyticsModule } from './analytics';
+import { AnalyticsModule, GoogleAnalyticsService } from './analytics';
 import { AppComponent } from './app.component';
+import { ReportingErrorHandler, watchDialogs } from './field-reports';
 import { GroupJoinedGuard } from './group.routeguard';
 import { KhitmaGroupService } from './khitma-group.service';
 import { SharedModule } from './modules/shared.module';
@@ -126,6 +127,12 @@ const routes: Routes = [
         maxHeight: CSS.supports('height', '1dvh') ? 'calc(100dvh - 32px)' : 'calc(100vh - 32px)',
       }),
     },
+    // What goes wrong on people's phones reaches analytics (field-reports.ts).
+    { provide: ErrorHandler, useClass: ReportingErrorHandler },
+    provideAppInitializer(() => {
+      (inject(ErrorHandler) as ReportingErrorHandler).listenToWindow(window);
+      watchDialogs(inject(MatDialog), inject(GoogleAnalyticsService), window);
+    }),
     GroupJoinedGuard,
     KhitmaGroupService,
     CommonService,
