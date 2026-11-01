@@ -352,7 +352,11 @@
     "groups": "مجموعاتي",
     "group_add": "مجموعة جديدة",
     "book": "المصحف الشريف",
-    "about": "عن البرنامج"
+    "about": "عن البرنامج",
+    "textSize": "حجم النص",
+    "smaller": "تصغير النص",
+    "larger": "تكبير النص",
+    "textGlyph": "أ"
   },
   "status": {
     "summary": "🟢 تمّ {done} · 🟡 قيد القراءة {reading} · 🔴 متاح {free}",

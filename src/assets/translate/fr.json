@@ -355,7 +355,11 @@
     "groups": "Mes groupes",
     "group_add": "Nouveau groupe",
     "book": "Le Saint Coran",
-    "about": "À propos de l’application"
+    "about": "À propos de l’application",
+    "textSize": "Taille du texte",
+    "smaller": "Texte plus petit",
+    "larger": "Texte plus grand",
+    "textGlyph": "A"
   },
   "status": {
     "summary": "🟢 Lus {done} · 🟡 En lecture {reading} · 🔴 Libres {free}",

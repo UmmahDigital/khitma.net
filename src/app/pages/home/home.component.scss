@@ -1,7 +1,7 @@
 @use "src/variables" as *;
 
 .home {
-  font-size: 20px;
+  font-size: text(20px);
   line-height: normal;
   // Right-aligned rather than justified: without kashida, justifying Arabic only stretches the spaces.
   text-align: start;
@@ -59,13 +59,13 @@ footer{
   }
 
   strong {
-    font-size: 22px;
+    font-size: text(22px);
     line-height: 1.3;
   }
 
   span {
     color: $text-muted;
-    font-size: 18px;
+    font-size: text(18px);
     line-height: 1.4;
   }
 }
@@ -141,14 +141,14 @@ mat-card{
   }
 
   .impact-title {
-    font-size: 22px;
+    font-size: text(22px);
     font-weight: 700;
     color: #1c6151;
   }
 
   .impact-hadith {
     margin: 10px 0 0;
-    font-size: 17px;
+    font-size: text(17px);
     color: #4d5b57;
     white-space: pre-line;
   }
@@ -168,7 +168,7 @@ mat-card{
   }
 
   .ramadan-title {
-    font-size: 26px;
+    font-size: text(26px);
     font-weight: 700;
     color: #f5d77a;
   }

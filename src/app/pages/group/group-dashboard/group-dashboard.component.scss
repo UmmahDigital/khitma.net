@@ -79,7 +79,7 @@
 }
 
 .user-msg {
-  font-size: 22px;
+  font-size: text(22px);
   line-height: 1.4;
 
   span {
@@ -163,7 +163,7 @@ mat-panel-title {
     width: 100%;
     background: $admin-tonal;
     color: $admin-color;
-    font-size: 19px;
+    font-size: text(19px);
     font-weight: 700;
     text-align: start;
     line-height: 56px;

@@ -355,7 +355,11 @@
     "groups": "My groups",
     "group_add": "New group",
     "book": "The Holy Quran",
-    "about": "About the app"
+    "about": "About the app",
+    "textSize": "Text size",
+    "smaller": "Smaller text",
+    "larger": "Larger text",
+    "textGlyph": "A"
   },
   "status": {
     "summary": "🟢 Read {done} · 🟡 Being read {reading} · 🔴 Free {free}",

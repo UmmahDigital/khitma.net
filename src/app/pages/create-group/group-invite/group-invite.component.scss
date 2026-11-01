@@ -1,3 +1,5 @@
+@use "src/variables" as *;
+
 :host > div {
   display: flex;
   flex-direction: column;
@@ -16,7 +18,7 @@
 .invite-intro {
   h2 {
     margin: 0 0 4px;
-    font-size: 28px;
+    font-size: text(28px);
   }
 
   p {

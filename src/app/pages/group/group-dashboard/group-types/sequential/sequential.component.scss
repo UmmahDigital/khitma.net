@@ -99,7 +99,7 @@
     height: auto;
     min-height: 56px;
     padding: 8px 10px;
-    font-size: 18px;
+    font-size: text(18px);
     font-weight: 700;
     line-height: 1.25;
     white-space: normal;
@@ -111,7 +111,7 @@
     min-height: 48px;
     padding: 4px 6px;
     color: $text-muted;
-    font-size: 16px;
+    font-size: text(16px);
     line-height: 1.3;
     white-space: normal;
 }
@@ -164,12 +164,12 @@
     mat-icon {
         width: 28px;
         height: 28px;
-        font-size: 28px;
+        font-size: text(28px);
     }
 
     span {
         margin-top: 2px;
-        font-size: 18px;
+        font-size: text(18px);
         font-weight: 700;
     }
 }
@@ -189,19 +189,19 @@
   }
 
   .help-finish-title {
-    font-size: 22px;
+    font-size: text(22px);
     font-weight: 700;
     color: #1c6151;
   }
 
   .help-finish-text {
-    font-size: 18px;
+    font-size: text(18px);
     margin-bottom: 10px;
   }
 
   .help-finish-impact {
     margin: 10px 0 0;
-    font-size: 16px;
+    font-size: text(16px);
     color: #1c6151;
   }
 }
@@ -222,7 +222,7 @@
   }
 
   .next-juz-title {
-    font-size: 20px;
+    font-size: text(20px);
     font-weight: 700;
     color: #1c6151;
   }
@@ -266,13 +266,13 @@
   }
 
   .memorial-dua-title {
-    font-size: 18px;
+    font-size: text(18px);
     color: #1c6151;
     margin-bottom: 8px;
   }
 
   .memorial-dua-text {
-    font-size: 24px;
+    font-size: text(24px);
     line-height: 1.7;
   }
 }

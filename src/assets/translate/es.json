@@ -355,7 +355,11 @@
     "groups": "Mis grupos",
     "group_add": "Nuevo grupo",
     "book": "El Noble Corán",
-    "about": "Acerca de la aplicación"
+    "about": "Acerca de la aplicación",
+    "textSize": "Tamaño del texto",
+    "smaller": "Texto más pequeño",
+    "larger": "Texto más grande",
+    "textGlyph": "A"
   },
   "status": {
     "summary": "🟢 Leídos {done} · 🟡 En lectura {reading} · 🔴 Libres {free}",

@@ -355,7 +355,11 @@
     "groups": "Meine Gruppen",
     "group_add": "Neue Gruppe",
     "book": "Der edle Koran",
-    "about": "Über die App"
+    "about": "Über die App",
+    "textSize": "Textgröße",
+    "smaller": "Kleinerer Text",
+    "larger": "Größerer Text",
+    "textGlyph": "A"
   },
   "status": {
     "summary": "🟢 Gelesen {done} · 🟡 Wird gelesen {reading} · 🔴 Frei {free}",

@@ -64,7 +64,7 @@ The end-to-end tests use [Playwright](https://playwright.dev) against a local Fi
    - `mobile-chromium`: every behavior test plus screenshot comparisons of the current design;
    - `oldest-supported-browser`: the behavior tests again, with Chromium made to act like the oldest phones in `.browserslistrc` (iOS 14.5, and Chromium 79 for Samsung Internet 12 and old Android WebViews).
 
-The tests use a roomy phone (390×844). `e2e/tests/small-screens.spec.ts` also opens the pages and dialogs on phones with fewer CSS pixels: set to large text (360×595), to the largest display size (320×560), and held sideways (740×340). Pages may not scroll sideways there, and every dialog button must be on the screen.
+The tests use a roomy phone (390×844). `e2e/tests/small-screens.spec.ts` also opens the pages and dialogs on phones with fewer CSS pixels: set to large text (360×595, and again with the app's largest text size), to the largest display size (320×560), and held sideways (740×340). Pages may not scroll sideways there, and every dialog button must be on the screen.
 
 Screenshot baselines exist for macOS only (`e2e/tests/__screenshots__/darwin`), so CI skips them. After an intended design change, review the diffs and run `npm run e2e:update-screenshots`.
 

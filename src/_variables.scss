@@ -1,4 +1,12 @@
 @use "sass:color";
+@use "sass:math";
+
+// Text sizes follow the reader's choice (the text size in the menu sets the root's size, see styles.scss); at the
+// default 18px root, text(24px) is still 24px.
+@function text($px) {
+  @return math.div($px, 18px) * 1rem;
+}
+
 $primary-color: #075E54;
 // Buttons and links. A touch darker than WhatsApp's #128C7E so white text on it passes WCAG AA (4.6:1).
 $action-color: #118376;

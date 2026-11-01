@@ -1,3 +1,5 @@
+@use "src/variables" as *;
+
 .about {
   font-size: larger;
   line-height: normal;
@@ -41,7 +43,7 @@ hr {
 
   h2 {
     margin-bottom: 8px;
-    font-size: 28px;
+    font-size: text(28px);
     font-weight: 700;
     text-align: center;
   }

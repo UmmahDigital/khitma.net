@@ -36,3 +36,19 @@ test.describe('the juz grid', () => {
     await expect(toggles.nth(2).locator('.juz-mark')).toHaveCount(0);
   });
 });
+
+test('the text size in the menu sets every text size, and is kept on the phone', async ({ page }) => {
+  await openApp(page, '/');
+  const rootSize = () => page.evaluate(() => getComputedStyle(document.documentElement).fontSize);
+  await expect.poll(rootSize).toBe('18px');
+
+  await page.getByRole('button', { name: 'menu' }).click();
+  await page.getByRole('button', { name: 'تكبير النص' }).click();
+  await page.getByRole('button', { name: 'تكبير النص' }).click();
+  await expect.poll(rootSize).toBe('22.4px');
+  await expect(page.getByRole('button', { name: 'تكبير النص' })).toBeDisabled();
+
+  await page.reload();
+  await expect.poll(rootSize).toBe('22.4px');
+  expect(await page.evaluate(() => localStorage.getItem('textSize'))).toBe('xl');
+});

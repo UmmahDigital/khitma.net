@@ -16,7 +16,7 @@ html {
   --mat-dialog-container-min-width: min(280px, calc(100vw - 32px));
 
   --mat-menu-container-shape: 16px;
-  --mat-menu-item-label-text-size: 18px;
+  --mat-menu-item-label-text-size: #{text(18px)};
   --mat-menu-item-icon-color: #{$primary-color};
 
   --mat-form-field-filled-container-shape: 12px;
@@ -65,7 +65,7 @@ html {
   white-space: normal;
   align-items: center;
   text-align: center;
-  font-size: 20px;
+  font-size: text(20px);
   font-weight: 700;
 }
 
@@ -81,7 +81,7 @@ html {
   .mat-mdc-button-base:not(.large) {
     height: 44px;
     min-width: 88px;
-    font-size: 18px;
+    font-size: text(18px);
   }
 }
 

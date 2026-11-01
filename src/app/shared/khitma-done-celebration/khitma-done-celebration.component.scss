@@ -1,7 +1,7 @@
 @use "src/variables" as *;
 
 .gift-container {
-  font-size: 20px;
+  font-size: text(20px);
   transition: 1s;
   display: block;
   position: relative;
