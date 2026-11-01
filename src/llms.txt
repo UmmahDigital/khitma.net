@@ -25,9 +25,17 @@ It works in any modern phone browser, including older phones (iOS 14.5 and later
 
 ## Guides (Arabic)
 
+- [All guides](https://khitma.net/guide/)
+- [Frequently asked questions](https://khitma.net/guide/faq/)
 - [A khitma for someone who passed away](https://khitma.net/guide/khitma-for-the-deceased/): organising it with family over WhatsApp, step by step, and the supplication for the deceased.
 - [The group Ramadan khitma](https://khitma.net/guide/ramadan-group-khitma/): one khitma during the month, or a complete khitma every day with 30 people.
 - [Organising a group khitma over WhatsApp](https://khitma.net/guide/whatsapp-group-khitma/): one link instead of copied name lists.
+- [Dividing the Quran among a number of people](https://khitma.net/guide/divide-quran-among-people/): by juz, hizb or page, for any group size.
+- [A weekly family khitma every Friday](https://khitma.net/guide/weekly-family-khitma/): a khitma that repeats by itself, each member moving to the next juz.
+- [A khitma at a house of condolence](https://khitma.net/guide/khitma-at-a-house-of-condolence/): a QR code to join and the khitma on a big screen.
+- [A khitma for someone who is ill](https://khitma.net/guide/khitma-for-healing/): reading and making dua together.
+- [When a group khitma stalls](https://khitma.net/guide/when-a-khitma-stalls/): finishing the last ajza.
+- [How long completing the Quran takes](https://khitma.net/guide/how-long-to-complete-the-quran/): alone and with a group, in a day or a week.
 
 ## In other languages
 
