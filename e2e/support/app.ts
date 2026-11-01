@@ -177,9 +177,9 @@ export async function openedUrls(page: Page): Promise<string[]> {
   return page.evaluate(() => (window as any).__opened);
 }
 
-/** The text of a wa.me link the app opened. */
+/** The text of a WhatsApp link the app opened. Never a wa.me link: its redirect turns emoji into "�". */
 export function whatsappText(url: string): string {
-  expect(url).toMatch(/^https:\/\/wa\.me\/\?text=/);
+  expect(url).toMatch(/^https:\/\/api\.whatsapp\.com\/send\?text=/);
   return new URL(url).searchParams.get('text')!;
 }
 

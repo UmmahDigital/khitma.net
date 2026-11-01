@@ -32,7 +32,9 @@ export class SharingService {
       return;
     }
     this.track('whatsapp', content, groupId);
-    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+    // Not wa.me: its redirect turns every emoji (the status message's 🟢🟡🔴) into "�". It redirects to
+    // api.whatsapp.com/send, which keeps them.
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
   }
 
   /** The phone's share sheet; where there is none, the message is copied and WhatsApp offered. */
