@@ -19,7 +19,7 @@ test.describe('sharing', () => {
   test('a new group is sent on WhatsApp in one tap, with a clean invite', async ({ page }) => {
     await openApp(page, '/new?type=recurring', { storage: { refCode: REF } });
     await page.getByLabel('عنوان الختمة').fill('ختمة الجمعة');
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill('أبو محمد');
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill('أبو محمد');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
     const groupId = new URL(page.url()).pathname.split('/')[2];

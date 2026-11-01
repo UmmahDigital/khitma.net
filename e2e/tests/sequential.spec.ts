@@ -57,7 +57,7 @@ test.describe('sequential group: members', () => {
     await createSequentialGroup(groupId, { author: ADMIN, assigned: { 1: { owner: ADMIN, status: DONE } } });
 
     await openDashboard(page, groupId, 'سارة');
-    await expect(page.getByText('يمكنك اختيار أي من الأجزاء التي باللون الأحمر.')).toBeVisible();
+    await expect(page.getByText('اختر أيّ جزء متاح (باللون الأحمر).')).toBeVisible();
     await juzToggle(page, 5).click();
 
     await expect.poll(() => storedJuz(groupId, 5)).toEqual({ owner: 'سارة', status: BOOKED });
@@ -168,7 +168,7 @@ test.describe('sequential group: admin', () => {
     expect(await storedJuz(groupId, 3)).toEqual({ owner: 'خالد', status: BOOKED });
 
     await juzToggle(page, 3).click();
-    await page.getByRole('button', { name: 'تمّت قراءته' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'تمّت قراءته' }).click();
     await expect.poll(() => storedJuz(groupId, 3)).toEqual({ owner: 'خالد', status: DONE });
 
     await juzToggle(page, 6).click();
@@ -299,7 +299,7 @@ test.describe('sequential group: admin', () => {
     expect(lines).toContain('01 🟢 سارة');
     expect(lines).toContain('02 🟡 خالد');
     expect(lines).toContain('03 🔴 ');
-    expect(shared.text).toContain('موعد تسليم الختمة: يوم الخميس.');
+    expect(shared.text).toContain('موعد إتمام الختمة: يوم الخميس.');
     expect(shared.text).toContain(`http://localhost:4300/group/${groupId}`);
   });
 

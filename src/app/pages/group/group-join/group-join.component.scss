@@ -1,3 +1,4 @@
+@use "src/variables" as *;
 
 .in-app-hint {
   margin: 0 auto 16px;
@@ -6,6 +7,10 @@
   background: #fff4d6;
   text-align: center;
   line-height: 1.4;
+
+  @include dark {
+    background: #3a3120;
+  }
 }
 
 .continue-as {

@@ -1,3 +1,5 @@
+@use "src/variables" as *;
+
 .wrapper {
     position: relative;
     width: 50%;
@@ -81,7 +83,7 @@
     position: absolute;
     top: 75px;
     font-family: "Lato";
-    font-size: 20px;
+    font-size: text(20px);
     letter-spacing: 12px;
     color: #fff;
     left: 15%;

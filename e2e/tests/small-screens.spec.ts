@@ -5,12 +5,14 @@ import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtur
 // Phones set to large text or a large display size have fewer CSS pixels than the roomy phone the other specs use
 // (390x844): 360x595 is such a phone with the browser's bars showing (an admin could not renew her khitma on one:
 // the dialog's buttons were below the screen), 320x560 the largest display size, and 740x340 a phone held sideways.
-// On each, pages may not scroll sideways, and every dialog keeps all its buttons on the screen.
+// The first again with the largest text size from the menu (text-size.ts). On each, pages may not scroll sideways,
+// and every dialog keeps all its buttons on the screen.
 
-const SCREENS = [
+const SCREENS: Array<{ width: number; height: number; textSize?: string }> = [
   { width: 360, height: 595 },
   { width: 320, height: 560 },
   { width: 740, height: 340 },
+  { width: 360, height: 595, textSize: 'xl' },
 ];
 
 const ADMIN = 'أبو أحمد';
@@ -60,16 +62,20 @@ async function adminTool(page: Page, name: string | RegExp) {
 }
 
 for (const screen of SCREENS) {
-  test.describe(`a ${screen.width}x${screen.height} screen`, () => {
+  const viewport = { width: screen.width, height: screen.height };
+  // The text size is kept on the phone, like the groups joined.
+  const storage = (more: Record<string, unknown> = {}) => (screen.textSize ? { textSize: screen.textSize, ...more } : more);
+
+  test.describe(`a ${screen.width}x${screen.height} screen${screen.textSize ? ` with ${screen.textSize} text` : ''}`, () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(screen);
+      await page.setViewportSize(viewport);
     });
 
     test('public pages fit its width', async ({ page }) => {
       const groupId = newGroupId('small-public');
       await createSequentialGroup(groupId, { author: ADMIN, assigned: { 1: { owner: ADMIN, status: BOOKED } } });
 
-      await openApp(page, '/', { now: OUTSIDE_RAMADAN });
+      await openApp(page, '/', { now: OUTSIDE_RAMADAN, storage: storage() });
       await expect(page.locator('#ayat-count .main-counter')).toBeVisible();
       await expectFitsWidth(page, 'home');
 
@@ -95,7 +101,7 @@ for (const screen of SCREENS) {
         author: ADMIN,
         assigned: { 1: { owner: ADMIN, status: DONE }, 5: { owner: 'سارة', status: BOOKED } },
       });
-      await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: 'سارة' }) } });
+      await openApp(page, `/group/${groupId}`, { storage: storage({ groups: joinedGroups({ [groupId]: 'سارة' }) }) });
       await expect(page.getByText('السلام عليكم يا سارة')).toBeVisible();
       await expectFitsWidth(page, 'the member’s page');
 
@@ -121,13 +127,13 @@ for (const screen of SCREENS) {
           12: { owner: 'ليلى', status: DONE },
         },
       });
-      await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: ADMIN }) } });
+      await openApp(page, `/group/${groupId}`, { storage: storage({ groups: joinedGroups({ [groupId]: ADMIN }) }) });
       await expect(page.getByText(`السلام عليكم يا ${ADMIN}`)).toBeVisible();
       await page.getByText('أدوات مسؤول المجموعة').click();
       await expect(page.locator('.admin-tools').getByRole('button', { name: 'تعديل تفاصيل الختمة' })).toBeVisible();
       await expectFitsWidth(page, 'the admin’s page');
 
-      for (const tool of ['بدء الختمة التالية', 'تكرار الختمة تلقائيًا', 'تعديل تفاصيل الختمة', /إتاحة المحجوز منذ أسبوع/]) {
+      for (const tool of ['بدء الختمة التالية', 'تكرار الختمة تلقائيًا', 'تعديل تفاصيل الختمة', /إتاحة الأجزاء المتأخّرة/]) {
         await adminTool(page, tool);
         await expectButtonsOnScreen(page, String(tool));
       }

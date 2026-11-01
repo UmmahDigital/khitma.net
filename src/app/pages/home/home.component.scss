@@ -1,7 +1,7 @@
 @use "src/variables" as *;
 
 .home {
-  font-size: 20px;
+  font-size: text(20px);
   line-height: normal;
   // Right-aligned rather than justified: without kashida, justifying Arabic only stretches the spaces.
   text-align: start;
@@ -38,7 +38,7 @@ a {
 
 footer{
   text-align: center;
-  color: gray;
+  color: var(--text-muted);
 }
 
 // Friendly app: Dayma's icon, name and tagline, and a button in Dayma's own green.
@@ -59,13 +59,13 @@ footer{
   }
 
   strong {
-    font-size: 22px;
+    font-size: text(22px);
     line-height: 1.3;
   }
 
   span {
-    color: $text-muted;
-    font-size: 18px;
+    color: var(--text-muted);
+    font-size: text(18px);
     line-height: 1.4;
   }
 }
@@ -103,7 +103,7 @@ font-weight: bold;
 
 
 .secondary-counter{
-  color:gray;
+  color:var(--text-muted);
 }
 
 .number{
@@ -112,12 +112,12 @@ font-weight: bold;
     'DejaVu Sans Mono', Menlo, Consolas, monospace;
 
 
-  color:$primary-color;
+  color:var(--primary);
   font-weight: bold;
 }
 
 .counter-color{
-  color:$primary-color;
+  color:var(--primary);
 
 }
 
@@ -132,7 +132,7 @@ mat-card{
   max-width: 420px;
   padding: 14px 16px;
   border-radius: 16px;
-  background: #e3f1ee;
+  background: var(--tint);
   text-align: center;
 
   p {
@@ -141,15 +141,15 @@ mat-card{
   }
 
   .impact-title {
-    font-size: 22px;
+    font-size: text(22px);
     font-weight: 700;
-    color: #1c6151;
+    color: var(--tint-text);
   }
 
   .impact-hadith {
     margin: 10px 0 0;
-    font-size: 17px;
-    color: #4d5b57;
+    font-size: text(17px);
+    color: var(--text-muted);
     white-space: pre-line;
   }
 }
@@ -168,7 +168,7 @@ mat-card{
   }
 
   .ramadan-title {
-    font-size: 26px;
+    font-size: text(26px);
     font-weight: 700;
     color: #f5d77a;
   }

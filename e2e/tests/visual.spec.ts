@@ -230,7 +230,7 @@ test.describe('screenshots of the current design', () => {
     await snap(page, 'sequential-admin-booking-ages');
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.getByText('أدوات مسؤول المجموعة').click();
-    await expect(page.getByRole('button', { name: 'إتاحة المحجوز منذ أسبوع أو أكثر (1)' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'إتاحة الأجزاء المتأخّرة (1)' })).toBeVisible();
     await snap(page, 'sequential-admin-stale-tools');
   });
 
@@ -238,7 +238,7 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(PHONE);
     await openAsMember(page, 'visual-stale', ADMIN);
     await page.locator('app-juz-grid app-juz-toggle').nth(1).click();
-    await expect(page.getByRole('button', { name: 'تمّت قراءته' })).toBeVisible();
+    await expect(page.getByRole('dialog').getByRole('button', { name: 'تمّت قراءته' })).toBeVisible();
     // The dialog focuses its first button; drop focus so the focus halo doesn't flicker between runs.
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await settle(page);
@@ -423,6 +423,74 @@ test.describe('screenshots of the current design', () => {
     await expect(page.getByRole('button', { name: 'نعم، أتممته' })).toBeVisible();
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await snap(page, 'popup-confirm-juz');
+  });
+
+  // The same screens when the phone is set to dark (_color-scheme.scss).
+  test.describe('in dark mode', () => {
+    test.use({ colorScheme: 'dark' });
+
+    test('home', async ({ page }) => {
+      await page.setViewportSize(PHONE);
+      await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, now: OUTSIDE_RAMADAN });
+      await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+      await snap(page, 'dark-home');
+    });
+
+    test('sequential group: admin tools', async ({ page }) => {
+      await page.setViewportSize(TALL_PHONE);
+      await openAsMember(page, 'visual-family', ADMIN);
+      await page.getByText('أدوات مسؤول المجموعة').click();
+      await expect(page.getByRole('button', { name: 'بدء الختمة التالية' })).toBeVisible();
+      await snap(page, 'dark-sequential-admin');
+    });
+
+    test('sequential group: new khitmah dialog', async ({ page }) => {
+      await page.setViewportSize(TALL_PHONE);
+      await openAsMember(page, 'visual-family', ADMIN);
+      await page.getByText('أدوات مسؤول المجموعة').click();
+      await page.getByRole('button', { name: 'بدء الختمة التالية' }).click();
+      await expect(page.getByRole('button', { name: 'بدء', exact: true })).toBeVisible();
+      await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+      await settle(page);
+      await expect(page.locator('mat-dialog-container')).toHaveScreenshot('dark-sequential-new-khitmah-dialog.png');
+    });
+
+    test('sequential group: completed memorial khitma', async ({ page }) => {
+      await page.setViewportSize(PHONE);
+      await openAsMember(page, 'visual-memorial-done', 'عضو 3');
+      await expect(page.locator('.memorial-dua-text')).toBeVisible();
+      await page.locator('.memorial-dua').evaluate((card) => card.scrollIntoView({ block: 'center' }));
+      await snap(page, 'dark-sequential-memorial-complete');
+    });
+
+    test('create group: a memorial khitma', async ({ page }) => {
+      await page.setViewportSize(PHONE);
+      await openApp(page, '/new?type=onetime', { freezeTime: true });
+      await page.getByRole('button', { name: 'عن روح متوفّى' }).click();
+      await page.getByLabel('اسم المتوفّى').fill('فاطمة');
+      await page.getByRole('button', { name: 'رحمها الله' }).click();
+      await expect(page.getByLabel('عنوان الختمة')).toHaveValue('ختمة عن روح فاطمة رحمها الله');
+      await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+      await page.getByRole('heading', { name: 'ما الغرض من الختمة؟' }).evaluate((heading) => heading.scrollIntoView({ block: 'start' }));
+      await snap(page, 'dark-create-memorial');
+    });
+
+    test('same-task group: admin', async ({ page }) => {
+      await page.setViewportSize(TALL_PHONE);
+      await openAsMember(page, 'visual-daily', ADMIN);
+      await expect(page.locator('app-group-members mat-card')).toHaveCount(3);
+      await snap(page, 'dark-same-task-admin');
+    });
+
+    test('popup: main menu', async ({ page }) => {
+      await page.setViewportSize(PHONE);
+      await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, now: OUTSIDE_RAMADAN });
+      await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+      await page.getByRole('button', { name: 'menu' }).click();
+      await expect(page.getByRole('link', { name: 'عن البرنامج' })).toBeVisible();
+      await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+      await snap(page, 'dark-popup-main-menu');
+    });
   });
 });
 

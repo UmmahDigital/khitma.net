@@ -9,20 +9,20 @@ html {
   --mat-button-outlined-container-shape: 999px;
   --mat-button-tonal-container-shape: 999px;
   --mat-button-text-container-shape: 999px;
-  --mat-button-text-label-text-color: #{$primary-color};
+  --mat-button-text-label-text-color: var(--primary);
 
   --mat-dialog-container-shape: 28px;
   // Short confirmations get a comfortable width instead of hugging their two-word title.
   --mat-dialog-container-min-width: min(280px, calc(100vw - 32px));
 
   --mat-menu-container-shape: 16px;
-  --mat-menu-item-label-text-size: 18px;
-  --mat-menu-item-icon-color: #{$primary-color};
+  --mat-menu-item-label-text-size: #{text(18px)};
+  --mat-menu-item-icon-color: var(--primary);
 
   --mat-form-field-filled-container-shape: 12px;
-  --mat-form-field-filled-focus-active-indicator-color: #{$primary-color};
-  --mat-form-field-filled-focus-label-text-color: #{$primary-color};
-  --mat-form-field-filled-caret-color: #{$primary-color};
+  --mat-form-field-filled-focus-active-indicator-color: var(--primary);
+  --mat-form-field-filled-focus-label-text-color: var(--primary);
+  --mat-form-field-filled-caret-color: var(--primary);
 
   --mat-snack-bar-container-shape: 12px;
   --mat-snack-bar-container-color: #{$snack-color};
@@ -33,16 +33,27 @@ html {
 
   --mat-card-outlined-container-shape: #{$surface-radius};
   --mat-card-elevated-container-shape: #{$surface-radius};
+
+  // Surfaces follow light and dark (_color-scheme.scss); in light they're white, as in the prebuilt theme.
+  --mat-dialog-container-color: var(--surface-raised);
+  --mat-menu-container-color: var(--surface-raised);
+  --mat-select-panel-background-color: var(--surface-raised);
+  --mat-card-elevated-container-color: var(--surface);
+  --mat-card-outlined-container-color: var(--surface);
+  --mat-card-filled-container-color: var(--surface);
+  --mat-expansion-container-background-color: var(--surface);
+  --mat-button-toggle-background-color: var(--surface);
+  --mat-button-protected-container-color: var(--surface);
 }
 
 // The prebuilt theme colors these per palette class, so the green has to be set on the same classes.
 .mat-mdc-radio-button.mat-accent,
 .mat-mdc-radio-button.mat-primary {
-  --mat-radio-selected-icon-color: #{$primary-color};
-  --mat-radio-selected-focus-icon-color: #{$primary-color};
-  --mat-radio-selected-hover-icon-color: #{$primary-color};
-  --mat-radio-selected-pressed-icon-color: #{$primary-color};
-  --mat-radio-checked-ripple-color: #{$primary-color};
+  --mat-radio-selected-icon-color: var(--primary);
+  --mat-radio-selected-focus-icon-color: var(--primary);
+  --mat-radio-selected-hover-icon-color: var(--primary);
+  --mat-radio-selected-pressed-icon-color: var(--primary);
+  --mat-radio-checked-ripple-color: var(--primary);
 }
 
 .mat-mdc-raised-button.mat-primary,
@@ -65,7 +76,7 @@ html {
   white-space: normal;
   align-items: center;
   text-align: center;
-  font-size: 20px;
+  font-size: text(20px);
   font-weight: 700;
 }
 
@@ -81,13 +92,13 @@ html {
   .mat-mdc-button-base:not(.large) {
     height: 44px;
     min-width: 88px;
-    font-size: 18px;
+    font-size: text(18px);
   }
 }
 
 // Menus: roomier items, a soft shadow.
 .mat-mdc-menu-panel.mat-mdc-menu-panel {
-  box-shadow: $surface-shadow-raised;
+  box-shadow: var(--surface-shadow-raised);
 }
 
 .mat-mdc-menu-item {

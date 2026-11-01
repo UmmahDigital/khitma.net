@@ -7,8 +7,7 @@
   </app-todo>
 
   @if (this.group.targetDate) {
-    <span class="task-target-date"><span [translate]="'sametask.date'">موعد
-    التسليم:</span> {{this.group.targetDate}}.</span>
+    <span class="task-target-date"><span [translate]="'sametask.date'">موعد الإتمام:</span> {{this.group.targetDate}}.</span>
   }
 
 
@@ -27,9 +26,7 @@
     <div class="center-center" style="flex-direction: column;">
       <div class="tip">
         <strong [translate]="'sametask.responsible'">لمسؤول المجموعة:</strong>
-        <span [translate]="'sametask.responsibleDesc'">يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما
-          ويمكنك تعديل الأعضاء عن طريق الضغط
-        على كبسة التعديل أدناه.</span>
+        <span [translate]="'sametask.responsibleDesc'">اضغط على اسم العضو لتغيير حالة مهمّته، وعلى زرّ التعديل أدناه لتعديل الأعضاء.</span>
       </div>
       @if (isAdmin) {
         <mat-button-toggle class="members-list-edit-btn"

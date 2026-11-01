@@ -31,12 +31,12 @@ button.large.mat-mdc-button-base {
 // Dialogs: legacy padding, the h1 size the titles always had, actions aligned to the start.
 .mat-mdc-dialog-container {
   --mat-dialog-subhead-font: "Markazi Text";
-  --mat-dialog-subhead-size: 32px;
-  --mat-dialog-subhead-line-height: 48px;
+  --mat-dialog-subhead-size: #{text(32px)};
+  --mat-dialog-subhead-line-height: #{text(48px)};
   --mat-dialog-subhead-weight: 700;
   --mat-dialog-subhead-tracking: normal;
-  --mat-dialog-subhead-color: rgba(0, 0, 0, 0.87);
-  --mat-dialog-supporting-text-color: rgba(0, 0, 0, 0.87);
+  --mat-dialog-subhead-color: var(--text);
+  --mat-dialog-supporting-text-color: var(--text);
   --mat-dialog-supporting-text-tracking: normal;
 
   .mdc-dialog__surface {
@@ -82,7 +82,7 @@ button.large.mat-mdc-button-base {
 // Form fields: the legacy fill look, measured on the legacy build: 80px boxes around 40px inputs,
 // 18px lines, a darker fill and regular-weight labels.
 .mat-mdc-form-field {
-  --mat-form-field-filled-container-color: rgba(0, 0, 0, 0.04);
+  --mat-form-field-filled-container-color: var(--field-fill);
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
 
@@ -93,9 +93,9 @@ button.large.mat-mdc-button-base {
   }
 
   .mat-mdc-input-element.mat-mdc-form-field-input-control {
-    line-height: 18px;
+    line-height: text(18px);
     font-weight: 400;
-    color: #000;
+    color: var(--field-text);
   }
 
   input.mat-mdc-input-element {

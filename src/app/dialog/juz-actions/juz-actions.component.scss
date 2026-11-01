@@ -1,6 +1,8 @@
+@use "src/variables" as *;
+
 .juz-actions-booking {
   .owner {
-    font-size: 22px;
+    font-size: text(22px);
     font-weight: 700;
   }
 

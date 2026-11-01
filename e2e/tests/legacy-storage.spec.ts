@@ -53,7 +53,7 @@ test.describe('phones with data from older versions', () => {
       storage: { login: { id: 'legacy-user', email: 'sara@example.com', fullName: 'سارة', groupIds: [] } },
     });
 
-    await expect(page.getByLabel('اسمك (مسؤول الختمة)')).toHaveValue('سارة');
+    await expect(page.getByLabel('اسمك (مسؤول المجموعة)')).toHaveValue('سارة');
     await page.getByLabel('عنوان الختمة').fill('ختمة جديدة');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
 

@@ -13,12 +13,12 @@
     padding: 0 16px;
     margin-bottom: 4px;
     border-radius: 999px;
-    color: #1d2b29;
-    font-size: 21px;
+    color: var(--text-strong);
+    font-size: text(21px);
     text-decoration: none;
 
     mat-icon {
-        color: $primary-color;
+        color: var(--primary);
     }
 
     // The gap goes on the label: icon fonts force their own left-to-right direction.
@@ -32,7 +32,39 @@
 }
 
 .menu-row.active-link {
-    background: $primary-tonal;
-    color: $primary-color;
+    background: var(--primary-tonal);
+    color: var(--primary);
     font-weight: 700;
+}
+
+// Text size: a label, then a smaller and a larger letter.
+.text-size-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 12px 16px 0;
+    border-top: 1px solid var(--hairline);
+    color: var(--text-strong);
+    font-size: text(18px);
+
+    .text-size-label {
+        flex: 1;
+    }
+
+    .text-size-btn {
+        min-width: 48px;
+        height: 44px;
+        padding: 0;
+        line-height: 1;
+    }
+
+    .smaller {
+        font-size: text(16px);
+    }
+
+    .larger {
+        font-size: text(24px);
+        font-weight: 700;
+    }
 }

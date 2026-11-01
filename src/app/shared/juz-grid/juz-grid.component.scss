@@ -1,7 +1,32 @@
+@use "src/variables" as *;
+
 .juz-grid-row {
   margin: 0 -16px -16px 0;
 
   > .fx-flex-20 {
     padding: 0 16px 16px 0;
+  }
+}
+
+// Each juz is a button: the whole cell can be tapped, and a keyboard reaches it.
+.juz-button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+
+  // A ring around the circle while the keyboard is on it.
+  &:focus-visible .juz-toggle {
+    box-shadow: 0 0 0 3px var(--page-bg), 0 0 0 6px var(--primary);
   }
 }

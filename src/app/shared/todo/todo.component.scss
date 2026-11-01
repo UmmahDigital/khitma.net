@@ -1,13 +1,13 @@
 @use "src/variables" as *;
 
 .todo-list {
-    background: #fff;
-    font-size: 20px;
+    background: var(--surface);
+    font-size: text(20px);
     max-width: 15em;
     margin: auto;
     padding: 0.5em 1em;
     border-radius: 20px;
-    box-shadow: $surface-shadow-raised;
+    box-shadow: var(--surface-shadow-raised);
 }
 .todo {
     display: block;
@@ -149,7 +149,7 @@
     }
 
     .todo__state:checked ~ .todo__text {
-        color: $text-muted;
+        color: var(--text-muted);
     }
 }
 
@@ -161,7 +161,7 @@
 
     .todo-list {
         background: transparent; // rgba(255, 255, 255, 0.15);
-        font-size: 20px;
+        font-size: text(20px);
         max-width: 15em;
         margin: auto;
         padding: 0.5em 1em;

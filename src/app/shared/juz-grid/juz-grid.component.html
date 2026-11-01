@@ -1,18 +1,12 @@
 <section dir="ltr" class="fx-row-wrap juz-grid-row">
   @for (juz of ajza; track juz) {
     <div class="fx-flex-20" style="text-align:center">
-      <app-juz-toggle [juz]="juz" [isMyJuz]="myAjzaIndexes.indexOf(juz.index)>=0"
-        [celebrate]="juz.index === celebrateJuzIndex" (click)="juzClicked(juz)">
-      </app-juz-toggle>
+      <!-- A button, so the juz can be reached with a keyboard; its label says its state, and whose it is. -->
+      <button type="button" class="juz-button" [attr.aria-label]="label(juz)" (click)="juzClicked(juz)">
+        <app-juz-toggle [juz]="juz" [isMyJuz]="myAjzaIndexes.indexOf(juz.index)>=0"
+          [celebrate]="juz.index === celebrateJuzIndex">
+        </app-juz-toggle>
+      </button>
     </div>
   }
 </section>
-
-<!--
-<div class="ideas-list" >
-  <div *ngFor="let idea of filteredItems" fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%"
-    style="text-align:center">
-    <app-idea [idea]="idea" [index]="i"></app-idea>
-  </div>
-</div>
--->

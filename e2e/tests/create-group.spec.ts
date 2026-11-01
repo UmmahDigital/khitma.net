@@ -4,7 +4,7 @@ import { getDoc } from '../support/firestore';
 
 async function fillGroupDetails(page: Page, title: string, author: string) {
   await page.getByLabel('عنوان الختمة').fill(title);
-  await page.getByLabel('اسمك (مسؤول الختمة)').fill(author);
+  await page.getByLabel('اسمك (مسؤول المجموعة)').fill(author);
 }
 
 function groupIdFromInviteUrl(page: Page): string {
@@ -82,7 +82,7 @@ test.describe('creating a group', () => {
     await expect(submit).toBeDisabled();
     await page.getByLabel('عنوان الختمة').fill('ختمة');
     await expect(submit).toBeDisabled();
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill('خالد');
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill('خالد');
     await expect(submit).toBeEnabled();
   });
 });

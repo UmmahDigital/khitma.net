@@ -15,3 +15,12 @@
     <mat-icon>help_outline</mat-icon><span [translate]="'menu.about'">عن البرنامج</span>
   </a>
 </nav>
+
+<!-- Text size for older eyes: the same size everywhere in the app, kept on this phone (text-size.ts). -->
+<div class="text-size-row" role="group" [attr.aria-label]="common.translation.menu?.textSize || 'حجم النص'">
+  <span class="text-size-label" [translate]="'menu.textSize'">حجم النص</span>
+  <button type="button" mat-stroked-button class="text-size-btn smaller" [disabled]="textSize === 's'" (click)="changeTextSize(-1)"
+    [attr.aria-label]="common.translation.menu?.smaller || 'تصغير النص'">{{ common.translation.menu?.textGlyph || 'أ' }}</button>
+  <button type="button" mat-stroked-button class="text-size-btn larger" [disabled]="textSize === 'xl'" (click)="changeTextSize(1)"
+    [attr.aria-label]="common.translation.menu?.larger || 'تكبير النص'">{{ common.translation.menu?.textGlyph || 'أ' }}</button>
+</div>

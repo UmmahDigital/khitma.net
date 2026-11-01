@@ -59,8 +59,8 @@ mat-toolbar {
 .action-btn {
   background: $action-color !important;
   color: white !important;
-  --mat-button-protected-container-elevation-shadow: #{$surface-shadow};
-  --mat-button-protected-hover-container-elevation-shadow: #{$surface-shadow-raised};
+  --mat-button-protected-container-elevation-shadow: #{var(--surface-shadow)};
+  --mat-button-protected-hover-container-elevation-shadow: #{var(--surface-shadow-raised)};
 }
 
 // Primary actions in dialogs ("نعم") use the app's green, not the prebuilt theme's indigo.
@@ -78,7 +78,11 @@ a.large {
 
 .action-btn[disabled="true"] {
   background-color: lightgray !important;
-  color: gray !important;
+  color: var(--text-muted) !important;
+
+  @include dark {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+  }
 }
 
 .pwa-btn {
@@ -154,7 +158,7 @@ mat-toolbar {
 #app-container {
   position: relative;
   height: 100%;
-  background: #fafafa;
+  background: var(--page-bg);
   flex: 1 1 33%;
   max-width: 33%;
   box-sizing: border-box;
@@ -180,11 +184,16 @@ section > p {
 }
 
 .tip {
-  background: $admin-tonal;
-  color: $admin-color;
+  background: var(--admin-tonal);
+  color: var(--admin);
   padding: 16px;
   border-radius: $surface-radius;
   display: block;
+
+  // "For the group admin:" and the hint after it (Angular drops the whitespace between the two elements).
+  > strong {
+    margin-inline-end: 0.3em;
+  }
 }
 
 .help-btn {
@@ -206,6 +215,10 @@ hr {
   border: none;
   border-top: 1px solid lightgray;
   margin: 16px 16px;
+
+  @include dark {
+    border-top-color: var(--hairline);
+  }
 }
 
 .mat-badge-accent .mat-badge-content {
@@ -250,6 +263,6 @@ hr {
   background: $snack-color;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: text(16px);
   line-height: 1.4;
 }

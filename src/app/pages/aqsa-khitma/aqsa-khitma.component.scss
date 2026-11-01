@@ -44,7 +44,7 @@ mat-button-toggle-group{
   
   
   .secondary-counter{
-    color:gray;
+    color:var(--text-muted);
   }
   
   .number{
@@ -53,12 +53,12 @@ mat-button-toggle-group{
       'DejaVu Sans Mono', Menlo, Consolas, monospace;
   
   
-    color:$primary-color;
+    color:var(--primary);
     font-weight: bold;
   }
   
   .counter-color{
-    color:$primary-color;
+    color:var(--primary);
   
   }
 

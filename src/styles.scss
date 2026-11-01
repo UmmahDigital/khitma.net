@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
+@use "sass:map";
+@use "sass:math";
 @use "sass:meta";
 @use "src/variables" as *;
 
@@ -41,10 +43,30 @@ body {
   margin: 0;
   // font-family: "Scheherazade", serif !important;
   // font-size: 100% !important;
-  background-color: $background-color;
-  font-size: large;
+  // Beside the app's column on wide screens, in light and dark.
   background: black;
   overflow: hidden;
+}
+
+// The root sets every text size (text() in _variables.scss): 112.5% of the browser's own size (18px unless the
+// reader changed it there), smaller or larger by the text size in the menu (text-size.ts).
+html {
+  font-size: 112.5%;
+
+  &[data-text-size="s"] {
+    font-size: 100%;
+  }
+  &[data-text-size="l"] {
+    font-size: 125%;
+  }
+  &[data-text-size="xl"] {
+    font-size: 140%;
+  }
+}
+
+body {
+  font-size: 1rem;
+  color: var(--text);
 }
 .rtl {
   direction: rtl;
@@ -64,7 +86,7 @@ body {
 
 // Markazi Text throughout. Its letters are small for their size, so body text is 19px (16px reads
 // like 13px). MDC uses `body-2` for base text and `headline-5` for h1.
-$custom-typography: mat.m2-define-typography-config(
+$custom-typography-px: mat.m2-define-typography-config(
   $font-family: "Markazi Text",
   $headline-5: mat.m2-define-typography-level(32px, 48px, 700),
   $body-1: mat.m2-define-typography-level(19px, 30px, 500, $letter-spacing: normal),
@@ -72,15 +94,33 @@ $custom-typography: mat.m2-define-typography-config(
   $button: mat.m2-define-typography-level(18px, 26px, 500, $letter-spacing: normal),
 );
 
+// The same levels with sizes in rem, so Material's text follows the reader's text size like the rest of the app
+// (text() in _variables.scss); at the default size nothing changes.
+@function _in-rem($value) {
+  @if meta.type-of($value) == "number" and math.unit($value) == "px" {
+    @return text($value);
+  }
+  @return $value;
+}
+
+$custom-typography: ();
+@each $name, $level in $custom-typography-px {
+  @if meta.type-of($level) == "map" {
+    $level: map.merge($level, (font-size: _in-rem(map.get($level, font-size)), line-height: _in-rem(map.get($level, line-height))));
+  }
+  $custom-typography: map.merge($custom-typography, ($name: $level));
+}
+
 @include mat.typography-hierarchy($custom-typography);
 @include mat.all-component-typographies($custom-typography);
 
+@include meta.load-css("src/color-scheme");
 @include meta.load-css("src/material-compat");
 @include meta.load-css("src/theme");
 
 hr {
   border: none;
-  border-top: 1px solid $hairline;
+  border-top: 1px solid var(--hairline);
 }
 // @include mat-button-typography($custom-typography);
 

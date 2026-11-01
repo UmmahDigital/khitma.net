@@ -134,7 +134,7 @@ test.describe('analytics', () => {
   test('creating a group records its type and purpose', async ({ page }) => {
     await openApp(page, '/new?type=recurring');
     await page.getByLabel('عنوان الختمة').fill('ختمة الجمعة');
-    await page.getByLabel('اسمك (مسؤول الختمة)').fill('أبو محمد');
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill('أبو محمد');
     await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
     await expect(page).toHaveURL(/\/group\/[^/]+\/invite$/);
 

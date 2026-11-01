@@ -10,7 +10,7 @@
   line-height: $size;
 
   border-radius: 100%;
-  font-size: 24px;
+  font-size: text(24px);
   color: rgba(0, 0, 0, 0.8);
 
   margin: 0 auto;
@@ -37,17 +37,40 @@
   transform: scale(1);
 }
 
-// Finished ajza carry a check, so "done" never depends on telling green from yellow.
-.juz-check {
+// Booked and finished ajza carry a mark in the corner (a reader, a check), so their state never depends on telling
+// the colours apart.
+.juz-mark {
   position: absolute;
   top: -4px;
   right: -4px;
   width: 19px;
   height: 19px;
+}
 
+.juz-booked-mark {
+  circle {
+    fill: #8a5a00;
+    stroke: var(--page-bg);
+    stroke-width: 1.5px;
+  }
+
+  .glyph {
+    fill: white;
+    stroke: none;
+  }
+
+  .glyph-line {
+    fill: none;
+    stroke: white;
+    stroke-width: 1.8px;
+    stroke-linecap: round;
+  }
+}
+
+.juz-check {
   circle {
     fill: $primary-color;
-    stroke: $background-color;
+    stroke: var(--page-bg);
     stroke-width: 1.5px;
   }
 
