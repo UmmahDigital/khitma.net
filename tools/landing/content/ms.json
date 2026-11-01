@@ -1,0 +1,74 @@
+{
+  "lang": "ms",
+  "locale": "ms_MY",
+  "title": "Khitma.net: khatam al-Quran beramai-ramai secara percuma",
+  "description": "Mulakan khatam al-Quran beramai-ramai secara percuma dan kongsi pautannya di WhatsApp untuk membahagikan juzuk: setiap orang memilih satu daripada 30 juzuk untuk dibaca, dan anda bersama-sama mengikuti perkembangannya sehingga al-Quran dikhatamkan. Tanpa akaun, tiada apa-apa untuk dipasang.",
+  "h1": "Khatam al-Quran bersama-sama",
+  "lead": "Khitma.net ialah aplikasi web percuma untuk khatam al-Quran beramai-ramai. Mulakan satu khatam, kongsi pautannya dengan keluarga dan rakan, dan setiap orang memilih satu juzuk untuk dibaca. Semua orang dapat melihat juzuk yang sudah dibaca, yang sedang dibaca dan yang masih kosong, sehingga khatam selesai.",
+  "start": "Mulakan khatam",
+  "startRecurring": "Cipta kumpulan yang mengkhatamkan al-Quran secara berkala",
+  "howTitle": "Bagaimana ia berfungsi",
+  "steps": [
+    "Mulakan khatam: beri tajuk dan tulis nama anda. Untuk arwah, untuk orang yang sakit, sempena Ramadan, atau untuk apa-apa hajat.",
+    "Kongsi jemputan dalam kumpulan WhatsApp, atau minta orang di sekeliling anda mengimbas kod QR-nya.",
+    "Setiap orang membuka pautan, menulis nama mereka dan memilih satu daripada 30 juzuk. Tanpa akaun dan tiada apa-apa untuk dipasang.",
+    "Selepas membacanya, mereka menekan “Saya selesai membaca juzuk”. Semua orang dapat melihat perkembangannya sehingga khatam selesai."
+  ],
+  "featuresTitle": "Direka untuk membaca bersama-sama",
+  "features": [
+    {
+      "title": "Untuk arwah",
+      "text": "Tajuk khatam ditulis khas untuk arwah, dan apabila khatam selesai, doa untuk arwah dipaparkan untuk dibaca oleh semua."
+    },
+    {
+      "title": "Khatam yang berulang",
+      "text": "Kumpulan boleh memulakan khatam baharu dengan sendirinya setiap hari, setiap Jumaat atau setiap bulan, dan setiap ahli mendapat juzuk selepas juzuknya."
+    },
+    {
+      "title": "Tiada siapa yang terlupa",
+      "text": "Peringatan dalam kalendar anda untuk juzuk yang anda ambil, dan mesej siap sedia untuk meminta bantuan bagi juzuk yang masih kosong."
+    },
+    {
+      "title": "Bersama di satu tempat",
+      "text": "Di rumah keluarga arwah atau dalam majlis khatam, paparkan khatam pada skrin besar bersama kod QR untuk diimbas, dan lihat juzuk-juzuknya terisi."
+    },
+    {
+      "title": "Pada mana-mana telefon",
+      "text": "Ia berfungsi dalam pelayar, termasuk pada telefon lama, dengan teks besar dan mod gelap, dan kumpulan yang pernah anda buka tetap boleh dibuka walaupun tanpa sambungan Internet."
+    },
+    {
+      "title": "Dalam bahasa anda",
+      "text": "Bahasa Arab, Inggeris, Perancis, Sepanyol, Jerman, Urdu, Indonesia, Melayu, Turki dan Benggali."
+    }
+  ],
+  "faqTitle": "Soalan lazim",
+  "faq": [
+    {
+      "q": "Apakah itu khatam al-Quran?",
+      "a": "Khatam al-Quran (juga ditulis khitma atau khatm) ialah bacaan al-Quran yang lengkap, dari awal hingga akhir. Dalam khatam al-Quran beramai-ramai, 30 juzuk al-Quran (juz, jamaknya ajza) dibahagikan, supaya kumpulan itu bersama-sama dapat mengkhatamkan seluruh al-Quran."
+    },
+    {
+      "q": "Adakah Khitma.net percuma?",
+      "a": "Ya, percuma sepenuhnya. Peserta tidak memerlukan akaun atau aplikasi: mereka hanya membuka pautan dan menulis nama mereka."
+    },
+    {
+      "q": "Berapa lama masa yang diperlukan untuk khatam al-Quran beramai-ramai?",
+      "a": "Bergantung pada kumpulan: dengan 30 orang yang masing-masing membaca satu juzuk, al-Quran boleh dikhatamkan dalam sehari. Semasa memulakan khatam, anda boleh memilih tarikh sasaran: tiga hari, seminggu, menjelang Jumaat, atau tarikh lain."
+    },
+    {
+      "q": "Bagaimana jika seseorang mengambil juzuk tetapi tidak membacanya?",
+      "a": "Pentadbir kumpulan boleh mengosongkan juzuk yang diambil sejak seminggu atau lebih, supaya orang lain boleh mengambilnya, dan boleh menandakan juzuk sebagai sudah dibaca bagi pihak seseorang."
+    },
+    {
+      "q": "Bolehkah kumpulan kami mengkhatamkan al-Quran setiap minggu?",
+      "a": "Boleh. Khatam berkala boleh bermula semula dengan sendirinya setiap hari, setiap Jumaat atau setiap bulan, dan setiap ahli secara automatik mendapat juzuk selepas juzuk yang dibacanya."
+    },
+    {
+      "q": "Siapa yang boleh melihat khatam?",
+      "a": "Hanya mereka yang mempunyai pautannya. Halaman khatam tidak dipaparkan dalam enjin carian, kerana tajuknya sering membawa nama insan tersayang."
+    }
+  ],
+  "about": "Khitma.net bermula di Masjid al-Aqsa yang diberkati, tempat baris kod pertamanya ditulis, dan telah digunakan untuk puluhan ribu khatam al-Quran beramai-ramai sejak 2021.",
+  "openApp": "Buka Khitma.net",
+  "otherLanguages": "Bahasa lain"
+}

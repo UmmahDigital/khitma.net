@@ -75,6 +75,25 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebSite",
+          "@id": "https://khitma.net/#website",
+          "url": "https://khitma.net/",
+          "name": "ختمة.نت",
+          "alternateName": "Khitma.net",
+          "inLanguage": ["ar", "en", "fr", "es", "de", "ur", "id", "ms", "tr", "bn"],
+          "publisher": { "@id": "https://khitma.net/#organization" }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://khitma.net/#organization",
+          "name": "ختمة.نت",
+          "alternateName": "Khitma.net",
+          "url": "https://khitma.net/",
+          "logo": "https://khitma.net/assets/khitma-logo.png",
+          "foundingDate": "2021",
+          "sameAs": ["https://github.com/UmmahDigital/khitma.net"]
+        },
+        {
           "@type": "WebApplication",
           "@id": "https://khitma.net/#app",
           "name": "ختمة.نت",
@@ -83,13 +102,8 @@
           "description": "تطبيق ويب مجّاني لختم القرآن الكريم جماعيًّا: أنشئ ختمة، وشارك رابطها، ليختار كلّ مشارك جزءًا من الأجزاء الثلاثين ويقرأه، وتابعوا التقدّم حتى تتمّ الختمة.",
           "applicationCategory": "LifestyleApplication",
           "operatingSystem": "Web",
-          "inLanguage": [
-            "ar",
-            "en",
-            "fr",
-            "es",
-            "de"
-          ],
+          "inLanguage": ["ar", "en", "fr", "es", "de", "ur", "id", "ms", "tr", "bn"],
+          "publisher": { "@id": "https://khitma.net/#organization" },
           "isAccessibleForFree": true,
           "offers": {
             "@type": "Offer",
@@ -335,6 +349,18 @@
           <li><a href="/guide/khitma-for-the-deceased/">ختمة عن روح الميت: كيف تنظّمها مع العائلة والأصدقاء</a></li>
           <li><a href="/guide/ramadan-group-khitma/">ختمة رمضان الجماعية: طريقتان لتنظيمها</a></li>
           <li><a href="/guide/whatsapp-group-khitma/">كيف تنظّم ختمة قرآن جماعية عبر واتساب</a></li>
+        </ul>
+        <h2>بلغات أخرى</h2>
+        <ul>
+          <li><a href="/en/" hreflang="en" lang="en" dir="ltr">English</a></li>
+          <li><a href="/fr/" hreflang="fr" lang="fr" dir="ltr">Français</a></li>
+          <li><a href="/es/" hreflang="es" lang="es" dir="ltr">Español</a></li>
+          <li><a href="/de/" hreflang="de" lang="de" dir="ltr">Deutsch</a></li>
+          <li><a href="/ur/" hreflang="ur" lang="ur" dir="rtl">اردو</a></li>
+          <li><a href="/id/" hreflang="id" lang="id" dir="ltr">Bahasa Indonesia</a></li>
+          <li><a href="/ms/" hreflang="ms" lang="ms" dir="ltr">Bahasa Melayu</a></li>
+          <li><a href="/tr/" hreflang="tr" lang="tr" dir="ltr">Türkçe</a></li>
+          <li><a href="/bn/" hreflang="bn" lang="bn" dir="ltr">বাংলা</a></li>
         </ul>
         <section dir="ltr" lang="en">
           <h2>Khitma.net: read the whole Quran together</h2>

@@ -1,0 +1,74 @@
+{
+  "lang": "en",
+  "locale": "en_US",
+  "title": "Khitma.net: complete the Quran together, for free",
+  "description": "Start a group khitma (khatam) for free and share its link on WhatsApp: each person picks one of the 30 juz to read, and together you follow the progress until the Quran is complete. No account, nothing to install.",
+  "h1": "Complete the Quran together",
+  "lead": "Khitma.net is a free web app for group khitmas. Start one, share its link with family and friends, and each person picks a juz to read. Everyone sees what has been read, what is being read and what is still free, until the khitma is complete.",
+  "start": "Start a khitma",
+  "startRecurring": "Create a group that completes the Quran regularly",
+  "howTitle": "How it works",
+  "steps": [
+    "Start a khitma: give it a title and write your name. For someone who passed away, for someone who is ill, for Ramadan, or for any intention.",
+    "Share the invitation in a WhatsApp group, or let the people around you scan its QR code.",
+    "Each person opens the link, writes their name and picks one of the 30 juz. No account and nothing to install.",
+    "When they have read it, they tap “I finished reading juz”. Everyone sees the progress until the khitma is complete."
+  ],
+  "featuresTitle": "Made for reading together",
+  "features": [
+    {
+      "title": "For someone who passed away",
+      "text": "The khitma's title is written for them, and when it is complete, the supplication for the deceased appears for everyone to say."
+    },
+    {
+      "title": "Khitmas that repeat",
+      "text": "A group can start a new khitma every day, every Friday or every month, by itself, and each member gets the juz after theirs."
+    },
+    {
+      "title": "Nobody is forgotten",
+      "text": "A reminder in your calendar for the juz you took, and a ready message asking for help with the ajza that are still free."
+    },
+    {
+      "title": "Together in one place",
+      "text": "In a house of condolence or a gathering, show the khitma on a big screen with a QR code to scan, and watch the ajza fill up."
+    },
+    {
+      "title": "On any phone",
+      "text": "It works in the browser, on older phones too, with large text and dark mode, and groups you opened before open even without a connection."
+    },
+    {
+      "title": "In your language",
+      "text": "Arabic, English, French, Spanish, German, Urdu, Indonesian, Malay, Turkish and Bengali."
+    }
+  ],
+  "faqTitle": "Questions",
+  "faq": [
+    {
+      "q": "What is a khitma?",
+      "a": "A khitma (also written khatam or khatm) is a complete reading of the Quran, from beginning to end. In a group khitma, the 30 parts of the Quran (ajza, singular juz) are shared out, so that together the group completes the whole Quran."
+    },
+    {
+      "q": "Is Khitma.net free?",
+      "a": "Yes, completely free. Participants don't need an account or an app: they open the link and write their name."
+    },
+    {
+      "q": "How long does a group khitma take?",
+      "a": "It depends on the group: with 30 people each reading one juz, a khitma can be completed in a day. When you start one, you can choose a deadline: three days, a week, by Friday, or another date."
+    },
+    {
+      "q": "What if someone takes a juz and doesn't read it?",
+      "a": "The organiser can free the ajza taken a week or more ago, so that others can take them, and can mark a juz as read on someone's behalf."
+    },
+    {
+      "q": "Can our group complete the Quran every week?",
+      "a": "Yes. A recurring khitma can start again by itself every day, every Friday or every month, and each member automatically gets the juz after the one they read."
+    },
+    {
+      "q": "Who can see the khitma?",
+      "a": "Only people who have its link. Khitma pages are kept out of search engines, because their titles often carry the names of loved ones."
+    }
+  ],
+  "about": "Khitma.net began at the blessed Al-Aqsa Mosque, where its first lines of code were written, and has been used for tens of thousands of group khitmas since 2021.",
+  "openApp": "Open Khitma.net",
+  "otherLanguages": "Other languages"
+}

@@ -1,5 +1,5 @@
 import { Browser, expect, Page, test } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { joinedGroups, openApp, OUTSIDE_RAMADAN, openedUrls, whatsappText } from '../support/app';
 import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtures';
@@ -51,6 +51,77 @@ test.describe('the five new languages', () => {
     await openApp(page, `/group/${groupId}`, { storage: { lng: 'tr', groups: joinedGroups({ [groupId]: 'Ayşe' }) } });
     await page.locator('.help-finish').getByRole('button').click();
     expect(whatsappText((await openedUrls(page))[0])).toContain('29 cüz');
+  });
+});
+
+test.describe('the language pages', () => {
+  for (const code of ['en', 'ur', 'tr']) {
+    test(`/${code}/ is a whole page without JavaScript, and links to every language`, async ({ request }) => {
+      const response = await request.get(`/${code}/`);
+      expect(response.status()).toBe(200);
+      const html = await response.text();
+      expect(html).toContain(`<html lang="${code}" dir="${code === 'ur' ? 'rtl' : 'ltr'}">`);
+      expect(html).toContain(`<link rel="canonical" href="https://khitma.net/${code}/">`);
+      for (const other of CLUSTER) {
+        const href = other === 'ar' ? 'https://khitma.net/' : `https://khitma.net/${other}/`;
+        expect(html).toContain(`<link rel="alternate" hreflang="${other}" href="${href}">`);
+      }
+      expect(html).toContain('<link rel="alternate" hreflang="x-default" href="https://khitma.net/">');
+      const data = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)![1]);
+      const faq = data['@graph'].find((node: any) => node['@type'] === 'FAQPage');
+      for (const question of faq.mainEntity) {
+        expect(html).toContain(`<summary>${question.name.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')}</summary>`);
+      }
+    });
+  }
+
+  test('a language page leads into the app in its language', async ({ page }) => {
+    await page.goto('/tr/');
+    await page.locator('a.cta').first().click();
+    await expect(page).toHaveURL(/\/new\?type=onetime&from=landing_tr$/);
+    await expect(page.locator('section > header')).toHaveText(t('tr', 'gCreate.recurringNo'));
+    expect(await storedLanguage(page)).toBe('tr');
+    expect(await pageLanguage(page)).toEqual(['tr', 'ltr']);
+  });
+
+  test('its link to Arabic opens the app in Arabic, for someone who had another language too', async ({ page }) => {
+    await openApp(page, '/tr/', { now: OUTSIDE_RAMADAN, storage: { lng: 'tr', lastRecievedNotificationId: '2' } });
+    await page.getByRole('link', { name: 'العربية', exact: true }).click();
+    await expect(page.getByText(t('ar', 'home.creatA'))).toBeVisible();
+    await expect(page).toHaveURL(/\/$/);
+    expect(await pageLanguage(page)).toEqual(['ar', 'rtl']);
+    expect(await storedLanguage(page)).toBe('ar');
+  });
+
+  test('the service worker leaves the language pages and the guides to the server', async () => {
+    // ngsw.json as the production build writes it (the e2e build has no service worker), with Angular's own code.
+    type Generator = new (fs: object, baseHref: string) => { process(config: unknown): Promise<{ navigationUrls: { positive: boolean; regex: string }[] }> };
+    const { Generator } = (await import('@angular/service-worker/config' as string)) as { Generator: Generator };
+    const config = JSON.parse(readFileSync(join(__dirname, '../../ngsw-config.json'), 'utf8'));
+    const noFiles = { list: async () => [], read: async () => '', hash: async () => '', write: async () => undefined };
+    const { navigationUrls } = await new Generator(noFiles, '/').process(config);
+    // As ngsw-worker.js decides that a page is the app's: an included pattern matches it, and no excluded one.
+    const matches = (positive: boolean, path: string) =>
+      navigationUrls.some((url) => url.positive === positive && new RegExp(url.regex).test(path));
+    const appServes = (path: string) => matches(true, path) && !matches(false, path);
+
+    const pages = readdirSync(join(__dirname, '../../src/landing'));
+    expect(pages).toEqual(expect.arrayContaining(CLUSTER.filter((code) => code !== 'ar')));
+    for (const path of [...pages.flatMap((code) => [`/${code}/`, `/${code}`]), '/guide', '/guide/', '/guide/faq/']) {
+      expect(appServes(path), path).toBe(false);
+    }
+    for (const path of ['/', '/new', '/me/groups', '/about', '/group/abc', '/group/abc/invite']) {
+      expect(appServes(path), path).toBe(true);
+    }
+  });
+
+  test('the sitemap gives the home page and every language page their alternates', async ({ request }) => {
+    const sitemap = await (await request.get('/sitemap.xml')).text();
+    for (const code of CLUSTER) {
+      const href = code === 'ar' ? 'https://khitma.net/' : `https://khitma.net/${code}/`;
+      expect(sitemap).toContain(`<loc>${href}</loc>`);
+      expect(sitemap).toContain(`<xhtml:link rel="alternate" hreflang="${code}" href="${href}"/>`);
+    }
   });
 });
 

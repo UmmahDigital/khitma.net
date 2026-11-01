@@ -1,6 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://khitma.net/</loc></url>
+<!-- Written by tools/landing/render.mjs. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://khitma.net/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/es/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/de/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/ur/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/id/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/ms/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/tr/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
+  <url>
+    <loc>https://khitma.net/bn/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://khitma.net/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://khitma.net/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://khitma.net/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://khitma.net/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://khitma.net/de/"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://khitma.net/ur/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://khitma.net/id/"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://khitma.net/ms/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://khitma.net/tr/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://khitma.net/bn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://khitma.net/"/>
+  </url>
   <url><loc>https://khitma.net/new</loc></url>
   <url><loc>https://khitma.net/about</loc></url>
   <url><loc>https://khitma.net/aqsa</loc></url>

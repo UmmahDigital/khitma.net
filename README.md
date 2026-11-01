@@ -67,6 +67,12 @@ Arabic is the source of every text; Arabic, English, French, Spanish, German, Ur
 
 Someone's first visit decides their language, and it is kept: Arabic if the phone had opened the app before (it spoke Arabic to everyone until 2026) or lists Arabic among its languages; otherwise that of the link they opened, if it was shared from the app in Urdu, Indonesian, Malay, Turkish or Bengali (`?hl=ur`: many of those readers keep their phone in English), or their phone's, for those five; otherwise Arabic. iPhones tell a page only their main language. The language menu, or a `?lang=` link (the language pages use it), changes it. `index.html` applies these rules before the app starts; keep it in step with `firstLanguage` in `languages.ts`. Link previews (`functions/preview.js`) follow `?hl=` too: after changing the texts they use, run `node tools/i18n/preview-texts.mjs` and deploy the function (`npx firebase deploy --only functions:groupPreview --project quran-khitma`; CI deploys hosting only).
 
+## Search engines and AI assistants
+
+Public pages are plain HTML that crawlers read without JavaScript: the home page's text inside `<app-root>` and its JSON-LD (`src/index.html`), the guides in `src/guide/`, a page per language at `/en/`, `/ur/` and so on, and `src/llms.txt`. The language pages are written by `node tools/landing/render.mjs` from `tools/landing/content/<lang>.json` (check one with `node tools/i18n/check.mjs ur --landing`), and the same command writes `src/sitemap.xml`, which also gives the home page its alternates in each language (as the app's shell, `index.html` can't carry them). Group pages stay out of search results.
+
+Once, by hand: add khitma.net to Google Search Console and Bing Webmaster Tools and submit the sitemap; after a deploy that adds or changes public pages, run `node tools/seo/indexnow.mjs` (Bing, Yandex and others use IndexNow; its key is `src/<key>.txt`).
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io), or `npm run test:ci` for a single headless run.

@@ -129,6 +129,16 @@ test('main flows in a real old Chromium', async () => {
       await b.see('.juz-cell', 'ليلى');
       await b.screenshot(join(shots, 'big-screen.png'));
     });
+
+    await step('a language page, then the app in Urdu, right to left', async () => {
+      await b.open(ORIGIN, '/ur/');
+      await b.see('h1');
+      await b.open(ORIGIN, '/?lang=ur');
+      await b.waitFor(`document.documentElement.dir === 'rtl' && document.documentElement.lang === 'ur' && !/lang=/.test(location.search)`, 'Urdu, right to left');
+      await b.see('#ayat-count .main-counter');
+      await b.see('body.rtl');
+      await b.screenshot(join(shots, 'home-urdu.png'));
+    });
   } finally {
     await b.close();
   }
