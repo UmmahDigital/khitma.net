@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
+import { GoogleAnalyticsService } from './analytics';
 import { CelebrationService } from './celebration.service';
 import { NotificationsService } from './notifications.service';
 import { PwaService } from './pwa.service';
 import { CommonService } from './service/common.service';
 import { SeoService } from './seo.service';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
+import { currentTheme, onPhoneThemeChange, setTheme } from './theme';
 
 
 @Component({
@@ -35,10 +37,13 @@ export class AppComponent {
   // Without a connection, changes are kept on the phone and sent later (firestore.ts); the bar says so.
   isOffline = !navigator.onLine;
 
+  /** The look now (theme.ts): the phone's, or the one picked with the toolbar button. */
+  darkTheme = signal(currentTheme() === 'dark');
+
   constructor(public pwa: PwaService, private dialog: MatDialog, private router: Router,
     private notificationsService: NotificationsService,
     private celebrationService: CelebrationService, public common: CommonService,
-    iconRegistry: MatIconRegistry, private seo: SeoService) {
+    iconRegistry: MatIconRegistry, private seo: SeoService, private analytics: GoogleAnalyticsService) {
 
     // Outlined icons from a small self-hosted font (styles.scss), in the lighter line style.
     iconRegistry.setDefaultFontSetClass('material-symbols-outlined', 'mat-ligature-font');
@@ -77,6 +82,8 @@ export class AppComponent {
     window.addEventListener('online', () => (this.isOffline = false));
     window.addEventListener('offline', () => (this.isOffline = true));
 
+    onPhoneThemeChange(() => this.darkTheme.set(currentTheme() === 'dark'));
+
   }
 
   celebrate() {
@@ -106,6 +113,13 @@ export class AppComponent {
 
   changeLanguage(value) {
     this.common.currentLanguage = value;
+  }
+
+  toggleTheme(): void {
+    const theme = this.darkTheme() ? 'light' : 'dark';
+    setTheme(theme);
+    this.darkTheme.set(theme === 'dark');
+    this.analytics.send('theme_changed', { theme });
   }
 
 }

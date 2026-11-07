@@ -7,7 +7,8 @@
   @return math.div($px, 18px) * 1rem;
 }
 
-// Dark mode for a colour used in one place; shared ones are custom properties in _color-scheme.scss.
+// Dark mode for a colour used in one place; shared ones are custom properties in _color-scheme.scss. A look picked
+// with the toolbar button switches these blocks too (src/app/theme.ts).
 @mixin dark {
   @media (prefers-color-scheme: dark) {
     @content;

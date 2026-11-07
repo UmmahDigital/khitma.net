@@ -424,7 +424,8 @@
     "textSize": "متن کا سائز",
     "smaller": "چھوٹا متن",
     "larger": "بڑا متن",
-    "textGlyph": "آ"
+    "textGlyph": "آ",
+    "darkMode": "ڈارک موڈ"
   },
   "status": {
     "summary": "🟢 پڑھے جا چکے {done} · 🟡 زیرِ تلاوت {reading} · 🔴 دستیاب {free}",

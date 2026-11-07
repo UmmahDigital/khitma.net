@@ -4,6 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { captureLandingRef } from './app/referral';
+import { startTheme } from './app/theme';
 
 if (environment.production) {
   enableProdMode();
@@ -11,6 +12,9 @@ if (environment.production) {
 
 // Before the router reads the address: keep a shared link's reference (?r=) and remove it from the address.
 captureLandingRef();
+
+// Before the app adds its styles: light or dark, as picked with the toolbar button.
+startTheme();
 
 platformBrowserDynamic().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], })
   .catch(err => console.error(err));

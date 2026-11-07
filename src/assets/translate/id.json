@@ -424,7 +424,8 @@
     "textSize": "Ukuran teks",
     "smaller": "Perkecil teks",
     "larger": "Perbesar teks",
-    "textGlyph": "A"
+    "textGlyph": "A",
+    "darkMode": "Mode gelap"
   },
   "status": {
     "summary": "🟢 Sudah dibaca {done} · 🟡 Sedang dibaca {reading} · 🔴 Tersedia {free}",

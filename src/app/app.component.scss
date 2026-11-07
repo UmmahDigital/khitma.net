@@ -56,6 +56,17 @@ mat-toolbar {
   background: color.adjust($primary-color, $lightness: -5%) !important;
 }
 
+// White on the green in dark mode too: Material's dark toolbar has dark text, which left the icons black.
+mat-toolbar.mat-toolbar.mat-primary {
+  --mat-toolbar-container-text-color: white;
+}
+
+// Light or dark (theme.ts): a full-size button, its icon 8px from the globe like the other icons. The icons are
+// left-to-right (styles.scss), so the globe's margin is on its left: next to this button in left-to-right languages.
+.ltr .theme-toggle.mat-mdc-icon-button {
+  margin-right: -8px;
+}
+
 .action-btn {
   background: $action-color !important;
   color: white !important;

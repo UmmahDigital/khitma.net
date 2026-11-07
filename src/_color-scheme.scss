@@ -2,7 +2,8 @@
 @use "src/variables" as *;
 
 // Light and dark. Colours that change between them are custom properties: their light values are the app's colours
-// as they always were, and the dark ones follow the phone's setting (prefers-color-scheme). Telling browsers the app
+// as they always were, and the dark ones follow the phone's setting (prefers-color-scheme), or the look picked with
+// the toolbar button (src/app/theme.ts switches the dark blocks on or off). Telling browsers the app
 // has its own dark colours (color-scheme, and the meta tag in index.html) stops them from darkening it themselves,
 // as Samsung Internet does, which made dialogs and the brand green muddy.
 
