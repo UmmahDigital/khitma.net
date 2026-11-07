@@ -63,6 +63,11 @@ export interface SequentialGroupOptions {
   schedule?: { every: string; weekday?: number; cycleType: number };
   nextRoundAt?: Date;
   completedRounds?: Record<string, Date>;
+  /** When the round under way started, and who started it ('admin' or 'schedule'). */
+  roundStartedAt?: Date;
+  roundStartedBy?: string;
+  /** The round the latest start replaced, kept so it can be undone ({ cycle, forCycle, ajza… }). */
+  previousRound?: Record<string, unknown>;
 }
 
 export async function createSequentialGroup(id: string, options: SequentialGroupOptions = {}): Promise<void> {
@@ -86,6 +91,9 @@ export async function createSequentialGroup(id: string, options: SequentialGroup
   if (options.schedule !== undefined) doc.schedule = options.schedule;
   if (options.nextRoundAt !== undefined) doc.nextRoundAt = options.nextRoundAt;
   if (options.completedRounds !== undefined) doc.completedRounds = options.completedRounds;
+  if (options.roundStartedAt !== undefined) doc.roundStartedAt = options.roundStartedAt;
+  if (options.roundStartedBy !== undefined) doc.roundStartedBy = options.roundStartedBy;
+  if (options.previousRound !== undefined) doc.previousRound = options.previousRound;
   await setDoc(`groups/${id}`, doc);
 }
 

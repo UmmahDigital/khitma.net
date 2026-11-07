@@ -27,7 +27,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { FIRESTORE, watchDoc } from './firestore';
-import { isRoundDue, nextRoundAt, RoundSchedule } from './schedule';
+import { firstRoundAt, isRoundDue, nextRoundAfterManualStart, nextRoundAt, RoundSchedule } from './schedule';
 import { LocalDatabaseService } from './local-database.service';
 
 @Injectable({
@@ -128,7 +128,9 @@ export class KhitmaGroupService {
     schedule?: RoundSchedule | null
   ) {
     author = author.trim();
-    const firstRound = schedule ? nextRoundAt(schedule, new Date()) : null;
+    const now = new Date();
+    // The first round lasts at least half a round: a daily khitma created at 23:00 doesn't move on at midnight.
+    const firstRound = schedule ? firstRoundAt(schedule, now, { startedAt: now }) : null;
 
     let newGroupObj = {
       title: title,
@@ -194,7 +196,13 @@ export class KhitmaGroupService {
 
   // ******** SEQUENTIAL KHITMA
 
-  updateJuz(groupId, juzIndex, ownerName, juzStatus) {
+  /**
+   * Books, finishes, frees or renames one juz. `round` is the round the person saw when they acted (the current
+   * one by default): a change made on a page that still showed an earlier round is refused by the rules
+   * (firestore.rules) instead of landing on another reader's juz in the round that replaced it. Resolves once the
+   * server has the change, which can be much later offline; rejects with `permission-denied` when it was refused.
+   */
+  updateJuz(groupId, juzIndex, ownerName, juzStatus, round?: number): Promise<void> {
     let currentSequentialKhitma = <KhitmaGroup_Sequential>this._currentGroupObj;
 
     if (!groupId) {
@@ -202,8 +210,10 @@ export class KhitmaGroupService {
     }
 
     if (juzIndex == null) {
-      return; // [todo]: handle error
+      return Promise.resolve(); // [todo]: handle error
     }
+
+    round = round ?? (currentSequentialKhitma.cycle || 0);
 
     // [todo]: might need to change code below when supporting multigroup
 
@@ -220,18 +230,20 @@ export class KhitmaGroupService {
     // When the last juz is done, the round is recorded as completed, in the same write.
     const completedRound = juzStatus == JUZ_STATUS.DONE &&
       currentSequentialKhitma.ajza.every((juz) => juz.status == JUZ_STATUS.DONE)
-      ? { ['completedRounds.' + (currentSequentialKhitma.cycle || 0)]: serverTimestamp() }
+      ? { ['completedRounds.' + round]: serverTimestamp() }
       : {};
+    const guard = { lastJuzUpdate: { round, at: serverTimestamp() } };
 
+    let saved: Promise<void>;
     if (this._isV2Api) {
       let updatedObj = {};
       // updatedAt: when this juz last changed, e.g. how long a booking has been waiting.
       updatedObj['ajza.' + juzIndex] = { ...currentSequentialKhitma.ajza[juzIndex], updatedAt: serverTimestamp() };
 
-      updateDoc(this.groupDoc(groupId), { ...updatedObj, ...completedRound });
+      saved = updateDoc(this.groupDoc(groupId), { ...updatedObj, ...completedRound, ...guard });
     } else {
       // LEGACY CODE
-      updateDoc(this.groupDoc(groupId), { ajza: currentSequentialKhitma.ajza, ...completedRound });
+      saved = updateDoc(this.groupDoc(groupId), { ajza: currentSequentialKhitma.ajza, ...completedRound, ...guard });
     }
 
     // update also in the pesonal khitma
@@ -244,6 +256,8 @@ export class KhitmaGroupService {
     if (juzStatus == JUZ_STATUS.DONE) {
       this.globalKhitmaUpdateJuzFromGroup('ramadan2021', true);
     }
+
+    return saved;
   }
 
   getGroups(groupsIds: string[]) {
@@ -259,26 +273,59 @@ export class KhitmaGroupService {
   /**
    * Starts the next round, or goes one back (KHITMA_CYCLE_TYPE.REWIND), from the group as the server has it: a page
    * opened from the phone's cache, or offline, must not overwrite what others changed meanwhile. Needs a connection;
-   * resolves to the new round's number.
+   * resolves to the new round's number. In a khitma that repeats, the round started by hand stands in for the next
+   * automatic one, so the khitma doesn't move on twice.
    */
   startNewSequentialKhitmaCycle(groupId: string, newCycleType: number): Promise<number> {
     const ref = this.groupDoc(groupId);
     return runTransaction(this.db, async (transaction) => {
       const data: any = (await transaction.get(ref)).data();
       const ajza: Juz[] = Array.isArray(data.ajza) ? data.ajza : KhitmaGroup_Sequential.convertAjzaToArray(data.ajza);
-      const cycle = newCycleType === KHITMA_CYCLE_TYPE.REWIND ? Math.max(0, (data.cycle || 0) - 1) : (data.cycle || 0) + 1;
+      const rewind = newCycleType === KHITMA_CYCLE_TYPE.REWIND;
+      const cycle = rewind ? Math.max(0, (data.cycle || 0) - 1) : (data.cycle || 0) + 1;
+      const schedule: RoundSchedule | null = data.schedule ?? null;
+      const next = schedule && !rewind ? nextRoundAfterManualStart(schedule, data.nextRoundAt?.toDate?.() ?? null, new Date()) : null;
       transaction.update(ref, {
         cycle,
         ajza: newRoundAjzaObj(nextRoundAjza(ajza, newCycleType)),
         roundStartedAt: serverTimestamp(),
+        roundStartedBy: 'admin',
+        ...(next ? { nextRoundAt: Timestamp.fromDate(next) } : {}),
         ...withoutPickedDeadline(data),
+        // Only a round that started by itself can be undone.
+        previousRound: deleteField(),
       });
       return cycle;
     });
   }
 
+  /**
+   * Puts back the round that the latest automatic start replaced, exactly as it was: names, ✓ marks, its round number
+   * and when it started. An admin whose khitma moved on by itself re-typed every name by hand instead. Resolves to
+   * whether it was undone. The next automatic start stays as it is: the one that was due would only start again.
+   */
+  undoRoundStart(groupId: string): Promise<boolean> {
+    const ref = this.groupDoc(groupId);
+    return runTransaction(this.db, async (transaction) => {
+      const data: any = (await transaction.get(ref)).data();
+      const previous = data?.previousRound;
+      if (!previous || previous.forCycle !== (data.cycle || 0)) {
+        return false;
+      }
+      transaction.update(ref, {
+        cycle: previous.cycle,
+        ajza: previous.ajza,
+        roundStartedAt: previous.roundStartedAt ?? deleteField(),
+        roundStartedBy: previous.roundStartedBy ?? deleteField(),
+        ...(previous.targetAt ? { targetAt: previous.targetAt, targetDate: previous.targetDate ?? '' } : {}),
+        previousRound: deleteField(),
+      });
+      return true;
+    });
+  }
+
   /** Repeats the khitma on a rhythm (see schedule.ts), or stops repeating it (null); `startAt` sets the first round. */
-  setSchedule(groupId: string, schedule: RoundSchedule | null, startAt?: Date) {
+  setSchedule(groupId: string, schedule: RoundSchedule | null, startAt?: Date | null) {
     const next = schedule ? startAt ?? nextRoundAt(schedule, new Date()) : null;
     return updateDoc(this.groupDoc(groupId), {
       schedule: schedule ?? deleteField(),
@@ -307,8 +354,10 @@ export class KhitmaGroupService {
         cycle: (data.cycle || 0) + 1,
         ajza: newRoundAjzaObj(nextRoundAjza(ajza, data.schedule.cycleType)),
         roundStartedAt: serverTimestamp(),
+        roundStartedBy: 'schedule',
         nextRoundAt: next ? Timestamp.fromDate(next) : deleteField(),
         ...withoutPickedDeadline(data),
+        previousRound: previousRoundOf(data, (data.cycle || 0) + 1),
       });
       return true;
     });
@@ -449,6 +498,18 @@ function newRoundAjzaObj(ajza: Juz[]) {
     ajzaObj[key] = { ...ajzaObj[key], updatedAt: serverTimestamp() };
   }
   return ajzaObj;
+}
+
+/** The round an automatic start replaces, as stored, for undoRoundStart; `forCycle` is the round replacing it. */
+function previousRoundOf(data: any, forCycle: number) {
+  return {
+    cycle: data.cycle || 0,
+    ajza: data.ajza ?? KhitmaGroup_Sequential.getEmptyAjzaObj(),
+    forCycle,
+    ...(data.roundStartedAt ? { roundStartedAt: data.roundStartedAt } : {}),
+    ...(data.roundStartedBy ? { roundStartedBy: data.roundStartedBy } : {}),
+    ...(data.targetAt ? { targetAt: data.targetAt, targetDate: data.targetDate ?? '' } : {}),
+  };
 }
 
 /**

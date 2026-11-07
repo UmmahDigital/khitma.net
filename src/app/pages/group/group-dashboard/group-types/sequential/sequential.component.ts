@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from '../../../../../analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from '../../../../../alert.service';
-import { StartNewKhitmaComponent } from '../../../../../dialog/start-new-khitma/start-new-khitma.component';
+import { StartNewKhitmaComponent, StartNewKhitmaData } from '../../../../../dialog/start-new-khitma/start-new-khitma.component';
 import { GET_JUZ_READ_EXTERNAL_URL, Juz, JUZ_STATUS, KhitmaGroup, KhitmaGroup_Sequential, KHITMA_CYCLE_TYPE, NUM_OF_AJZA } from '../../../../../entities/entities';
 import { KhitmaGroupService } from '../../../../../khitma-group.service';
 import { LocalDatabaseService } from '../../../../../local-database.service';
@@ -16,19 +16,23 @@ import { ReferralService } from '../../../../../referral.service';
 import { impactLines } from '../../../../../referral';
 import { khitmaName, memorialDua, ONE_TIME_PURPOSES, Purpose } from '../../../../../purpose';
 import { renderShareCard } from '../../../../../share-card';
-import { FRIDAY, repeatText, RoundSchedule } from '../../../../../schedule';
+import { FRIDAY, nextRoundAt, repeatText, RoundSchedule, savedScheduleText, whenText } from '../../../../../schedule';
 import { firstFridayAfterRamadan, hijri, isAfterRamadanPromptTime } from '../../../../../ramadan';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
 import { suggestedJuz } from '../../../../../all-booked';
 import { googleCalendarUrl, icsFile, Reminder, reminderStart } from '../../../../../reminder';
 import { startLikeParams } from '../../../../../start-like';
 import { isRtl } from '../../../../../languages';
+import { nameKey } from '../../../../../names';
 import { StatusMessageGenerators } from '../../status-messages';
 import { countdownText, daysUntil, localDeadlineText } from '../../../../../deadline';
 import { bookedForDays, bookingAgeText, staleBookings } from '../../../../../booking-age';
 import { JuzAction, JuzActionsComponent, JuzActionsData } from '../../../../../dialog/juz-actions/juz-actions.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../../../../service/common.service';
+
+/** How long after a round starts the page says when, and admins can undo it. */
+const RECENT_START_MS = 12 * 3_600_000;
 
 @Component({
     selector: 'app-group-sequential',
@@ -93,8 +97,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       switch (action) {
         case 'leave-group': {
 
+          const round = this.round;
           this.myAjzaIndexes.forEach(juzIndex => {
-            this.groupsApi.updateJuz(this.group.id, juzIndex, "", JUZ_STATUS.IDLE);
+            this.saveJuz(juzIndex, "", JUZ_STATUS.IDLE, round);
           });
           break;
         }
@@ -104,6 +109,41 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.myAjzaIndexes = this.group.getMyAjzaIndexes(this.username); // [todo]: validate need
+  }
+
+  /** The round on the screen: what a juz change is made for (see saveJuz). */
+  private get round(): number {
+    return this.group?.cycle || 0;
+  }
+
+  /**
+   * Saves a change to one juz, made while round `round` was on the screen. If a new round has started since, the
+   * change isn't saved (the rules refuse it if this page hasn't heard yet): it was meant for a juz that is now
+   * another reader's. The member is told.
+   */
+  private saveJuz(juzIndex: number, owner: string, status: number, round: number) {
+    if (this.round !== round) {
+      this.roundMovedOn(juzIndex, round);
+      return;
+    }
+    this.groupsApi.updateJuz(this.group.id, juzIndex, owner, status, round).catch((error) => {
+      if (error?.code !== 'permission-denied') {
+        // Reported as before, as an unhandled error (field-reports.ts).
+        throw error;
+      }
+      this.roundMovedOn(juzIndex, round);
+    });
+  }
+
+  private roundMovedOn(juzIndex: number, round: number) {
+    const t = this.common.translation.sequential ?? {};
+    // Once this page shows the new round, it can say which juz is the member's now.
+    const mine = this.round !== round ? this.group.getMyAjzaIndexes(this.username) : [];
+    const text = mine.length === 1
+      ? fill(t.roundMovedMine || 'بدأت ختمة جديدة، فلم يُسجَّل التغيير على الجزء {juz}. جزؤك فيها {mine}.', { juz: juzIndex + 1, mine: mine[0] + 1 })
+      : fill(t.roundMoved || 'بدأت ختمة جديدة، فلم يُسجَّل التغيير على الجزء {juz}.', { juz: juzIndex + 1 });
+    this.alert.show(text, 8000);
+    this.$gaService.send('juz_change_refused', { reason: 'round_ended' });
   }
 
 
@@ -121,6 +161,9 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   adminJuzUpdate(juz: Juz) {
 
+    // The round on the screen when the admin tapped: a dialog stays open while a new round may start.
+    const round = this.round;
+
     if (juz.status == JUZ_STATUS.BOOKED) {
       // A tap used to mark the juz read right away, so one mis-tap marked someone else's juz as read. Now the admin
       // says what they meant, seeing whose booking it is and how old it is.
@@ -135,13 +178,13 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
         .afterClosed()
         .subscribe((action) => {
           if (action === 'done') {
-            const completesKhitma = this.isLastJuz(juz.index);
-            this.groupsApi.updateJuz(this.group.id, juz.index, juz.owner, JUZ_STATUS.DONE);
+            const completesKhitma = this.round === round && this.isLastJuz(juz.index);
+            this.saveJuz(juz.index, juz.owner, JUZ_STATUS.DONE, round);
             if (completesKhitma) {
               this.$gaService.send('khitma_completed', { completed_by: 'admin' });
             }
           } else if (action === 'release') {
-            this.groupsApi.updateJuz(this.group.id, juz.index, '', JUZ_STATUS.IDLE);
+            this.saveJuz(juz.index, '', JUZ_STATUS.IDLE, round);
           }
           if (action) {
             this.$gaService.send('admin_juz_update', { action });
@@ -163,7 +206,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       dialogRef.afterClosed().subscribe(dialogResult => {
 
         if (dialogResult) {
-          this.groupsApi.updateJuz(this.group.id, juz.index, "", JUZ_STATUS.IDLE);
+          this.saveJuz(juz.index, "", JUZ_STATUS.IDLE, round);
           this.$gaService.send('admin_juz_update', { action: 'clear' });
         }
 
@@ -319,6 +362,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     }
     const t = this.common.translation.gDashboard ?? {};
     const count = ajzaCount(stale.length, this.common.currentLanguage);
+    const round = this.round;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
         t.releaseTitle || 'إتاحة الأجزاء المتأخّرة؟',
@@ -332,7 +376,7 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
       if (!confirmed) {
         return;
       }
-      stale.forEach((juz) => this.groupsApi.updateJuz(this.group.id, juz.index, '', JUZ_STATUS.IDLE));
+      stale.forEach((juz) => this.saveJuz(juz.index, '', JUZ_STATUS.IDLE, round));
       this.$gaService.send('stale_bookings_released', { count: stale.length });
       this.alert.show(fill(t.released || 'أُتيح {count} من جديد', { count }), 4000);
     });
@@ -427,6 +471,59 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     return repeatText(<any>this.group, this.common.translation, this.common.currentLanguage);
   }
 
+  /**
+   * For 12 hours after a round started by itself, everyone sees when: members found their juz changed overnight and
+   * didn't know why. Rounds an admin starts show nothing new.
+   */
+  get roundStartLine(): string | null {
+    const at = this.group.roundStartedAt?.toMillis?.();
+    if (this.group.roundStartedBy !== 'schedule' || typeof at !== 'number' || Date.now() - at > RECENT_START_MS) {
+      return null;
+    }
+    const when = whenText(new Date(at), new Date(), this.common.translation, this.common.currentLanguage);
+    return fill(this.common.translation.newKhitma?.startedAuto || 'بدأت هذه الختمة تلقائيًا {when}.', { when });
+  }
+
+  /** Admins can undo it: the round it replaced is kept (see the service's undoRoundStart). */
+  get canUndoRound(): boolean {
+    return this.isAdmin && !!this.roundStartLine && this.group.previousRound?.forCycle === this.round;
+  }
+
+  /** Puts the previous round back as it was, after the admin confirms; what changed since the start is lost. */
+  undoRoundStart() {
+    const t = this.common.translation.sequential ?? {};
+    const lang = this.common.currentLanguage;
+    const startedAt = this.group.roundStartedAt?.toMillis?.() ?? 0;
+    // The round start set every juz's time; later ones were changed in the new round.
+    const changed = this.group.ajza.filter((juz) => (juz.updatedAt?.toMillis?.() ?? 0) > startedAt + 1000).length;
+    const text = (t.undoText || 'تعود الأسماء وعلامات الإتمام كما كانت قبل بدء هذه الختمة.') +
+      (changed ? ' ' + fill(t.undoChanges || 'وسيُلغى ما سُجّل فيها بعد بدئها ({count}).', { count: ajzaCount(changed, lang) }) : '');
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: new ConfirmDialogModel(t.undoTitle || 'الرجوع إلى الختمة السابقة؟', text, t.undoYes || 'رجوع', this.common.translation.dialog?.cancel),
+        maxWidth: '80vw',
+      })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (!confirmed) {
+          return;
+        }
+        const failed = () =>
+          this.alert.show(t.undoFailed || 'تعذّر الرجوع إلى الختمة السابقة. تأكّد من الاتصال بالإنترنت ثمّ أعد المحاولة.', 6000);
+        // It reads the group from the server, so it can't work offline: say so at once.
+        if (!navigator.onLine) {
+          failed();
+          return;
+        }
+        this.groupsApi.undoRoundStart(this.group.id).then((undone) => {
+          if (undone) {
+            this.alert.show(t.undone || 'عادت الختمة السابقة كما كانت.', 4000);
+            this.$gaService.send('round_undone', { trigger: 'schedule' });
+          }
+        }, failed);
+      });
+  }
+
   // «هل تكرّرون الختمة؟»: when a one-time khitma completes, its admin is asked whether it should repeat (families
   // often read one for the deceased every Friday). Ramadan khitmas have their own question, after Ramadan.
   private repeatAnswered = false;
@@ -447,9 +544,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
   repeatKhitma(every: 'week' | 'month') {
     const cycleType = KHITMA_CYCLE_TYPE.AUTO_BOOK;
     const schedule: RoundSchedule = every === 'week' ? { every, weekday: FRIDAY, cycleType } : { every, cycleType };
-    this.groupsApi.setSchedule(this.group.id, schedule);
+    // The khitma is complete: the next round starts at the rhythm's next time.
+    const first = nextRoundAt(schedule, new Date());
+    this.groupsApi.setSchedule(this.group.id, schedule, first);
     this.answerRepeat(every);
-    this.alert.show(this.common.translation.repeat?.done || 'ستتكرّر الختمة تلقائيًا بإذن الله', 4000);
+    this.alert.show(savedScheduleText(schedule, first, this.common.translation, this.common.currentLanguage), 6000);
   }
 
   answerRepeat(action: 'week' | 'month' | 'no') {
@@ -520,11 +619,13 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
     this.myAjzaIndexes.push(juz.index);
 
-    this.groupsApi.updateJuz(this.group.id, juz.index, this.username, JUZ_STATUS.BOOKED);
+    this.saveJuz(juz.index, this.username, JUZ_STATUS.BOOKED, this.round);
   }
 
   juzDone(juzIndex) {
 
+    // The round on the screen when the member tapped: the dialog stays open while a new round may start.
+    const round = this.round;
     const t = this.common.translation.sequential;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(fill(t?.dialog2Q || 'هل أتممت قراءة الجزء {juz}؟', { juz: juzIndex + 1 }), '', t?.doneYes, t?.doneNo),
@@ -535,11 +636,17 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
       if (dialogResult) {
 
+        if (this.round !== round) {
+          // Yesterday's juz is someone else's today: finishing it here would overwrite theirs.
+          this.roundMovedOn(juzIndex, round);
+          return;
+        }
+
         this.$gaService.event('juz_done');
         this.referral.credit('read', this.group.id);
 
         const completesKhitma = this.isLastJuz(juzIndex);
-        this.groupsApi.updateJuz(this.group.id, juzIndex, this.username, JUZ_STATUS.DONE);
+        this.saveJuz(juzIndex, this.username, JUZ_STATUS.DONE, round);
         if (completesKhitma) {
           this.$gaService.send('khitma_completed', { completed_by: 'member' });
         }
@@ -579,20 +686,26 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     this.$gaService.event('juz_giveup');
 
     // add confirmation modal
-    this.groupsApi.updateJuz(this.group.id, juzIndex, this.username, JUZ_STATUS.IDLE);
+    this.saveJuz(juzIndex, this.username, JUZ_STATUS.IDLE, this.round);
     this.myAjzaIndexes = this.myAjzaIndexes.filter(_juzIndex => _juzIndex !== juzIndex)
 
   }
 
   startNewKhitmah() {
 
+    const startedAt = this.group.roundStartedAt?.toMillis?.();
+    const data: StartNewKhitmaData = {
+      title: this.group.title,
+      author: this.group.author,
+      description: this.group.description,
+      cycle: this.group.cycle,
+      schedule: this.group.schedule as RoundSchedule,
+      pendingRoundAt: this.group.nextRoundAt?.toDate?.() ?? null,
+      currentRoundAt: typeof startedAt === 'number' ? new Date(startedAt) : null,
+      currentRoundBy: this.group.roundStartedBy ?? null,
+    };
     const dialogRef = this.dialog.open(StartNewKhitmaComponent, {
-      data: {
-        title: this.group.title,
-        author: this.group.author,
-        descreption: this.group.description,
-        cycle: this.group.cycle
-      },
+      data,
       maxWidth: "80vw"
     });
 
@@ -631,17 +744,36 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
 
   juzOwnerEdited(updatedJuz: Juz) {
 
-    if (updatedJuz.owner == "" || updatedJuz.owner == null) {
-      updatedJuz.status = JUZ_STATUS.IDLE;
+    const owner = KhitmaGroup.refineOwnerName(updatedJuz.owner ?? '');
+    const status = owner ? updatedJuz.status : JUZ_STATUS.IDLE;
+
+    this.saveJuz(updatedJuz.index, owner, status, this.round);
+
+  }
+
+  /**
+   * A member with no juz, whose name a booked juz has written differently (an admin re-typed it, ة for ه…): she is
+   * asked whether it's hers, and takes it in one tap, without leaving the group. Nobody else sees anything.
+   */
+  get similarNames(): string[] {
+    if (this.isAdmin || this.myAjzaIndexes?.length || this.group.isDone()) {
+      return [];
     }
+    const mine = nameKey(this.username);
+    const names = new Set<string>();
+    for (const juz of this.group.ajza) {
+      const owner = (juz.owner ?? '').trim();
+      if (juz.status === JUZ_STATUS.BOOKED && owner && owner !== this.username && nameKey(owner) === mine) {
+        names.add(owner);
+      }
+    }
+    return [...names];
+  }
 
-    updatedJuz.owner = KhitmaGroup.refineOwnerName(updatedJuz.owner);
-
-    this.groupsApi.updateJuz(this.group.id, updatedJuz.index, updatedJuz.owner, updatedJuz.status);
-
-
-    console.log("dashboard - juz update, new owner: " + updatedJuz.owner);
-
+  continueAs(name: string) {
+    this.$gaService.send('member_reclaimed', { group_id: this.group.id, group_type: this.group.type || 'SEQUENTIAL', source: 'dashboard' });
+    this.localDB.joinGroup(this.group.id, name);
+    window.location.reload();
   }
 
 

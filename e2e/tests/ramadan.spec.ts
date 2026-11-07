@@ -63,6 +63,19 @@ test.describe('Ramadan', () => {
     expect(await recordedEvents(page)).toContainEqual(['group_created', expect.objectContaining({ template: 'ramadan_daily' })]);
   });
 
+  test('a daily khitma created late at night doesn’t move on an hour later', async ({ page }) => {
+    // 23:00 in Jerusalem: members book their ajza tonight and read them tomorrow.
+    await openApp(page, '/', { now: new Date('2026-03-01T21:00:00Z') });
+    await page.getByRole('link', { name: 'ختمة كاملة كل يوم' }).click();
+    await page.getByLabel('اسمك (مسؤول المجموعة)').fill(ADMIN);
+    await page.getByRole('button', { name: 'إنشاء مجموعة الختمة' }).click();
+
+    const group = await getDoc(`groups/${await createdGroupId(page)}`);
+    // Not tonight's midnight, an hour away: the one after.
+    expect(group!.nextRoundAt).toEqual(new Date('2026-03-02T22:00:00Z'));
+    await expect(page.getByLabel('رسالة الدعوة للانضمام (يمكنك تعديلها)')).toBeVisible();
+  });
+
   test('from the 20th of Ramadan, the admin is asked whether the group continues weekly after Eid', async ({ page }) => {
     const groupId = newGroupId('after-ramadan');
     await createSequentialGroup(groupId, {

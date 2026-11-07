@@ -8,7 +8,8 @@
   }
 
 
-  @for (juz of ajza; track juz) {
+  <!-- Rows follow their juz number: each one keeps what the admin is typing while others change their ajza. -->
+  @for (juz of ajza; track juz.index) {
     <app-juz [juz]="juz" [isEditMode]="allowEdit"
       [isMyJuz]="myAjzaIndexes.indexOf(juz.index) >=0" (onJuzSelection)="juzClicked($event)"
       (onEdited)="juzEdited($event)">

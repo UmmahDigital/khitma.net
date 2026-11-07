@@ -21,6 +21,10 @@
     "autoBookDone": "Sıradaki cüz yalnızca cüzünü bitirenlere verilsin",
     "allIdle": "Tüm cüzler seçime açık olsun",
     "rewind": "Her üyeye bir önceki cüzü verilsin",
+    "startedAuto": "Bu hatim {when} otomatik olarak başladı.",
+    "startedAt": "Bu hatim {when} başladı.",
+    "repeatNext": "Sonraki hatim {when} otomatik olarak başlayacak. Şimdi başlatırsanız onun yerine geçer ve ondan sonraki {after} başlar.",
+    "repeatAfter": "Şimdi başlatırsanız, ondan sonraki hatim {after} otomatik olarak başlar.",
     "cancel": "İptal",
     "ok": "Başlat"
   },
@@ -165,7 +169,17 @@
     "doneNo": "Henüz değil",
     "done": " - Allah’ın lütfuyla hatim tamamlandı",
     "releaseText": "Okuyanın adı silinecek ve cüz yeniden seçilebilecek.",
-    "releaseYes": "Cüzü serbest bırak"
+    "releaseYes": "Cüzü serbest bırak",
+    "roundMoved": "Yeni bir hatim başladı, bu yüzden {juz}. cüzdeki değişiklik kaydedilmedi.",
+    "roundMovedMine": "Yeni bir hatim başladı, bu yüzden {juz}. cüzdeki değişiklik kaydedilmedi. Bu hatimdeki cüzünüz: {mine}.",
+    "isThisYourName": "Adınız hatimde böyle mi yazılmış?",
+    "undo": "Geri al",
+    "undoTitle": "Önceki hatme dönülsün mü?",
+    "undoText": "Adlar ve ✓ işaretleri bu hatim başlamadan önceki hâline döner.",
+    "undoChanges": "Başladığından beri kaydedilenler geri alınır ({count}).",
+    "undoYes": "Geri dön",
+    "undone": "Önceki hatim olduğu gibi geri geldi.",
+    "undoFailed": "Önceki hatme dönülemedi. İnternet bağlantınızı kontrol edip tekrar deneyin."
   },
   "reminder": {
     "button": "Bana okumayı hatırlat",
@@ -303,16 +317,34 @@
     "off": "Tekrar yok (her hatmi kendim başlatırım)",
     "newRound": "Her yeni hatimde:",
     "save": "Kaydet",
-    "saved": "Tekrar ayarı kaydedildi",
     "nextAt": "Sonraki hatim otomatik olarak başlayacak: {when}",
-    "nextAfterCompletion": "Sonraki hatim, bu hatim tamamlanınca otomatik olarak başlayacak"
+    "nextAfterCompletion": "Sonraki hatim, bu hatim tamamlanınca otomatik olarak başlayacak",
+    "tonight": "bu gece yarısı",
+    "todayAt": "bugün saat {time}",
+    "tomorrowAt": "yarın saat {time}",
+    "yesterdayAt": "dün saat {time}",
+    "onDate": "{date}",
+    "onDateAt": "{date} saat {time}",
+    "ruleDay": "Her günün başında",
+    "ruleWeek": "Her {weekday} gününün başında",
+    "ruleMonth": "Her ayın ilk gününün başında",
+    "ruleCompletion": "Her hatim tamamlandıktan altı saat sonra",
+    "effectAutoBook": "her üye, bitirmiş olsun ya da olmasın, kendi cüzünden sonrakine geçer",
+    "effectDoneOnly": "cüzünü bitirenler sonrakine geçer, kalan cüzler seçime açılır",
+    "effectAllIdle": "tüm cüzler yeniden seçime açılır",
+    "describe": "{rule} yeni bir hatim otomatik olarak başlar: {effect}. Kendiniz başlatmanıza gerek yok.",
+    "first": "İlk otomatik hatim {when} başlar.",
+    "firstAfterCompletion": "İlk otomatik hatim, bu hatim tamamlandıktan altı saat sonra başlar.",
+    "offNote": "Sonraki hatim ancak siz başlattığınızda başlar.",
+    "savedAt": "Kaydedildi. Sonraki hatim {when} otomatik olarak başlayacak; kendiniz başlatmanıza gerek yok.",
+    "savedAfterCompletion": "Kaydedildi. Sonraki hatim bu hatim tamamlanınca otomatik olarak başlayacak; kendiniz başlatmanıza gerek yok.",
+    "savedOff": "Tekrar kapatıldı: her hatmi kendiniz başlatın."
   },
   "repeat": {
     "title": "Hatim tekrarlansın mı?",
     "text": "Yeni hatim kendiliğinden başlar ve her üyeye kendi cüzünden sonraki cüz verilir.",
     "weekly": "Her cuma",
-    "no": "Hayır, teşekkürler",
-    "done": "İnşallah hatim kendiliğinden tekrarlanacak"
+    "no": "Hayır, teşekkürler"
   },
   "shareCard": {
     "button": "WhatsApp durumunda paylaş",

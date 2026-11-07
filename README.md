@@ -51,6 +51,25 @@ The Firebase SDK stays on version 11: version 12 and later add about 50 kB to ev
 
 Groups are kept on the phone (Firestore's persistent cache in IndexedDB, `src/app/firestore.ts`): a group opened before opens at once, even when the server can't be reached, and changes made offline (booking or finishing a juz) are sent when the connection returns, even after the page was closed. A bar at the bottom of the screen says so while the phone is offline. Starting the next round reads the group from the server, in a transaction, so a page opened from the cache can't overwrite newer changes; offline, the admin is told it needs a connection.
 
+A juz change carries the round it was made for (`lastJuzUpdate.round`), and the rules (`firestore.rules`) refuse one for a round that has ended: from a page that still showed yesterday's round, or sent when the connection came back, it would land on another reader's juz in the new round, and her name would appear twice. The member is told («بدأت ختمة جديدة، فلم يُسجَّل التغيير على الجزء 24…») and the app reports `juz_change_refused`. The done confirmation also checks, after «نعم», that the round is still the one it was opened in.
+
+## Firestore rules
+
+CI deploys Hosting only. After changing `firestore.rules`, deploy them by hand: `npx firebase deploy --only firestore:rules --project quran-khitma`. The end-to-end tests run the app against them in the emulator (`e2e/tests/round-guard.spec.ts` checks them directly too).
+
+## Repeating khitmas
+
+A juz khitma can repeat by itself (`src/app/schedule.ts`): every day, every week on a chosen day, on the 1st of each month, or after each completion. No server is involved: the first member to open the group once its next round is due starts it, in a transaction, so it starts once.
+
+- Admins turn it on in «تكرار الختمة تلقائيًا» (nothing is chosen until they choose), or with «هل تكرّرون الختمة؟» when a one-time khitma completes. Before saving, the dialog says what will happen and when the first automatic start is; after saving, that there's no need to start rounds by hand.
+- A round an admin starts by hand («بدء الختمة التالية») stands in for the next automatic one, so the khitma never moves on twice: an admin's own routine comes first, and the repeat steps in on a day they don't start it. The dialog says when the one after will start, and when the round under way started if that was less than 12 hours ago.
+- The first automatic start leaves the round under way at least half a round (12 hours for a daily khitma): a khitma created, or set to repeat, in the evening doesn't move on at midnight.
+- Every round start records who started it (`roundStartedBy`: `admin` or `schedule`). A round that started by itself keeps the one it replaced (`previousRound`): for 12 hours the page says when it started, and admins can undo it, «تراجع», which puts the previous round back exactly, names and ✓ marks, in a transaction. Rounds an admin starts look as they always did.
+
+## Names
+
+A member's juz is the one under her exact name, as always. Members type their name when they join and admins type names in the names list, so one person's name is sometimes written two ways (ة or ه, أ or ا, a mark copied from WhatsApp; `src/app/names.ts`): when a member has no juz and a booked juz has her name written that way, she is asked «هل اسمك مكتوب في الختمة هكذا؟» and takes it in one tap. Nobody else sees anything. In the names list, rows keep what the admin is typing while others change their ajza.
+
 ## Text size and dark mode
 
 Text sizes are relative to the page's root size: write `font-size: text(20px)` (`src/_variables.scss`), which is 20px at the default size. «حجم النص» in the menu sets the root to 100%, 112.5% (default), 125% or 140% of the browser's own size (`src/app/text-size.ts`); the choice is kept on the phone and applied before the first paint by a script in `src/index.html`.

@@ -16,10 +16,10 @@ import { SharingService } from '../../../sharing.service';
 import { ReferralService } from '../../../referral.service';
 import { ajzaCount, fill, inviteMessage } from '../../../share-messages';
 import { staleBookings } from '../../../booking-age';
-import { isRoundDue, RoundSchedule } from '../../../schedule';
+import { firstRoundAt, isRoundDue, RoundSchedule, savedScheduleText } from '../../../schedule';
 import { startLikeParams } from '../../../start-like';
 import { arabicComma } from '../../../languages';
-import { ScheduleComponent } from '../../../dialog/schedule/schedule.component';
+import { ScheduleComponent, ScheduleDialogData } from '../../../dialog/schedule/schedule.component';
 import { EditKhitmaDetailsComponent } from '../../../dialog/edit-khitma-details/edit-khitma-details.component';
 import { StartNewKhitmaComponent } from '../../../dialog/start-new-khitma/start-new-khitma.component';
 import { NativeShareService } from '../../../native-share.service';
@@ -153,9 +153,14 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
   }
 
   openSchedule() {
+    const data: ScheduleDialogData = {
+      current: (this.group.schedule as RoundSchedule) ?? null,
+      roundStartedAt: this.currentRoundStart(),
+      complete: !!this.group.isDone?.(),
+    };
     this.dialog
-      .open<ScheduleComponent, RoundSchedule | null, RoundSchedule | null>(ScheduleComponent, {
-        data: (this.group.schedule as RoundSchedule) ?? null,
+      .open<ScheduleComponent, ScheduleDialogData, RoundSchedule | null>(ScheduleComponent, {
+        data,
         maxWidth: '90vw',
         width: '380px',
       })
@@ -164,10 +169,23 @@ export class GroupDashboardComponent implements OnInit, OnDestroy {
         if (schedule === undefined) {
           return;
         }
-        this.groupsApi.setSchedule(this.group.id, schedule);
+        const first = schedule ? this.firstRound(schedule) : null;
+        this.groupsApi.setSchedule(this.group.id, schedule, first);
         this.$gaService.send('schedule_set', { every: schedule?.every ?? 'off' });
-        this.alert.show(this.common.translation.schedule?.saved || 'تمّ حفظ التكرار', 3000);
+        this.alert.show(savedScheduleText(schedule, first, this.common.translation, this.common.currentLanguage), 6000);
       });
+  }
+
+  /** When the round under way started (a new khitma's first round: when it was created), if that's known. */
+  private currentRoundStart(): Date | null {
+    const group = this.group;
+    const started = group.roundStartedAt?.toMillis?.() ?? (group.cycle ? undefined : group.createdAt?.toMillis?.());
+    return typeof started === 'number' ? new Date(started) : null;
+  }
+
+  /** When a khitma that starts repeating first moves on by itself: not before its current round is half through. */
+  private firstRound(schedule: RoundSchedule): Date | null {
+    return firstRoundAt(schedule, new Date(), { startedAt: this.currentRoundStart(), complete: this.group.isDone?.() });
   }
 
   /** Booked a week or more ago and still not done: the admin can free them for others. */

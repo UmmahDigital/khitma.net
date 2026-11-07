@@ -69,6 +69,10 @@ export class KhitmaGroup {
   /** Firestore Timestamps, recorded since 2026-10; older groups don't have them. */
   createdAt?: { toMillis(): number } | null;
   roundStartedAt?: { toMillis(): number } | null;
+  /** Who started the current round: an admin, or the khitma's repeat (schedule.ts). Recorded since 2026-11. */
+  roundStartedBy?: 'admin' | 'schedule';
+  /** The round the latest round start replaced, kept so an admin can undo that start (undoRoundStart). */
+  previousRound?: { forCycle: number } | null;
   /** When each round (by cycle number) had its last juz done. */
   completedRounds?: Record<string, { toMillis(): number }>;
   /** What the khitma is for (see purpose.ts), chosen when it was created; older groups don't have it. */
