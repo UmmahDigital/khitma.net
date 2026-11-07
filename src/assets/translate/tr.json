@@ -424,7 +424,8 @@
     "textSize": "Yazı boyutu",
     "smaller": "Yazıyı küçült",
     "larger": "Yazıyı büyüt",
-    "textGlyph": "A"
+    "textGlyph": "A",
+    "darkMode": "Karanlık mod"
   },
   "status": {
     "summary": "🟢 Okundu {done} · 🟡 Okunuyor {reading} · 🔴 Boşta {free}",

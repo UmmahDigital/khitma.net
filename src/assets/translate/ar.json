@@ -421,7 +421,8 @@
     "textSize": "حجم النص",
     "smaller": "تصغير النص",
     "larger": "تكبير النص",
-    "textGlyph": "أ"
+    "textGlyph": "أ",
+    "darkMode": "الوضع الداكن"
   },
   "status": {
     "summary": "🟢 تمّ {done} · 🟡 قيد القراءة {reading} · 🔴 متاح {free}",

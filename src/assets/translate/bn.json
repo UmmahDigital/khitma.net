@@ -424,7 +424,8 @@
     "textSize": "লেখার আকার",
     "smaller": "লেখা ছোট করুন",
     "larger": "লেখা বড় করুন",
-    "textGlyph": "অ"
+    "textGlyph": "অ",
+    "darkMode": "ডার্ক মোড"
   },
   "status": {
     "summary": "🟢 পড়া হয়েছে {done} · 🟡 পড়া হচ্ছে {reading} · 🔴 খালি {free}",

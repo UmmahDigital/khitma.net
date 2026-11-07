@@ -424,7 +424,8 @@
     "textSize": "Taille du texte",
     "smaller": "Texte plus petit",
     "larger": "Texte plus grand",
-    "textGlyph": "A"
+    "textGlyph": "A",
+    "darkMode": "Mode sombre"
   },
   "status": {
     "summary": "🟢 Lus {done} · 🟡 En lecture {reading} · 🔴 Libres {free}",

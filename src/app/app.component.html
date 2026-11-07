@@ -18,6 +18,12 @@
 
       <span class="spacer"></span>
 
+      <!-- Light or dark (theme.ts): the icon shows the look it switches to. -->
+      <button type="button" mat-icon-button class="theme-toggle" (click)="toggleTheme()"
+        [attr.aria-label]="common.translation.menu?.darkMode || 'الوضع الداكن'" [attr.aria-pressed]="darkTheme()">
+        <mat-icon>{{ darkTheme() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+
       <!-- <mat-icon
       class="lang-toggle"
       aria-hidden="false"

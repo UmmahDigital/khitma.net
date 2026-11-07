@@ -542,6 +542,64 @@ test.describe('screenshots of the current design', () => {
       await snap(page, 'dark-popup-main-menu');
     });
   });
+
+  // The look picked with the toolbar button (theme.ts) is exactly the phone's: the same screenshots as above.
+  test.describe('with the other look picked in the app', () => {
+    const pick = (page: Page, theme: 'light' | 'dark') => page.addInitScript((value) => localStorage.setItem('theme', value), theme);
+
+    async function adminToolsAndNewKhitmahDialog(page: Page, dark: boolean) {
+      await page.setViewportSize(TALL_PHONE);
+      await openAsMember(page, 'visual-family', ADMIN);
+      await page.getByText('أدوات مسؤول المجموعة').click();
+      const newKhitmah = page.getByRole('button', { name: 'بدء الختمة التالية' });
+      await expect(newKhitmah).toBeVisible();
+      await snap(page, dark ? 'dark-sequential-admin' : 'sequential-admin');
+      await newKhitmah.click();
+      await expect(page.getByRole('button', { name: 'بدء', exact: true })).toBeVisible();
+      await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+      await settle(page);
+      await expect(page.locator('mat-dialog-container')).toHaveScreenshot(dark ? 'dark-sequential-new-khitmah-dialog.png' : 'sequential-new-khitmah-dialog.png');
+    }
+
+    test('dark on a light phone: home', async ({ page }) => {
+      await pick(page, 'dark');
+      await page.setViewportSize(PHONE);
+      await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, now: OUTSIDE_RAMADAN });
+      await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
+      await snap(page, 'dark-home');
+    });
+
+    test('dark on a light phone: sequential group admin tools and new khitmah dialog', async ({ page }) => {
+      await pick(page, 'dark');
+      await adminToolsAndNewKhitmahDialog(page, true);
+    });
+
+    test('dark on a light phone: same-task group admin', async ({ page }) => {
+      await pick(page, 'dark');
+      await page.setViewportSize(TALL_PHONE);
+      await openAsMember(page, 'visual-daily', ADMIN);
+      await expect(page.locator('app-group-members mat-card')).toHaveCount(3);
+      await snap(page, 'dark-same-task-admin');
+    });
+
+    test.describe('light on a dark phone', () => {
+      test.use({ colorScheme: 'dark' });
+
+      test('sequential group admin tools and new khitmah dialog', async ({ page }) => {
+        await pick(page, 'light');
+        await adminToolsAndNewKhitmahDialog(page, false);
+      });
+
+      test('same-task group admin', async ({ page }) => {
+        await pick(page, 'light');
+        await page.setViewportSize(TALL_PHONE);
+        await openAsMember(page, 'visual-daily', ADMIN);
+        await page.getByText('أدوات مسؤول المجموعة').click();
+        await expect(page.getByRole('button', { name: 'مهمّة جديدة' })).toBeVisible();
+        await snap(page, 'same-task-admin');
+      });
+    });
+  });
 });
 
 test.describe('screenshot of the update screen', () => {
