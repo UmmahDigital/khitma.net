@@ -1,7 +1,7 @@
 import { expect, Page, test } from '@playwright/test';
 import { joinedGroups, OLD_ANDROID_UA, openApp, openInTooOldBrowser, OUTSIDE_RAMADAN, sharedImage } from '../support/app';
 import { setDoc } from '../support/firestore';
-import { createPagesGroup, createSameTaskGroup, createSequentialGroup, JUZ_STATUS } from '../support/fixtures';
+import { ajzaMap, buildAjza, createPagesGroup, createSameTaskGroup, createSequentialGroup, JUZ_STATUS } from '../support/fixtures';
 
 // Visual reference of the current design. Fixed IDs, data and clock keep the screenshots deterministic.
 // Regenerate deliberately with `npm run e2e:update-screenshots` and review the image diffs.
@@ -68,6 +68,18 @@ test.describe('screenshots of the current design', () => {
       description: 'نهديها لروح جدّنا رحمه الله',
       targetDate: 'يوم الجمعة',
       assigned: FAMILY_AJZA,
+    });
+    // A khitma that repeats every Friday: only those offer the repeat tool for now.
+    await createSequentialGroup('visual-repeating', {
+      title: 'ختمة العائلة',
+      author: ADMIN,
+      assigned: FAMILY_AJZA,
+      schedule: { every: 'week', weekday: 5, cycleType: 1 },
+      nextRoundAt: new Date('2026-03-05T22:00:00Z'),
+      // Its round started by itself at 00:30, a few hours before the frozen clock, and can be undone.
+      roundStartedAt: new Date('2026-02-28T22:30:00Z'),
+      roundStartedBy: 'schedule',
+      previousRound: { cycle: 0, forCycle: 0, ajza: ajzaMap(buildAjza(FAMILY_AJZA)) },
     });
     await createSequentialGroup('visual-complete', {
       title: 'ختمة مكتملة',
@@ -272,9 +284,35 @@ test.describe('screenshots of the current design', () => {
     await expect(page.locator('mat-dialog-container')).toHaveScreenshot('sequential-new-khitmah-dialog.png');
   });
 
+  test('sequential group: new khitmah dialog in a khitma that repeats', async ({ page }) => {
+    await page.setViewportSize(TALL_PHONE);
+    await openAsMember(page, 'visual-repeating', ADMIN);
+    await page.getByText('أدوات مسؤول المجموعة').click();
+    await page.locator('.admin-tools').getByRole('button', { name: 'بدء الختمة التالية' }).click();
+    await expect(page.locator('.repeat-note')).toBeVisible();
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await settle(page);
+    await expect(page.locator('mat-dialog-container')).toHaveScreenshot('sequential-new-khitmah-dialog-repeating.png');
+  });
+
+  test('sequential group: a round that started by itself, which the admin can undo', async ({ page }) => {
+    await page.setViewportSize(PHONE);
+    await openAsMember(page, 'visual-repeating', ADMIN);
+    const line = page.locator('.round-start-line');
+    await expect(line).toContainText('بدأت هذه الختمة تلقائيًا اليوم الساعة 00:30.');
+    await line.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+    await settle(page);
+    await expect(page).toHaveScreenshot('sequential-round-started-by-itself.png', {
+      clip: await line.evaluate((element) => {
+        const box = element.getBoundingClientRect();
+        return { x: 0, y: box.top - 120, width: window.innerWidth, height: box.height + 200 };
+      }),
+    });
+  });
+
   test('sequential group: repeating the khitma automatically', async ({ page }) => {
     await page.setViewportSize(TALL_PHONE);
-    await openAsMember(page, 'visual-family', ADMIN);
+    await openAsMember(page, 'visual-repeating', ADMIN);
     await page.getByText('أدوات مسؤول المجموعة').click();
     await page.getByRole('button', { name: 'تكرار الختمة تلقائيًا' }).click();
     await expect(page.getByRole('button', { name: 'حفظ' })).toBeVisible();

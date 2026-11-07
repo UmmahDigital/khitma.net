@@ -16,6 +16,25 @@
     font-weight: 700;
   }
 
+  // What saving will do, and when the first automatic start is.
+  .schedule-summary {
+    margin: 4px 0 0;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--tint);
+    color: var(--tint-text);
+    line-height: 1.5;
+
+    p {
+      margin: 0;
+    }
+
+    .schedule-first {
+      margin-top: 6px;
+      font-weight: 700;
+    }
+  }
+
   .weekday-chips {
     display: flex;
     flex-wrap: wrap;

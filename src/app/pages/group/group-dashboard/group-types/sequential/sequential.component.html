@@ -95,6 +95,18 @@
           </div>
         </div>
       }
+      @if (similarNames.length) {
+        <!-- Only when a booked juz has her name written differently (an admin re-typed it): she takes it in one tap,
+             without leaving the group, which would free her ajza. -->
+        <div class="not-my-name">
+          <p class="not-my-name-title" [translate]="'sequential.isThisYourName'">هل اسمك مكتوب في الختمة هكذا؟</p>
+          <div class="name-choices">
+            @for (name of similarNames; track name) {
+              <button mat-stroked-button (click)="continueAs(name)">{{ name }}</button>
+            }
+          </div>
+        </div>
+      }
     }
   </div>
   @if (afterRamadanPrompt) {
@@ -109,6 +121,13 @@
   }
   @if (deadlineLine) {
     <p class="deadline-line">⏳ {{ deadlineLine }}</p>
+  }
+  @if (roundStartLine) {
+    <p class="round-start-line">{{ roundStartLine }}
+      @if (canUndoRound) {
+        <button mat-button class="undo-round-btn" (click)="undoRoundStart()"><span [translate]="'sequential.undo'">تراجع</span></button>
+      }
+    </p>
   }
   @if (repeatLine) {
     <p class="deadline-line repeat-line">🔁 {{ repeatLine }}</p>

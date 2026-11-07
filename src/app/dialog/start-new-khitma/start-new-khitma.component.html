@@ -2,6 +2,13 @@
 
 <div mat-dialog-content>
 
+    @if (startedNote) {
+        <p class="round-note started-note">{{ startedNote }}</p>
+    }
+    @if (repeatNote) {
+        <p class="round-note repeat-note">{{ repeatNote }}</p>
+    }
+
     <label id="radio-group-label" [translate]="'newKhitma.label'">كيف تُوزَّع الأجزاء؟</label>
 
     <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="newCycleState">

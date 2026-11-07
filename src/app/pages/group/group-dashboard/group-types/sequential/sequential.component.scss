@@ -289,6 +289,37 @@
   color: var(--tint-text);
 }
 
+// When the round under way started, for 12 hours, with «تراجع» for admins.
+.round-start-line {
+  margin: 0 auto 12px;
+  text-align: center;
+  color: var(--text-muted);
+
+  .undo-round-btn {
+    color: var(--primary);
+    font-weight: 700;
+  }
+}
+
+// «هل اسمك مكتوب في الختمة هكذا؟»: a member without a juz takes her name as the khitma writes it.
+.not-my-name {
+  margin: 12px auto 0;
+  text-align: center;
+
+  .not-my-name-title {
+    margin: 0 0 10px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .name-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+}
+
 .start-own {
   margin: 20px auto 0;
   text-align: center;

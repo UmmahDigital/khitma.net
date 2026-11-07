@@ -1,6 +1,18 @@
 @use "src/variables" as *;
 
+// What starting now means, before choosing: a round that started a few hours ago, or the next automatic start.
+.round-note {
+    margin: 0 0 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--tint);
+    color: var(--tint-text);
+    line-height: 1.5;
+}
 
+.started-note {
+    font-weight: 700;
+}
 
 .radio-group {
     display: flex;

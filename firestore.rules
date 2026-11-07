@@ -1,19 +1,34 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-  
-    match /{document=**} {
+
+    // Groups have their own rule for updates, below: rules add up, so this one must not cover them.
+    match /{collection}/{document=**} {
       allow get;
-      allow create, update;
+      allow create, update: if collection != 'groups';
     }
-    
+
+    match /groups/{groupId} {
+      allow create;
+      allow update: if !juzChangeForAnEndedRound();
+    }
+
+    // A juz changed on a page that still showed an earlier round (the phone's copy on a slow connection, an offline
+    // change sent later, a page left open overnight) would land on the round that replaced it, on another reader's
+    // juz. The app sends the round it showed with every juz change (lastJuzUpdate.round); it must be the round under
+    // way. Writes that don't touch lastJuzUpdate (older versions of the app, round starts, settings) are unaffected.
+    function juzChangeForAnEndedRound() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasAny(['lastJuzUpdate'])
+        && request.resource.data.lastJuzUpdate.round != request.resource.data.get('cycle', 0);
+    }
+
     match /notifications/{document=**} {
       allow read;
     }
-    
+
     match /users/{document=**} {
       allow read,write;
     }
-    
+
   }
 }

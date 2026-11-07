@@ -19,7 +19,7 @@
     <mat-radio-button class="radio-button" value="off"><span [translate]="'schedule.off'">بدون تكرار (أبدأ كل ختمة بنفسي)</span></mat-radio-button>
   </mat-radio-group>
 
-  @if (every !== 'off') {
+  @if (every && every !== 'off') {
     <label id="schedule-round-label" class="schedule-label" [translate]="'schedule.newRound'">في كل ختمة جديدة:</label>
     <mat-radio-group class="radio-group" [(ngModel)]="cycleType" aria-labelledby="schedule-round-label">
       <mat-radio-button class="radio-button" [value]="KHITMA_CYCLE_TYPE.AUTO_BOOK">
@@ -33,9 +33,22 @@
       </mat-radio-button>
     </mat-radio-group>
   }
+
+  <!-- What saving will do, before it's saved: admins who turned the repeat on kept starting rounds themselves. -->
+  @if (description) {
+    <div class="schedule-summary">
+      <p class="schedule-description">{{ description }}</p>
+      @if (firstStart) {
+        <p class="schedule-first">{{ firstStart }}</p>
+      }
+    </div>
+  }
+  @if (offNote) {
+    <p class="schedule-summary" [translate]="'schedule.offNote'">لن تبدأ الختمة التالية إلا حين تبدؤها بنفسك.</p>
+  }
 </div>
 
 <div mat-dialog-actions>
   <button mat-button (click)="dialogRef.close()"><span [translate]="'dialog.cancel'">إلغاء</span></button>
-  <button mat-raised-button color="primary" class="app-btn-primary" (click)="save()"><span [translate]="'schedule.save'">حفظ</span></button>
+  <button mat-raised-button color="primary" class="app-btn-primary" [disabled]="!every" (click)="save()"><span [translate]="'schedule.save'">حفظ</span></button>
 </div>
