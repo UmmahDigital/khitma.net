@@ -422,7 +422,10 @@
     "smaller": "تصغير النص",
     "larger": "تكبير النص",
     "textGlyph": "أ",
-    "darkMode": "الوضع الداكن"
+    "darkMode": "الوضع الداكن",
+    "open": "القائمة",
+    "language": "اللغة",
+    "notifications": "الإشعارات"
   },
   "status": {
     "summary": "🟢 تمّ {done} · 🟡 قيد القراءة {reading} · 🔴 متاح {free}",

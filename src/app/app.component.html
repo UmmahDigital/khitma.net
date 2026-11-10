@@ -7,8 +7,8 @@
 
     @if (!isWide) {
     <mat-toolbar color="primary">
-      <button mat-icon-button aria-label="menu">
-        <mat-icon (click)="openMenu()">menu</mat-icon>
+      <button type="button" mat-icon-button (click)="openMenu()" [attr.aria-label]="common.translation.menu?.open || 'القائمة'">
+        <mat-icon>menu</mat-icon>
       </button>
 
       <a routerLink="">
@@ -32,12 +32,11 @@
       >language
     </mat-icon> -->
 
-    <mat-icon
-      aria-label="Language"
-      [matMenuTriggerFor]="langMenu"
-      style="margin-inline-start: 8px"
-      >language
-    </mat-icon>
+    <!-- The globe and the bell: buttons the size of their icon (app.component.scss). -->
+    <button type="button" class="toolbar-icon language-btn" [matMenuTriggerFor]="langMenu"
+      [attr.aria-label]="common.translation.menu?.language || 'اللغة'">
+      <mat-icon>language</mat-icon>
+    </button>
     <mat-menu #langMenu="matMenu" [class.dark]="isDarkStyle">
       @for (lang of common.languages; track lang) {
         <button
@@ -64,19 +63,19 @@
   </mat-select>
 </mat-form-field> -->
 
-<mat-icon
-  matBadge="1"
-  matBadgePosition="before"
-  matBadgeSize="medium"
-  matBadgeColor="accent"
-  (click)="showNotification()"
-  [matBadgeHidden]="!unreadNotification"
-  gaEvent="show_notification_clicked"
-  gaCategory="notifications"
-  >notifications
-</mat-icon>
+<button type="button" class="toolbar-icon" (click)="showNotification()" gaEvent="show_notification_clicked"
+  gaCategory="notifications" [attr.aria-label]="common.translation.menu?.notifications || 'الإشعارات'">
+  <mat-icon
+    matBadge="1"
+    matBadgePosition="before"
+    matBadgeSize="medium"
+    matBadgeColor="accent"
+    [matBadgeHidden]="!unreadNotification"
+    >notifications
+  </mat-icon>
+</button>
 
-<a routerLink="about" [attr.aria-label]="common.translation.about?.title || 'شرح الاستخدام'">
+<a routerLink="about" class="toolbar-icon" [attr.aria-label]="common.translation.about?.title || 'شرح الاستخدام'">
   <mat-icon class="help-btn">help_outline</mat-icon>
 </a>
 </mat-toolbar>

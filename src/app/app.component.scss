@@ -67,6 +67,43 @@ mat-toolbar.mat-toolbar.mat-primary {
   margin-right: -8px;
 }
 
+// The globe, the bell and help, sized and placed as the bare icons they were: a tap just beside the icon did nothing.
+// They also answer taps above and below the icon, over the toolbar's height, and the globe and the bell beside it,
+// into the 8px between the icons right-to-left (left-to-right they touch).
+.toolbar-icon {
+  position: relative;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -16px;
+    bottom: -16px;
+    left: 0;
+    right: 0;
+  }
+}
+
+button.toolbar-icon {
+  display: flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.rtl button.toolbar-icon::after {
+  left: -4px;
+  right: -4px;
+}
+
+// 8px from the bell, on its left in every language, as the icon's margin was (icons are left-to-right).
+.language-btn {
+  margin-left: 8px;
+}
+
 .action-btn {
   background: $action-color !important;
   color: white !important;

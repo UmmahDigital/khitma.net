@@ -425,7 +425,10 @@
     "smaller": "Yazıyı küçült",
     "larger": "Yazıyı büyüt",
     "textGlyph": "A",
-    "darkMode": "Karanlık mod"
+    "darkMode": "Karanlık mod",
+    "open": "Menü",
+    "language": "Dil",
+    "notifications": "Bildirimler"
   },
   "status": {
     "summary": "🟢 Okundu {done} · 🟡 Okunuyor {reading} · 🔴 Boşta {free}",

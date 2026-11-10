@@ -425,7 +425,10 @@
     "smaller": "Kleinerer Text",
     "larger": "Größerer Text",
     "textGlyph": "A",
-    "darkMode": "Dunkelmodus"
+    "darkMode": "Dunkelmodus",
+    "open": "Menü",
+    "language": "Sprache",
+    "notifications": "Benachrichtigungen"
   },
   "status": {
     "summary": "🟢 Gelesen {done} · 🟡 Wird gelesen {reading} · 🔴 Frei {free}",

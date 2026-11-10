@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
 import { joinedGroups, openApp } from '../support/app';
 import { getDoc } from '../support/firestore';
 import { createSequentialGroup, JUZ_STATUS, newGroupId } from '../support/fixtures';
@@ -42,7 +42,7 @@ test('the text size in the menu sets every text size, and is kept on the phone',
   const rootSize = () => page.evaluate(() => getComputedStyle(document.documentElement).fontSize);
   await expect.poll(rootSize).toBe('18px');
 
-  await page.getByRole('button', { name: 'menu' }).click();
+  await page.getByRole('button', { name: 'القائمة' }).click();
   await page.getByRole('button', { name: 'تكبير النص' }).click();
   await page.getByRole('button', { name: 'تكبير النص' }).click();
   await expect.poll(rootSize).toBe('22.4px');
@@ -51,4 +51,60 @@ test('the text size in the menu sets every text size, and is kept on the phone',
   await page.reload();
   await expect.poll(rootSize).toBe('22.4px');
   expect(await page.evaluate(() => localStorage.getItem('textSize'))).toBe('xl');
+});
+
+// Older readers tap beside small icons: the toolbar's buttons answer taps around their icon, and the keyboard.
+test.describe('the toolbar', () => {
+  const tapAt = (page: Page, x: number, y: number) => page.mouse.click(x, y);
+
+  test('☰ opens the menu from anywhere on its button, and with the keyboard', async ({ page }) => {
+    await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' } });
+    const menu = page.getByRole('button', { name: 'القائمة' });
+    const box = (await menu.boundingBox())!;
+    await tapAt(page, box.x + 3, box.y + box.height / 2);
+    await expect(page.getByRole('link', { name: 'عن البرنامج' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+
+    await menu.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('link', { name: 'عن البرنامج' })).toBeVisible();
+  });
+
+  test('the globe and the bell are buttons that also answer taps around their icon', async ({ page }) => {
+    await openApp(page, '/');
+    await expect(page.locator('.mat-badge-content')).toBeVisible();
+    const toolbar = (await page.locator('mat-toolbar').boundingBox())!;
+    const globe = page.getByRole('button', { name: 'اللغة' });
+    const bell = page.getByRole('button', { name: 'الإشعارات' });
+    const theme = page.getByRole('button', { name: 'الوضع الداكن' });
+    const g = (await globe.boundingBox())!;
+    const b = (await bell.boundingBox())!;
+    // Where they always were: 24px icons, 8px apart (right to left).
+    expect([g.width, g.height, b.width, b.height]).toEqual([24, 24, 24, 24]);
+    expect(g.x - (b.x + b.width)).toBe(8);
+
+    // Below the globe's icon, near the toolbar's edge; then just beside it, on the side of the dark mode button.
+    for (const [x, y] of [
+      [g.x + g.width / 2, toolbar.y + toolbar.height - 2],
+      [g.x + g.width + 2, g.y + g.height / 2],
+    ]) {
+      await tapAt(page, x, y);
+      await expect(page.getByRole('menuitem', { name: 'English' })).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(page.getByRole('menuitem')).toHaveCount(0);
+    }
+    await expect(theme).toHaveAttribute('aria-pressed', 'false');
+
+    // In the gap between the bell and the globe, closer to the bell.
+    await tapAt(page, b.x + b.width + 3, b.y + b.height / 2);
+    await expect(page.getByRole('dialog').getByRole('heading', { name: 'مجتمع ختمة.نت' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+
+    // And with the keyboard.
+    await globe.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('menuitem', { name: 'English' })).toBeVisible();
+  });
 });

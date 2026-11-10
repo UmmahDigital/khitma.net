@@ -3,9 +3,10 @@ import { openApp, OUTSIDE_RAMADAN, readLocalStorage } from '../support/app';
 
 // The announcement behind the bell (the latest document in `notifications`, seeded in support/fixtures.ts).
 
-async function openAnnouncement(page: Page) {
+/** The bell is «الإشعارات», or "Notifications" in English. */
+async function openAnnouncement(page: Page, bell = 'الإشعارات') {
   await expect(page.locator('.mat-badge-content')).toBeVisible();
-  await page.locator('mat-icon[gaevent="show_notification_clicked"]').click();
+  await page.getByRole('button', { name: bell }).click();
   const dialog = page.getByRole('dialog');
   await expect(dialog.getByRole('heading', { name: 'مجتمع ختمة.نت' })).toBeVisible();
   // Measured once it has finished zooming in.
@@ -49,7 +50,7 @@ test.describe('the announcement', () => {
 
   test('in English the dialog reads left to right, and an Arabic announcement keeps its own direction', async ({ page }) => {
     await openApp(page, '/', { storage: { lng: 'en' }, now: OUTSIDE_RAMADAN });
-    const dialog = await openAnnouncement(page);
+    const dialog = await openAnnouncement(page, 'Notifications');
 
     const close = (await dialog.getByRole('button', { name: 'Close' }).boundingBox())!;
     const box = (await dialog.boundingBox())!;

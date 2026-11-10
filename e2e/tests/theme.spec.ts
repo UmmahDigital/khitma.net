@@ -59,7 +59,7 @@ test.describe('on a dark phone', () => {
     await page.getByRole('link', { name: 'ورد التجربة' }).click();
     const donePanel = page.locator('.member-panel.task-done');
     await expect(donePanel).toHaveCSS('background-color', 'rgb(209, 231, 221)');
-    await page.getByRole('button', { name: 'menu' }).click();
+    await page.getByRole('button', { name: 'القائمة' }).click();
     await expect(page.locator('.mat-mdc-dialog-surface')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
     await page.keyboard.press('Escape');
 

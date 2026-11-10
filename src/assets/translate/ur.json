@@ -425,7 +425,10 @@
     "smaller": "چھوٹا متن",
     "larger": "بڑا متن",
     "textGlyph": "آ",
-    "darkMode": "ڈارک موڈ"
+    "darkMode": "ڈارک موڈ",
+    "open": "مینو",
+    "language": "زبان",
+    "notifications": "اطلاعات"
   },
   "status": {
     "summary": "🟢 پڑھے جا چکے {done} · 🟡 زیرِ تلاوت {reading} · 🔴 دستیاب {free}",

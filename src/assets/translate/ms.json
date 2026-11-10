@@ -425,7 +425,10 @@
     "smaller": "Teks lebih kecil",
     "larger": "Teks lebih besar",
     "textGlyph": "A",
-    "darkMode": "Mod gelap"
+    "darkMode": "Mod gelap",
+    "open": "Menu",
+    "language": "Bahasa",
+    "notifications": "Pemberitahuan"
   },
   "status": {
     "summary": "🟢 Sudah dibaca {done} · 🟡 Sedang dibaca {reading} · 🔴 Masih kosong {free}",
