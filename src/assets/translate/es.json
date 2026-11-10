@@ -425,7 +425,10 @@
     "smaller": "Texto más pequeño",
     "larger": "Texto más grande",
     "textGlyph": "A",
-    "darkMode": "Modo oscuro"
+    "darkMode": "Modo oscuro",
+    "open": "Menú",
+    "language": "Idioma",
+    "notifications": "Notificaciones"
   },
   "status": {
     "summary": "🟢 Leídos {done} · 🟡 En lectura {reading} · 🔴 Libres {free}",

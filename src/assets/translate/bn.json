@@ -425,7 +425,10 @@
     "smaller": "লেখা ছোট করুন",
     "larger": "লেখা বড় করুন",
     "textGlyph": "অ",
-    "darkMode": "ডার্ক মোড"
+    "darkMode": "ডার্ক মোড",
+    "open": "মেনু",
+    "language": "ভাষা",
+    "notifications": "বিজ্ঞপ্তি"
   },
   "status": {
     "summary": "🟢 পড়া হয়েছে {done} · 🟡 পড়া হচ্ছে {reading} · 🔴 খালি {free}",

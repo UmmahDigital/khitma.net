@@ -425,7 +425,10 @@
     "smaller": "Smaller text",
     "larger": "Larger text",
     "textGlyph": "A",
-    "darkMode": "Dark mode"
+    "darkMode": "Dark mode",
+    "open": "Menu",
+    "language": "Language",
+    "notifications": "Notifications"
   },
   "status": {
     "summary": "🟢 Read {done} · 🟡 Being read {reading} · 🔴 Free {free}",

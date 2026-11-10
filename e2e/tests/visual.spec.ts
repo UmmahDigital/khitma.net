@@ -441,7 +441,7 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(PHONE);
     await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, now: OUTSIDE_RAMADAN });
     await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
-    await page.getByRole('button', { name: 'menu' }).click();
+    await page.getByRole('button', { name: 'القائمة' }).click();
     await expect(page.getByRole('link', { name: 'عن البرنامج' })).toBeVisible();
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await snap(page, 'popup-main-menu');
@@ -460,7 +460,7 @@ test.describe('screenshots of the current design', () => {
     await page.setViewportSize(PHONE);
     await openApp(page, '/', { now: OUTSIDE_RAMADAN });
     await expect(page.locator('.mat-badge-content')).toBeVisible();
-    await page.locator('mat-icon[gaevent="show_notification_clicked"]').click();
+    await page.getByRole('button', { name: 'الإشعارات' }).click();
     await expect(page.getByRole('link', { name: 'مجموعة الفيسبوك' })).toBeVisible();
     await settle(page);
     await expect(page.locator('mat-dialog-container')).toHaveScreenshot('popup-announcement.png');
@@ -536,7 +536,7 @@ test.describe('screenshots of the current design', () => {
       await page.setViewportSize(PHONE);
       await openApp(page, '/', { storage: { lastRecievedNotificationId: '2' }, now: OUTSIDE_RAMADAN });
       await expect(page.locator('#ayat-count .main-counter')).toHaveText(/\d/);
-      await page.getByRole('button', { name: 'menu' }).click();
+      await page.getByRole('button', { name: 'القائمة' }).click();
       await expect(page.getByRole('link', { name: 'عن البرنامج' })).toBeVisible();
       await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
       await snap(page, 'dark-popup-main-menu');

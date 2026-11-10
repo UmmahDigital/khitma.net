@@ -111,7 +111,7 @@ for (const screen of SCREENS) {
       await chooseMenuItem(page, page.locator('.group-options-menu-button'), 'ترك المجموعة');
       await expectButtonsOnScreen(page, 'leaving the group');
 
-      await page.locator('mat-icon[gaevent="show_notification_clicked"]').click();
+      await page.getByRole('button', { name: 'الإشعارات' }).click();
       await expectButtonsOnScreen(page, 'the announcement');
     });
 

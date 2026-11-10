@@ -425,7 +425,10 @@
     "smaller": "Texte plus petit",
     "larger": "Texte plus grand",
     "textGlyph": "A",
-    "darkMode": "Mode sombre"
+    "darkMode": "Mode sombre",
+    "open": "Menu",
+    "language": "Langue",
+    "notifications": "Notifications"
   },
   "status": {
     "summary": "🟢 Lus {done} · 🟡 En lecture {reading} · 🔴 Libres {free}",
