@@ -1,5 +1,22 @@
 import { Juz, JUZ_STATUS, NUM_OF_AJZA } from './entities/entities';
 
+interface KhitmaKind {
+  cycle?: number;
+  schedule?: unknown;
+  purpose?: string | null;
+}
+
+/**
+ * Whether a reader with no juz of her own is offered one to read anyway when every juz is taken: in a one-time
+ * khitma only, for latecomers. In a khitma that repeats (it has moved on to a next round, repeats on a schedule, or
+ * was created as one that repeats), everyone's juz is given out: a reader who sees none has hers under her name
+ * written differently, or none today, and members took «اقرأ الجزء …», where their «أتممت قراءة جزء …» button
+ * usually is, for that button.
+ */
+export function offersReadingWhenAllBooked(group: KhitmaKind): boolean {
+  return !(group.cycle ?? 0) && !group.schedule && group.purpose !== 'regular';
+}
+
 /**
  * When every juz of a khitma is taken, a juz this member can read anyway, for the reward (nothing is booked or
  * recorded): first the ajza still being read, then the others. Each list is in an order that stays the same for a
