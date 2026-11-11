@@ -30,9 +30,10 @@ test.describe('a name written differently in the khitma', () => {
     await createSequentialGroup(groupId, { author: ADMIN, assigned: everyone({ 24: { owner: 'فاطمه', status: BOOKED } }) });
 
     await openApp(page, `/group/${groupId}`, { storage: { groups: joinedGroups({ [groupId]: 'فاطمة' }) } });
-    await expect(page.getByText('جميع الأجزاء محجوزة')).toBeVisible();
     const prompt = page.locator('.not-my-name');
     await expect(prompt).toContainText('هل اسمك مكتوب في الختمة هكذا؟');
+    // Not another juz to read instead: «اقرأ الجزء …» was taken for her «أتممت قراءة جزء …» button.
+    await expect(page.locator('.all-booked')).toHaveCount(0);
     await prompt.getByRole('button', { name: 'فاطمه' }).click();
 
     await expect(page.getByText('السلام عليكم يا فاطمه')).toBeVisible({ timeout: 20_000 });

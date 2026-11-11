@@ -19,7 +19,7 @@ import { renderShareCard } from '../../../../../share-card';
 import { FRIDAY, nextRoundAt, repeatText, RoundSchedule, savedScheduleText, whenText } from '../../../../../schedule';
 import { firstFridayAfterRamadan, hijri, isAfterRamadanPromptTime } from '../../../../../ramadan';
 import { ajzaCount, fill, freeAjza, helpFinishMessage, readingAjza } from '../../../../../share-messages';
-import { suggestedJuz } from '../../../../../all-booked';
+import { offersReadingWhenAllBooked, suggestedJuz } from '../../../../../all-booked';
 import { googleCalendarUrl, icsFile, Reminder, reminderStart } from '../../../../../reminder';
 import { startLikeParams } from '../../../../../start-like';
 import { isRtl } from '../../../../../languages';
@@ -241,10 +241,17 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     return fill(template, { count: ajzaCount(this.readingAjza.length, this.common.currentLanguage) });
   }
 
-  /** Every juz is taken and none is this member's: a juz to read anyway, for the reward (all-booked.ts). */
+  /**
+   * Every juz of a one-time khitma is taken and none is this member's: a juz to read anyway, for the reward
+   * (all-booked.ts). Not where the member's juz is most likely under her name written differently: in a khitma that
+   * repeats, or when a booked juz has her name written another way.
+   */
   get suggestion(): number | null {
     // Not while the member is being thanked for the juz they just finished.
     if (this.group.isDone() || this.group.hasIdleAjza() || this.myAjzaIndexes?.length || this.offerAfter !== null) {
+      return null;
+    }
+    if (!offersReadingWhenAllBooked(this.group) || this.myNameWrittenDifferently.length) {
       return null;
     }
     return suggestedJuz(this.group.ajza, this.group.id, new Date(), this.suggestionStep);
@@ -759,6 +766,11 @@ export class Group_Sequential_Component implements OnInit, OnChanges {
     if (this.isAdmin || this.myAjzaIndexes?.length || this.group.isDone()) {
       return [];
     }
+    return this.myNameWrittenDifferently;
+  }
+
+  /** The names of booked ajza that are this reader's name written another way. */
+  private get myNameWrittenDifferently(): string[] {
     const mine = nameKey(this.username);
     const names = new Set<string>();
     for (const juz of this.group.ajza) {

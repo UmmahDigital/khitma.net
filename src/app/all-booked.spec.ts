@@ -1,4 +1,4 @@
-import { suggestedJuz } from './all-booked';
+import { offersReadingWhenAllBooked, suggestedJuz } from './all-booked';
 import { Juz, JUZ_STATUS } from './entities/entities';
 
 function ajza(reading: number[]): Juz[] {
@@ -35,5 +35,20 @@ describe('suggestedJuz', () => {
     expect(steps.slice(0, 3).sort((a, b) => a - b)).toEqual([4, 9, 17]);
     expect(new Set(steps).size).toBe(30);
     expect(suggestedJuz(ajza([4, 9, 17]), 'g1', morning, 30)).toBe(steps[0]);
+  });
+});
+
+describe('offersReadingWhenAllBooked', () => {
+  it('offers a juz to latecomers of a one-time khitma', () => {
+    expect(offersReadingWhenAllBooked({ cycle: 0 })).toBe(true);
+    expect(offersReadingWhenAllBooked({})).toBe(true);
+    expect(offersReadingWhenAllBooked({ cycle: 0, purpose: 'memorial', schedule: null })).toBe(true);
+  });
+
+  it('offers none in a khitma that repeats, where everyone’s juz is given out', () => {
+    expect(offersReadingWhenAllBooked({ cycle: 1891 })).toBe(false);
+    expect(offersReadingWhenAllBooked({ cycle: 3, purpose: 'memorial' })).toBe(false);
+    expect(offersReadingWhenAllBooked({ cycle: 0, schedule: { every: 'day', cycleType: 1 } })).toBe(false);
+    expect(offersReadingWhenAllBooked({ cycle: 0, purpose: 'regular' })).toBe(false);
   });
 });

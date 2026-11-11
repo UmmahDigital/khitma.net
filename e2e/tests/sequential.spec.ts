@@ -139,6 +139,28 @@ test.describe('sequential group: members', () => {
     await expect(card).toContainText(`بقراءة الجزء ${first}.`);
   });
 
+  test('in a khitma that repeats, a reader without a juz is offered none to read: hers is most likely under her name written differently', async ({ browser }) => {
+    const assigned = Object.fromEntries(Array.from({ length: 30 }, (_, i) => [i + 1, { owner: `عضو ${i + 1}`, status: BOOKED }]));
+    const repeating = {
+      'it has moved on before': { cycle: 1891 },
+      'it repeats every day': { schedule: { every: 'day', cycleType: 1 }, nextRoundAt: new Date(Date.now() + 6 * 3_600_000) },
+      'it was created as one that repeats': { purpose: 'regular' },
+    };
+    for (const [why, kind] of Object.entries(repeating)) {
+      const groupId = newGroupId('seq-all-booked-repeats');
+      await createSequentialGroup(groupId, { author: ADMIN, assigned, ...kind });
+      // A member whose juz the khitma has under another name, and the admin, who reads none (as in the report).
+      for (const username of ['سارة', ADMIN]) {
+        const page = await browser.newPage();
+        await openDashboard(page, groupId, username);
+        await expect(page.locator('app-juz-grid app-juz-toggle')).toHaveCount(30);
+        await expect(page.locator('.all-booked'), `${why}, as ${username}`).toHaveCount(0);
+        await expect(page.getByRole('link', { name: /^اقرأ الجزء/ })).toHaveCount(0);
+        await page.context().close();
+      }
+    }
+  });
+
   test('leaving archives the group on this phone and returns home', async ({ page }) => {
     const groupId = newGroupId('seq-leave');
     await createSequentialGroup(groupId, { title: 'ختمة للمغادرة', author: ADMIN });

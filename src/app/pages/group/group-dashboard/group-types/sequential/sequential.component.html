@@ -85,7 +85,8 @@
       @if (this.group.hasIdleAjza()) {
         <span [translate]="'sequential.select'">اختر أيّ جزء متاح (باللون الأحمر).</span>
       } @else if (suggestion) {
-        <!-- Every juz is taken: a juz to read anyway, for the reward, instead of a dead end. -->
+        <!-- Every juz of a one-time khitma is taken: a juz to read anyway, for the reward, instead of a dead end (see
+             suggestion: not in a khitma that repeats). -->
         <div class="next-juz-offer all-booked">
           <p class="next-juz-title" [translate]="'sequential.allTitle'">جميع الأجزاء محجوزة</p>
           <p>{{ suggestionText('allRead', 'ولكن يمكنك أن تشارك في الأجر بقراءة الجزء {juz}.') }}</p>
